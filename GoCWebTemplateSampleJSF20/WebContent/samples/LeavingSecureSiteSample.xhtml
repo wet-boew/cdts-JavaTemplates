@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="beaninit">
+		<ui:param name="goctemplateclientbean" value="#{leavingsecuresitesamplebean}" />		
+	</ui:define>
+    <ui:define name="content">
+        <h1>GoC Web Template Samples - Leaving Secure Site</h1>
+	    <p>In certain scenarios (ex: secure sites) we want to notify the user that the link or action they have just performed will exit the current secured site/session and it is possible that data could be lost. The message allows the user to cancel the redirect or continue with the redirect.</p>
+	    <h2>Pre-requisite</h2>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.LeavingSecureSiteSample</code> bean class, and the bean name is <code class="wb-prettify">"leavingsecuresitesamplebean"</code>.</p>
+    	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
+    	<div class="wb-prettify all-pre lang-vb linenums">
+        	<pre>
+&lt;ui:define name="beaninit"&gt;
+	&lt;ui:param name="clientbean" value="<h:outputText value="&amp;#35;&#123;leavingsecuresitesamplebean&#125;" escape="false" />" /&gt;		
+&lt;/ui:define&gt;
+        	</pre>
+    	</div>
+    	<h2>Leaving Secure Site Warning</h2>
+	    <p>This feature can be enabled in the Web Template and will:</p>
+	    <ul>
+	        <li>display the message to the user in the form of a modal window</li>
+	        <li>display the message your application provides</li>
+	        <li>allow your application to execute any clean up code (ex: close session, gracefully logout user etc...)</li>
+	        <li>allow your application to exlude any domains from raising the warning</li>
+	    </ul>
+	    <h2>How it works</h2>
+	    <ul>
+	    	<li>If <code class="wb-prettify">DisplayModalWindow</code> is set to true (default):
+            	<ul>
+	                <li>When the user clicks an external link, the modal window will be displayed to the user.</li>
+	                <li>A "Cancel" button appears on the window to allow the user to return to their page.</li>
+	                <li>A "Yes" button appears on the window to allow the user to continue with the redirection to the selected link.</li>
+	            </ul>
+        	</li>
+	        <li>if the "Yes" button is clicked:
+	            <ul>
+	                <li>the user will first be redirect to the url set in <code class="wb-prettify">"leavingSecureSiteRedirectUrl"</code> via either the cdn.properties file or programmatically, this url does not have to point to a resource that actually exists in your JSF application</li>
+	                <li>the info of the linked that was clicked is part of the querystring to that url</li>
+	                <li>create a custom Filter class that will intercept the redirect url that was defined earlier</li>
+	                <li>execute any clean up code your application requires</li>
+	                <li>once executed the filter will redirect the user to the url of the clicked link</li>
+	            </ul>
+	        </li>
+	    </ul>
+	    <p>Here is a local link that will not display the warning: <a href="BaseSettingsSample.xhtml">Link to Local Page</a></p>
+	    <p>Here is an external link that will display the warning:<a href="http://www.google.ca">Link to External Page</a></p>
+	    <h2>Steps to implement:</h2>
+	    <h3>Enable the leaving secure site feature</h3>
+	    <ul>
+	        <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteWarningEnabled"</code> to <strong>"true"</strong></li>
+	        <li>Provide the message to be displayed by setting the <code class="wb-prettify">"leavingSecureSiteWarningMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarningMessage</code> method in your custom bean class.</li>
+	        <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteRedirectUrl"</code> to your page which will execute your clean up code and then redirect to the selected url.</li>
+	        <li>Set, via the cdn.properties or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteExcludedDomain"</code> the list of domains you do not want to raise the warning</li>
+	    </ul>
+	    <div class="wb-prettify all-pre lang-vb linenums">
+        	<pre>
+@Override
+public void setLeavingSecureSiteRedirectUrl() { 
+	this.leavingSecureSiteRedirectUrl = "customredirect.xhtml";
+}
+
+@Override
+public void setLeavingSecureSiteWarningEnabled() { this.leavingSecureSiteWarningEnabled = true; }
+
+@Override
+public void setLeavingSecureSiteWarningMessage() {
+	this.leavingSecureSiteWarningMessage = "You are about to leave a secure site, do you wish to continue?";
+}
+
+@Override
+public void setLeavingSecureSiteExcludedDomains() {
+	this.leavingSecureSiteExcludedDomain = "www.esdc.gc.ca,www.jobbank.gc.ca,www.redseal.ca";
+}
+
+@Override
+public void setLeavingSecureSiteDisplayModalWindow() {
+	// this.leavingSecureSiteDisplayModalWindow = false;
+}	
+        	</pre>
+    	</div>
+	    <h3>Created your "redirect" custom Filter</h3>
+	    <ul>
+	        <li>Create a new Servlet Filter class</li>
+	        <li>in the overriding <code class="wb-prettify">doFilter</code> method, intercept the leave secure site redirect url defined in your custom bean</li>
+	        <li>enter your clean up code if required</li>
+	        <li>redirect to the <code class="wb-prettify">"targetURL"</code> parameter value in the querystring</li>
+	        <li>register the custom in the web.xml configuration file</li>
+	    </ul>
+	    <div class="wb-prettify all-pre lang-vb linenums">
+	        <h3>Code Sample for your Redirect Filter and web.xml registration</h3>
+	        <pre>
+public class CustomRedirectFilter implements Filter {
+
+	public void destroy() {}
+
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+		String uri = ((HttpServletRequest)req).getRequestURI();
+		
+		if (uri.indexOf("customredirect.xhtml") != -1) {
+			try {
+				HttpServletRequest currentReq = (HttpServletRequest)req;
+				String redirectUrl = URLDecoder.decode(currentReq.getParameter("targetUrl"), "UTF-8");
+				((HttpServletResponse)res).sendRedirect(redirectUrl);
+			}
+			catch (Exception ex) { chain.doFilter(req, res); }
+		} else {
+			chain.doFilter(req, res);
+		}
+	}
+
+	public void init(FilterConfig fConfig) throws ServletException {}
+
+}
+
+&lt;filter&gt;
+    &lt;filter-name&gt;CustomRedirectFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;goc.webtemplate.jsf.samplefilter.CustomRedirectFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;CustomRedirectFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/faces/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+	        </pre>
+	     </div>
+	     <div>
+	        <h3>Other Web Template Samples</h3>
+	        <ul>
+	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
+	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
+	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
+	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
+	            <li><a href="ErrorSample.xhtml">Errors</a></li>
+	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
+	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
+	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
+	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
+	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
+	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
+	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
+	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
+	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
+	        </ul>
+	    </div>
+    </ui:define>
+</ui:composition>

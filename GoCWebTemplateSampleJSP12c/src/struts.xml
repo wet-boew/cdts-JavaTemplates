@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.devMode" value="true" />
+	<package name="default" namespace="/" extends="struts-default">
+		<!--  ==============================================================  -->
+		<!--  The following are part of the GoC Web Template related struts configuration, 
+			  do NOT modify or remove the following. -->
+		<!--  ==============================================================  -->					  
+		<result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		<action name="leavesecuresiteredirect" class="goc.webtemplate.component.jsp.LeaveSecureSiteAction" method="execute"></action>
+		<action name="switchlocale" class="goc.webtemplate.component.jsp.SwitchLocaleAction" method="execute"></action>
+		<!--  ==============================================================  -->
+		
+		
+		<!--  ==============================================================  -->
+		<!--  The following set of actions are for the sample pages.  These can 
+			  be removed at anytime if the sample page are no longer required. -->
+		<!--  ==============================================================  -->
+		<action name="index"><result type="tiles">index</result></action>
+		<action name="splashpagesample"><result type="tiles">splashPageSample</result></action>
+		<action name="gcintranetsample"><result type="tiles">gcIntranetSample</result></action>
+		<action name="addjsandcssfilessample"><result type="tiles">addJSAndCSSFilesSample</result></action>
+		<action name="basesettingssample"><result type="tiles">baseSettingsSample</result></action>
+		<action name="breadcrumbsample"><result type="tiles">breadcrumbsSample</result></action>
+		<action name="errorsample"><result type="tiles">errorSample</result></action>
+		<action name="extendedbasepagesample"><result type="tiles">extendedBasePageSample</result></action>
+		<action name="feedbackandsharethispagesample"><result type="tiles">feedbackAndShareThisPageSample</result></action>
+		<action name="footerlinkssample"><result type="tiles">footerLinksSample</result></action>
+		<action name="leavingsecureSitesample"><result type="tiles">leaveSecureSiteSample</result></action>
+		<action name="leftsidemenusample"><result type="tiles">leftSideMenuSample</result></action>
+		<action name="nestedmasterpagesample"><result type="tiles">nestedMasterPageSample</result></action>
+		<action name="sessiontimeoutsample"><result type="tiles">sessionTimeoutSample</result></action>
+		<action name="transactionalsample"><result type="tiles">transactionalSample</result></action>		
+		<!--  ==============================================================  -->
+	</package>
+</struts>

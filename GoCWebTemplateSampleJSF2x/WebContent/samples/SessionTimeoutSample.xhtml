@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="beaninit">
+		<ui:param name="goctemplateclientbean" value="#{sessiontimeoutsamplebean}" />		
+	</ui:define>
+    <ui:define name="content">
+        <h1>GoC Web Template Samples - Session Timeout</h1>
+	    <p><a href="http://www.gcpedia.gc.ca/wiki/Content_Delivery_Network/GoC_.NET_template_guide">Web Template Documentation (GCPedia)</a></p>
+	    <p>This sample helps web page owners by providing session timeout and inactivity timeout functionality and is based on the <a href="http://wet-boew.github.io/wet-boew/demos/session-timeout/session-timeout-en.html">WET Session Timeout plugin</a>. When a user requests a page with this plugin implemented their session will begin. After the specified session period, they will be notified that their session is about to timeout. At this point, they will have the option to remain logged in by clicking "Continue session", or signing out by clicking "End session now".</p>
+		<h2>Pre-requisite</h2>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.SessionTimeoutSample</code> bean class, and the bean name is <code class="wb-prettify">"sessiontimeoutsamplebean"</code>.</p>
+    	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
+    	<div class="wb-prettify all-pre lang-vb linenums">
+        	<pre>
+&lt;ui:define name="beaninit"&gt;
+	&lt;ui:param name="clientbean" value="<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean&#125;" escape="false" />" /&gt;		
+&lt;/ui:define&gt;
+        	</pre>
+    	</div>
+    	<h2>Session Timeout Configuration</h2>
+	    <p>At any time during the session, if the user remains idle for a specified amount of time, they will be notified that they're session is about to timeout. In either case, if the user does not respond to the timeout notification within a specified amount of time, once they click either "Continue session" or "End session now" they will be automatically redirected to the sign out page.</p>
+	    <h4>To Enable the session timeout:</h4>
+	    <ul>
+	        <li>Set the key <code class="wb-prettify">"session.timeout.enabled"</code> in the cdn.properties file to "true".</li>
+	        <li>or set the property programmatically via overriding the <code class="wb-prettify">"setSessionTimeoutEnabled"</code> method in your custom bean class</li>
+	    </ul>
+	    <p>The rest of the configuration are set in the cdn.properties resource bundle or programmatically via the <code class="wb-prettify">setSessionTimeoutConfigurations</code> method using the goc.webtemplate.SessionTimeout object: </p>
+	    <ul>
+	        <li><strong>session.inactivity.value</strong>: inactivity period of time after which the modal dialog will appear (default 20 minutes)</li>
+	        <li><strong>session.reactiontime.value</strong>: period of time the user has to perform an action once the modal dialog is displayed (default 3 minutes)</li>
+	        <li><strong>session.sessionalive.value</strong>: period of time for the session to stay alive until the modal dialog appears (default 20 minutes)</li>
+	        <li><strong>session.logouturl</strong>: URL that users are sent to when the session has expired</li>
+	        <li><strong>session.refreshcallbackurl</strong>: URL used to perform an ajax request to determine the validity of the session</li>
+	        <li><strong>session.refreshonclick</strong>: Determines if clicking on the document should reset the inactivity timeout and perform an ajax request (if a refreshCallbackUrl has been specified)</li>
+	        <li><strong>session.refreshlimit.value</strong>: Sets the amount of time that must pass before an ajax request can be made</li>
+	        <li><strong>session.method</strong>: Sets the request method used for ajax requests. Recommended: GET or POST</li>
+	        <li><strong>session.additionaldata</strong>: Additional data to send with the request</li>
+	   	</ul>
+	    <h4>Notes:</h4>
+	    <ul>
+	        <li>The <code class="wb-prettify">inactivity, reactionTime and sessionalive</code> parameters are set in milliseconds. For help with the time values, use this time converter.</li>
+	        <li>Your <code class="wb-prettify">sessionalive and inactivity</code> parameters should be equal to your web server session alive time minus the reactionTime time. If you set your <code class="wb-prettify">sessionalive time and inactivity time</code> to the same as your web server without taking into consideration the <code class="wb-prettify">reactionTime time</code> then the session will have ended by the server as soon as the popup appears to extend the session.</li>
+	        <li>The server response needs to contain a message body. Don't use a request method (e.g. HEAD) that disallows a message body in the response.</li>
+	    </ul>	 
+	    <h4>In this sample</h4>
+	    <p>In this sample we have:</p>
+	    <ul>
+	        <li>Set the server session timeout to 1 minute</li>
+	        <li>Set the <code class="wb-prettify">Inactivity and SessionAlive</code> to 30 seconds. This means the popup will be displayed every 30 seconds.</li>
+	        <li>Set the <code class="wb-prettify">reactionTime</code> to 10 second. This gives the user 10 seconds to make a selection once the pop up is displayed</li>
+	        <li>Set the <code class="wb-prettify">logoutURL</code> to "SessionTimeoutLogout.xhtml".  This page will clean up the session and redirect the user to another page, simulating a proper logout flow.</li>
+	        <li>Set the <code class="wb-prettify">refreshCallbackUrl</code> to "SessionTimeoutValidity.xhtml".  This page ensures the server session is still valid and return "true" if it is and "false" if the session is expired or no longer valid.</li>
+	        <li>Set the <code class="wb-prettify">refreshOnClick</code> to "false" so that clicks made by the user on the page does not trigger a call to the url set in the "refreshCallbackURL" to validate the server session.</li>
+	    </ul>   
+	    <div class="wb-prettify all-pre lang-vb linenums">
+	    	<h4>Custom Bean Sample Code</h4>
+	        <pre>
+@Override
+public void setSessionTimeoutEnabled() { this.sessionTimeoutEnabled = true; }
+
+@Override
+public void setSessionTimeoutConfigurations() { 
+	SessionTimeout configs = new SessionTimeout();
+	
+	configs.setInActivity(30000);
+	configs.setReactionTime(10000);
+	configs.setSessionAlive(30000);
+	configs.setLogoutUrl("SessionTimeoutLogout.xhtml");            
+	configs.setRefreshCallbackUrl("SessionTimeoutValidity.xhtml");
+	configs.setRefreshOnClick(false);
+	configs.setRefreshLimit(3);
+	configs.setMethod("");
+	configs.setAdditionalData("");
+	
+	this.sessionTimeoutConfigurations = configs;
+}
+	        </pre>
+	    </div>
+	    <div class="wb-prettify all-pre lang-vb linenums">
+	    	<h4>SessionTimeoutLogout.xhtml</h4>
+	        <pre>
+&lt;ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html"&gt;
+    &lt;ui:define name="beaninit"&gt;
+		&lt;ui:param name="goctemplateclientbean" value="<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean&#125;" escape="false" /> /&gt;		
+	&lt;/ui:define&gt;
+    &lt;ui:define name="content"&gt;
+    	<h:outputText value="&amp;#35;&#123;goctemplateclientbean.logoutAction&#125;" escape="false" />
+    &lt;/ui:define&gt;
+&lt;/ui:composition&gt;
+
+// In the session timeout bean class, the getLogoutAction property that is 
+// invoked simply does the Session cleanup code as required and performs a server redirect.
+public String getLogoutAction() {
+	try {
+		HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = currentReq.getSession(false);
+		if (session != null) session.invalidate();
+		((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect("AddJSandCSSFilesSample.xhtml");
+	}
+	catch (Exception ex) {}
+	return "";
+}
+	        </pre>
+	    </div>
+	    <div class="wb-prettify all-pre lang-vb linenums">
+	    	<h4>SessionTimeoutValidity.xhtml</h4>
+	        <pre>
+&lt;f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"&gt;
+	<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean.sessionValidity&#125;" escape="false" />
+&lt;/f:view&gt;
+
+// In the session timeout bean class, the getSessionValidity property simply returns the 
+// string "true" or "false" depending on the current session state
+public String getSessionValidity() {
+	String sessionValid = "true";
+	try {
+		HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = currentReq.getSession(false);
+		sessionValid = (session == null ? "false" : "true");
+	}
+	catch (Exception ex) {}
+	return sessionValid;
+}
+	        </pre>
+	    </div>
+     	<div>
+	        <h3>Other Web Template Samples</h3>
+	        <ul>
+	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
+	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
+	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
+	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
+	            <li><a href="ErrorSample.xhtml">Errors</a></li>
+	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
+	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
+	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
+	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
+	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
+	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
+	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
+	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
+	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
+	        </ul>
+	    </div>
+    </ui:define>
+</ui:composition>

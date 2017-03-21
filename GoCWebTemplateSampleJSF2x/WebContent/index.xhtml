@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="beaninit">
+		<ui:param name="goctemplateclientbean" value="#{indexbean}" />		
+	</ui:define>
+    <ui:define name="content">
+        <div><h:outputText value="#{indexbean.bundleValues}" escape="false"/></div>
+        <div>
+		    <h3>Goto sample pages</h3>
+		    <ul>
+		    	<li><a href="faces/samples/SplashPageSample.xhtml">Splash Page</a></li>
+	            <li><a href="faces/samples/AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
+	            <li><a href="faces/samples/BaseSettingsSample.xhtml">Basic Settings</a></li>
+	            <li><a href="faces/samples/BreadcrumbSample.xhtml">Breadcrumbs</a></li>
+	            <li><a href="faces/samples/ErrorSample.xhtml">Errors</a></li>
+	            <li><a href="faces/samples/ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
+	            <li><a href="faces/samples/FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
+	            <li><a href="faces/samples/FooterLinksSample.xhtml">Footer Links</a></li>
+	            <li><a href="faces/samples/LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
+	            <li><a href="faces/samples/LeftSideMenuSample.xhtml">Left Side Menu</a></li>
+	            <li><a href="faces/samples/NestedMasterPageSample.xhtml">Nested Master Page</a></li>
+	            <li><a href="faces/samples/SessionTimeoutSample.xhtml">Session Timeout</a></li>
+	            <li><a href="faces/samples/TransactionalSample.xhtml">Transactional Page</a></li>
+	            <li><a href="faces/samples/IntranetSample.xhtml">GCIntranet Theme Page</a></li>
+	        </ul>
+		</div>
+    </ui:define>
+</ui:composition>

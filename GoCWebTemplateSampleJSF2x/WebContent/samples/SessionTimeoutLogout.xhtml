@@ -1,0 +1,8 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="beaninit">
+		<ui:param name="goctemplateclientbean" value="#{sessiontimeoutsamplebean}" />		
+	</ui:define>
+    <ui:define name="content">
+    	#{goctemplateclientbean.logoutAction}
+    </ui:define>
+</ui:composition>

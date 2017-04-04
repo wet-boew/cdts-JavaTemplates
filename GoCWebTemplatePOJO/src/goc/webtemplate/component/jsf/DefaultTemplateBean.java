@@ -121,4 +121,31 @@ public class DefaultTemplateBean extends BaseBean {
 
 	@Override
 	public void setLeavingSecureSiteDisplayModalWindow() {}
+	
+    @Override
+    public void setShowGlobalNav() {}
+    
+    @Override
+    public void setShowSiteMenu() {}
+    
+    @Override
+    public void setCustomSiteMenuUrl() {}
+    
+    @Override
+    public void setSignInLinkUrl() {}
+    
+    @Override
+    public void setSignOutLinkUrl() {}
+    
+    @Override
+    public void setShowSecureIcon() {}
+    
+    @Override
+    public void setShowSignInLink() {}
+    
+    @Override
+    public void setShowSignOutLink() {}
+    
+    @Override
+    public void setCustomFooterLinks() {}
 }

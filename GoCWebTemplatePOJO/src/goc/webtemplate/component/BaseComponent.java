@@ -9,6 +9,7 @@ import java.util.MissingResourceException;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
+import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
@@ -68,7 +69,16 @@ public abstract class BaseComponent {
     public abstract void setLeftMenuSections();
     public abstract void setPrivacyLinkUrl();
     public abstract void setTermsConditionsLinkUrl();
-    
+    public abstract void setShowGlobalNav();
+    public abstract void setShowSiteMenu();
+    public abstract void setCustomSiteMenuUrl();
+    public abstract void setSignInLinkUrl();
+    public abstract void setSignOutLinkUrl();
+    public abstract void setShowSecureIcon();
+    public abstract void setShowSignInLink();
+    public abstract void setShowSignOutLink();
+    public abstract void setCustomFooterLinks();
+
     public abstract java.util.ResourceBundle getResourceBundle();
 	public abstract String getResourceBundleString(String resourceBundleName, String resourceBundleKey) throws MissingResourceException;
 	public abstract String getTwoLetterCultureLanguage();	
@@ -113,6 +123,15 @@ public abstract class BaseComponent {
     protected ArrayList<String> htmlBodyElements = new ArrayList<String>();
     protected String staticFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
     protected String contentCreatorTitle = "";
+    protected boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
+    protected boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
+    protected String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
+    protected String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
+    protected String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
+    protected boolean showSecureIcon = false;
+    protected boolean showSignInLink = false;
+    protected boolean showSignOutLink = false;
+    protected ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
     
     protected boolean sessionTimeoutEnabled = Boolean.parseBoolean(this.getResourceBundleString("cdn", "session.timeout.enabled"));
     protected SessionTimeout sessionTimeoutConfigurations = null;
@@ -304,6 +323,14 @@ public abstract class BaseComponent {
 	 */
 	public String getHeaderTitle() {
 		this.setHeaderTitle();
+		if (this.headerTitle == null) this.headerTitle = "";
+		
+		if (this.getTheme().toLowerCase().equals("gcweb") &&  //NOTE: Hardcoding, should this be a new "titleSuffix" property?
+            this.headerTitle.endsWith(" - Canada.ca") )		    
+		{
+		    return StringEscapeUtils.escapeHtml4(this.headerTitle + " - Canada.ca");
+		}
+		
 		return StringEscapeUtils.escapeHtml4(this.headerTitle);
 	}
 	
@@ -945,6 +972,106 @@ public abstract class BaseComponent {
     	this.setStaticFallbackFilePath();
     	return StringEscapeUtils.escapeHtml4(this.staticFilePath);
     }
+
+	/**
+	 *  Determines if the Global Nav bar in the footer is to be displayed.
+     *  Set by application programmatically or in the cdn.properties
+     *  Only available in the Application Template
+	 */
+	public boolean getShowGlobalNav() {
+	    this.setShowGlobalNav();
+	    return this.showGlobalNav;
+	}
+	
+	/**
+     *  Determines if the Site Menu is to appear at the top of the page. 
+     *  If set to false only a blue band will be seen.
+     *  Set by application programmatically or in the cdn.properties
+     *  Only available in the Application Template
+     */
+	public boolean getShowSiteMenu() {
+	    this.setShowSiteMenu();
+	    return this.showSiteMenu;
+	}
+	
+	/**
+     * A custom site menu to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu)
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+	 */
+	public String getCustomSiteMenuUrl() {
+	    this.setCustomSiteMenuUrl();
+	    return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.customSiteMenuUrl));
+	}
+
+	/**
+     * The link to use for the sign in button, will only appear if getShowSignInLink() is set to true
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+     * 
+     * @see getShowSignInLink()
+	 */
+	public String getSignInLinkUrl() {
+	    this.setSignInLinkUrl();
+	    return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.signInLinkUrl));
+	}
+	
+	/**
+     * The link to use for the sign out button, will only appear if getSignOutLinkUrl() is set to true
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+     * 
+     * @see getShowSignOutLink()
+	 */
+	public String getSignOutLinkUrl() {
+	    this.setSignOutLinkUrl();
+        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.signOutLinkUrl));	    
+	}
+	
+	/**
+     * Displays the secure icon next to the applicaiton name in the header.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSecureIcon() {
+	    this.setShowSecureIcon();
+	    return this.showSecureIcon;
+	}
+	
+	/**
+     * Displays the sign in link set.
+     * signInLinkUrl must not be null or whitespace
+     * showSignOutLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSignInLink() {
+	    this.setShowSignInLink();
+	    return this.showSignInLink;
+	}
+	
+	/**
+     * Displays the signout link set.
+     * signOutLinkUrl must not be null or whitespace
+     * showSignInLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSignOutLink() {
+	    this.setShowSignOutLink();
+	    return this.showSignOutLink;
+	}
+	
+	/**
+     * Custom links if null uses standard links if not null overrides the existing footer links
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public ArrayList<FooterLink> getCustomFooterLinks() {
+	    this.setCustomFooterLinks();
+	    return this.customFooterLinks;
+	}
 	
 	/**
 	 * Determines if the master template pages should use the "Run" or a specific version of the 

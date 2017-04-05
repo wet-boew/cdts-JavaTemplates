@@ -1,11 +1,14 @@
 package goc.webtemplate.component;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.MissingResourceException;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import com.google.gson.Gson;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
@@ -15,6 +18,8 @@ import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
+
+import goc.webtemplate.component.jsonentities.AppFooter;
 
 /**
  * This is the base class that will be shared with either the JSF 
@@ -27,7 +32,20 @@ import goc.webtemplate.Utility;
  *
  */
 public abstract class BaseComponent {
-	// ==============================================================
+    /**
+     * Object used for JSON serialization.  (https://github.com/google/gson)
+     * 
+     * According to documentation (http://www.javadoc.io/doc/com.google.code.gson/gson/2.8.0) 
+     * and source code, Gson objects are thread-safe.
+     */
+    //NOTE: Doesn't render null values by default, which is what we want
+    //NOTE: Escapes HTML by default, which is what we want (though URLs still need to be encoded)
+    //NOTE: Indented output can be obtained by chaining a call to setPrettyPrinting()
+    private static Gson gson = new com.google.gson.GsonBuilder()
+                                        .setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.IDENTITY)
+                                        .create();
+    
+    // ==============================================================
 	// List of Public Abstracted methods that needs to be implemented
 	// ==============================================================
 	public abstract void setCDNEnvironment();
@@ -563,6 +581,22 @@ public abstract class BaseComponent {
     public String getPrivacyLinkUrl() {
     	this.setPrivacyLinkUrl();
     	return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.privacyLinkUrl));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appFooter"
+     */
+    public String getRenderAppFooter()
+    {
+        /*AppFooter   appFooter;
+        
+        appFooter = new AppFooter(
+                        this.getCdnEnvironmentParsed(),
+                        JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                        
+                );*/
+        return null; //TODO: COMPLETE
     }
     
     /**

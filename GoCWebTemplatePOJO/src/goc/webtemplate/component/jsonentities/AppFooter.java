@@ -2,7 +2,6 @@ package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.List;
 
 import goc.webtemplate.FooterLink;
@@ -10,7 +9,7 @@ import goc.webtemplate.Link;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
- * as parameter to the 'wet.builder.footer' JavaScript function in the template
+ * as parameter to the 'wet.builder.appFooter' JavaScript function in the template
  * pages. 
  */
 public class AppFooter implements Serializable {
@@ -115,19 +114,4 @@ public class AppFooter implements Serializable {
     public void setShowFeatures(boolean showFeatures) {
         this.showFeatures = showFeatures;
     }
-    
-//TODO: Temporary test, remove!    
-public static void main(String[] args) throws Throwable
-{
-    //NOTE: Doesn't render null values by default, which is what we want
-    com.google.gson.Gson   gson = new com.google.gson.GsonBuilder()
-                                        .setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.IDENTITY).create();
-    AppFooter af = new AppFooter();
-    af.setCdnEnvVar("akamai");
-  //TODO: Calvin: Is newWindow still good?
-    af.setFooterSections(Arrays.asList(new FooterLink[] {new FooterLink("myhref", "texT", false), new FooterLink("value2", "text2", true)})); 
-    
-    System.out.println("[" + gson.toJson(af) + "]");
-}
-
 }

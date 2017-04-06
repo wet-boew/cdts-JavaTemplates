@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="package" name="GoCWebTemplatePOJO">
+<project basedir="." default="install-to-projects" name="GoCWebTemplatePOJO">
     <property environment="env"/>
 	
-	<property name="weblogic.home" value="c:/lup/itrds/wlserver-12.1.3-j7" />
+	<property name="weblogic.home" value="../../../itrds/wlserver-12.1.3-j7" />
 	<property name="weblibs.dir" value="../GoCWebTemplateSampleJSP/WebContent/WEB-INF/lib" />
 	
 	<property name="package.targetdir" value="c:/temp" />
@@ -100,6 +100,7 @@
     </path>
 
 	<target name="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
         <mkdir dir="${compile.targetdir}"/>
         <copy includeemptydirs="false" todir="${compile.targetdir}">
             <fileset dir="src">
@@ -117,7 +118,6 @@
     <target name="build-subprojects"/>
 	
     <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="${debug.enabled}" debuglevel="${debuglevel}" destdir="${compile.targetdir}" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="GoCWebTemplatePOJO.classpath"/>
@@ -125,9 +125,26 @@
     </target>	
 	
 	<target depends="build" name="package">
-        <jar destfile="${package.targetdir}/${jar-fileName}">
+        <jar destfile="${package.targetdir}/${jar-fileName}" manifest="src/META-INF/MANIFEST.MF">
             <fileset dir="${compile.targetdir}" />
         </jar>
 	</target>
-	<!-- TODO: Add manifest Jar to temp dir and copy to projects -->
+	
+	<target depends="package" name="install-to-projects">
+		<echo message="Copying POJO jar file to web template projects..." />
+
+        <copy file="${package.targetdir}/${jar-fileName}" todir="../GoCWebTemplateSampleJSF2x/WebContent/WEB-INF/lib"
+              preservelastmodified="true" overwrite="true" force="true" failonerror="true" verbose="true" />
+
+		<copy file="${package.targetdir}/${jar-fileName}" todir="../GoCWebTemplateSampleJSF20/WebContent/WEB-INF/lib"
+              preservelastmodified="true" overwrite="true" force="true" failonerror="true" verbose="true" />
+
+		<copy file="${package.targetdir}/${jar-fileName}" todir="../GoCWebTemplateSampleJSP/WebContent/WEB-INF/lib"
+              preservelastmodified="true" overwrite="true" force="true" failonerror="true" verbose="true" />
+
+		<copy file="${package.targetdir}/${jar-fileName}" todir="../GoCWebTemplateSampleJSP12c/WebContent/WEB-INF/lib"
+		      preservelastmodified="true" overwrite="true" force="true" failonerror="true" verbose="true" />
+		
+		<echo message="Done.  You should now do a Refresh on the Eclipse projects for the library update to be reflected." />
+	</target>
 </project>

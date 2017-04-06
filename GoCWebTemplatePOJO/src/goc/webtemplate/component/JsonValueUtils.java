@@ -1,5 +1,9 @@
 package goc.webtemplate.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import goc.webtemplate.Link;
 import goc.webtemplate.Utility;
 
 public final class JsonValueUtils {
@@ -26,8 +30,25 @@ public final class JsonValueUtils {
     /**
      * Returns the specified String value, encoded for use as a URL if non-empty, or null 
      */
-    public static String GetNonEmptyURLEncodedString(String value)
+    public static String GetNonEmptyURLEscapedString(String value)
     {
         return Utility.isNullOrEmpty(value)? null: BaseUtil.encodeUrl(value);
+    }
+    
+    /**
+     * Returns a copy of the specified link list with its entries URL-escaped and blanks transformed into nulls.
+     */
+    public static ArrayList<Link> GetNonEmptyLinkList(List<Link> links)
+    {
+        ArrayList<Link> vtr;
+        
+        if ((links == null) || (links.size() <= 0)) return null;
+        
+        vtr = new ArrayList<Link>();
+        for (Link l: links)
+            vtr.add(new Link(BaseUtil.encodeUrl(l.getHref()), 
+                             JsonValueUtils.GetNonEmptyString(l.getText())));
+
+        return vtr;
     }
 }

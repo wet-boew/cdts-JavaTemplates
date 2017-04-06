@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.LanguageLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
@@ -20,6 +21,7 @@ import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
+import goc.webtemplate.component.jsonentities.AppTop;
 
 /**
  * This is the base class that will be shared with either the JSF 
@@ -111,7 +113,8 @@ public abstract class BaseComponent {
 	protected String subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
 	protected boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
 	protected boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
-	protected String cdnLocalPath = null; //see getRenderLocalPath
+	protected String cdnLocalPathRender = null; //see getRenderLocalPath
+	protected String cdnLocalPath = null;
 	protected String headerTitle = "";
 	protected String applicationTitleText = "";
 	protected String applicationTitleUrl = "";
@@ -584,19 +587,103 @@ public abstract class BaseComponent {
     }
     
     /**
+     * NOTE: This method assumes the instance variable values are already defined.
+     */
+    private void checkIfBothShowSignInAndOutAreSet()
+    {
+        if (this.showSignInLink && this.showSignOutLink)
+        {
+            throw new java.lang.IllegalStateException("Both showSignInLink and showSignOutLink must not be enabled at the same time.");
+        }
+    }
+    
+    /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
      * as parameter for the "appFooter"
      */
     public String getRenderAppFooter()
     {
-        /*AppFooter   appFooter;
+        AppFooter               appFooter;
+        ArrayList<FooterLink>   tmpFooterLinks = null;
+        
+        //TODO: The "setXXX" calls are to allow implementaters to set/override the value. This should be revised in favor of a single "initialize" method.
+        this.setTermsConditionsLinkUrl();
+        this.setPrivacyLinkUrl();
+        this.setContactLinks();
+        this.setCustomFooterLinks();
+        
+        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0))
+        {
+            tmpFooterLinks = new ArrayList<FooterLink>();
+            for (FooterLink fl: this.customFooterLinks)
+                tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
+                                   JsonValueUtils.GetNonEmptyString(fl.getText()), 
+                                   fl.getNewWindow()));
+        }
         
         appFooter = new AppFooter(
                         this.getCdnEnvironmentParsed(),
                         JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
-                        
-                );*/
-        return null; //TODO: COMPLETE
+                        JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                        this.getShowGlobalNav(),
+                        tmpFooterLinks,
+                        JsonValueUtils.GetNonEmptyLinkList(this.contactLinks),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.privacyLinkUrl),
+                        this.getShowFeature()                        
+                );
+        
+        return gson.toJson(appFooter);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appTop"
+     */
+    public String getRenderAppTop()
+    {
+        AppTop                  appTop;
+        ArrayList<Breadcrumb>   tmpBreadcrumbs = null;
+        
+        //TODO: The "setXXX" calls are to allow implementaters to set/override the value. This should be revised in favor of a single "initialize" method. (will also impact the checkIfBothSignInOutareSet call below)
+        this.setApplicationTitleText();
+        this.setCustomSiteMenuUrl();
+        this.setShowSearch();
+        this.setBreadcrumbsList();
+        this.setShowPreContent();
+
+        if ((this.breadCrumbsList != null) && (this.breadCrumbsList.size() > 0))
+        {
+            tmpBreadcrumbs = new ArrayList<Breadcrumb>();
+            for (Breadcrumb bc: this.breadCrumbsList)
+            {
+                tmpBreadcrumbs.add(new Breadcrumb(
+                                        BaseUtil.encodeUrl(bc.getHref()), 
+                                        JsonValueUtils.GetNonEmptyString(bc.getTitle()), 
+                                        JsonValueUtils.GetNonEmptyString(bc.getAcronym())) );                
+            }
+        }
+        
+        appTop = new AppTop(
+                    this.getCdnEnvironmentParsed(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitleText),
+                    JsonValueUtils.GetNonEmptyURLEscapedString(this.customSiteMenuUrl),
+                    this.buildLanguageLinkList(),
+                    this.getShowSiteMenu(),
+                    this.getShowSecureIcon(),
+                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
+                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.showSearch,
+                    tmpBreadcrumbs,
+                    this.showPreContent
+                );
+
+        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
+        this.checkIfBothShowSignInAndOutAreSet();
+        
+        return gson.toJson(appTop);
     }
     
     /**
@@ -671,6 +758,32 @@ public abstract class BaseComponent {
     	} else {
     		return "";
     	}
+    }
+    
+    private ArrayList<LanguageLink> buildLanguageLinkList()
+    {
+        ArrayList<LanguageLink> vtr;
+        
+        if (!this.getShowLanguageLink()) return null;
+        
+        vtr = new ArrayList<LanguageLink>();
+        vtr.add(new LanguageLink(BaseUtil.encodeUrl(this.getLanguageLinkUrl()),
+                                this.getLanguageLinkLang(),
+                                this.getLanguageLinkText()));
+        
+        return vtr;
+    }
+    
+    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
+    {
+        ArrayList<Link> vtr;
+        
+        if ((!showLink) || Utility.isNullOrEmpty(href)) return null;
+        
+        vtr = new ArrayList<Link>();
+        vtr.add(new Link(BaseUtil.encodeUrl(href), null));
+        
+        return vtr;
     }
     
     /**
@@ -795,26 +908,62 @@ public abstract class BaseComponent {
      * @return Either "localPath: "...value/..."" or "", this is used strictly by the various master template page.
      */
     public String getRenderLocalPath() {
-    	if (this.cdnLocalPath == null)
+    	if (this.cdnLocalPathRender == null)
     	{
-    		this.cdnLocalPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
-    		if (!Utility.isNullOrEmpty(this.cdnLocalPath))
+    	    String tmpPath = this.getLocalPath();
+    	    if (!Utility.isNullOrEmpty(tmpPath))
+    	    {
+                this.cdnLocalPathRender = "localPath: \"" + tmpPath + "\",";
+    	    }
+            else
+            {
+                this.cdnLocalPathRender = "";
+            }
+    	    
+    		this.cdnLocalPathRender = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+    		if (!Utility.isNullOrEmpty(this.cdnLocalPathRender))
     		{
     			String templateVersion = this.getTemplateVersion();
     			if (templateVersion == null) templateVersion = "";
     			
-    			//BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(cdnUrl))
-				this.cdnLocalPath = "localPath: \"" + 
-										BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(this.cdnLocalPath, this.getTheme(), templateVersion))) + 
+				this.cdnLocalPathRender = "localPath: \"" + 
+										BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(this.cdnLocalPathRender, this.getTheme(), templateVersion))) + 
 									"\",";
     		}
     		else
     		{
-    			this.cdnLocalPath = "";
+    			this.cdnLocalPathRender = "";
     		}
     	}
     	
-    	return this.cdnLocalPath;    			
+    	return this.cdnLocalPathRender;    			
+    }
+    
+    /**
+     * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
+     */
+    public String getLocalPath()
+    {
+        String  tmpPath;
+        String  templateVersion;
+        
+        if (this.cdnLocalPath == null)
+        {
+            tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            if (!Utility.isNullOrEmpty(tmpPath))
+            {
+                templateVersion = this.getTemplateVersion();
+                if (templateVersion == null) templateVersion = "";
+                
+                this.cdnLocalPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(tmpPath, this.getTheme(), templateVersion)));
+            }
+            else
+            {
+                this.cdnLocalPath = "";
+            }
+        }
+        
+        return this.cdnLocalPath;
     }
     
     /**

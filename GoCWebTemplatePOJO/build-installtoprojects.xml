@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="package" name="GoCWebTemplatePOJO">
+    <property environment="env"/>
+	
+	<property name="weblogic.home" value="c:/lup/itrds/wlserver-12.1.3-j7" />
+	<property name="weblibs.dir" value="../GoCWebTemplateSampleJSP/WebContent/WEB-INF/lib" />
+	
+	<property name="package.targetdir" value="c:/temp" />
+	<property name="compile.targetdir" value="./bin" />
+	
+	<property name="jar-fileName" value="goc.webtemplate.pojo.jar" />
+	
+	<property name="debug.enabled" value="false" />
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+
+	
+	<path id="EAR Libraries.libraryclasspath"/>
+	
+    <path id="WebLogic System Libraries.libraryclasspath">
+        <pathelement location="${weblogic.home}/wlserver/server/lib/api.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/glassfish.jstl_1.0.0.0_1-2-2-0.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.annotation_1.2.0.0_1-1.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.ejb_3.3.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.enterprise.deploy_1.4.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.enterprise.inject_1.2.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.interceptor_1.3.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.jdo_2.0.4.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.jms_1.1.4.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/glassfish.jsf_2.0.0.0_2-1-20.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.jsp_4.0.0.0_2-2.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.mail_2.0.0.0_1-4-4.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.management.j2ee_1.2.0.0.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.persistence_2.0.0.0_2-0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.resource_1.7.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.security.auth.message_2.2.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.security.jacc_1.2.0.0_1-1.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.servlet_2.2.0.0_3-0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.transaction_2.2.0.0_1-1.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.validation_1.2.0.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.xml.bind_1.0.0.0_2-2-3.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.xml.registry_1.2.0.0_1-0-4.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/jaxrpc-api-1.1.jar"/>
+        <pathelement location="${weblogic.home}/oracle_common/modules/javax.xml.ws_1.0.0.0_2-2.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.websocket_1.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/javax.json_1.0.0.0_1-0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/server/lib/wls-api.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/features/weblogic.server.merged.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.utils_2.3.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.diagnostics.instrumentor.config_3.1.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.redef.binding_3.1.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.oracle.core.coherence.app.descriptor.binding_1.1.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.oracle.core.coherence.descriptor.binding_4.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.diagnostics.accessor.binding_4.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/monfox.dsnmp.agent_1.3.0.0_4-7-30.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.datasource6.binding_2.3.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.descriptor.application.binding_3.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.descriptor.j2ee.binding_3.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.descriptor.settable.binding_3.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.descriptor.wl.binding_4.0.0.0.jar"/>
+        <pathelement location="${weblogic.home}/wlserver/modules/com.bea.core.management.core.binding_4.1.0.0.jar"/>
+    </path>
+    <path id="WEBDEPS.userclasspath">
+        <pathelement location="${weblibs.dir}/commons-beanutils-1.8.0.jar"/>
+        <pathelement location="${weblibs.dir}/commons-digester-2.0.jar"/>
+        <pathelement location="${weblibs.dir}/commons-fileupload-1.3.2.jar"/>
+        <pathelement location="${weblibs.dir}/commons-io-2.2.jar"/>
+        <pathelement location="${weblibs.dir}/commons-lang-2.4.jar"/>
+        <pathelement location="${weblibs.dir}/commons-lang3-3.2.jar"/>
+        <pathelement location="${weblibs.dir}/commons-logging-1.1.3.jar"/>
+        <pathelement location="${weblibs.dir}/commons-logging-api-1.1.jar"/>
+        <pathelement location="${weblibs.dir}/commons-validator-1.3.1.jar"/>
+        <pathelement location="${weblibs.dir}/freemarker-2.3.22.jar"/>
+        <pathelement location="${weblibs.dir}/glassfish.jstl_1.2.0.1.jar"/>
+        <pathelement location="${weblibs.dir}/goc.webtemplate.pojo.jar"/>
+        <pathelement location="${weblibs.dir}/javassist-3.11.0.GA.jar"/>
+        <pathelement location="${weblibs.dir}/ognl-3.0.19.jar"/>
+        <pathelement location="${weblibs.dir}/slf4j-api-1.7.24.jar"/>
+        <pathelement location="${weblibs.dir}/slf4j-simple-1.7.24.jar"/>
+        <pathelement location="${weblibs.dir}/struts2-core-2.3.32.jar"/>
+        <pathelement location="${weblibs.dir}/struts2-tiles-plugin-2.3.32.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-api-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-compat-3.0.1.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-core-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-el-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-freemarker-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-jsp-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-ognl-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-servlet-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/tiles-template-2.2.2.jar"/>
+        <pathelement location="${weblibs.dir}/xwork-core-2.3.32.jar"/>
+        <pathelement location="${weblibs.dir}/gson-2.8.0.jar"/>
+    </path>
+    <path id="GoCWebTemplatePOJO.classpath">
+        <pathelement location="${compile.targetdir}"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="WebLogic System Libraries.libraryclasspath"/>
+        <path refid="WEBDEPS.userclasspath"/>
+    </path>
+
+	<target name="init">
+        <mkdir dir="${compile.targetdir}"/>
+        <copy includeemptydirs="false" todir="${compile.targetdir}">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="${compile.targetdir}"/>
+    </target>
+	
+    <target depends="clean" name="cleanall"/>
+    <target depends="clean,build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+	
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="${debug.enabled}" debuglevel="${debuglevel}" destdir="${compile.targetdir}" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="GoCWebTemplatePOJO.classpath"/>
+        </javac>
+    </target>	
+	
+	<target depends="build" name="package">
+        <jar destfile="${package.targetdir}/${jar-fileName}">
+            <fileset dir="${compile.targetdir}" />
+        </jar>
+	</target>
+	<!-- TODO: Add manifest Jar to temp dir and copy to projects -->
+</project>

@@ -15,7 +15,7 @@ import goc.webtemplate.Link;
 public class AppFooter implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String              cdnEnvVar; //cdnEnvironment;
+    private String              cdnEnv; 
     private String              subTheme;
     private String              localPath;
     private boolean             globalNav;
@@ -29,10 +29,10 @@ public class AppFooter implements Serializable {
     {
     }
 
-    public AppFooter(String cdnEnvVar, String subTheme, String localPath, boolean globalNav,
+    public AppFooter(String cdnEnv, String subTheme, String localPath, boolean globalNav,
             List<FooterLink> footerSections, List<Link> contactLinks, String termsLink, String privacyLink,
             boolean showFeatures) {
-        this.cdnEnvVar = cdnEnvVar;
+        this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
         this.globalNav = globalNav;
@@ -43,12 +43,12 @@ public class AppFooter implements Serializable {
         this.showFeatures = showFeatures;
     }
 
-    public String getCdnEnvVar() {
-        return cdnEnvVar;
+    public String getCdnEnv() {
+        return cdnEnv;
     }
 
-    public void setCdnEnvVar(String cdnEnvVar) {
-        this.cdnEnvVar = cdnEnvVar;
+    public void setCdnEnv(String cdnEnv) {
+        this.cdnEnv = cdnEnv;
     }
 
     public String getSubTheme() {

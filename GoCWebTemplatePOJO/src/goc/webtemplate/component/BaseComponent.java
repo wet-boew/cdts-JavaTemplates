@@ -347,7 +347,7 @@ public abstract class BaseComponent {
 		if (this.headerTitle == null) this.headerTitle = "";
 		
 		if (this.getTheme().toLowerCase().equals("gcweb") &&  //NOTE: Hardcoding, should this be a new "titleSuffix" property?
-            this.headerTitle.endsWith(" - Canada.ca") )		    
+            !this.headerTitle.endsWith(" - Canada.ca") )		    
 		{
 		    return StringEscapeUtils.escapeHtml4(this.headerTitle + " - Canada.ca");
 		}
@@ -593,6 +593,7 @@ public abstract class BaseComponent {
     {
         if (this.showSignInLink && this.showSignOutLink)
         {
+            System.err.println(this.getClass().getName() + ": ERROR: Both showSignInLink and showSignOutLink must not be enabled at the same time.");
             throw new java.lang.IllegalStateException("Both showSignInLink and showSignOutLink must not be enabled at the same time.");
         }
     }
@@ -886,7 +887,7 @@ public abstract class BaseComponent {
         {
             sb.append("showShare: false,");
         }
-	        
+
 		return sb.toString();
     }
     
@@ -949,7 +950,14 @@ public abstract class BaseComponent {
         
         if (this.cdnLocalPath == null)
         {
-            tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            try
+            {
+                tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            }
+            catch (java.util.MissingResourceException ex)
+            {
+                tmpPath = null;
+            }
             if (!Utility.isNullOrEmpty(tmpPath))
             {
                 templateVersion = this.getTemplateVersion();

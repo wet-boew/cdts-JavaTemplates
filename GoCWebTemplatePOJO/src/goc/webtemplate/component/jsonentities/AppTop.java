@@ -16,7 +16,7 @@ import goc.webtemplate.Link;
 public class AppTop implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private String              cdnEnvVar; //cdnEnvironment;
+    private String              cdnEnv;
     private String              subTheme;
     private String              localPath;
     private String              appName;
@@ -42,10 +42,10 @@ public class AppTop implements Serializable {
     {
     }
 
-    public AppTop(String cdnEnvVar, String subTheme, String localPath, String appName, String menuPath,
+    public AppTop(String cdnEnv, String subTheme, String localPath, String appName, String menuPath,
             List<LanguageLink> lngLinks, boolean siteMenu, boolean secure, List<Link> signIn, List<Link> signOut,
             boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent) {
-        this.cdnEnvVar = cdnEnvVar;
+        this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
         this.appName = appName;
@@ -60,12 +60,12 @@ public class AppTop implements Serializable {
         this.showPreContent = showPreContent;
     }
 
-    public String getCdnEnvVar() {
-        return cdnEnvVar;
+    public String getCdnEnv() {
+        return cdnEnv;
     }
 
-    public void setCdnEnvVar(String cdnEnvVar) {
-        this.cdnEnvVar = cdnEnvVar;
+    public void setCdnEnv(String cdnEnv) {
+        this.cdnEnv = cdnEnv;
     }
 
     public String getSubTheme() {

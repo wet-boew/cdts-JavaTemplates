@@ -37,6 +37,7 @@
 		<action name="nestedmasterpagesample"><result type="tiles">nestedMasterPageSample</result></action>
 		<action name="sessiontimeoutsample"><result type="tiles">sessionTimeoutSample</result></action>
 		<action name="transactionalsample"><result type="tiles">transactionalSample</result></action>
+        <action name="applicationsample"><result type="tiles">applicationSample</result></action>
 		<!--  ==============================================================  -->
 	</package>
 </struts>

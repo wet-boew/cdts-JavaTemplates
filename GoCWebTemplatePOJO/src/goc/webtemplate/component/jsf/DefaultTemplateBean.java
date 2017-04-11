@@ -46,13 +46,29 @@ public class DefaultTemplateBean extends BaseBean {
 	
 	@Override
 	public void setShowFeature() {}
+
+	@Override
+	public void setContactLinkUrl() {}
 	
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl.  WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #setContactLinkUrl()
+     */
+    @Deprecated
 	@Override
 	public void setContactLinks() {}
 	
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
 	@Override
 	public void setNewsLinks() {}
 	
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
 	@Override
 	public void setAboutLinks() {}
 	

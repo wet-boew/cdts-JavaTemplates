@@ -12,40 +12,14 @@
 &lt;/s:bean&gt;
 	</pre>
 </div>
-<p>All categories are based on the same logic which is a collection of <code class="wb-prettify">"goc.webtemplate.Link"</code> and are set programmatically by populating the <code class="wb-prettify">"contactLinks, newsLinks and/or aboutLinks"</code> collections of the Web Template Master Page.</p>
-<p>The collections can be populated via overriding the following corresponding method in your custom bean class:</p>
-<ul>
-	<li><code class="wb-prettify">setContactLinks</code></li>
-	<li><code class="wb-prettify">setAboutLinks</code></li>
-	<li><code class="wb-prettify">setNewsLinks</code></li>
-</ul>
-<p>The <code class="wb-prettify">"Link"</code> class has 2 properties</p>
-<ul>
-    <li><code class="wb-prettify">"href"</code>: the url of the link.</li>
-    <li><code class="wb-prettify">"text"</code>: the text of the link that is displayed</li>
-</ul>
+<h2>Setting the Contact Us link</h2>
+<p>The "Contact Us" link at the bottom of the page can be customized by populating the <code class="wb-prettify">contactLinkUrl</code> variable:</p>
 <div class="wb-prettify all-pre lang-vb linenums">
     <pre>
 @Override
-public void setAboutLinks() { 
-	// About Links
-	this.aboutLinks.add(new Link("https://www.facebook.com", "Facebook"));
-	this.aboutLinks.add(new Link("http://www.lapresse.ca/", "LaPresse"));
-}
-
-@Override
-public void setContactLinks() { 
-	// Contact Links
-	this.contactLinks.add(new Link("http://travel.gc.ca/", "Travel"));
-	this.contactLinks.add(new Link("http://healthycanadians.gc.ca/index-eng.php", "Health"));
-	this.contactLinks.add(new Link("http://jobs-emplois.gc.ca/index-eng.htm", "Jobs"));
-}
-
-@Override
-public void setNewsLinks() { 
-	// News Links
-	this.newsLinks.add(new Link("http://www.cbc.ca/news/canada", "CBC"));
-	this.newsLinks.add(new Link("http://www.cnn.com/", "CNN"));
+public void setContactLinkUrl()
+{
+    this.contactLinkUrl = "http://travel.gc.ca/";
 }
     </pre>
 </div>		

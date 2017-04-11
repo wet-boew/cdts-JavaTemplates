@@ -77,8 +77,22 @@ public abstract class BaseComponent {
     public abstract void setShowSharePageLink();
     public abstract void setSharePageMediaSites();
     public abstract void setShowFeature();
+    public abstract void setContactLinkUrl();
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl.  WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #setContactLinkUrl()
+     */
+    @Deprecated
     public abstract void setContactLinks();
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setNewsLinks();
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setAboutLinks();
     public abstract void setHtmlHeaderElements();
     public abstract void setHtmlBodyElements();
@@ -137,8 +151,22 @@ public abstract class BaseComponent {
     protected ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
     protected boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     protected ArrayList<Breadcrumb> breadCrumbsList = new ArrayList<Breadcrumb>();
+    protected String contactLinkUrl = null;
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl. WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #contactLinkUrl()
+     */
+    @Deprecated
     protected ArrayList<Link> contactLinks = new ArrayList<Link>();
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected ArrayList<Link> newsLinks = new ArrayList<Link>();
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected ArrayList<Link> aboutLinks = new ArrayList<Link>();
     protected ArrayList<String> htmlHeaderElements = new ArrayList<String>();
     protected ArrayList<String> htmlBodyElements = new ArrayList<String>();
@@ -628,7 +656,7 @@ public abstract class BaseComponent {
                         JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
                         this.getShowGlobalNav(),
                         tmpFooterLinks,
-                        JsonValueUtils.GetNonEmptyLinkList(this.contactLinks),
+                        JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
                         JsonValueUtils.GetNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.GetNonEmptyURLEscapedString(this.privacyLinkUrl),
                         this.getShowFeature()                        
@@ -824,6 +852,18 @@ public abstract class BaseComponent {
         return sb.toString();
     }
     
+    private ArrayList<Link> getContactList()
+    {
+        this.setContactLinks();
+        this.setContactLinkUrl();
+        
+        if (this.contactLinkUrl == null) return this.contactLinks; //String value takes precedence/only use list if no string value specified
+        
+        ArrayList<Link> vtr = new ArrayList<Link>();
+        vtr.add(new Link(this.contactLinkUrl, ""));
+        return vtr;
+    }
+    
     /**
      * Builds a string with the format required by the closure templates, to represent a list of links for :
      * 	- Contact Us
@@ -834,15 +874,15 @@ public abstract class BaseComponent {
      * @return string in the format expected by the Closure Templates te generate the list of links
      */
     public String getRenderLinksList() {
-		this.setContactLinks();
-		this.setNewsLinks();
-		this.setAboutLinks();
+		//this.setContactLinks();
+		//this.setNewsLinks();
+		//this.setAboutLinks();
 		
 		StringBuilder sb = new StringBuilder();
 
-        this.buildLinksJSONString(sb, "contactLinks", this.contactLinks);
-        this.buildLinksJSONString(sb, "newsLinks", this.newsLinks);
-        this.buildLinksJSONString(sb, "aboutLinks", this.aboutLinks);
+        this.buildLinksJSONString(sb, "contactLinks", this.getContactList());
+        //this.buildLinksJSONString(sb, "newsLinks", this.newsLinks);
+        //this.buildLinksJSONString(sb, "aboutLinks", this.aboutLinks);
         
         return sb.toString();
     }

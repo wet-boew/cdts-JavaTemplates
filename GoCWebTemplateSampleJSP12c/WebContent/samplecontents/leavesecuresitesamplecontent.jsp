@@ -4,10 +4,10 @@
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.LeaveSecureSiteSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
-<p>The custom bean name must be <strong>clientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
+<p>The custom bean name must be <strong>goctemplateclientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
 <div class="wb-prettify all-pre lang-vb linenums">
 	<pre>
-&lt;s:bean name="goc.webtemplate.jsp.samplebeans.LeaveSecureSiteSampleBean" var="clientbean"&gt;
+&lt;s:bean name="goc.webtemplate.jsp.samplebeans.LeaveSecureSiteSampleBean" var="goctemplateclientbean"&gt;
 	&lt;s:param name="request" value="#request.servletrequest" /&gt;
 &lt;/s:bean&gt;
 	</pre>
@@ -115,5 +115,7 @@ public class LeaveSecureSiteAction {
         <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
         <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
         <li><a href="transactionalsample.action">Transactional Page</a></li>
+        <li><a href="applicationsample.action">Application Page</a></li>
+        <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
     </ul>
 </div>

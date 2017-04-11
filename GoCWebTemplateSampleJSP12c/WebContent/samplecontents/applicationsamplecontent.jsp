@@ -4,10 +4,10 @@
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.ApplicationSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
-<p>The custom bean name must be <strong>clientbean</strong> and a <strong>request</strong> parameter must be also be present as follow:</p>
+<p>The custom bean name must be <strong>goctemplateclientbean</strong> and a <strong>request</strong> parameter must be also be present as follow:</p>
 <div class="wb-prettify all-pre lang-vb linenums">
 	<pre>
-&lt;s:bean name="goc.webtemplate.jsp.samplebeans.ApplicationSampleBean" var="clientbean"&gt;
+&lt;s:bean name="goc.webtemplate.jsp.samplebeans.ApplicationSampleBean" var="goctemplateclientbean"&gt;
 	&lt;s:param name="request" value="#request.servletrequest" /&gt;
 &lt;/s:bean&gt;
 	</pre>

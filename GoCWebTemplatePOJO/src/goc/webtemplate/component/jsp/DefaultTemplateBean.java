@@ -164,4 +164,10 @@ public class DefaultTemplateBean extends BaseBean {
     
     @Override
     public void setCustomFooterLinks() {}
+    
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    @Override
+    public void setCustomSearch() {}
 }

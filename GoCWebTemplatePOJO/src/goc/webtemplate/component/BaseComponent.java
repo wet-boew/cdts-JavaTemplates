@@ -112,6 +112,7 @@ public abstract class BaseComponent {
     public abstract void setShowSignInLink();
     public abstract void setShowSignOutLink();
     public abstract void setCustomFooterLinks();
+    public abstract void setCustomSearch();
 
     public abstract java.util.ResourceBundle getResourceBundle();
 	public abstract String getResourceBundleString(String resourceBundleName, String resourceBundleKey) throws MissingResourceException;
@@ -181,6 +182,10 @@ public abstract class BaseComponent {
     protected boolean showSignInLink = false;
     protected boolean showSignOutLink = false;
     protected ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    protected String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
     
     protected boolean sessionTimeoutEnabled = Boolean.parseBoolean(this.getResourceBundleString("cdn", "session.timeout.enabled"));
     protected SessionTimeout sessionTimeoutConfigurations = null;
@@ -706,7 +711,8 @@ public abstract class BaseComponent {
                     this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
                     this.showSearch,
                     tmpBreadcrumbs,
-                    this.showPreContent
+                    this.showPreContent,
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch())
                 );
 
         //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
@@ -1302,6 +1308,14 @@ public abstract class BaseComponent {
 	public ArrayList<FooterLink> getCustomFooterLinks() {
 	    this.setCustomFooterLinks();
 	    return this.customFooterLinks;
+	}
+	
+	/**
+	 * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+	 */
+	public String getCustomSearch() {
+	    this.setCustomSearch();
+	    return this.customSearch;
 	}
 	
 	/**

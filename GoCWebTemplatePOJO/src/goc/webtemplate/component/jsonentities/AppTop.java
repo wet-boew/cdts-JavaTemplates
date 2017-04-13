@@ -37,6 +37,7 @@ public class AppTop implements Serializable {
     private boolean             search;
     private List<Breadcrumb>    breadcrumbs;
     private boolean             showPreContent;
+    private String              customSearch;
 
     public AppTop()
     {
@@ -44,7 +45,7 @@ public class AppTop implements Serializable {
 
     public AppTop(String cdnEnv, String subTheme, String localPath, String appName, String menuPath,
             List<LanguageLink> lngLinks, boolean siteMenu, boolean secure, List<Link> signIn, List<Link> signOut,
-            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent) {
+            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -58,6 +59,7 @@ public class AppTop implements Serializable {
         this.search = search;
         this.breadcrumbs = breadcrumbs;
         this.showPreContent = showPreContent;
+        this.customSearch = customSearch;
     }
 
     public String getCdnEnv() {
@@ -162,5 +164,13 @@ public class AppTop implements Serializable {
 
     public void setShowPreContent(boolean showPreContent) {
         this.showPreContent = showPreContent;
+    }
+    
+    public String getCustomSearch() {
+        return this.customSearch;
+    }
+    
+    public void setCustomSearch(String customSearch) {
+        this.customSearch = customSearch;
     }
 }

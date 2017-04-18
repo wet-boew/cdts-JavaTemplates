@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="package" name="JavaWebTemplate-Release">
+    <property environment="env"/>
+	
+	<property name="package.targetdir" value="c:/temp/jwt-release" />
+
+    <macrodef name="create-archive">
+        <attribute name="project-name"/>
+        <sequential>
+            <echo message="Creating archive for [@{project-name}]" />
+
+            <zip destfile="${package.targetdir}/@{project-name}.zip" defaultexcludes="yes">
+            	<fileset dir="..">
+            		<include name="@{project-name}/**" />
+            		<exclude name="@{project-name}/build/classes/**" />
+            	</fileset>
+        	</zip>
+        </sequential>
+    </macrodef>
+	
+	
+	<target name="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <mkdir dir="${package.targetdir}"/>
+    </target>
+    <target name="clean">
+        <delete dir="${package.targetdir}"/>
+    </target>
+
+	<target depends="clean,init" name="package">
+	    <create-archive project-name="GoCWebTemplateSampleJSF20" />
+        <create-archive project-name="GoCWebTemplateSampleJSF2x" />
+        <create-archive project-name="GoCWebTemplateSampleJSP" />
+        <create-archive project-name="GoCWebTemplateSampleJSP12c" />
+		
+		<echo message="Done.  Release packages available in ${package.targetdir}..." />
+	</target>
+	
+	
+</project>

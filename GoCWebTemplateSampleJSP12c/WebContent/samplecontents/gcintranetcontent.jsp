@@ -75,6 +75,7 @@ public void setApplicationTitleUrl() {
         <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
         <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
         <li><a href="transactionalsample.action">Transactional Page</a></li>
+        <li><a href="applicationsample.action">Application Page</a></li>
         <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
     </ul>
 </div>

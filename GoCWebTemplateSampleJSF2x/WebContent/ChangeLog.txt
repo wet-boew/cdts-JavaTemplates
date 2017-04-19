@@ -1,4 +1,35 @@
 ************************************************************************************************************
+4.0.24.1 - 2017-04-18
+    -Implementation of WET/CDTS v4.0.24
+    -Updated static fallback files
+    -The value '- Canada.ca' is now automatically appended to the headerTitle when the theme is 'gcweb', as requested by Treasury Board.
+    -Introduction of JSON serialization library 'gson-2.8.0.jar' as a dependency in WEB-INF/lib, now required for internal generation of JSON object values passed to closure templates.
+    -BaseComponent.newsLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
+    -BaseComponent.aboutLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
+    -BaseComponent.contactLinks and its associated methods have been marked deprecated. They are replaced by contactLinkUrl. Will be removed in a futrue release.
+    -Added new master pages for the Application Template:
+        -/templates/application-master-template.xhtml
+        -/templates/application-leftmenu-master-template.xhtml
+        -New sample page: /samples/ApplicationSample.xhtml
+    -Added new Application Template specific configuration proeprties (cdn.properties) values:
+        -goc.webtemplate.showglobalnav - Override the default footer and display the global navigation menu for Canada.ca
+        -goc.webtemplate.showsitemenu - Hide or show the site menu
+        -goc.webtemplate.customsitemenuurl - Custom Menu used to override the CDTS Menu Config value can be pointed to a dynamic page
+        -goc.webtemplate.signinlinkurl - Link used by the sign-in button on the menu
+        -goc.webtemplate.signoutlinkurl - Link used by the sign-out button on the menu
+    -Added new Application Template configuration variables in BaseComponent, with associated override methods:
+        -showGlobalNav - Override the default footer and display the global navigation menu for Canada.ca
+        -showSiteMenu - Hide or show the site menu
+        -customSiteMenuUrl - Custom Menu used to override the CDTS Menu 
+        -signInLinkUrl - Link used by the sign-in button on the menu
+        -signOutLinkUrl - Link used by the sign-out button on the menu
+        -showSecureIcon - Whether or not to display the lock icon beside the application name 
+        -showSignInLink - Show the sign in link on the page.cannot be true when ShowSignOutLink is true
+        -showSignOutLink - Show the sign out link on the page. cannot be true when ShowSignInLink is true
+        -customFooterLinks - Will create a custom set of columns for your footer links
+    -Bug fixes
+
+************************************************************************************************************
 4.0.23.2 - 2017-03-14
     -Implementation of "_localpath" environment property in cdn.properties to allow for CDTS files hosted locally for development and/or load testing.
     -Bug fixes

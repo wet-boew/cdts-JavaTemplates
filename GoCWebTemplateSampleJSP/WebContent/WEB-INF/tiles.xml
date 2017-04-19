@@ -32,6 +32,18 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="body" value="" />
 	</definition>
+    
+    <definition name="gocWebTemplateApplicationLayout" template="/templates/application-mastertemplate.jsp">
+        <put-attribute name="beaninit" value="/templates/beaninit.jsp" />
+        <put-attribute name="title" value="" />
+        <put-attribute name="body" value="" />
+    </definition>
+    
+    <definition name="gocWebTemplateApplicationLeftMenuLayout" template="/templates/application-leftmenu-mastertemplate.jsp">
+        <put-attribute name="beaninit" value="/templates/beaninit.jsp" />
+        <put-attribute name="title" value="" />
+        <put-attribute name="body" value="" />
+    </definition>
 	<!-- ===================================================================== -->
 	
 	
@@ -111,5 +123,10 @@
 		<put-attribute name="beaninit" value="/samplebeans/transactionalsamplebean.jsp" />
 		<put-attribute name="body" value="/samplecontents/transactionalsamplecontent.jsp" />
 	</definition>
+    
+    <definition name="applicationSample" extends="gocWebTemplateApplicationLayout">
+        <put-attribute name="beaninit" value="/samplebeans/applicationsamplebean.jsp" />
+        <put-attribute name="body" value="/samplecontents/applicationsamplecontent.jsp" />
+    </definition>
 	<!--  ========================================================= -->
 </tiles-definitions>

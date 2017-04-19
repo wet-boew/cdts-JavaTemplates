@@ -77,7 +77,7 @@
             <!-- end main content -->
             <div id="def-preFooter">
                 <!-- Write closure fall-back static file -->
-                <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'prefooter-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
+                <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'preFooter-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         	</div>
             <!-- Write closure template -->
             <script type="text/javascript">

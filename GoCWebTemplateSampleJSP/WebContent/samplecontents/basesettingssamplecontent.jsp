@@ -4,10 +4,10 @@
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.BaseSettingsSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
-<p>The custom bean name must be <strong>clientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
+<p>The custom bean name must be <strong>goctemplateclientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
 <div class="wb-prettify all-pre lang-vb linenums">
 	<pre>
-&lt;s:bean name="goc.webtemplate.jsp.samplebeans.BaseSettingsSampleBean" var="clientbean"&gt;
+&lt;s:bean name="goc.webtemplate.jsp.samplebeans.BaseSettingsSampleBean" var="goctemplateclientbean"&gt;
 	&lt;s:param name="request" value="#request.servletrequest" /&gt;
 &lt;/s:bean&gt;
 	</pre>
@@ -49,6 +49,23 @@ public void setDateModified() {
 }
 	</pre>
 </div>
+<h2>Change Language Link</h2>
+<p>You can set a custom link for changing the language of your site</p>
+<p>This can be set programmatically by overriding the <code class="wb-prettify">setLanguageLinkUrl</code> method in your custom bean class.</p>
+<h2>Version Identifier</h2>
+<p>The Version Identifier is displayed near the bottom of the page. This element shares the same location as "DateModified" and only one of the two can be displayed at once. If a "DateModified" is supplied the date will take precedence over the "VersionIdentifier".</p>
+<p>Set programmatically via the <code class="wb-prettify">"VersionIdentifier"</code> property of the Web Template.</p>
+<h2>Screen Identifier</h2>
+<p>The Screen Identifier is displayed near the bottom of the page. This element serves a unique identifier for your page and can be used to help communication between users and the service desk/support team to identify the location exact location of a user in your application.</p>
+<p>Set programmatically via the <code class="wb-prettify">"ScreenIdentifier"</code> property of the Web Template.</p>
+<div class="wb-prettify all-pre lang-vb linenums">
+    <pre>
+@Override
+public void setScreenIdentifier() {
+    this.screenIdentifier = "PAGE001"; 
+}
+    </pre>
+</div>
 <div>
     <h3>Other Web Template Samples</h3>
     <ul>
@@ -65,6 +82,7 @@ public void setDateModified() {
         <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
         <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
         <li><a href="transactionalsample.action">Transactional Page</a></li>
+        <li><a href="applicationsample.action">Application Page</a></li>
         <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
     </ul>
 </div>

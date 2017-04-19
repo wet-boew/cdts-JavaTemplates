@@ -95,6 +95,11 @@
 		<managed-bean-class>goc.webtemplate.jsf.samplebeans.TransactionSample</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+    <managed-bean>
+        <managed-bean-name>applicationsamplebean</managed-bean-name>
+        <managed-bean-class>goc.webtemplate.jsf.samplebeans.ApplicationSample</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 	<managed-bean>
 		<managed-bean-name>gcintranetsamplebean</managed-bean-name>
 		<managed-bean-class>goc.webtemplate.jsf.samplebeans.IntranetSample</managed-bean-class>

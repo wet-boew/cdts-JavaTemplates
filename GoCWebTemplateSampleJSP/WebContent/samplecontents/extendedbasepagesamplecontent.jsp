@@ -44,11 +44,11 @@ public class ExtendedBasePageSampleBean extends BaseBean {
 </div>
 <h2>Steps when adding your JSP Pages</h2>
 <ul>
-    <li>include the custom bean class in the <strong>beaninit</strong> section that is made available the web template, <strong>always</strong> under the name <strong>clientbean</strong>.</li>
+    <li>include the custom bean class in the <strong>beaninit</strong> section that is made available the web template, <strong>always</strong> under the name <strong>goctemplateclientbean</strong>.</li>
 </ul>
 <div class="wb-prettify all-pre lang-vb linenums">
    	<pre>
-&lt;s:bean name="goc.webtemplate.jsp.samplebeans.ExtendedBasePageSampleBean" var="clientbean"&gt;
+&lt;s:bean name="goc.webtemplate.jsp.samplebeans.ExtendedBasePageSampleBean" var="goctemplateclientbean"&gt;
 	&lt;s:param name="request" value="#request.servletrequest" /&gt;
 &lt;/s:bean&gt;
    	</pre>
@@ -72,6 +72,7 @@ public class ExtendedBasePageSampleBean extends BaseBean {
         <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
         <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
         <li><a href="transactionalsample.action">Transactional Page</a></li>
+        <li><a href="applicationsample.action">Application Page</a></li>
         <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
     </ul>
 </div>

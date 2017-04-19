@@ -12,7 +12,7 @@
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 &lt;ui:define name="beaninit"&gt;
-	&lt;ui:param name="clientbean" value="<h:outputText value="&amp;#35;&#123;basesettingssamplebean&#125;" escape="false" />" /&gt;		
+	&lt;ui:param name="goctemplateclientbean" value="<h:outputText value="&amp;#35;&#123;basesettingssamplebean&#125;" escape="false" />" /&gt;		
 &lt;/ui:define&gt;
         	</pre>
     	</div>
@@ -53,6 +53,24 @@ public void setDateModified() {
 }
 			</pre>
     	</div>
+<h2>Change Language Link</h2>
+<p>You can set a custom link for changing the language of your site</p>
+<p>This can be set programmatically by overriding the <code class="wb-prettify">setLanguageLinkUrl</code> method in your custom bean class.</p>
+<h2>Version Identifier</h2>
+<p>The Version Identifier is displayed near the bottom of the page. This element shares the same location as "DateModified" and only one of the two can be displayed at once. If a "DateModified" is supplied the date will take precedence over the "VersionIdentifier".</p>
+<p>Set programmatically via the <code class="wb-prettify">"VersionIdentifier"</code> property of the Web Template.</p>
+<h2>Screen Identifier</h2>
+<p>The Screen Identifier is displayed near the bottom of the page. This element serves a unique identifier for your page and can be used to help communication between users and the service desk/support team to identify the location exact location of a user in your application.</p>
+<p>Set programmatically via the <code class="wb-prettify">"ScreenIdentifier"</code> property of the Web Template.</p>
+<div class="wb-prettify all-pre lang-vb linenums">
+    <pre>
+@Override
+public void setScreenIdentifier() {
+    this.screenIdentifier = "PAGE001"; 
+}
+    </pre>
+</div>
+    	
     	<div>
         	<h3>Other Web Template Samples</h3>
         	<ul>
@@ -69,6 +87,7 @@ public void setDateModified() {
 	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
 	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
 	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
+                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
 	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
 	        </ul>
 	    </div>

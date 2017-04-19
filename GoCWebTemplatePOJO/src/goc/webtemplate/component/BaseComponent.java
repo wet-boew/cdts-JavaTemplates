@@ -1,19 +1,27 @@
 package goc.webtemplate.component;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.MissingResourceException;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import com.google.gson.Gson;
+
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
+import goc.webtemplate.FooterLink;
+import goc.webtemplate.LanguageLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
+
+import goc.webtemplate.component.jsonentities.AppFooter;
+import goc.webtemplate.component.jsonentities.AppTop;
 
 /**
  * This is the base class that will be shared with either the JSF 
@@ -26,7 +34,20 @@ import goc.webtemplate.Utility;
  *
  */
 public abstract class BaseComponent {
-	// ==============================================================
+    /**
+     * Object used for JSON serialization.  (https://github.com/google/gson)
+     * 
+     * According to documentation (http://www.javadoc.io/doc/com.google.code.gson/gson/2.8.0) 
+     * and source code, Gson objects are thread-safe.
+     */
+    //NOTE: Doesn't render null values by default, which is what we want
+    //NOTE: Escapes HTML by default, which is what we want (though URLs still need to be encoded)
+    //NOTE: Indented output can be obtained by chaining a call to setPrettyPrinting()
+    private static Gson gson = new com.google.gson.GsonBuilder()
+                                        .setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.IDENTITY)
+                                        .create();
+    
+    // ==============================================================
 	// List of Public Abstracted methods that needs to be implemented
 	// ==============================================================
 	public abstract void setCDNEnvironment();
@@ -56,8 +77,22 @@ public abstract class BaseComponent {
     public abstract void setShowSharePageLink();
     public abstract void setSharePageMediaSites();
     public abstract void setShowFeature();
+    public abstract void setContactLinkUrl();
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl.  WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #setContactLinkUrl()
+     */
+    @Deprecated
     public abstract void setContactLinks();
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setNewsLinks();
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setAboutLinks();
     public abstract void setHtmlHeaderElements();
     public abstract void setHtmlBodyElements();
@@ -68,7 +103,17 @@ public abstract class BaseComponent {
     public abstract void setLeftMenuSections();
     public abstract void setPrivacyLinkUrl();
     public abstract void setTermsConditionsLinkUrl();
-    
+    public abstract void setShowGlobalNav();
+    public abstract void setShowSiteMenu();
+    public abstract void setCustomSiteMenuUrl();
+    public abstract void setSignInLinkUrl();
+    public abstract void setSignOutLinkUrl();
+    public abstract void setShowSecureIcon();
+    public abstract void setShowSignInLink();
+    public abstract void setShowSignOutLink();
+    public abstract void setCustomFooterLinks();
+    public abstract void setCustomSearch();
+
     public abstract java.util.ResourceBundle getResourceBundle();
 	public abstract String getResourceBundleString(String resourceBundleName, String resourceBundleKey) throws MissingResourceException;
 	public abstract String getTwoLetterCultureLanguage();	
@@ -83,7 +128,8 @@ public abstract class BaseComponent {
 	protected String subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
 	protected boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
 	protected boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
-	protected String cdnLocalPath = null; //see getRenderLocalPath
+	protected String cdnLocalPathRender = null; //see getRenderLocalPath
+	protected String cdnLocalPath = null;
 	protected String headerTitle = "";
 	protected String applicationTitleText = "";
 	protected String applicationTitleUrl = "";
@@ -106,13 +152,40 @@ public abstract class BaseComponent {
     protected ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
     protected boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     protected ArrayList<Breadcrumb> breadCrumbsList = new ArrayList<Breadcrumb>();
+    protected String contactLinkUrl = null;
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl. WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #contactLinkUrl()
+     */
+    @Deprecated
     protected ArrayList<Link> contactLinks = new ArrayList<Link>();
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected ArrayList<Link> newsLinks = new ArrayList<Link>();
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected ArrayList<Link> aboutLinks = new ArrayList<Link>();
     protected ArrayList<String> htmlHeaderElements = new ArrayList<String>();
     protected ArrayList<String> htmlBodyElements = new ArrayList<String>();
     protected String staticFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
     protected String contentCreatorTitle = "";
+    protected boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
+    protected boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
+    protected String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
+    protected String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
+    protected String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
+    protected boolean showSecureIcon = false;
+    protected boolean showSignInLink = false;
+    protected boolean showSignOutLink = false;
+    protected ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    protected String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
     
     protected boolean sessionTimeoutEnabled = Boolean.parseBoolean(this.getResourceBundleString("cdn", "session.timeout.enabled"));
     protected SessionTimeout sessionTimeoutConfigurations = null;
@@ -304,6 +377,14 @@ public abstract class BaseComponent {
 	 */
 	public String getHeaderTitle() {
 		this.setHeaderTitle();
+		if (this.headerTitle == null) this.headerTitle = "";
+		
+		if (this.getTheme().toLowerCase().equals("gcweb") &&  //NOTE: Hardcoding, should this be a new "titleSuffix" property?
+            !this.headerTitle.endsWith(" - Canada.ca") )		    
+		{
+		    return StringEscapeUtils.escapeHtml4(this.headerTitle + " - Canada.ca");
+		}
+		
 		return StringEscapeUtils.escapeHtml4(this.headerTitle);
 	}
 	
@@ -539,6 +620,108 @@ public abstract class BaseComponent {
     }
     
     /**
+     * NOTE: This method assumes the instance variable values are already defined.
+     */
+    private void checkIfBothShowSignInAndOutAreSet()
+    {
+        if (this.showSignInLink && this.showSignOutLink)
+        {
+            System.err.println(this.getClass().getName() + ": ERROR: Both showSignInLink and showSignOutLink must not be enabled at the same time.");
+            throw new java.lang.IllegalStateException("Both showSignInLink and showSignOutLink must not be enabled at the same time.");
+        }
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appFooter"
+     */
+    public String getRenderAppFooter()
+    {
+        AppFooter               appFooter;
+        ArrayList<FooterLink>   tmpFooterLinks = null;
+        
+        //TODO: The "setXXX" calls are to allow implementaters to set/override the value. This should be revised in favor of a single "initialize" method.
+        this.setTermsConditionsLinkUrl();
+        this.setPrivacyLinkUrl();
+        this.setContactLinks();
+        this.setCustomFooterLinks();
+        
+        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0))
+        {
+            tmpFooterLinks = new ArrayList<FooterLink>();
+            for (FooterLink fl: this.customFooterLinks)
+                tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
+                                   JsonValueUtils.GetNonEmptyString(fl.getText()), 
+                                   fl.getNewWindow()));
+        }
+        
+        appFooter = new AppFooter(
+                        this.getCdnEnvironmentParsed(),
+                        JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                        JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                        this.getShowGlobalNav(),
+                        tmpFooterLinks,
+                        JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.privacyLinkUrl),
+                        this.getShowFeature()                        
+                );
+        
+        return gson.toJson(appFooter);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appTop"
+     */
+    public String getRenderAppTop()
+    {
+        AppTop                  appTop;
+        ArrayList<Breadcrumb>   tmpBreadcrumbs = null;
+        
+        //TODO: The "setXXX" calls are to allow implementaters to set/override the value. This should be revised in favor of a single "initialize" method. (will also impact the checkIfBothSignInOutareSet call below)
+        this.setApplicationTitleText();
+        this.setCustomSiteMenuUrl();
+        this.setShowSearch();
+        this.setBreadcrumbsList();
+        this.setShowPreContent();
+
+        if ((this.breadCrumbsList != null) && (this.breadCrumbsList.size() > 0))
+        {
+            tmpBreadcrumbs = new ArrayList<Breadcrumb>();
+            for (Breadcrumb bc: this.breadCrumbsList)
+            {
+                tmpBreadcrumbs.add(new Breadcrumb(
+                                        BaseUtil.encodeUrl(bc.getHref()), 
+                                        JsonValueUtils.GetNonEmptyString(bc.getTitle()), 
+                                        JsonValueUtils.GetNonEmptyString(bc.getAcronym())) );                
+            }
+        }
+        
+        appTop = new AppTop(
+                    this.getCdnEnvironmentParsed(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitleText),
+                    JsonValueUtils.GetNonEmptyURLEscapedString(this.customSiteMenuUrl),
+                    this.buildLanguageLinkList(),
+                    this.getShowSiteMenu(),
+                    this.getShowSecureIcon(),
+                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
+                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.showSearch,
+                    tmpBreadcrumbs,
+                    this.showPreContent,
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch())
+                );
+
+        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
+        this.checkIfBothShowSignInAndOutAreSet();
+        
+        return gson.toJson(appTop);
+    }
+    
+    /**
      * Builds a string with the format required by the closure templates, to represent the Application Title 
      * information (only applicable to the GCIntranet theme).
      * 
@@ -612,6 +795,32 @@ public abstract class BaseComponent {
     	}
     }
     
+    private ArrayList<LanguageLink> buildLanguageLinkList()
+    {
+        ArrayList<LanguageLink> vtr;
+        
+        if (!this.getShowLanguageLink()) return null;
+        
+        vtr = new ArrayList<LanguageLink>();
+        vtr.add(new LanguageLink(BaseUtil.encodeUrl(this.getLanguageLinkUrl()),
+                                this.getLanguageLinkLang(),
+                                this.getLanguageLinkText()));
+        
+        return vtr;
+    }
+    
+    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
+    {
+        ArrayList<Link> vtr;
+        
+        if ((!showLink) || Utility.isNullOrEmpty(href)) return null;
+        
+        vtr = new ArrayList<Link>();
+        vtr.add(new Link(BaseUtil.encodeUrl(href), null));
+        
+        return vtr;
+    }
+    
     /**
      * Builds a string with the format required by the closure templates, to manage the leave secure site warning 
      * feature offered by the WET Template.
@@ -649,6 +858,18 @@ public abstract class BaseComponent {
         return sb.toString();
     }
     
+    private ArrayList<Link> getContactList()
+    {
+        this.setContactLinks();
+        this.setContactLinkUrl();
+        
+        if (this.contactLinkUrl == null) return this.contactLinks; //String value takes precedence/only use list if no string value specified
+        
+        ArrayList<Link> vtr = new ArrayList<Link>();
+        vtr.add(new Link(this.contactLinkUrl, ""));
+        return vtr;
+    }
+    
     /**
      * Builds a string with the format required by the closure templates, to represent a list of links for :
      * 	- Contact Us
@@ -659,15 +880,15 @@ public abstract class BaseComponent {
      * @return string in the format expected by the Closure Templates te generate the list of links
      */
     public String getRenderLinksList() {
-		this.setContactLinks();
-		this.setNewsLinks();
-		this.setAboutLinks();
+		//this.setContactLinks();
+		//this.setNewsLinks();
+		//this.setAboutLinks();
 		
 		StringBuilder sb = new StringBuilder();
 
-        this.buildLinksJSONString(sb, "contactLinks", this.contactLinks);
-        this.buildLinksJSONString(sb, "newsLinks", this.newsLinks);
-        this.buildLinksJSONString(sb, "aboutLinks", this.aboutLinks);
+        this.buildLinksJSONString(sb, "contactLinks", this.getContactList());
+        //this.buildLinksJSONString(sb, "newsLinks", this.newsLinks);
+        //this.buildLinksJSONString(sb, "aboutLinks", this.aboutLinks);
         
         return sb.toString();
     }
@@ -712,7 +933,7 @@ public abstract class BaseComponent {
         {
             sb.append("showShare: false,");
         }
-	        
+
 		return sb.toString();
     }
     
@@ -734,26 +955,69 @@ public abstract class BaseComponent {
      * @return Either "localPath: "...value/..."" or "", this is used strictly by the various master template page.
      */
     public String getRenderLocalPath() {
-    	if (this.cdnLocalPath == null)
+    	if (this.cdnLocalPathRender == null)
     	{
-    		this.cdnLocalPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
-    		if (!Utility.isNullOrEmpty(this.cdnLocalPath))
+    	    String tmpPath = this.getLocalPath();
+    	    if (!Utility.isNullOrEmpty(tmpPath))
+    	    {
+                this.cdnLocalPathRender = "localPath: \"" + tmpPath + "\",";
+    	    }
+            else
+            {
+                this.cdnLocalPathRender = "";
+            }
+    	    
+    		this.cdnLocalPathRender = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+    		if (!Utility.isNullOrEmpty(this.cdnLocalPathRender))
     		{
     			String templateVersion = this.getTemplateVersion();
     			if (templateVersion == null) templateVersion = "";
     			
-    			//BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(cdnUrl))
-				this.cdnLocalPath = "localPath: \"" + 
-										BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(this.cdnLocalPath, this.getTheme(), templateVersion))) + 
+				this.cdnLocalPathRender = "localPath: \"" + 
+										BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(this.cdnLocalPathRender, this.getTheme(), templateVersion))) + 
 									"\",";
     		}
     		else
     		{
-    			this.cdnLocalPath = "";
+    			this.cdnLocalPathRender = "";
     		}
     	}
     	
-    	return this.cdnLocalPath;    			
+    	return this.cdnLocalPathRender;    			
+    }
+    
+    /**
+     * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
+     */
+    public String getLocalPath()
+    {
+        String  tmpPath;
+        String  templateVersion;
+        
+        if (this.cdnLocalPath == null)
+        {
+            try
+            {
+                tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            }
+            catch (java.util.MissingResourceException ex)
+            {
+                tmpPath = null;
+            }
+            if (!Utility.isNullOrEmpty(tmpPath))
+            {
+                templateVersion = this.getTemplateVersion();
+                if (templateVersion == null) templateVersion = "";
+                
+                this.cdnLocalPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(tmpPath, this.getTheme(), templateVersion)));
+            }
+            else
+            {
+                this.cdnLocalPath = "";
+            }
+        }
+        
+        return this.cdnLocalPath;
     }
     
     /**
@@ -945,6 +1209,114 @@ public abstract class BaseComponent {
     	this.setStaticFallbackFilePath();
     	return StringEscapeUtils.escapeHtml4(this.staticFilePath);
     }
+
+	/**
+	 *  Determines if the Global Nav bar in the footer is to be displayed.
+     *  Set by application programmatically or in the cdn.properties
+     *  Only available in the Application Template
+	 */
+	public boolean getShowGlobalNav() {
+	    this.setShowGlobalNav();
+	    return this.showGlobalNav;
+	}
+	
+	/**
+     *  Determines if the Site Menu is to appear at the top of the page. 
+     *  If set to false only a blue band will be seen.
+     *  Set by application programmatically or in the cdn.properties
+     *  Only available in the Application Template
+     */
+	public boolean getShowSiteMenu() {
+	    this.setShowSiteMenu();
+	    return this.showSiteMenu;
+	}
+	
+	/**
+     * A custom site menu to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu)
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+	 */
+	public String getCustomSiteMenuUrl() {
+	    this.setCustomSiteMenuUrl();
+	    return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.customSiteMenuUrl));
+	}
+
+	/**
+     * The link to use for the sign in button, will only appear if getShowSignInLink() is set to true
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+     * 
+     * @see getShowSignInLink()
+	 */
+	public String getSignInLinkUrl() {
+	    this.setSignInLinkUrl();
+	    return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.signInLinkUrl));
+	}
+	
+	/**
+     * The link to use for the sign out button, will only appear if getSignOutLinkUrl() is set to true
+     * Set by application programmatically or in the cdn.properties
+     * Only available in the Application Template
+     * 
+     * @see getShowSignOutLink()
+	 */
+	public String getSignOutLinkUrl() {
+	    this.setSignOutLinkUrl();
+        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.signOutLinkUrl));	    
+	}
+	
+	/**
+     * Displays the secure icon next to the applicaiton name in the header.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSecureIcon() {
+	    this.setShowSecureIcon();
+	    return this.showSecureIcon;
+	}
+	
+	/**
+     * Displays the sign in link set.
+     * signInLinkUrl must not be null or whitespace
+     * showSignOutLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSignInLink() {
+	    this.setShowSignInLink();
+	    return this.showSignInLink;
+	}
+	
+	/**
+     * Displays the signout link set.
+     * signOutLinkUrl must not be null or whitespace
+     * showSignInLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public boolean getShowSignOutLink() {
+	    this.setShowSignOutLink();
+	    return this.showSignOutLink;
+	}
+	
+	/**
+     * Custom links if null uses standard links if not null overrides the existing footer links
+     * Set by application programmatically
+     * Only available in the Application Template
+	 */
+	public ArrayList<FooterLink> getCustomFooterLinks() {
+	    this.setCustomFooterLinks();
+	    return this.customFooterLinks;
+	}
+	
+	/**
+	 * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+	 */
+	public String getCustomSearch() {
+	    this.setCustomSearch();
+	    return this.customSearch;
+	}
 	
 	/**
 	 * Determines if the master template pages should use the "Run" or a specific version of the 

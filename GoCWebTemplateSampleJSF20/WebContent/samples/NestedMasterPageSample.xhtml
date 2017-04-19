@@ -91,7 +91,7 @@ public class NestedMasterPageSample extends BaseBean {
 	        <pre>
 &lt;ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="NestedMasterPageTemplate.xhtml" xmlns:h="http://java.sun.com/jsf/html"&gt;
     &lt;ui:define name="beaninit"&gt;
-		&lt;ui:param name="clientbean" value="<h:outputText value="&amp;#35;&#123;nestedchildpagesamplebean&#125;" escape="false" />" /&gt;
+		&lt;ui:param name="goctemplateclientbean" value="<h:outputText value="&amp;#35;&#123;nestedchildpagesamplebean&#125;" escape="false" />" /&gt;
 	&lt;/ui:define&gt;
     &lt;ui:define name="leftContent"&gt;
     	&lt;h1&gt;Hello World!&lt;/h1&gt;
@@ -126,6 +126,7 @@ public class NestedChildPageSample extends NestedMasterPageSample {
 	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
 	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
 	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
+                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
 	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
 	        </ul>
 	    </div>

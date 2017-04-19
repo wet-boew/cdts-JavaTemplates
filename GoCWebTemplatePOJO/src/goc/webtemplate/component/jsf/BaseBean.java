@@ -12,6 +12,11 @@ import goc.webtemplate.Constants;
 import goc.webtemplate.component.BaseComponent;
 
 public abstract class BaseBean extends BaseComponent {
+    
+    public HttpServletRequest getRequest() {
+        return (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    }
+    
 	@Override
 	protected String getDefaultLangLinkUrl() {
 		try {

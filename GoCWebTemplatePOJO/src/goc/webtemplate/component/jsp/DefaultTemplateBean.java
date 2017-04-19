@@ -46,12 +46,29 @@ public class DefaultTemplateBean extends BaseBean {
 	@Override
 	public void setShowFeature() {}
 	
-	@Override
+
+    @Override
+    public void setContactLinkUrl() {}
+    
+    /**
+     * @deprecated contactLinks should not be overriden. It has been replaced by contactLinkUrl.  WILL BE REMOVED IN A FUTURE RELEASE.
+     * @see #setContactLinkUrl()
+     */
+    @Deprecated
+    @Override
 	public void setContactLinks() {}
 	
+    /**
+     * @deprecated newLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
 	@Override
 	public void setNewsLinks() {}
 	
+    /**
+     * @deprecated aboutLinks should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
 	@Override
 	public void setAboutLinks() {}
 	
@@ -120,4 +137,37 @@ public class DefaultTemplateBean extends BaseBean {
 
 	@Override
 	public void setLeavingSecureSiteDisplayModalWindow() {}
+	
+    @Override
+    public void setShowGlobalNav() {}
+    
+    @Override
+    public void setShowSiteMenu() {}
+    
+    @Override
+    public void setCustomSiteMenuUrl() {}
+    
+    @Override
+    public void setSignInLinkUrl() {}
+    
+    @Override
+    public void setSignOutLinkUrl() {}
+    
+    @Override
+    public void setShowSecureIcon() {}
+    
+    @Override
+    public void setShowSignInLink() {}
+    
+    @Override
+    public void setShowSignOutLink() {}
+    
+    @Override
+    public void setCustomFooterLinks() {}
+    
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    @Override
+    public void setCustomSearch() {}
 }

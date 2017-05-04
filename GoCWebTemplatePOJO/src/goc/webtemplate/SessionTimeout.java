@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class SessionTimeout implements Serializable {
+    private boolean enabled = false;
 	private int inActivity = 0;
 	private int reactionTime = 0;
 	private int sessionAlive = 0;
@@ -15,25 +16,45 @@ public class SessionTimeout implements Serializable {
 	private String additionalData = "";
     
     public SessionTimeout() {
-    	this(0, 0, 0, "", "", false, 0, "", "");
     }
-    
+
     public SessionTimeout(int inactivity, int reactiontime, int sessionalive, 
     					  String logouturl, String refreshcallbackurl, 
     					  boolean refreshonclick, int refreshlimit, 
     					  String method, String additionaldata) {
-		
-    	this.inActivity = inactivity;
-		this.reactionTime = reactiontime;
-		this.sessionAlive = sessionalive;
-		this.logoutUrl = logouturl;
-		this.refreshCallbackUrl = refreshcallbackurl;
-		this.refreshOnClick = refreshonclick;
-		this.refreshLimit = refreshlimit;
-		this.method = method;
-		this.additionalData = additionaldata;
+
+        this(false,
+             inactivity, reactiontime, sessionalive,
+             logouturl, refreshcallbackurl,
+             refreshonclick, refreshlimit,
+             method, additionaldata);
     }
 
+    public SessionTimeout(boolean enabled, int inactivity, int reactiontime, int sessionalive, 
+            String logouturl, String refreshcallbackurl, 
+            boolean refreshonclick, int refreshlimit, 
+            String method, String additionaldata) {
+
+        this.enabled = enabled;
+        this.inActivity = inactivity;
+        this.reactionTime = reactiontime;
+        this.sessionAlive = sessionalive;
+        this.logoutUrl = logouturl;
+        this.refreshCallbackUrl = refreshcallbackurl;
+        this.refreshOnClick = refreshonclick;
+        this.refreshLimit = refreshlimit;
+        this.method = method;
+        this.additionalData = additionaldata;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+    
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    
 	public int getInActivity() {
 		return inActivity;
 	}

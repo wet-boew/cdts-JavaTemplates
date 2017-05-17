@@ -14,12 +14,16 @@ import goc.webtemplate.ApplicationTitle;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
+
+import goc.webtemplate.component.jsonentities.AppFooter;
+import goc.webtemplate.component.jsonentities.AppTop;
 
 /**
  * This is the base class from all template configuration beans, inherited by both
@@ -63,15 +67,14 @@ public abstract class AbstractCoreBean {
     //-------------------------------------------------------
     //---[ Main template instance variables
     //-------------------------------------------------------
-//TODO: Review... are unindented ones still needed?    
     private String cdnEnvironment = this.getResourceBundleString("cdn", "cdn_environment");
+    private String cdtsCdnEnv = null; // initialized in getCdtsCdnEnv
     private String templateVersion = this.getResourceBundleString("cdn", "wettemplate_version");
     private String theme = this.getResourceBundleString("cdn", "wettemplate_theme");
     private String subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
     private boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
     private boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
-private String cdnLocalPathRender = null; //see getRenderLocalPath
-private String cdnLocalPath = null;
+    private String cdnLocalPath = null;
     private String headerTitle = "";
     private ApplicationTitle applicationTitle = new ApplicationTitle();
     private String languageLinkUrl = "";
@@ -88,8 +91,8 @@ private String cdnLocalPath = null;
     private String versionIdentifier = "";
     private boolean showSearch = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsearch"));
     private boolean showPreContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showprecontent"));
-    private boolean showLanguageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showlanguagelink"));
     private boolean showPostContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showpostcontent"));
+    private boolean showLanguageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showlanguagelink"));
     private boolean showFeedbackLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink"));
     private boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
     private boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
@@ -98,7 +101,6 @@ private String cdnLocalPath = null;
     private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
     private ArrayList<String> htmlBodyElements = new ArrayList<String>();
     private String staticFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
-    private String contentCreatorTitle = "";
     private boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
     private boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
     private String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
@@ -108,11 +110,8 @@ private String cdnLocalPath = null;
     private boolean showSignInLink = false;
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
-    /**
-     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
-     */
     private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
-    private SessionTimeout sessionTimeoutConfigurations = null; //sessionTimeoutEnabled = Boolean.parseBoolean(this.getResourceBundleString("cdn", "session.timeout.enabled"));
+    private SessionTimeout sessionTimeoutConfigurations = null; //initialization in get method 
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private String privacyLinkUrl = "";
     private String termsConditionsLinkUrl = "";
@@ -122,6 +121,7 @@ private String cdnLocalPath = null;
     //---[ Caching of calculated values
     //-------------------------------------------------------
     private String partialCDNPath = null;
+    private String cdnLocalPathRender = null; //see getRenderLocalPath
     //-------------------------------------------------------
     
     //-------------------------------------------------------
@@ -172,6 +172,57 @@ private String cdnLocalPath = null;
     public void setCDNEnvironment(String value) {
         this.cdnEnvironment = value;
     }
+
+    /**
+     * Returns the "cdnEnv" value that the closure template is expecting. This value 
+     * is different than the "CDN Evironment" used to select which CDTS is targetted.
+     * 
+     * Set at application level via "cdn_????_env" in cdn.properties,
+     * can be overriden programmatically.
+     */
+    public String getCdtsCdnEnv() {
+        this.initializeOnce();
+        if (this.cdtsCdnEnv == null)this.cdtsCdnEnv = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_env");
+        return (Utility.isNullOrEmpty(this.cdtsCdnEnv) ? "prod" : this.cdtsCdnEnv);
+    }
+    
+    /**
+     * Sets the "cdnEnv" value that the closure template is expecting. This value 
+     * is different than the "CDN Evironment" used to select which CDTS is targetted.
+     * 
+     * Set at application level via "cdn_????_env" in cdn.properties,
+     * can be overriden programmatically.
+     */
+    public void setCdtsCdnEnv(String value) {
+        this.cdtsCdnEnv = value;
+    }
+    
+    /**
+     * Returns the path to the location of the static backup files.
+     * 
+     * Set at application level via "goc.webtemplate.staticfileslocation" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * The default value point to the "StaticFallbackFiles" directory under 
+     * "WebContent" in the eclipse project.
+     */
+    public String getStaticFallbackFilePath() {
+        this.initializeOnce();
+        return StringEscapeUtils.escapeHtml4(this.staticFilePath); //TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
+    }
+
+    /**
+     * Sets the path to the location of the static backup files.
+     * 
+     * Set at application level via "goc.webtemplate.staticfileslocation" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * The default value point to the "StaticFallbackFiles" directory under 
+     * "WebContent" in the eclipse project.
+     */
+    public void setStaticFallbackFilePath(String value) {
+        this.staticFilePath = value;
+    }        
     
     /**
      * Returns whether or not the communication between the browser and the CDTS should be encrypted.
@@ -257,6 +308,27 @@ private String cdnLocalPath = null;
         this.subTheme = value;
     }
 
+    /**
+     * Returns whether the jQuery files should be loaded from google or from the CDN.
+     * 
+     * Set at application level via "wettemplate_loadjqueryfromgoogle" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getLoadJQueryFromGoogle() {
+        this.initializeOnce();
+        return this.loadjQueryFromGoogle;
+    }
+    
+    /**
+     * Sets whether the jQuery files should be loaded from google or from the CDN.
+     * 
+     * Set at application level via "wettemplate_loadjqueryfromgoogle" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setLoadJQueryFromGoogle(boolean value) {
+        this.loadjQueryFromGoogle = value;
+    }
+    
     /**
      * Returns the list of breadcrumb links.
      */
@@ -368,6 +440,27 @@ private String cdnLocalPath = null;
     }
     
     /**
+     * Returns whether the Language Toggle Link is to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showlanguagelink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowLanguageLink() {
+        this.initializeOnce();
+        return this.showLanguageLink;
+    }
+
+    /**
+     * Sets whether the Language Toggle Link is to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showlanguagelink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowLanguageLink(boolean value) {
+        this.showLanguageLink = value;
+    }
+    
+    /**
      * Returns the url to be used for the language toggle, there is a default url already in place for either the 
      * JSF or JSP implementation of the Template, but can be set by application programmatically.
      * 
@@ -433,8 +526,535 @@ private String cdnLocalPath = null;
         this.leftMenuSections = value;
     }
     
+    /**
+     * Returns the URL to be used for the Privacy link in transactional mode. 
+     */
+    public String getPrivacyLinkUrl() {
+        this.initializeOnce();
+        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.privacyLinkUrl));
+    }
     
-//TODO: HERE ENDS THE MAIN PROPERTIES    
+    /**
+     * Sets the URL to be used for the Privacy link in transactional mode. 
+     */
+    public void setPrivacyLinkUrl(String value) {
+        this.privacyLinkUrl = value;
+    }
+    
+    /**
+     * Returns the URL to be used to the contact link.
+     */
+    public String getContactLinkUrl() {
+        this.initializeOnce();
+        return this.contactLinkUrl;
+    }
+    
+    /**
+     * Returns the URL to be used to the contact link.
+     */
+    public void setContactLinkUrl(String value) {
+        this.contactLinkUrl = value;
+    }
+    
+    /**
+     * Returns whether the features of the footer are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowFeature() {
+        this.initializeOnce();
+        return this.showFeature;
+    }
+
+    /**
+     * Sets whether the features of the footer are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowFeature(boolean value) {
+        this.showFeature = value;
+    }
+
+    /**
+     * Returns whether the Share Page Link of the footer are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showsharepagelink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowSharePageLink() {
+        this.initializeOnce();
+        return this.showSharePageLink;
+    }
+    
+    /**
+     * Sets whether the Share Page Link of the footer are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showsharepagelink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowSharePageLink(boolean value) {
+        this.showSharePageLink = value;
+    }
+
+    /**
+     * Returns whether the Pre Content of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showprecontent" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowPreContent() {
+        this.initializeOnce();
+        return this.showPreContent;
+    }
+    
+    /**
+     * Sets whether the Pre Content of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showprecontent" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowPreContent(boolean value) {
+        this.showPreContent = value;
+    }
+
+    /**
+     * Returns whether the Post Content of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showpostcontent" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowPostContent() {
+        this.initializeOnce();
+        return this.showPostContent;
+    }
+    
+    /**
+     * Sets whether the Post Content of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showpostcontent" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowPostContent(boolean value) {
+        this.showPostContent = value;
+    }
+
+    /**
+     * Returns whether the Search control of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showsearch" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowSearch() {
+        this.initializeOnce();
+        return this.showSearch;
+    }
+    
+    /**
+     * Sets whether the Search control of the header are to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showsearch" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowSearch(boolean value) {
+        this.showSearch = value;
+    }
+    
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    public String getCustomSearch() {
+        this.initializeOnce();
+        return this.customSearch;
+    }
+    
+    /**
+     * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
+     */
+    public void setCustomSearch(String value) {
+        this.customSearch = value;
+    }
+    
+    /**
+     * Returns the list of items to be displayed in the Share Page window.
+     * Set by application programmatically
+     */
+    public ArrayList<Constants.SocialMediaSites> getSharePageMediaSites() {
+        this.initializeOnce();
+        return this.sharePageMediaSites;
+    }
+    
+    /**
+     * Sets the list of items to be displayed in the Share Page window.
+     * Set by application programmatically
+     */
+    public void setSharePageMediaSites(ArrayList<Constants.SocialMediaSites> value) {
+        this.sharePageMediaSites = value;
+    }
+    
+    /**
+     * Returns whether the FeedBack link of the footer is to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public boolean getShowFeedbackLink() {
+        this.initializeOnce();
+        return this.showFeedbackLink;
+    }
+    
+    /**
+     * Sets whether the FeedBack link of the footer is to be displayed.
+     * 
+     * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setShowFeedbackLink(boolean value) {
+        this.showFeedbackLink = value;
+    }
+    
+    /**
+     * Returns the FeedBack link URL.
+     * 
+     * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public String getFeedbackUrl() {
+        this.initializeOnce();
+        return this.feedbackUrl;
+    }
+    
+    /**
+     * Sets the FeedBack link URL.
+     * 
+     * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setFeedbackUrl(String value) {
+        this.feedbackUrl = value;
+    }
+    
+    /**
+     * Returns a unique string to identify a web page. Used by user to identify the screen where an issue occured.
+     */
+    public String getScreenIdentifier() {
+        this.initializeOnce();
+        return this.screenIdentifier;
+    }
+    
+    /**
+     * Sets a unique string to identify a web page. Used by user to identify the screen where an issue occured.
+     */
+    public void setScreenIdentifier(String value) {
+        this.screenIdentifier = value;
+    }
+    
+    /**
+     * Returns the configuration object containing the various session timeout settings.
+     *  
+     * Can be set in either cdn.properties or by application programmatically
+     */
+    public SessionTimeout getSessionTimeoutConfigurations() {
+        this.initializeOnce();
+
+        //if not overriden, set from config
+        if (this.sessionTimeoutConfigurations == null) {
+            java.util.ResourceBundle bundle = this.getResourceBundle();
+            this.sessionTimeoutConfigurations = this.buildDefaultSessionTimeoutConfigurations(bundle);
+        }
+
+        return this.sessionTimeoutConfigurations;
+    }
+
+    /**
+     * Sets the configuration object containing the various session timeout settings.
+     *  
+     * Can be set in either cdn.properties or by application programmatically
+     */
+    public void setSessionTimeoutConfigurations(SessionTimeout value) {
+        this.sessionTimeoutConfigurations = value;
+    }
+
+    /**
+     * Returns the url to be used for the Terms & Conditions link in transactional mode.
+     * 
+     * Set by application programmatically.
+     */
+    public String getTermsConditionsLinkUrl() {
+        this.initializeOnce();
+        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.termsConditionsLinkUrl));//TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
+    }
+    
+    /**
+     * Sets the url to be used for the Terms & Conditions link in transactional mode.
+     * 
+     * Set by application programmatically.
+     */
+    public void setTermsConditionsLinkUrl(String value) {
+        this.termsConditionsLinkUrl = value;
+    }
+    
+    /**
+     *  Returns whether the Global Nav bar in the footer is to be displayed.
+     *  
+     * Set at application level via "goc.webtemplate.showglobalnav" property in cdn.properties, 
+     * can be overriden programatically.  
+     *  
+     *  Only available in the Application Template
+     */
+    public boolean getShowGlobalNav() {
+        this.initializeOnce();
+        return this.showGlobalNav;
+    }
+    
+    /**
+     * Sets whether the Global Nav bar in the footer is to be displayed.
+     *  
+     * Set at application level via "goc.webtemplate.showglobalnav" property in cdn.properties, 
+     * can be overriden programatically.  
+     *  
+     *  Only available in the Application Template
+     */
+    public void setShowGlobalNav(boolean value)
+    {
+        this.showGlobalNav = value;
+    }
+    
+    /**
+     * Returns the  custom site menu to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu)
+     * 
+     * Set at application level via "goc.webtemplate.customsitemenuurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     */
+    public String getCustomSiteMenuUrl() {
+        this.initializeOnce();
+        return this.customSiteMenuUrl;
+    }
+    
+    /**
+     * Sets the custom site menu to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu)
+     * 
+     * Set at application level via "goc.webtemplate.customsitemenuurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     */
+    public void setCustomSiteMenuUrl(String value) {
+        this.customSiteMenuUrl = value;
+    }
+    
+    /**
+     *  Returns whether the Site Menu is to appear at the top of the page. 
+     *  If set to false only a band will still be seen.
+     *  
+     * Set at application level via "goc.webtemplate.showsitemenu" property in cdn.properties, 
+     * can be overriden programatically.  
+     *  
+     *  Only available in the Application Template
+     */
+    public boolean getShowSiteMenu() {
+        this.initializeOnce();
+        return this.showSiteMenu;
+    }
+    
+    /**
+     *  Sets whether the Site Menu is to appear at the top of the page. 
+     *  If set to false only a band will still be seen.
+     *  
+     * Set at application level via "goc.webtemplate.showsitemenu" property in cdn.properties, 
+     * can be overriden programatically.  
+     *  
+     *  Only available in the Application Template
+     */
+    public void setShowSiteMenu(boolean value) {
+        this.showSiteMenu = value;
+    }
+
+    /**
+     * Returns the link to use for the sign in button, will only appear if getShowSignInLink() is set to true
+     * 
+     * Set at application level via "goc.webtemplate.signinlinkurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see getShowSignInLink()
+     */
+    public String getSignInLinkUrl() {
+        this.initializeOnce();
+        return this.signInLinkUrl;
+    }
+    
+    /**
+     * Sets the link to use for the sign in button, will only appear if getShowSignInLink() is set to true
+     * 
+     * Set at application level via "goc.webtemplate.signinlinkurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see getShowSignInLink()
+     */
+    public void setSignInLinkUrl(String value) {
+        this.signInLinkUrl = value;
+    }
+
+    /**
+     * Returns the link to use for the sign out button, will only appear if getSignOutLinkUrl() is set to true
+     * 
+     * Set at application level via "goc.webtemplate.signoutlinkurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see getShowSignOutLink()
+     */
+    public String getSignOutLinkUrl() {
+        this.initializeOnce();
+        return this.signOutLinkUrl;      
+    }
+    
+    /**
+     * Sets the link to use for the sign out button, will only appear if getSignOutLinkUrl() is set to true
+     * 
+     * Set at application level via "goc.webtemplate.signoutlinkurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see getShowSignOutLink()
+     */
+    public void setSignOutLinkUrl(String value) {
+        this.signOutLinkUrl = value;
+    }
+
+    /**
+     * Returns whether the secure icon is displayed next to the applicaiton name in the header.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public boolean getShowSecureIcon() {
+        this.initializeOnce();
+        return this.showSecureIcon;
+    }
+    
+    /**
+     * Sets whether the secure icon is displayed next to the applicaiton name in the header.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public void setShowSecureIcon(boolean value) {
+        this.showSecureIcon = value;
+    }
+
+    /**
+     * Returns whether the sign in link is displayed.
+     * signInLinkUrl must not be null or whitespace
+     * showSignOutLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public boolean getShowSignInLink() {
+        this.initializeOnce();
+        return this.showSignInLink;
+    }
+
+    /**
+     * Sets whether the sign in link is displayed.
+     * signInLinkUrl must not be null or whitespace
+     * showSignOutLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public void setShowSignInLink(boolean value) {
+        this.showSignInLink = value;
+    }
+    
+    /**
+     * Returns whether the signout link is displayed.
+     * signOutLinkUrl must not be null or whitespace
+     * showSignInLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public boolean getShowSignOutLink() {
+        this.initializeOnce();
+        return this.showSignOutLink;
+    }
+    
+    /**
+     * Sets whether the signout link is displayed.
+     * signOutLinkUrl must not be null or whitespace
+     * showSignInLink must not be set at the same time.
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public void setShowSignOutLink(boolean value) {
+        this.showSignOutLink = value;
+    }
+    
+    /**
+     * Returns this custom links.
+     * If null uses standard links if not null overrides the existing footer links
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public ArrayList<FooterLink> getCustomFooterLinks() {
+        this.initializeOnce();
+        return this.customFooterLinks;
+    }
+
+    /**
+     * Sets this custom links.
+     * If null uses standard links if not null overrides the existing footer links
+     * Set by application programmatically
+     * Only available in the Application Template
+     */
+    public void setCustomFooterLinks(ArrayList<FooterLink> value) {
+        this.customFooterLinks = value;
+    }
+    
+    
+//TODO: HERE ENDS THE MAIN PROPERTIES
+    /**
+     * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
+     */
+    public String getLocalPath()
+    {
+        String  tmpPath;
+        String  templateVersion;
+        
+        if (this.cdnLocalPath == null)
+        {
+            try
+            {
+                tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            }
+            catch (java.util.MissingResourceException ex)
+            {
+                tmpPath = null;
+            }
+            if (!Utility.isNullOrEmpty(tmpPath))
+            {
+                templateVersion = this.getTemplateVersion();
+                if (templateVersion == null) templateVersion = "";
+                
+                this.cdnLocalPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(tmpPath, this.getTheme(), templateVersion)));
+            }
+            else
+            {
+                this.cdnLocalPath = "";
+            }
+        }
+        
+        return this.cdnLocalPath;
+    }
+    
     private String getPartialCDNPath() {
         String https;
         String envName;
@@ -469,6 +1089,21 @@ private String cdnLocalPath = null;
         this.partialCDNPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(cdnUrl));
         
         return this.partialCDNPath;
+    }
+    
+    /**
+     * Outputs the portion of the SoyUtils and WET url in each of the master template page, the value 
+     * outputted is determined by the current WET Template Version identified in cdn.properties, if 
+     * no value is specified the "run" version of the WET Template will be utilized.
+     *   
+     * @return either "rn" or "app", this is used strictly by the various master template page
+     */
+    private String getRunOrVersionValue() {
+        if (Utility.isNullOrEmpty(this.getTemplateVersion())) { 
+            return "rn";
+        } else {
+            return "app";
+        }
     }
     
     /**
@@ -508,6 +1143,56 @@ private String cdnLocalPath = null;
         //If we don't have a date, return version identifier if we have one set
         return JsonValueUtils.GetNonEmptyString(this.getVersionIdentifier());
     }
+    
+    private ArrayList<Link> getContactList()
+    {
+        ArrayList<Link> vtr = new ArrayList<Link>();
+        vtr.add(new Link(this.getContactLinkUrl(), ""));
+        return vtr;
+    }
+    
+    /**
+     * helper method to build the default SessionTimeout configuration object using default value 
+     * specified in the resource bundle
+     */
+    private SessionTimeout buildDefaultSessionTimeoutConfigurations(java.util.ResourceBundle bundle) {
+        SessionTimeout configs = new SessionTimeout();
+        
+        if (bundle != null) {
+            configs.setEnabled(Boolean.parseBoolean(bundle.getString("session.timeout.enabled")));
+            configs.setInActivity(Integer.parseInt(bundle.getString("session.inactivity.value")));
+            configs.setReactionTime(Integer.parseInt(bundle.getString("session.reactiontime.value")));
+            configs.setSessionAlive(Integer.parseInt(bundle.getString("session.sessionalive.value")));
+            configs.setLogoutUrl(bundle.getString("session.logouturl"));
+            
+            if (!Utility.isNullOrEmpty(bundle.getString("session.refreshcallbackurl"))) 
+                configs.setRefreshCallbackUrl(bundle.getString("session.refreshcallbackurl"));
+            
+            if (!Utility.isNullOrEmpty(bundle.getString("session.refreshonclick"))) 
+                configs.setRefreshOnClick(Boolean.parseBoolean(bundle.getString("session.refreshonclick")));
+                
+            if (Integer.parseInt(bundle.getString("session.refreshlimit.value")) > 0) 
+                configs.setRefreshLimit(Integer.parseInt(bundle.getString("session.refreshlimit.value")));
+                
+            if (!Utility.isNullOrEmpty(bundle.getString("session.method"))) 
+                configs.setMethod(bundle.getString("session.method"));
+                
+            if (!Utility.isNullOrEmpty(bundle.getString("session.additionaldata"))) 
+                configs.setAdditionalData(bundle.getString("session.additionaldata"));
+        }
+        
+        return configs;
+    }    
+    
+    /**
+     * outputs the version of the GoC Java Web Template, it will be put as a comment in the html of the 
+     * master pages.  this will help us troubleshoot issues with clients using the template.
+     * 
+     * @return the distribution version value as per specified in the Constants class
+     */
+    public String getWebTemplateDistributionVersion() {
+        return Constants.WEB_TEMPLATE_DISTRIBUTION_VERSION;
+    }     
     
     /**
      * Returns the CDN path to the soyutils javascript file.
@@ -599,7 +1284,450 @@ private String cdnLocalPath = null;
         return sb.toString();
     }
 
+    private ArrayList<LanguageLink> buildLanguageLinkList()
+    {
+        ArrayList<LanguageLink> vtr;
+        
+        if (!this.getShowLanguageLink()) return null;
+        
+        vtr = new ArrayList<LanguageLink>();
+        vtr.add(new LanguageLink(BaseUtil.encodeUrl(this.getLanguageLinkUrl()),
+                                this.getLanguageLinkLang(),
+                                this.getLanguageLinkText()));
+        
+        return vtr;
+    }    
+    
+    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
+    {
+        ArrayList<Link> vtr;
+        
+        if ((!showLink) || Utility.isNullOrEmpty(href)) return null;
+        
+        vtr = new ArrayList<Link>();
+        vtr.add(new Link(BaseUtil.encodeUrl(href), null));
+        
+        return vtr;
+    }
+    
+    /**
+     * NOTE: This method assumes the instance variable values are already defined.
+     */
+    private void checkIfBothShowSignInAndOutAreSet()
+    {
+        if (this.showSignInLink && this.showSignOutLink)
+        {
+            System.err.println(this.getClass().getName() + ": ERROR: Both showSignInLink and showSignOutLink must not be enabled at the same time.");
+            throw new java.lang.IllegalStateException("Both showSignInLink and showSignOutLink must not be enabled at the same time.");
+        }
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appFooter"
+     */
+    public String getRenderAppFooter()
+    {
+        AppFooter               appFooter;
+        ArrayList<FooterLink>   tmpFooterLinks = null;
+        
+        this.initializeOnce();
+        
+        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0))
+        {
+            tmpFooterLinks = new ArrayList<FooterLink>();
+            for (FooterLink fl: this.customFooterLinks)
+                tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
+                                   JsonValueUtils.GetNonEmptyString(fl.getText()), 
+                                   fl.getNewWindow()));
+        }
+        
+        appFooter = new AppFooter(
+                        this.getCdtsCdnEnv(),
+                        JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                        JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                        this.getShowGlobalNav(),
+                        tmpFooterLinks,
+                        JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
+                        JsonValueUtils.GetNonEmptyURLEscapedString(this.privacyLinkUrl),
+                        this.getShowFeature()                        
+                );
+        
+        return gson.toJson(appFooter);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appTop"
+     */
+    public String getRenderAppTop()
+    {
+        AppTop                  appTop;
 
+        appTop = new AppTop(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getText()),
+                    JsonValueUtils.GetNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
+                    this.buildLanguageLinkList(),
+                    this.getShowSiteMenu(),
+                    this.getShowSecureIcon(),
+                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
+                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.showSearch,
+                    this.getEncodedBreadcrumbs(),
+                    this.showPreContent,
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch())
+                );
+
+        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
+        this.checkIfBothShowSignInAndOutAreSet();
+        
+        return gson.toJson(appTop);
+    }
+    
+//TODO: HERE! (1332)
+    /**
+     * Outputs the portion of the SoyUtils and WET url in each of the master template page, the value 
+     * outputted is determined by the current WET Template Version identified in cdn.properties, if 
+     * no value is specified the "run" version of the WET Template will be utilized.
+     *   
+     * @return either "" if in "Run" mode or the wet template version value, this is used strictly by the various master template page
+     */
+    public String getThemeVersionValue() {//TODO: IF DOABLE, Remove this method once the templates are modified to use JSON serialization
+        if (this.getRunOrVersionValue().equals("rn")) {
+            return "";
+        } else {
+            return this.getTemplateVersion() + "/";
+        }
+    }
+    
+    /**
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderShowPostContent() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        return (this.getShowPostContent() ? "true" : "false");
+    }
+    
+    /**
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderShowPreContent() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        return (this.getShowPreContent() ? "true" : "false");
+    }
+    
+    /**
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderShowSearch() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        return (this.getShowSearch() ? "search: true," : "search: false,");
+    }
+    
+    /**
+     * Builds the html of the WET Session Timeout Control that provided session timeout and inactivity functionality.
+     * For more documentation: https://wet-boew.github.io/v4.0-ci/demos/session-timeout/session-timeout-en.html
+     * 
+     * @return the html of the WET session timeout control
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getSessionTimeoutControl() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        StringBuilder sb = new StringBuilder();
+        
+        SessionTimeout configs = this.getSessionTimeoutConfigurations();
+        
+        if (configs.isEnabled()) { 
+            sb.append("<span class='wb-sessto' data-wb-sessto='{");
+            sb.append("\"inactivity\": ");
+            sb.append(configs.getInActivity());
+            sb.append(", \"reactionTime\": ");
+            sb.append(configs.getReactionTime());
+            sb.append(", \"sessionalive\": ");
+            sb.append(configs.getSessionAlive());
+            sb.append(", \"logouturl\": \"");
+            sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(configs.getLogoutUrl())));
+            sb.append("\"");
+            
+            if (!Utility.isNullOrEmpty(configs.getRefreshCallbackUrl())) {
+                sb.append(", \"refreshCallbackUrl\": \"");
+                sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(configs.getRefreshCallbackUrl())));
+                sb.append("\"");
+            }
+            
+            sb.append(", \"refreshOnClick\": ");
+            sb.append(configs.isRefreshOnClick());
+            
+            if (configs.getRefreshLimit() > 0) {
+                sb.append(", \"refreshLimit\": ");
+                sb.append(configs.getRefreshLimit());
+            }
+            
+            if (!Utility.isNullOrEmpty(configs.getMethod())) {
+                sb.append(", \"method\": \"");
+                sb.append(StringEscapeUtils.escapeHtml4(configs.getMethod()));
+                sb.append("\"");
+            }
+            
+            if (!Utility.isNullOrEmpty(configs.getAdditionalData())) {
+                sb.append(", \"additionalData\": \"");
+                sb.append(StringEscapeUtils.escapeHtml4(configs.getAdditionalData()));
+                sb.append("\"");
+            }
+            
+            sb.append("}'></span>");
+        }
+        return sb.toString();
+    }
+    
+    
+    /**
+     * Builds a string with the format required by the closure template, to represent the "localPath" argument,
+     * which should be specified when the project is hosting teh CDTS files locally (usually for development or load testing purposes).
+     * 
+     * @return Either "localPath: "...value/..."" or "", this is used strictly by the various master template page.
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderLocalPath() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        if (this.cdnLocalPathRender == null)
+        {
+            String tmpPath = this.getLocalPath();
+            if (!Utility.isNullOrEmpty(tmpPath))
+            {
+                this.cdnLocalPathRender = "localPath: \"" + tmpPath + "\",";
+            }
+            else
+            {
+                this.cdnLocalPathRender = "";
+            }
+        }
+        
+        return this.cdnLocalPathRender;             
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template, to represent if the jQuery 
+     * file should be loaded from Google or CDTS locally.
+     *   
+     * @return either "external" or "", this is used strictly by the various master template page
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderjQuery() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        return this.getLoadJQueryFromGoogle() ? "jqueryEnv: \"external\"," : "";
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to represent the Share Page Links.
+     * If the application did not supply the Share Page items, the Share Page link will not be displayed.
+     * 
+     * sample output: showShare: ["email", "facebook", "linkedin", "twitter"]
+     * 
+     * @return string in the format expected by the Closure Templates to generate the Share Page Link
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderSharePageMediaSites() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        StringBuilder sb = new StringBuilder();
+        
+        this.initializeOnce();
+        
+        if (this.getShowSharePageLink() && this.sharePageMediaSites.size() > 0)
+        {
+            sb.append("showShare: [");
+
+            for (Constants.SocialMediaSites site : this.sharePageMediaSites)
+            {
+                sb.append(" '" + site + "', ");
+            }
+            sb.append("],");
+        }
+        else // don't display the feedback link
+        {
+            sb.append("showShare: false,");
+        }
+
+        return sb.toString();
+    }
+    
+    /**
+     * Builds a string with the format required by the Closure Templates, to represent the Screen Identifier 
+     * value.  If the application did not supply a Screen Identifier value, nothing will be rendered.
+     * 
+     * @return string in the format expected by the Closure Template to generate the Screen Identifier execution script
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderScreenIdentifier() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        return (!Utility.isNullOrEmpty(this.getScreenIdentifier()) ? 
+                    "screenIdentifier: \"" + StringEscapeUtils.escapeHtml4(this.getScreenIdentifier()) + "\", " : 
+                    "");
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to represent a list of links for :
+     *  - Contact Us
+     *  - About Us
+     *  - News
+     * The list of links is provided by the application
+     * 
+     * @return string in the format expected by the Closure Templates te generate the list of links
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderLinksList() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        StringBuilder sb = new StringBuilder();
+
+        this.buildLinksJSONString(sb, "contactLinks", this.getContactList());
+        
+        return sb.toString();
+    }
+    /**
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    private void buildLinksJSONString(StringBuilder sb, String linkTitle, ArrayList<Link> linksList) {//TODO: Remove this method once the templates are modified to use JSON serialization
+        if (linksList != null && linksList.size() > 0)
+        {
+            sb.append(linkTitle);
+            sb.append(": [");
+            for (Link lk : linksList)
+            {
+                sb.append("{href: '");
+                sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(lk.getHref())));
+                sb.append("', text: '");
+                sb.append(StringEscapeUtils.escapeHtml4(lk.getText()));
+                sb.append("'},");
+            }
+            sb.append("],");
+        }
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to manage the leave secure site warning 
+     * feature offered by the WET Template.
+     * 
+     * sample output: exitScript: true, 
+     *                exitURL: "", 
+     *                exitMsg: "", 
+     *                exitDomains: ""
+     * 
+     * @return string in the format expected by the Closure Templates to manage the leave secure site warning feature
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderLeavingSecureSiteWarning() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        StringBuilder               sb = new StringBuilder();
+        LeavingSecureSiteWarning    lssw = this.getLeavingSecureSiteWarning();
+        
+        if (lssw.isEnabled() && !Utility.isNullOrEmpty(lssw.getRedirectUrl())) {
+            sb.append("exitScript: true,");
+            sb.append(lssw.getDisplayModalWindow() ? "" : " displayModal: false,");
+            sb.append("exitURL: \"");
+            sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(lssw.getRedirectUrl())));
+            sb.append("\",");
+            sb.append("exitMsg: \"");
+            sb.append(StringEscapeUtils.escapeHtml4(lssw.getMessage()));
+            sb.append("\",");
+            
+            if (!Utility.isNullOrEmpty(lssw.getExcludedDomains())) {
+                sb.append("exitDomains: \"");
+                sb.append(StringEscapeUtils.escapeHtml4(lssw.getExcludedDomains()));
+                sb.append("\",");
+            }
+        }
+        else
+        {
+            sb.append("exitScript: false,");
+        }
+        
+        return sb.toString();
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to represent the Language toggle link.
+     * 
+     * @return string in the format expected by the Closure Templates to generate the language toggle link
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderLanguageLink() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        if (this.getShowLanguageLink()) {
+            return "lngLinks: [{" + 
+                        "lang: '" + StringEscapeUtils.escapeHtml4(this.getLanguageLinkLang()) + "', " + 
+                        "href: '" + BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.getLanguageLinkUrl())) + "', " + 
+                        "text: '" + StringEscapeUtils.escapeHtml4(this.getLanguageLinkText()) + "'" + 
+                        "}],";
+        } else {
+            return "";
+        }
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to represent the feedback link.
+     * 
+     * 
+     * sample output: showFeatures: true
+     * 
+     * @return string in the format expected by the Closure Templates to generate the features
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderFeedbackLink() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        if (this.getShowFeedbackLink()) {
+            return (!Utility.isNullOrEmpty(this.feedbackUrl) ? "showFeedback: '" + BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.getFeedbackUrl())) + "'," : "");
+        } else {
+            return "showFeedback: false,";
+        }
+    }
+    
+    /**
+     * Builds a string with the format required by the closure templates, to represent the features/activities.
+     * 
+     * sample output: showFeatures: true
+     * 
+     * @return string in the format expected by the Closure Templates to generate the features
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderFeatures() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        if (this.getShowFeature()) {
+            return "showFeatures: true,";
+        } else {
+            return "showFeatures: false,";
+        }
+    }
+
+    /**
+     * Builds a string with the format required by the closure templates, to represent the Application Title 
+     * information (only applicable to the GCIntranet theme).
+     * 
+     * @return string in the format expected by the Closure Templates to generate the application title
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderApplicationTitle() {//TODO: Remove this method once the templates are modified to use JSON serialization
+        this.initializeOnce();
+        
+        if (!Utility.isNullOrEmpty(this.applicationTitle.getText()))
+        {
+            //intranetTitle: [{href: "http://hrsdc.prv/eng/iit/index.shtml", text: "IITB"}],
+            return "intranetTitle: [{" + 
+                        (Utility.isNullOrEmpty(this.applicationTitle.getUrl()) ? 
+                                "" : 
+                                "href: \"" + BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.applicationTitle.getUrl())) + "\", ") + 
+                        "text: \"" + StringEscapeUtils.escapeHtml4(this.applicationTitle.getText()) + "\"" + 
+                        "}],";
+        }
+        
+        return "";
+    }
+    
     /**
      * @deprecated  This method should not be used, it will be removed in a futrue version.
      */

@@ -2,6 +2,12 @@ package goc.webtemplate.component.jsf;
 
 import javax.faces.context.FacesContext;
 
+/**
+ * @deprecated THIS CLASS WILL BE DELETED IN AN UPCOMING RELEASE, IT HAS BEEN REPLACED BY DefaultTemplateCoreBean
+ *             Web Template Page beans should now override DefaultTemplateCoreBean and implement/override its onWebTemplateInitialize method to initialize properties. 
+ * @see DefaultTemplateCoreBean
+ */
+@Deprecated
 public class DefaultTemplateBean extends BaseBean {
 	@Override
 	public void setHeaderTitle() { 

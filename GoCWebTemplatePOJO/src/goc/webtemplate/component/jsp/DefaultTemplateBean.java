@@ -1,5 +1,11 @@
 package goc.webtemplate.component.jsp;
 
+/**
+ * @deprecated THIS CLASS WILL BE DELETED IN AN UPCOMING RELEASE, IT HAS BEEN REPLACED BY DefaultTemplateCoreBean
+ *             Web Template Page beans should now override DefaultTemplateCoreBean and implement/override its onWebTemplateInitialize method to initialize properties. 
+ * @see DefaultTemplateCoreBean
+ */
+@Deprecated
 public class DefaultTemplateBean extends BaseBean {
 
 	@Override

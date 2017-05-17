@@ -100,7 +100,7 @@ public abstract class AbstractCoreBean {
     private ArrayList<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
     private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
     private ArrayList<String> htmlBodyElements = new ArrayList<String>();
-    private String staticFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
+    private String staticFallbackFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
     private boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
     private boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
     private String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
@@ -111,7 +111,7 @@ public abstract class AbstractCoreBean {
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
     private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
-    private SessionTimeout sessionTimeoutConfigurations = null; //initialization in get method 
+    private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method 
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private String privacyLinkUrl = "";
     private String termsConditionsLinkUrl = "";
@@ -208,7 +208,7 @@ public abstract class AbstractCoreBean {
      */
     public String getStaticFallbackFilePath() {
         this.initializeOnce();
-        return StringEscapeUtils.escapeHtml4(this.staticFilePath); //TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
+        return StringEscapeUtils.escapeHtml4(this.staticFallbackFilePath); //TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class AbstractCoreBean {
      * "WebContent" in the eclipse project.
      */
     public void setStaticFallbackFilePath(String value) {
-        this.staticFilePath = value;
+        this.staticFallbackFilePath = value;
     }        
     
     /**
@@ -327,6 +327,21 @@ public abstract class AbstractCoreBean {
      */
     public void setLoadJQueryFromGoogle(boolean value) {
         this.loadjQueryFromGoogle = value;
+    }
+    
+    /**
+     * Returns the title that will be displayed in the header above the top menu.
+     */
+    public ApplicationTitle getApplicationTitle() {
+        this.initializeOnce();
+        return this.applicationTitle;
+    }
+    
+    /**
+     * Sets the title that will be displayed in the header above the top menu.
+     */
+    public void setApplicationTitle(ApplicationTitle value) {
+        this.applicationTitle = value;
     }
     
     /**
@@ -755,16 +770,16 @@ public abstract class AbstractCoreBean {
      *  
      * Can be set in either cdn.properties or by application programmatically
      */
-    public SessionTimeout getSessionTimeoutConfigurations() {
+    public SessionTimeout getSessionTimeoutConfiguration() {
         this.initializeOnce();
 
         //if not overriden, set from config
-        if (this.sessionTimeoutConfigurations == null) {
+        if (this.sessionTimeoutConfiguration == null) {
             java.util.ResourceBundle bundle = this.getResourceBundle();
-            this.sessionTimeoutConfigurations = this.buildDefaultSessionTimeoutConfigurations(bundle);
+            this.sessionTimeoutConfiguration = this.buildDefaultSessionTimeoutConfigurations(bundle);
         }
 
-        return this.sessionTimeoutConfigurations;
+        return this.sessionTimeoutConfiguration;
     }
 
     /**
@@ -772,8 +787,8 @@ public abstract class AbstractCoreBean {
      *  
      * Can be set in either cdn.properties or by application programmatically
      */
-    public void setSessionTimeoutConfigurations(SessionTimeout value) {
-        this.sessionTimeoutConfigurations = value;
+    public void setSessionTimeoutConfiguration(SessionTimeout value) {
+        this.sessionTimeoutConfiguration = value;
     }
 
     /**
@@ -1439,7 +1454,7 @@ public abstract class AbstractCoreBean {
     public String getSessionTimeoutControl() {//TODO: Remove this method once the templates are modified to use JSON serialization
         StringBuilder sb = new StringBuilder();
         
-        SessionTimeout configs = this.getSessionTimeoutConfigurations();
+        SessionTimeout configs = this.getSessionTimeoutConfiguration();
         
         if (configs.isEnabled()) { 
             sb.append("<span class='wb-sessto' data-wb-sessto='{");

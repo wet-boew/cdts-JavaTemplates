@@ -9,11 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import goc.webtemplate.Constants;
 import goc.webtemplate.component.BaseComponent;
 
+/**
+ * @deprecated THIS CLASS WILL BE DELETED IN AN UPCOMING RELEASE, IT HAS BEEN REPLACED BY BaseCoreBean
+ * @see BaseCoreBean
+ */
+@Deprecated
 public abstract class BaseBean extends BaseComponent {
 	private HttpServletRequest req = null;	
 
 	@Override
-	protected String getDefaultLangLinkUrl() {
+	protected String getDefaultLanguageLinkUrl() {
 		try {
 			String requestUri = (String)this.req.getAttribute("javax.servlet.forward.request_uri");
 			if (requestUri == null) requestUri = this.req.getRequestURI();

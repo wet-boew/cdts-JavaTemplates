@@ -9,8 +9,14 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import goc.webtemplate.Constants;
+
 import goc.webtemplate.component.BaseComponent;
 
+/**
+ * @deprecated THIS CLASS WILL BE DELETED IN AN UPCOMING RELEASE, IT HAS BEEN REPLACED BY BaseCoreBean
+ * @see BaseCoreBean
+ */
+@Deprecated
 public abstract class BaseBean extends BaseComponent {
     
     public HttpServletRequest getRequest() {
@@ -18,7 +24,7 @@ public abstract class BaseBean extends BaseComponent {
     }
     
 	@Override
-	protected String getDefaultLangLinkUrl() {
+	protected String getDefaultLanguageLinkUrl() {
 		try {
 			HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 			String currentUrlEncoded = URLEncoder.encode(currentReq.getRequestURI() + (currentReq.getQueryString() == null ? "" : "?" + currentReq.getQueryString()), "UTF-8");

@@ -276,4 +276,12 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setPrivacyLinkUrl(this.privacyLinkUrl);
         this.setTermsConditionsLinkUrl(this.termsConditionsLinkUrl);
     }
+    
+    /**
+     * @deprecated Use getDefaultLanguageLinkUrl() instead
+     */
+    @Deprecated
+    public String getDefaultLangLinkUrl() {
+        return this.getDefaultLanguageLinkUrl();
+    }
 }

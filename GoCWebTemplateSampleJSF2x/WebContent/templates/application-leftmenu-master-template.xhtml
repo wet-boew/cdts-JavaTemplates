@@ -26,13 +26,13 @@
 	        <!-- Write closure template -->
 	        <script type="text/javascript">
 	            document.write(wet.builder.refTop({
-	                cdnEnv: "#{goctemplateclientbean.cdnEnvironmentParsed}",
+	                cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}",
 	                subTheme: "#{goctemplateclientbean.subTheme}", 
 	                #{goctemplateclientbean.renderjQuery}
 	                #{goctemplateclientbean.renderLocalPath}
 	            }));
 	        </script>
-	        <h:outputText value="#{goctemplateclientbean.htmlHeaderElements}" escape="false" />
+	        <h:outputText value="#{goctemplateclientbean.renderHtmlHeaderElements}" escape="false" />
 	        <!--  GoC Web Template Build Version #{goctemplateclientbean.webTemplateDistributionVersion} -->
 	    </head>
 	    <body vocab="http://schema.org/" typeof="WebPage">
@@ -60,7 +60,7 @@
 			            <script type="text/javascript">
 			                var defPreFooter = document.getElementById("def-preFooter");
 			                defPreFooter.outerHTML = wet.builder.preFooter({
-			                    cdnEnv: "#{goctemplateclientbean.cdnEnvironmentParsed}",
+			                    cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}",
 			                    #{goctemplateclientbean.renderScreenIdentifier}
 			                    #{goctemplateclientbean.dateModifiedOrVersionIdentifierValue}
 			                    showPostContent: #{goctemplateclientbean.showPostContent}, 
@@ -77,7 +77,7 @@
 		            <script type="text/javascript">
 		                var secondarymenu = document.getElementById("wb-sec");
 		                secondarymenu.innerHTML = wet.builder.secmenu({
-		                    #{goctemplateclientbean.leftMenuSections}
+		                    #{goctemplateclientbean.renderLeftMenuSections}
 		                });
 		            </script>
 	        	</div>
@@ -94,13 +94,13 @@
 	        <!-- Write closure template -->
             <script type="text/javascript">
                 document.write(wet.builder.refFooter({
-                    cdnEnv: "#{goctemplateclientbean.cdnEnvironmentParsed}", 
+                    cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}", 
                     #{goctemplateclientbean.renderLeavingSecureSiteWarning}
                     #{goctemplateclientbean.renderjQuery}
                     #{goctemplateclientbean.renderLocalPath}
                 }));
             </script>
-	        <h:outputText value="#{goctemplateclientbean.htmlBodyElements}" escape="false" />
+	        <h:outputText value="#{goctemplateclientbean.renderHtmlBodyElements}" escape="false" />
 	    </body>
 	</html>
 	

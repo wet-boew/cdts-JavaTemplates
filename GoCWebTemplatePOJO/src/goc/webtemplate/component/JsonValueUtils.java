@@ -45,9 +45,11 @@ public final class JsonValueUtils {
         if ((links == null) || (links.size() <= 0)) return null;
         
         vtr = new ArrayList<Link>();
-        for (Link l: links)
+        for (Link l: links) {
+            if (l.getHref() == null) continue;
             vtr.add(new Link(BaseUtil.encodeUrl(l.getHref()), 
                              JsonValueUtils.GetNonEmptyString(l.getText())));
+        }
 
         return vtr;
     }

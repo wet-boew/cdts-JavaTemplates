@@ -1033,9 +1033,8 @@ public abstract class AbstractCoreBean {
     public void setCustomFooterLinks(ArrayList<FooterLink> value) {
         this.customFooterLinks = value;
     }
+
     
-    
-//TODO: HERE ENDS THE MAIN PROPERTIES
     /**
      * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
      */
@@ -1348,8 +1347,7 @@ public abstract class AbstractCoreBean {
         
         this.initializeOnce();
         
-        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0))
-        {
+        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0)) {
             tmpFooterLinks = new ArrayList<FooterLink>();
             for (FooterLink fl: this.customFooterLinks)
                 tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
@@ -1403,7 +1401,6 @@ public abstract class AbstractCoreBean {
         return gson.toJson(appTop);
     }
     
-//TODO: HERE! (1332)
     /**
      * Outputs the portion of the SoyUtils and WET url in each of the master template page, the value 
      * outputted is determined by the current WET Template Version identified in cdn.properties, if 
@@ -1614,7 +1611,7 @@ public abstract class AbstractCoreBean {
             for (Link lk : linksList)
             {
                 sb.append("{href: '");
-                sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(lk.getHref())));
+                sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(lk.getHref() != null? lk.getHref(): "")));
                 sb.append("', text: '");
                 sb.append(StringEscapeUtils.escapeHtml4(lk.getText()));
                 sb.append("'},");

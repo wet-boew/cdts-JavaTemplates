@@ -38,13 +38,13 @@
         <!-- Write closure template -->
         <script type="text/javascript">
             document.write(wet.builder.refTop({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed"/>", 
+                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>", 
                 subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
                 <s:property escape="false" value="#goctemplateclientbean.renderjQuery" />
                 <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
             }));
         </script>
-        <s:property escape="false" value="#goctemplateclientbean.htmlHeaderElements" />
+        <s:property escape="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" typeof="WebPage">		
@@ -57,10 +57,10 @@
         <script type="text/javascript">
             var defTop = document.getElementById("def-top");
             defTop.outerHTML = wet.builder.top({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed"/>",
+                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
                 subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
                 <s:property value="#goctemplateclientbean.renderApplicationTitle" escape="false" />
-                <s:property value="#goctemplateclientbean.showSearch" />
+                <s:property value="#goctemplateclientbean.renderShowSearch" />
                 <s:property value="#goctemplateclientbean.renderLanguageLink" escape="false" />
                 showPreContent: <s:property value="#goctemplateclientbean.showPreContent" />,
                 <s:property value="#goctemplateclientbean.breadcrumbsList" />
@@ -79,7 +79,7 @@
             <script type="text/javascript">
                 var defPreFooter = document.getElementById("def-preFooter");
                 defPreFooter.outerHTML = wet.builder.preFooter({
-                    cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed"/>",
+                    cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
                     <s:property escape="false" value="#goctemplateclientbean.renderScreenIdentifier" />
                     <s:property escape="false" value="#goctemplateclientbean.dateModifiedOrVersionIdentifierValue" />
                     showPostContent: <s:property value="#goctemplateclientbean.showPostContent" />,
@@ -96,7 +96,7 @@
         <script type="text/javascript">
             var defFooter = document.getElementById("def-footer");
             defFooter.outerHTML = wet.builder.footer({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed"/>",
+                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
                 subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
                 <s:property value="#goctemplateclientbean.renderFeatures" />
                 <s:property value="#goctemplateclientbean.renderLinksList" />
@@ -106,12 +106,12 @@
         <!-- Write closure template -->
 		<script type="text/javascript">
 			document.write(wet.builder.refFooter({
-			    cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed"/>",
+			    cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
 			    <s:property escape="false" value="#goctemplateclientbean.renderLeavingSecureSiteWarning" />
 			    <s:property escape="false" value="#goctemplateclientbean.renderjQuery" />
                 <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
 			}));
 		</script>
-        <s:property escape="false" value="#goctemplateclientbean.htmlBodyElements" />	
+        <s:property escape="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>
 </html>

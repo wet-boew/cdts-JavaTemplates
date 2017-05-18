@@ -37,11 +37,11 @@
         <!-- Write closure template -->
         <script type="text/javascript">
             document.write(wet.builder.splashTop({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdnEnvironmentParsed" />",
+                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv" />",
                 <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
             }));
         </script>
-        <s:property escape="false" value="#goctemplateclientbean.htmlHeaderElements" />
+        <s:property escape="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" class="splash" typeof="WebPage">

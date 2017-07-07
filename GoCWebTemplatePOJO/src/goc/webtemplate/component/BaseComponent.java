@@ -56,6 +56,7 @@ public abstract class BaseComponent {
 	public abstract void setSubTheme();
 	public abstract void setApplicationTitleText();
 	public abstract void setApplicationTitleUrl();
+	public abstract void setIntranetTitle();
 	public abstract void setUseHttps();
 	public abstract void setLoadjQueryFromGoogle();
 	public abstract void setHeaderTitle();
@@ -133,6 +134,7 @@ public abstract class BaseComponent {
 	protected String headerTitle = "";
 	protected String applicationTitleText = "";
 	protected String applicationTitleUrl = "";
+	protected Link intranetTitle = null;
 	protected boolean showSearch = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsearch"));
     protected String langLinkUrl = "";
     protected boolean showPreContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showprecontent"));
@@ -681,10 +683,13 @@ public abstract class BaseComponent {
         
         //TODO: The "setXXX" calls are to allow implementaters to set/override the value. This should be revised in favor of a single "initialize" method. (will also impact the checkIfBothSignInOutareSet call below)
         this.setApplicationTitleText();
+        this.setApplicationTitleUrl();
         this.setCustomSiteMenuUrl();
         this.setShowSearch();
         this.setBreadcrumbsList();
         this.setShowPreContent();
+        this.setIntranetTitle();
+        this.setLeftMenuSections();
 
         if ((this.breadCrumbsList != null) && (this.breadCrumbsList.size() > 0))
         {
@@ -703,6 +708,8 @@ public abstract class BaseComponent {
                     JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
                     JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
                     JsonValueUtils.GetNonEmptyString(this.applicationTitleText),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitleUrl),
+                    this.buildIntranetTitleList(),
                     JsonValueUtils.GetNonEmptyURLEscapedString(this.customSiteMenuUrl),
                     this.buildLanguageLinkList(),
                     this.getShowSiteMenu(),
@@ -712,7 +719,8 @@ public abstract class BaseComponent {
                     this.showSearch,
                     tmpBreadcrumbs,
                     this.showPreContent,
-                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch())
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
+                    (this.leftMenuSections != null && this.leftMenuSections.size() > 0) //true if there is at least one left menu section defined
                 );
 
         //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
@@ -805,6 +813,18 @@ public abstract class BaseComponent {
         vtr.add(new LanguageLink(BaseUtil.encodeUrl(this.getLanguageLinkUrl()),
                                 this.getLanguageLinkLang(),
                                 this.getLanguageLinkText()));
+        
+        return vtr;
+    }
+    
+    private ArrayList<Link> buildIntranetTitleList() {
+        ArrayList<Link> vtr;
+        
+        if (this.intranetTitle == null) return null;
+        
+        vtr = new ArrayList<Link>(1);
+        vtr.add(new Link(BaseUtil.encodeUrl(this.intranetTitle.getHref()), 
+                         this.intranetTitle.getText()));
         
         return vtr;
     }
@@ -1187,6 +1207,15 @@ public abstract class BaseComponent {
 		return (this.showSearch ? "search: true," : "search: false,");
     }
 
+	/**
+	 * Returns the value of the "topSecMenu" JSON property, based on whether or
+	 * not a left menu is specified.
+	 */
+	public String getRenderTopSecMenu() {
+	    this.setLeftMenuSections();
+        return (this.leftMenuSections == null || this.leftMenuSections.size() <= 0) ? "topSecMenu: false," : "topSecMenu: true,";
+	}
+	
 	/**
 	 * Determines if the Share Page Link of the footer are to be displayed, this can be 
 	 * set in either cdn.properties or by application programmatically.

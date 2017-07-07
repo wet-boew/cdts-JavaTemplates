@@ -1,6 +1,7 @@
 package goc.webtemplate.jsp.samplebeans;
 
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.Link;
 
 import goc.webtemplate.component.jsp.DefaultTemplateBean;
 
@@ -15,6 +16,18 @@ public class ApplicationSampleBean extends DefaultTemplateBean {
 	public void setApplicationTitleText() {
 	    this.applicationTitleText = "My Application";
 	}
+
+    @Override
+    public void setApplicationTitleUrl() {
+        //(will only take effect for ESDC's GCIntranet theme)
+        this.applicationTitleUrl = "#myapplicationurl";
+    }
+    
+    @Override
+    public void setIntranetTitle() {
+        //(will only take effect for ESDC's GCIntranet theme)
+        this.intranetTitle = new Link("#intranetlink", "My Intranet");
+    }
     
     @Override
     public void setShowSecureIcon() {

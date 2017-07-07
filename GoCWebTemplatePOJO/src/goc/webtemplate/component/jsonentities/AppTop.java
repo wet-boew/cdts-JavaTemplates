@@ -20,6 +20,8 @@ public class AppTop implements Serializable {
     private String              subTheme;
     private String              localPath;
     private String              appName;
+    private String              appUrl;
+    private List<Link>          intranetTitle;
     
     private String              menuPath;
     private List<LanguageLink>  lngLinks;
@@ -38,18 +40,24 @@ public class AppTop implements Serializable {
     private List<Breadcrumb>    breadcrumbs;
     private boolean             showPreContent;
     private String              customSearch;
+    /**
+     * Must be true if there is a left section/left side menu, otherwise must be false.
+     */
+    private boolean             topSecMenu;
 
     public AppTop()
     {
     }
 
-    public AppTop(String cdnEnv, String subTheme, String localPath, String appName, String menuPath,
+    public AppTop(String cdnEnv, String subTheme, String localPath, String appName, String appUrl, List<Link> intranetTitle, String menuPath,
             List<LanguageLink> lngLinks, boolean siteMenu, boolean secure, List<Link> signIn, List<Link> signOut,
-            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch) {
+            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
         this.appName = appName;
+        this.appUrl = appUrl;
+        this.intranetTitle = intranetTitle;
         this.menuPath = menuPath;
         this.lngLinks = lngLinks;
         this.siteMenu = siteMenu;
@@ -60,6 +68,7 @@ public class AppTop implements Serializable {
         this.breadcrumbs = breadcrumbs;
         this.showPreContent = showPreContent;
         this.customSearch = customSearch;
+        this.topSecMenu = topSecMenu;
     }
 
     public String getCdnEnv() {
@@ -92,6 +101,22 @@ public class AppTop implements Serializable {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+    
+    public String getAppUrl() {
+        return appUrl;
+    }
+
+    public void setAppUrl(String appUrl) {
+        this.appUrl = appUrl;
+    }
+
+    public List<Link> getIntranetTitle() {
+        return intranetTitle;
+    }
+
+    public void setIntranetTitle(List<Link> intranetTitle) {
+        this.intranetTitle = intranetTitle;
     }
 
     public String getMenuPath() {
@@ -172,5 +197,13 @@ public class AppTop implements Serializable {
     
     public void setCustomSearch(String customSearch) {
         this.customSearch = customSearch;
+    }
+
+    public boolean isTopSecMenu() {
+        return topSecMenu;
+    }
+
+    public void setTopSecMenu(boolean topSecMenu) {
+        this.topSecMenu = topSecMenu;
     }
 }

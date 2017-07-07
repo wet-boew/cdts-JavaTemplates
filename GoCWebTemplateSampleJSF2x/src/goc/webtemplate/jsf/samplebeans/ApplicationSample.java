@@ -1,9 +1,11 @@
 package goc.webtemplate.jsf.samplebeans;
 
 import javax.enterprise.context.RequestScoped;
+
 import javax.inject.Named;
 
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.Link;
 
 import goc.webtemplate.component.jsf.DefaultTemplateBean;
 
@@ -19,6 +21,18 @@ public class ApplicationSample extends DefaultTemplateBean {
     @Override
     public void setApplicationTitleText() {
         this.applicationTitleText = "My Application";
+    }
+
+    @Override
+    public void setApplicationTitleUrl() {
+        //(will only take effect for ESDC's GCIntranet theme)
+        this.applicationTitleUrl = "#myapplicationurl";
+    }
+    
+    @Override
+    public void setIntranetTitle() {
+        //(will only take effect for ESDC's GCIntranet theme)
+        this.intranetTitle = new Link("#intranetlink", "My Intranet");
     }
     
     @Override

@@ -1,35 +1,19 @@
 package goc.webtemplate.jsf.samplebeans;
 
-import goc.webtemplate.component.jsf.DefaultTemplateBean;
+import goc.webtemplate.ApplicationTitle;
 
-public class IntranetSample extends DefaultTemplateBean {
-	@Override
-	public void setHeaderTitle() { 
-		this.headerTitle = "GCIntranet Sample Page"; 
-	}
-	
-	@Override
-	public void setCDNEnvironment() {
-		this.cdnEnvironment = "ESDCProd";
-	}
-	
-	@Override
-	public void setSubTheme() {
-		this.subTheme = "esdc";
-	}
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
-	@Override
-	public void setTheme() {
-		this.mainTheme = "gcintranet";
-	}
+public class IntranetSample extends DefaultTemplateCoreBean {
+    
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setHeaderTitle("GCIntranet Sample Page"); 
+        
+        this.setCDNEnvironment("ESDCProd");
+        this.setTheme("gcintranet");
+        this.setSubTheme("esdc");
 
-	@Override
-	public void setApplicationTitleText() {
-		this.applicationTitleText = "GCIntranet Site";
-	}
-
-	@Override
-	public void setApplicationTitleUrl() {
-		this.applicationTitleUrl = "http://www.google.ca";
-	}
+        this.setApplicationTitle(new ApplicationTitle("GCIntranet Site", "http://www.google.ca"));
+    }
 }

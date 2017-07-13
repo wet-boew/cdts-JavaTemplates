@@ -1,11 +1,11 @@
 package goc.webtemplate.jsp.samplebeans;
 
-import goc.webtemplate.component.jsp.DefaultTemplateBean;
+import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
-public class NestedMasterPageTemplateBean extends DefaultTemplateBean {
+public class NestedMasterPageTemplateBean extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setDateModified() {
-		this.dateModified = new java.util.Date();
-	}
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setDateModified(new java.util.Date());
+    }
 }

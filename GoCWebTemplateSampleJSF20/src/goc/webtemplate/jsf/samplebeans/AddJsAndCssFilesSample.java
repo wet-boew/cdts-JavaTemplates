@@ -1,18 +1,15 @@
 package goc.webtemplate.jsf.samplebeans;
 
-import goc.webtemplate.component.jsf.DefaultTemplateBean;;
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;;
 
-public class AddJsAndCssFilesSample extends DefaultTemplateBean {
+public class AddJsAndCssFilesSample extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setHtmlBodyElements() {
-		// Add a JS to the body (bottom of page)
-		this.htmlBodyElements.add("<script src='myJS.js'></script>");
-	}
-
-	@Override
-	public void setHtmlHeaderElements() {
-		// Add a CSS to the header
-		this.htmlHeaderElements.add("<link rel='stylesheet' type='text/css' href='mystyle.css'>");
-	}
+    @Override
+    public void onWebTemplateInitialize() {
+        // Add a CSS to the header
+        this.getHtmlHeaderElements().add("<link rel='stylesheet' type='text/css' href='samplecontents/mystyle.css'>");
+        
+        // Add a JS to the body (bottom of page)
+        this.getHtmlBodyElements().add("<script src='samplecontents/myJS.js'></script>");
+    }
 }

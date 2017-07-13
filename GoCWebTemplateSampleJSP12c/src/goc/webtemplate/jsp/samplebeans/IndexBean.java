@@ -1,10 +1,10 @@
 package goc.webtemplate.jsp.samplebeans;
 
-import goc.webtemplate.component.jsp.DefaultTemplateBean;
+import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
 import java.util.ResourceBundle;
 
-public class IndexBean extends DefaultTemplateBean {
+public class IndexBean extends DefaultTemplateCoreBean {
 
 	public String getBundleValues() {
 		String elem = "";
@@ -16,7 +16,7 @@ public class IndexBean extends DefaultTemplateBean {
 			sb.append("<strong>" + elem + "</strong> = " + bundle.getString(elem) + "<br />");
 		}
 		sb.append("<br />");
-		sb.append("<strong>default switch language url</strong> = " + this.getDefaultLangLinkUrl() + "<br />");
+		sb.append("<strong>default switch language url</strong> = " + this.getDefaultLanguageLinkUrl() + "<br />");
 		sb.append("<strong>default leave secure site redirect url</strong> = " + this.getDefaultLeaveSecureSiteRedirectUrl());
 		
 		return sb.toString();

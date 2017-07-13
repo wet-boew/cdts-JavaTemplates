@@ -1,16 +1,12 @@
 package goc.webtemplate.jsf.samplebeans;
 
-import goc.webtemplate.component.jsf.DefaultTemplateBean;
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
-public class TransactionSample extends DefaultTemplateBean {
+public class TransactionSample extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setPrivacyLinkUrl() {
-		this.privacyLinkUrl = "http://www.tsn.ca";
-	}
-
-	@Override
-	public void setTermsConditionsLinkUrl() {
-		this.termsConditionsLinkUrl = "http://www.lapresse.ca";
-	}
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setPrivacyLinkUrl("http://www.tsn.ca");
+        this.setTermsConditionsLinkUrl("http://www.lapresse.ca");
+    }
 }

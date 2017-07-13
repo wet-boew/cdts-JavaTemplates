@@ -1,23 +1,18 @@
 package goc.webtemplate.jsf.samplebeans;
 
 import goc.webtemplate.Constants;
-import goc.webtemplate.component.jsf.DefaultTemplateBean;
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
-public class FeedbackAndShareThisPageSample extends DefaultTemplateBean {
+public class FeedbackAndShareThisPageSample extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setSharePageMediaSites() {
-		this.sharePageMediaSites.add(Constants.SocialMediaSites.bitly);
-        this.sharePageMediaSites.add(Constants.SocialMediaSites.facebook);
-        this.sharePageMediaSites.add(Constants.SocialMediaSites.twitter);
-	}
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setShowFeedbackLink(true);
+        this.setFeedbackUrl("http://www.google.ca"); 
 
-	@Override
-	public void setShowFeedbackLink() { this.showFeedbackLink = true; }
-
-	@Override
-	public void setFeedbackUrl() { this.feedbackUrl = "http://www.google.ca"; }
-
-	@Override
-	public void setShowSharePageLink() { this.showSharePageLink = true; }
+        this.setShowSharePageLink(true);
+        this.getSharePageMediaSites().add(Constants.SocialMediaSites.bitly);
+        this.getSharePageMediaSites().add(Constants.SocialMediaSites.facebook);
+        this.getSharePageMediaSites().add(Constants.SocialMediaSites.twitter);
+    }
 }

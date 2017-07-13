@@ -1,12 +1,11 @@
 package goc.webtemplate.jsf.samplebeans;
 
-import goc.webtemplate.component.jsf.DefaultTemplateBean;
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
-public class FooterLinksSample extends DefaultTemplateBean {
-    
+public class FooterLinksSample extends DefaultTemplateCoreBean {
+
     @Override
-    public void setContactLinkUrl()
-    {
-        this.contactLinkUrl = "http://travel.gc.ca/";
+    public void onWebTemplateInitialize() {
+        this.setContactLinkUrl("http://travel.gc.ca/");        
     }
 }

@@ -1,15 +1,17 @@
 package goc.webtemplate.jsp.samplebeans;
 
-import goc.webtemplate.component.jsp.DefaultTemplateBean;
+import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
-public class ExtendedBasePageSampleBean extends DefaultTemplateBean {
+public class ExtendedBasePageSampleBean extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setHeaderTitle() {
-		this.headerTitle = "Title set for everpage!";
-	}
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setHeaderTitle("Title set for every page!");
+    }
 
-	public String getWeather() { return "Sunny"; }
+	public String getWeather() { 
+	    return "Sunny"; 
+    }
 	
 	public String getSessionId() {
 		return this.getRequest().getSession().getId();

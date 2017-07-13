@@ -1,34 +1,45 @@
 package goc.webtemplate.jsf.samplebeans;
 
+import java.util.ArrayList;
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.SessionTimeout;
-import goc.webtemplate.component.jsf.DefaultTemplateBean;
 
-public class SessionTimeoutSample extends DefaultTemplateBean {
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
-	@Override
-	public void setSessionTimeoutConfigurations() {
-		SessionTimeout configs = new SessionTimeout();
-		
-		configs.setInActivity(30000);
-		configs.setReactionTime(10000);
-		configs.setSessionAlive(30000);
-		configs.setLogoutUrl("SessionTimeoutLogout.xhtml");            
-		configs.setRefreshCallbackUrl("SessionTimeoutValidity.xhtml");
-		configs.setRefreshOnClick(false);
-		configs.setRefreshLimit(3);
-		configs.setMethod("");
-		configs.setAdditionalData("");
-		
-		this.sessionTimeoutConfigurations = configs;
-	}
-	
-	@Override
-	public void setSessionTimeoutEnabled() { this.sessionTimeoutEnabled = true; }
+public class SessionTimeoutSample extends DefaultTemplateCoreBean {
+
+    @Override
+    public void onWebTemplateInitialize() {
+        ArrayList<Breadcrumb>   bcs = new ArrayList<Breadcrumb>();
+        
+        bcs.add(new Breadcrumb("http://www.canada.ca/en/index.html", "Home", ""));
+        bcs.add(new Breadcrumb("http://www.esdc.gc.ca/en/jobs/opportunities/index.page", "Jobs", ""));
+        bcs.add(new Breadcrumb("http://www.esdc.gc.ca/en/jobs/opportunities/youth_students.page", "Opportunities", ""));
+        bcs.add(new Breadcrumb("", "FSWEP", "Federal Student Work Experience Program"));
+        
+        this.setBreadcrumbs(bcs);
+
+        SessionTimeout sconfig = new SessionTimeout();
+        
+        sconfig.setEnabled(true);
+        sconfig.setInActivity(30000);
+        sconfig.setReactionTime(10000);
+        sconfig.setSessionAlive(30000);
+        sconfig.setLogoutUrl("sessiontimeoutlogout.jsp");            
+        sconfig.setRefreshCallbackUrl("sessiontimeoutvalidity.jsp");
+        sconfig.setRefreshOnClick(false);
+        sconfig.setRefreshLimit(3);
+        sconfig.setMethod("");
+        sconfig.setAdditionalData("");
+        
+        this.setSessionTimeoutConfiguration(sconfig);
+    }
 	
 	public String getLogoutAction() {
 		try {

@@ -138,6 +138,9 @@ public class DefaultTemplateBean extends BaseBean {
 	@Override
 	public void setApplicationTitleUrl() {}
 
+    @Override
+    public void setIntranetTitle() {}
+
 	@Override
 	public void setLoadjQueryFromGoogle() {}
 

@@ -61,6 +61,7 @@
                 subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
                 <s:property value="#goctemplateclientbean.renderApplicationTitle" escape="false" />
                 <s:property value="#goctemplateclientbean.renderShowSearch" />
+				<s:property value="#goctemplateclientbean.renderTopSecMenu" />
                 <s:property value="#goctemplateclientbean.renderLanguageLink" escape="false" />
                 showPreContent: <s:property value="#goctemplateclientbean.showPreContent" />,
                 <s:property value="#goctemplateclientbean.breadcrumbsList" />

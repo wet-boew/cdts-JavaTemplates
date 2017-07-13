@@ -1,4 +1,12 @@
 ************************************************************************************************************
+4.0.25.1 - 2017-07-10
+    -Implementation of WET/CDTS v4.0.25
+    -Updated static fallback files
+    -Added an URL to the application title in the Application Template
+    -Added an Intranet Title to the Application Template 
+    -Bug fixes
+
+************************************************************************************************************
 4.0.24.1 - 2017-04-18
     -Implementation of WET/CDTS v4.0.24
     -Updated static fallback files

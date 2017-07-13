@@ -34,6 +34,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
 	public abstract void setSubTheme();
 	public abstract void setApplicationTitleText();
 	public abstract void setApplicationTitleUrl();
+	public abstract void setIntranetTitle();
 	public abstract void setUseHttps();
 	public abstract void setLoadjQueryFromGoogle();
 	public abstract void setHeaderTitle();
@@ -107,6 +108,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
 	protected String headerTitle = "";
 	protected String applicationTitleText = "";
 	protected String applicationTitleUrl = "";
+	protected Link intranetTitle = null;
 	protected boolean showSearch = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsearch"));
     protected String langLinkUrl = "";
     protected boolean showPreContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showprecontent"));
@@ -182,6 +184,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setSubTheme();
         this.setApplicationTitleText();
         this.setApplicationTitleUrl();
+        this.setIntranetTitle();
         this.setUseHttps();
         this.setLoadjQueryFromGoogle();
         this.setHeaderTitle();
@@ -233,6 +236,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setLoadJQueryFromGoogle(this.loadjQueryFromGoogle);
         this.setHeaderTitle(this.headerTitle);
         this.setApplicationTitle(new ApplicationTitle(this.applicationTitleText, this.applicationTitleUrl));
+        this.setIntranetTitle(this.intranetTitle);
         this.setShowSearch(this.showSearch);
         this.setLanguageLinkUrl(this.langLinkUrl);
         this.setShowPreContent(this.showPreContent);

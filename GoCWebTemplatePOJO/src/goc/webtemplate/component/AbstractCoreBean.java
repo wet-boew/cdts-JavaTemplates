@@ -77,6 +77,7 @@ public abstract class AbstractCoreBean {
     private String cdnLocalPath = null;
     private String headerTitle = "";
     private ApplicationTitle applicationTitle = new ApplicationTitle();
+    private Link intranetTitle = null;    
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
     private String contactLinkUrl = null;
@@ -342,6 +343,20 @@ public abstract class AbstractCoreBean {
      */
     public void setApplicationTitle(ApplicationTitle value) {
         this.applicationTitle = value;
+    }
+    
+    /**
+     * Returns the "intranet title" (displayed at very top) for ESDC intranet theme. 
+     */
+    public Link getIntranetTitle() {
+        return this.intranetTitle;
+    }
+    
+    /**
+     * Sets the "intranet title" (displayed at very top) for ESDC intranet theme. 
+     */
+    public void setIntranetTitle(Link value) {
+        this.intranetTitle = value;
     }
     
     /**
@@ -1312,6 +1327,18 @@ public abstract class AbstractCoreBean {
         return vtr;
     }    
     
+    private ArrayList<Link> buildIntranetTitleList() {
+        ArrayList<Link> vtr;
+        
+        if (this.intranetTitle == null) return null;
+        
+        vtr = new ArrayList<Link>(1);
+        vtr.add(new Link(BaseUtil.encodeUrl(this.intranetTitle.getHref()), 
+                         this.intranetTitle.getText()));
+        
+        return vtr;
+    }
+    
     private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
     {
         ArrayList<Link> vtr;
@@ -1383,6 +1410,8 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
                     JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
                     JsonValueUtils.GetNonEmptyString(this.applicationTitle.getText()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getUrl()),
+                    this.buildIntranetTitleList(),
                     JsonValueUtils.GetNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
                     this.buildLanguageLinkList(),
                     this.getShowSiteMenu(),
@@ -1392,7 +1421,8 @@ public abstract class AbstractCoreBean {
                     this.showSearch,
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
-                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch())
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
+                    (this.leftMenuSections != null && this.leftMenuSections.size() > 0) //true if there is at least one left menu section defined
                 );
 
         //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
@@ -1439,6 +1469,15 @@ public abstract class AbstractCoreBean {
     public String getRenderShowSearch() {//TODO: Remove this method once the templates are modified to use JSON serialization
         return (this.getShowSearch() ? "search: true," : "search: false,");
     }
+    
+    /**
+     * @deprecated  This method should not be used, it will be removed in a futrue version.
+     */
+    @Deprecated
+    public String getRenderTopSecMenu() {
+        this.initializeOnce();
+        return (this.leftMenuSections == null || this.leftMenuSections.size() <= 0) ? "topSecMenu: false," : "topSecMenu: true,";
+    }    
     
     /**
      * Builds the html of the WET Session Timeout Control that provided session timeout and inactivity functionality.

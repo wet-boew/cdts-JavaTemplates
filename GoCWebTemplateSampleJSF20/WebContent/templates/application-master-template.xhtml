@@ -25,12 +25,7 @@
             </noscript>
             <!-- Write closure template -->
             <script type="text/javascript">
-                document.write(wet.builder.refTop({
-                    cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}",
-                    subTheme: "#{goctemplateclientbean.subTheme}",
-                    #{goctemplateclientbean.renderjQuery} 
-                    #{goctemplateclientbean.renderLocalPath}
-                }));
+                document.write(wet.builder.refTop(#{goctemplateclientbean.renderRefTop}));
             </script>
             <h:outputText value="#{goctemplateclientbean.renderHtmlHeaderElements}" escape="false" />
             <!--  GoC Web Template Build Version #{goctemplateclientbean.webTemplateDistributionVersion} -->

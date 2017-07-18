@@ -24,6 +24,7 @@ import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
+import goc.webtemplate.component.jsonentities.RefTop;
 
 /**
  * This is the base class from all template configuration beans, inherited by both
@@ -1365,10 +1366,56 @@ public abstract class AbstractCoreBean {
     
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "refTop"
+     */
+    public String getRenderRefTop() {
+        return gson.toJson(new RefTop(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    this.getLoadJQueryFromGoogle() ? "external" : null,
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                ));        
+    }
+    
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appTop"
+     */
+    public String getRenderAppTop() {
+        AppTop  appTop;
+
+        appTop = new AppTop(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getText()),
+                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getUrl()),
+                    this.buildIntranetTitleList(),
+                    JsonValueUtils.GetNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
+                    this.buildLanguageLinkList(),
+                    this.getShowSiteMenu(),
+                    this.getShowSecureIcon(),
+                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
+                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.showSearch,
+                    this.getEncodedBreadcrumbs(),
+                    this.showPreContent,
+                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
+                    (this.leftMenuSections != null && this.leftMenuSections.size() > 0) //true if there is at least one left menu section defined
+                    );
+
+        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
+        this.checkIfBothShowSignInAndOutAreSet();
+
+        return gson.toJson(appTop);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
      * as parameter for the "appFooter"
      */
-    public String getRenderAppFooter()
-    {
+    public String getRenderAppFooter() {
         AppFooter               appFooter;
         ArrayList<FooterLink>   tmpFooterLinks = null;
         
@@ -1395,40 +1442,6 @@ public abstract class AbstractCoreBean {
                 );
         
         return gson.toJson(appFooter);
-    }
-    
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used 
-     * as parameter for the "appTop"
-     */
-    public String getRenderAppTop()
-    {
-        AppTop                  appTop;
-
-        appTop = new AppTop(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
-                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
-                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getText()),
-                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getUrl()),
-                    this.buildIntranetTitleList(),
-                    JsonValueUtils.GetNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
-                    this.buildLanguageLinkList(),
-                    this.getShowSiteMenu(),
-                    this.getShowSecureIcon(),
-                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
-                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
-                    this.showSearch,
-                    this.getEncodedBreadcrumbs(),
-                    this.showPreContent,
-                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
-                    (this.leftMenuSections != null && this.leftMenuSections.size() > 0) //true if there is at least one left menu section defined
-                );
-
-        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
-        this.checkIfBothShowSignInAndOutAreSet();
-        
-        return gson.toJson(appTop);
     }
     
     /**

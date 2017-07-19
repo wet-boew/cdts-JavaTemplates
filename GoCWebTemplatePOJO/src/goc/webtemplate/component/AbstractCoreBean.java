@@ -25,6 +25,7 @@ import goc.webtemplate.Utility;
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.RefTop;
+import goc.webtemplate.component.jsonentities.Top;
 
 /**
  * This is the base class from all template configuration beans, inherited by both
@@ -1340,6 +1341,10 @@ public abstract class AbstractCoreBean {
         return vtr;
     }
     
+    private boolean getHasLeftMenuSections() {
+        return (this.leftMenuSections != null && this.leftMenuSections.size() > 0);
+    }
+    
     private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
     {
         ArrayList<Link> vtr;
@@ -1399,6 +1404,43 @@ public abstract class AbstractCoreBean {
                 ));        
     }
     
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "top"
+     */
+    public String getRenderTop() {
+        return gson.toJson(new Top(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    this.buildIntranetTitleList(),
+                    this.showSearch,
+                    this.buildLanguageLinkList(),
+                    this.showPreContent,
+                    this.getEncodedBreadcrumbs(),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    true, //siteMenu
+                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                ));        
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "top" for transactional pages.
+     */
+    public String getRenderTransactionalTop() {
+        return gson.toJson(new Top(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    this.buildIntranetTitleList(),
+                    this.showSearch,
+                    this.buildLanguageLinkList(),
+                    false, //preContent
+                    this.getEncodedBreadcrumbs(),
+                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    false, //siteMenu
+                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                ));        
+    }
     
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
@@ -1424,7 +1466,7 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
                     JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
-                    (this.leftMenuSections != null && this.leftMenuSections.size() > 0) //true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                     );
 
         //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)

@@ -42,18 +42,7 @@
 	        <!-- Write closure template -->
 	        <script type="text/javascript">
 	            var defTop = document.getElementById("def-top");
-	            defTop.outerHTML = wet.builder.top({
-	                cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}",
-	                subTheme: "#{goctemplateclientbean.subTheme}", 
-	                #{goctemplateclientbean.renderApplicationTitle}
-	                #{goctemplateclientbean.renderShowSearch}
-                    #{goctemplateclientbean.renderTopSecMenu}
-	                #{goctemplateclientbean.renderLanguageLink}
-	                siteMenu: false, 
-	                #{goctemplateclientbean.breadcrumbsList}
-	                showPreContent: false,
-                    #{goctemplateclientbean.renderLocalPath}
-	            });
+	            defTop.outerHTML = wet.builder.top(#{goctemplateclientbean.renderTransactionalTop});
 	        </script>
 	        <div class="container">
 	        	<div class="row">

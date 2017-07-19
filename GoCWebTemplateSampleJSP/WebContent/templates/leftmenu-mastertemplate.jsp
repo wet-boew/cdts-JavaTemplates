@@ -51,17 +51,7 @@
         <!-- Write closure template -->
         <script type="text/javascript">
             var defTop = document.getElementById("def-top");
-            defTop.outerHTML = wet.builder.top({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
-                subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
-                <s:property value="#goctemplateclientbean.renderApplicationTitle" escape="false" />
-                <s:property value="#goctemplateclientbean.renderShowSearch" />
-				<s:property value="#goctemplateclientbean.renderTopSecMenu" />
-                <s:property value="#goctemplateclientbean.renderLanguageLink" escape="false" />
-                showPreContent: <s:property value="#goctemplateclientbean.showPreContent" />,
-                <s:property value="#goctemplateclientbean.breadcrumbsList" />
-                <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
-            });
+            defTop.outerHTML = wet.builder.top(<s:property escape="false" value="#goctemplateclientbean.renderTop" />);
         </script>
         <div class="container">
         	<div class="row">

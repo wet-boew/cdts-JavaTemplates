@@ -43,7 +43,7 @@
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" typeof="WebPage">		
-		<s:property escape="false" value="#goctemplateclientbean.sessionTimeoutControl" />
+		<s:property escape="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
         <div id="def-top">
             <!-- Write closure fall-back static file -->
             <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'appTop-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />

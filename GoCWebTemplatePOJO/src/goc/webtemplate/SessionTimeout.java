@@ -2,10 +2,11 @@ package goc.webtemplate;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
 public class SessionTimeout implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private boolean enabled = false;
-	private int inActivity = 0;
+	private int inactivity = 0;
 	private int reactionTime = 0;
 	private int sessionAlive = 0;
 	private String logoutUrl = "";
@@ -36,7 +37,7 @@ public class SessionTimeout implements Serializable {
             String method, String additionaldata) {
 
         this.enabled = enabled;
-        this.inActivity = inactivity;
+        this.inactivity = inactivity;
         this.reactionTime = reactiontime;
         this.sessionAlive = sessionalive;
         this.logoutUrl = logouturl;
@@ -55,12 +56,12 @@ public class SessionTimeout implements Serializable {
         this.enabled = enabled;
     }
     
-	public int getInActivity() {
-		return inActivity;
+	public int getInactivity() {
+		return inactivity;
 	}
 
-	public void setInActivity(int inActivity) {
-		this.inActivity = inActivity;
+	public void setInactivity(int inActivity) {
+		this.inactivity = inActivity;
 	}
 
 	public int getReactionTime() {

@@ -1190,7 +1190,7 @@ public abstract class AbstractCoreBean {
         
         if (bundle != null) {
             configs.setEnabled(Boolean.parseBoolean(bundle.getString("session.timeout.enabled")));
-            configs.setInActivity(Integer.parseInt(bundle.getString("session.inactivity.value")));
+            configs.setInactivity(Integer.parseInt(bundle.getString("session.inactivity.value")));
             configs.setReactionTime(Integer.parseInt(bundle.getString("session.reactiontime.value")));
             configs.setSessionAlive(Integer.parseInt(bundle.getString("session.sessionalive.value")));
             configs.setLogoutUrl(bundle.getString("session.logouturl"));
@@ -1303,11 +1303,11 @@ public abstract class AbstractCoreBean {
         
         if (elems != null && elems.size() > 0)
         {
-            int idx = 0;
+            sb.append("\r\n");
             for (String elem : elems) 
             {
-                sb.append((idx == 0 ? "\r\n" : "") + elem + (idx == (elems.size() - 1) ? "" : "\r\n"));
-                idx++;
+                sb.append(elem);
+                sb.append("\r\n");
             }
         }
             
@@ -1362,6 +1362,28 @@ public abstract class AbstractCoreBean {
             System.err.println(this.getClass().getName() + ": ERROR: Both showSignInLink and showSignOutLink must not be enabled at the same time.");
             throw new java.lang.IllegalStateException("Both showSignInLink and showSignOutLink must not be enabled at the same time.");
         }
+    }
+    
+    /**
+     * Builds the html of the WET Session Timeout Control that provided session timeout and inactivity functionality.
+     * For more documentation: https://wet-boew.github.io/v4.0-ci/demos/session-timeout/session-timeout-en.html
+     * 
+     * @return the html of the WET session timeout control
+     */
+    public String getRenderSessionTimeoutControl() {
+        
+        StringBuilder   sb;
+        SessionTimeout  configs = this.getSessionTimeoutConfiguration();
+        
+        if (!configs.isEnabled()) return "";
+        
+        sb = new StringBuilder();
+        
+        sb.append("<span class='wb-sessto' data-wb-sessto='");
+        sb.append(gson.toJson(new goc.webtemplate.component.jsonentities.SessionTimeout(configs)));
+        sb.append("'></span>");
+
+        return sb.toString();
     }
     
     /**
@@ -1491,63 +1513,6 @@ public abstract class AbstractCoreBean {
         this.initializeOnce();
         return (this.leftMenuSections == null || this.leftMenuSections.size() <= 0) ? "topSecMenu: false," : "topSecMenu: true,";
     }    
-    
-    /**
-     * Builds the html of the WET Session Timeout Control that provided session timeout and inactivity functionality.
-     * For more documentation: https://wet-boew.github.io/v4.0-ci/demos/session-timeout/session-timeout-en.html
-     * 
-     * @return the html of the WET session timeout control
-     * @deprecated  This method should not be used, it will be removed in a futrue version.
-     */
-    @Deprecated
-    public String getSessionTimeoutControl() {//TODO: Remove this method once the templates are modified to use JSON serialization
-        StringBuilder sb = new StringBuilder();
-        
-        SessionTimeout configs = this.getSessionTimeoutConfiguration();
-        
-        if (configs.isEnabled()) { 
-            sb.append("<span class='wb-sessto' data-wb-sessto='{");
-            sb.append("\"inactivity\": ");
-            sb.append(configs.getInActivity());
-            sb.append(", \"reactionTime\": ");
-            sb.append(configs.getReactionTime());
-            sb.append(", \"sessionalive\": ");
-            sb.append(configs.getSessionAlive());
-            sb.append(", \"logouturl\": \"");
-            sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(configs.getLogoutUrl())));
-            sb.append("\"");
-            
-            if (!Utility.isNullOrEmpty(configs.getRefreshCallbackUrl())) {
-                sb.append(", \"refreshCallbackUrl\": \"");
-                sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(configs.getRefreshCallbackUrl())));
-                sb.append("\"");
-            }
-            
-            sb.append(", \"refreshOnClick\": ");
-            sb.append(configs.isRefreshOnClick());
-            
-            if (configs.getRefreshLimit() > 0) {
-                sb.append(", \"refreshLimit\": ");
-                sb.append(configs.getRefreshLimit());
-            }
-            
-            if (!Utility.isNullOrEmpty(configs.getMethod())) {
-                sb.append(", \"method\": \"");
-                sb.append(StringEscapeUtils.escapeHtml4(configs.getMethod()));
-                sb.append("\"");
-            }
-            
-            if (!Utility.isNullOrEmpty(configs.getAdditionalData())) {
-                sb.append(", \"additionalData\": \"");
-                sb.append(StringEscapeUtils.escapeHtml4(configs.getAdditionalData()));
-                sb.append("\"");
-            }
-            
-            sb.append("}'></span>");
-        }
-        return sb.toString();
-    }
-    
     
     /**
      * Builds a string with the format required by the closure template, to represent the "localPath" argument,

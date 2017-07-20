@@ -27,6 +27,7 @@ import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.PreFooter;
+import goc.webtemplate.component.jsonentities.RefFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.Top;
@@ -215,7 +216,7 @@ public abstract class AbstractCoreBean {
      */
     public String getStaticFallbackFilePath() {
         this.initializeOnce();
-        return StringEscapeUtils.escapeHtml4(this.staticFallbackFilePath); //TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
+        return StringEscapeUtils.escapeHtml4(this.staticFallbackFilePath); 
     }
 
     /**
@@ -1425,7 +1426,7 @@ public abstract class AbstractCoreBean {
         return gson.toJson(new RefTop(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
-                    this.getLoadJQueryFromGoogle() ? "external" : null,
+                    this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
                     JsonValueUtils.GetNonEmptyString(this.getLocalPath())
                 ));        
     }
@@ -1598,6 +1599,19 @@ public abstract class AbstractCoreBean {
                 );
         
         return gson.toJson(appFooter);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "refFooter"
+     */
+    public String getRenderRefFooter() {
+        return gson.toJson(new RefFooter(
+                this.getCdtsCdnEnv(),
+                this.getLeavingSecureSiteWarning(),
+                this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
+                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+            ));        
     }
     
     /**

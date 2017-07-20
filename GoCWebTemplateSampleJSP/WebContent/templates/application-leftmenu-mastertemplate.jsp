@@ -93,12 +93,7 @@
         </script>
         <!-- Write closure template -->
 		<script type="text/javascript">
-		    document.write(wet.builder.refFooter({
-		        cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
-		        <s:property escape="false" value="#goctemplateclientbean.renderLeavingSecureSiteWarning" />
-		        <s:property escape="false" value="#goctemplateclientbean.renderjQuery" />
-                <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
-		    }));
+		    document.write(wet.builder.refFooter(<s:property escape="false" value="#goctemplateclientbean.renderRefFooter" />));
 		</script>
         <s:property escape="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>

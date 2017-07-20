@@ -66,12 +66,7 @@
 	        </script>
 	        <!-- Write closure template -->
             <script type="text/javascript">
-                document.write(wet.builder.refFooter({
-                    cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}", 
-                    #{goctemplateclientbean.renderLeavingSecureSiteWarning}
-                	#{goctemplateclientbean.renderjQuery} 
-                    #{goctemplateclientbean.renderLocalPath}
-                }));
+                document.write(wet.builder.refFooter(#{goctemplateclientbean.renderRefFooter}));
             </script>
 	        <h:outputText value="#{goctemplateclientbean.renderHtmlBodyElements}" escape="false" />
 	    </body>

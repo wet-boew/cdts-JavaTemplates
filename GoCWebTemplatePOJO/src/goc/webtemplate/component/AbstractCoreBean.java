@@ -25,6 +25,7 @@ import goc.webtemplate.Utility;
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
+import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.PreFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.ShareList;
@@ -566,7 +567,8 @@ public abstract class AbstractCoreBean {
      */
     public String getPrivacyLinkUrl() {
         this.initializeOnce();
-        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.privacyLinkUrl));
+        //return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.privacyLinkUrl));
+        return this.privacyLinkUrl;
     }
     
     /**
@@ -818,7 +820,8 @@ public abstract class AbstractCoreBean {
      */
     public String getTermsConditionsLinkUrl() {
         this.initializeOnce();
-        return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.termsConditionsLinkUrl));//TODO: Escaping will no longer be needed once/if value is used only with JSON serialization
+        //return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.termsConditionsLinkUrl));
+        return this.termsConditionsLinkUrl;
     }
     
     /**
@@ -1528,6 +1531,40 @@ public abstract class AbstractCoreBean {
                 new ShareList(false, null),
                 JsonValueUtils.GetNonEmptyString(this.getScreenIdentifier())
               ));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "footer"
+     */
+    public String getRenderFooter() {
+        return gson.toJson(new Footer(
+                this.getCdtsCdnEnv(),
+                JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                true, //showFooter
+                this.getShowFeature(),
+                JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
+                null, //privacyLink
+                null, //termsLink
+                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+            ));        
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "footer" for transactional template
+     */
+    public String getRenderTransactionalFooter() {
+        return gson.toJson(new Footer(
+                this.getCdtsCdnEnv(),
+                JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                false, //showFooter
+                this.getShowFeature(),
+                JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
+                JsonValueUtils.GetNonEmptyString(this.getPrivacyLinkUrl()),
+                JsonValueUtils.GetNonEmptyString(this.getTermsConditionsLinkUrl()),
+                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+            ));        
     }
     
     /**

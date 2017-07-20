@@ -1,6 +1,7 @@
 package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import goc.webtemplate.Breadcrumb;

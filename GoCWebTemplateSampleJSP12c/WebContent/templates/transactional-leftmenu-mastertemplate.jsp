@@ -92,16 +92,7 @@
         <!-- Write closure template -->
         <script type="text/javascript">
             var defFooter = document.getElementById("def-footer");
-            defFooter.outerHTML = wet.builder.footer({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv"/>",
-                subTheme: "<s:property value="#goctemplateclientbean.subTheme"/>",
-                showFooter: false, 
-                termsLink: "<s:property value="#goctemplateclientbean.termsConditionsLinkUrl" />", 
-                privacyLink: "<s:property value="#goctemplateclientbean.privacyLinkUrl" />",  
-                <s:property value="#goctemplateclientbean.renderFeatures" />
-                <s:property value="#goctemplateclientbean.renderLinksList" />
-                <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
-            });
+            defFooter.outerHTML = wet.builder.footer(<s:property escape="false" value="#goctemplateclientbean.renderTransactionalFooter" />);
         </script>
         <!-- Write closure template -->
         <script type="text/javascript">

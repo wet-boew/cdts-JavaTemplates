@@ -24,7 +24,10 @@ import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
+import goc.webtemplate.component.jsonentities.FeedbackLink;
+import goc.webtemplate.component.jsonentities.PreFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
+import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.Top;
 
 /**
@@ -1315,6 +1318,26 @@ public abstract class AbstractCoreBean {
         return sb.toString();
     }
 
+    private String buildDateModified() {
+        Date    sourceDate = this.getDateModified();
+
+        //If we have a date set, return it
+        if (sourceDate != null) return dateModifiedFormat.get().format(sourceDate);
+        //If we don't have a date, but we have a versionIdentifier: no date modified at all!
+        if (!Utility.isNullOrEmpty(this.getVersionIdentifier())) return null;
+        //If we don't have a date nor a versionIdentifier, return epoc date as default
+        return dateModifiedFormat.get().format(new Date(0));       
+    }    
+    
+    private String buildVersionIdentifier() {
+        //If we have a date set or no versionIdentifier specified: return null
+        if ((this.getDateModified() != null) ||
+             Utility.isNullOrEmpty(this.getVersionIdentifier())) return null;
+                
+        //If we don't have a date set, but we have a versionIdentifier, return the version
+        return this.getVersionIdentifier();
+    }
+    
     private ArrayList<LanguageLink> buildLanguageLinkList()
     {
         ArrayList<LanguageLink> vtr;
@@ -1473,6 +1496,38 @@ public abstract class AbstractCoreBean {
         this.checkIfBothShowSignInAndOutAreSet();
 
         return gson.toJson(appTop);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "preFooter"
+     */
+    public String getRenderPreFooter() {
+        return gson.toJson(new PreFooter(
+                this.getCdtsCdnEnv(),
+                this.buildVersionIdentifier(),
+                this.buildDateModified(),
+                this.showPostContent,
+                new FeedbackLink(this.showFeedbackLink, this.feedbackUrl),
+                new ShareList(this.showSharePageLink, this.sharePageMediaSites),
+                JsonValueUtils.GetNonEmptyString(this.getScreenIdentifier())
+              ));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "preFooter" for transactional template.
+     */
+    public String getRenderTransactionalPreFooter() {
+        return gson.toJson(new PreFooter(
+                this.getCdtsCdnEnv(),
+                this.buildVersionIdentifier(),
+                this.buildDateModified(),
+                false, //showPostContent,
+                new FeedbackLink(false, null),
+                new ShareList(false, null),
+                JsonValueUtils.GetNonEmptyString(this.getScreenIdentifier())
+              ));
     }
     
     /**

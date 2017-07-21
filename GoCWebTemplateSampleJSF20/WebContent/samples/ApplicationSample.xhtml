@@ -21,7 +21,7 @@
 </div>
 
 <h2>Pre-requisite</h2>
-<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.ApplicationSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
 <p>The custom bean name must be <strong>goctemplateclientbean</strong> and a <strong>request</strong> parameter must be also be present as follow:</p>
@@ -35,13 +35,16 @@
 
 <h2>Application Name</h2>
 <p>
-    This setting determines the application title for your site. Set programmatically by overriding the <code class="wb-prettify">setApplicationTitleText()</code> method in your custom bean class.
+    This setting determines the application title for your site. Set programmatically by calling the <code class="wb-prettify">setApplicationTitleText</code> method in your custom bean class.
 </p>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
-public void setApplicationTitleText() {
-    this.applicationTitleText = "My Application";
+public void onWebTemplateInitialize() {
+//...
+    //NOTE: Application Title's URL will only take effect for ESDC's GCIntranet theme
+    this.setApplicationTitle(new ApplicationTitle("My Application", "#myapplicationurl"));
+//...        
 }
     </pre>
 </div>
@@ -60,11 +63,16 @@ public void setApplicationTitleText() {
 </ul>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
-//NOTE: showGlobalNav must be false for the footer links to appear.
 @Override
-public void setCustomFooterLinks() {
-    this.customFooterLinks.add(new FooterLink("#", "Footer Link 1", false));
-    this.customFooterLinks.add(new FooterLink("#", "Footer Link 2", true));
+public void onWebTemplateInitialize() {
+//...
+    //NOTE: showGlobalNav must be false for the footer links to appear.
+    this.setCustomFooterLinks(new ArrayList&lt;FooterLink&gt;(Arrays.asList( 
+            new FooterLink[] {
+                    new FooterLink("#", "Footer Link 1", false),
+                    new FooterLink("#", "Footer Link 2", true)
+            })));
+//...
 }
    </pre>
 </div>
@@ -74,8 +82,10 @@ public void setCustomFooterLinks() {
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
-public void setCustomSearch() {
-    this.customSearch = "SDS";
+public void onWebTemplateInitialize() {
+//...
+    this.setCustomSearch("SDS");        
+//...
 }
     </pre>
 </div>
@@ -87,10 +97,12 @@ public void setCustomSearch() {
 </div>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
- @Override
- public void setShowGlobalNav() {
-     this.showGlobalNav = false;
- }
+@Override
+public void onWebTemplateInitialize() {
+//...
+    this.setShowGlobalNav(false);
+//...
+}
     </pre>
 </div>
 <h2>Site Menu</h2>
@@ -102,31 +114,34 @@ public void setCustomSearch() {
         <p>Although not required, it is suggested that the CDTS team be contacted before enabling this option.</p>
 
         <p>You can copy the format in the sample custom menu file provided below in our sample.</p>
-        <a href="https://ssl-templates.services.gc.ca/app/cls/wet/gcweb/v4_0_24/cdts/custommenu-en.html">https://ssl-templates.services.gc.ca/app/cls/wet/gcweb/v4_0_24/cdts/custommenu-en.html</a>
+        <a href="https://ssl-templates.services.gc.ca/app/cls/wet/gcweb/v4_0_25/cdts/custommenu-en.html">https://ssl-templates.services.gc.ca/app/cls/wet/gcweb/v4_0_25/cdts/custommenu-en.html</a>
     </li>
 </ul>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
-public void setShowSiteMenu() {
-    this.showSiteMenu = true;
-}
-
-@Override
-public void setCustomSiteMenuUrl() {
-    this.customSiteMenuUrl = this.getRequest().getContextPath() + "/samplecontents/mycustommenu.html";
+public void onWebTemplateInitialize() {
+//...
+    this.setShowSiteMenu(true);
+    
+    //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
+    //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)
+    this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/samplecontents/mycustommenu.html" );
+//...
 }
     </pre>
 </div>
 <h2>Secure Icon</h2>
 <p>
-    Override the <code class="wb-prettify">setShowSecureIcon</code> method in your custom bean class to show or hide the secure icon.
+    Call the <code class="wb-prettify">setShowSecureIcon</code> method in your custom bean class to show or hide the secure icon.
 </p>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
-public void setShowSecureIcon() {
-    this.showSecureIcon = true;
+public void onWebTemplateInitialize() {
+//...
+    this.setShowSecureIcon(true);
+//...
 }
     </pre>
 </div>
@@ -147,13 +162,11 @@ public void setShowSecureIcon() {
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
-public void setShowSignInLink() {
-    this.showSignInLink = true;
-}
-@Override
-public void setSignInLinkUrl() {
-    this.signInLinkUrl = "#";  
-}
+public void onWebTemplateInitialize() {
+//...
+    this.setShowSignInLink(true);
+    this.setSignInLinkUrl("#");
+//...
     </pre>
 </div>
 <h3>Sign Out</h3>
@@ -166,12 +179,11 @@ public void setSignInLinkUrl() {
 <div class="wb-prettify all-pre lang-c# linenums">
    <pre> 
 @Override
-public void setShowSignOutLink() {
-    this.showSignOutLink = true;
-}
-@Override
-public void setSignOutLinkUrl() {
-    this.signOutLinkUrl = "#";  
+public void onWebTemplateInitialize() {
+//...
+    this.setShowSignOutLink(true);
+    this.setSignOutLinkUrl("#"); 
+//...
 }
    </pre>
 </div>
@@ -180,30 +192,11 @@ public void setSignOutLinkUrl() {
 <p>The setting <code class="wb-prettify">showSearch</code> can be set programmatically or in the cdn.properties.</p>
 <h2>Features</h2>
 <p>This will be used by the Principal Publisher to insert GoC activities and initiatives into your page. By default this is ALWAYS shown on all pages. You will need authorization from the Principal Publisher to not include this content in your web asset.</p>
-<p>If you receive such authorization then you can programmatically turn this off by overriding the <code class="wb-prettify">setShowFeature</code> method in your custom bean class  or in the cdn.properties</p>
+<p>If you receive such authorization then you can programmatically turn this off by calling the <code class="wb-prettify">setShowFeature</code> method in your custom bean class  or in the cdn.properties</p>
 <h2>Pre-Content</h2>
 <p>This will be used by Principal Publisher to insert content into the pre content space of your page. By default this is ALWAYS shown on all pages. You will need authorization from the Principal Publisher to not include this content in your web asset.</p>
-<p>If you recieve such authorization then you can turn off the pre-content programmatically by overriding the <code class="wb-prettify">setShowPreContent</code> method in your custom bean class or in the cdn.properties.</p>
+<p>If you recieve such authorization then you can turn off the pre-content programmatically by calling the <code class="wb-prettify">setShowPreContent</code> method in your custom bean class or in the cdn.properties.</p>
 
-     	<div>
-	        <h3>Other Web Template Samples</h3>
-	        <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

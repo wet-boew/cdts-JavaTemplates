@@ -4,8 +4,8 @@
 	</ui:define>
     <ui:define name="content">
         <h1>GoC Web Template Samples - Extended BasePage</h1>
-	    <p>This page provides an example on how to extend the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class provided by the Web Template.  The <code class="wb-prettify">BaseBean</code> provided by the Web Template has very little functions and therefore applications may wish to extend its functionality. This will be useful should you require to add your own common logic that will be used by your applications' pages.</p>
-	    <p>In this sample, we've created a new class <code class="wb-prettify">"ExtendedBasePageSample"</code>, which extend the BaseBean class from the Web Template and it includes the following:</p>
+	    <p>This page provides an example on how to extend the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class provided by the Web Template.  The <code class="wb-prettify">BaseCoreBean</code> provided by the Web Template has very little functions and therefore applications may wish to extend its functionality. This will be useful should you require to add your own common logic that will be used by your applications' pages.</p>
+	    <p>In this sample, we've created a new class <code class="wb-prettify">"ExtendedBasePageSample"</code>, which extend the BaseCoreBean class from the Web Template and it includes the following:</p>
 	    <ul>
 	        <li>A getter method <code class="wb-prettify">"getWeather"</code>, which returns a string.</li>
 	        <li>A getter method <code class="wb-prettify">"getSessionId"</code>, which returns the ID of the user's session</li>
@@ -15,42 +15,41 @@
 	    <h2>Level of inheritance:</h2>
 	    <ul>
 	        <li>Your pages will inherit from your Extended Base Page</li>
-	        <li>Your Extended Base Page will inherit from the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> of the Web Template</li>
-	        <li>The <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> of the Web Template inherits from <code class="wb-prettify">goc.webtemplate.component.BaseComponent</code> class</li>
+	        <li>Your Extended Base Page will inherit from the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> of the Web Template</li>
+	        <li>The <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> of the Web Template inherits from <code class="wb-prettify">goc.webtemplate.component.AbstractCoreBean</code> class</li>
 	    </ul>
 	    <h2>Steps to Extend the Template BasePage</h2>
 	    <ul>
 	        <li>Create a new class</li>
-	        <li>Inherit from <code class="wb-prettify">"goc.webtemplate.component.jsf.BaseBean"</code></li>
+	        <li>Inherit from <code class="wb-prettify">"goc.webtemplate.component.jsf.BaseCoreBean"</code> or <code class="wb-prettify">"goc.webtemplate.component.jsf.DefaultTemplateCoreBean"</code></li>
 	        <li>Include the logic required for your application</li>
 	    </ul>
 	    <div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
-import goc.webtemplate.component.jsf.BaseBean;
-
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
 @Named("extendedbasepagesamplebean")
 @RequestScoped
-public class ExtendedBasePageSample extends BaseBean {
+public class ExtendedBasePageSample extends DefaultTemplateCoreBean {
 
-	@Override
-	public void setHeaderTitle() {
-		this.headerTitle = "Title set for everpage!";
-	}
-	
-	...
-	
-	public String getWeather() { return "Sunny"; }
-	
-	public String getSessionId() {
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		return req.getSession().getId();
-	}
-	
+    @Override
+    public void onWebTemplateInitialize() {
+        this.setHeaderTitle("Title set for every page!");
+    }
+    
+    public String getWeather() { 
+        return "Sunny"; 
+    }
+    
+    public String getSessionId() {
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return req.getSession().getId();
+    }
 }
         	</pre>
     	</div>
@@ -68,25 +67,6 @@ public class ExtendedBasePageSample extends BaseBean {
 	    <h2>Values from the "ExtendedBasePage"</h2>
 	    <div>Session ID: <strong>#{goctemplateclientbean.sessionId}</strong></div>
 	    <div>Today's Weather: <strong>#{goctemplateclientbean.weather}</strong></div>
-		<div>
-		    <h3>Other Web Template Samples</h3>
-		    <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-		</div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

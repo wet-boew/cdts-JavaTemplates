@@ -16,7 +16,7 @@
         	<button type="button" onclick="javascript:myAlertFunction()">Click me to call my JS function.</button>    
     	</div>
     	<h2>Pre-requisite</h2>
-    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
     	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.AddJsAndCssFilesSample</code> bean class, and the bean name is <code class="wb-prettify">"addjsandcssfilessamplebean"</code>.</p>
     	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
@@ -28,49 +28,34 @@
     	</div>
     	<h2>Header Tags</h2>
     	<p>Set programmatically by populating the <code class="wb-prettify">"htmlHeaderElements"</code> collection of the Web Template Master Page.</p>
-    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag must be supplied.  The collection can be populated by overriding the <code class="wb-prettify">setHtmlHeaderElements</code> method in your custom bean class.</p>
+    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag must be supplied.  The collection can be populated by calling the <code class="wb-prettify">getHtmlHeaderElements</code> method in your custom bean class.</p>
     	<p>The header tag should be used for MetaTags, CSS and possible for JS files.</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 @Override
-public void setHtmlHeaderElements() {
-	// Add a CSS to the header
-	this.htmlHeaderElements.add("&lt;link rel='stylesheet' type='text/css' href='mystyle.css'&gt;");
+public void onWebTemplateInitialize() {
+//...
+    // Add a CSS to the header
+    this.getHtmlHeaderElements().add("&lt;link rel='stylesheet' type='text/css' href='samplecontents/mystyle.css'&gt;");
+//...    
 }
         	</pre>
     	</div>
     	<h2>Body Tags</h2>
     	<p>Set programmatically by populating the <code class="wb-prettify">"htmlBodyElements"</code> collection of the Web Template Master Page.</p>
-    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag must be supplied.  The collection can be populated by overriding the <code class="wb-prettify">setHtmlBodyElements</code> method in your custom bean class.</p>
+    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag must be supplied.  The collection can be populated by calling the <code class="wb-prettify">getHtmlBodyElements</code> method in your custom bean class.</p>
     	<p>The body tag should be used for JS files.</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 @Override
-public void setHtmlBodyElements() {
-	// Add a JS to the body (bottom of page)
-	this.htmlBodyElements.add("&lt;script src='myJS.js'&gt;&lt;/script&gt;");
+public void onWebTemplateInitialize() {
+//...
+    // Add a JS to the body (bottom of page)
+    this.getHtmlBodyElements().add("&lt;script src='samplecontents/myJS.js'&gt;&lt;/script&gt;");
+//...    
 }
         	</pre>
     	</div>
-    	<div>
-	        <h3>Other Web Template Samples</h3>
-	        <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
-    </ui:define>
+<ui:include src="_sampleslist.xhtml" />    	
+   </ui:define>
 </ui:composition>

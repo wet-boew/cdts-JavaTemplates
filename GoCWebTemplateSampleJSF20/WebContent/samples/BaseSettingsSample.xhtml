@@ -6,7 +6,7 @@
         <h1>GoC Web Template Samples - Basic Settings</h1>
     	<p>This sample page provides the basic items to configure in your pages, when using the GoC Web Template.</p>
     	<h2>Pre-requisite</h2>
-    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
     	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.BaseSettingsSample</code> bean class, and the bean name is <code class="wb-prettify">"basesettingssamplebean"</code>.</p>
     	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
@@ -18,44 +18,50 @@
     	</div>
     	<h2>Page Title</h2>
     	<p>This setting determines the title for your site.</p>
-    	<p>Set programmatically via overriding the <code class="wb-prettify">"setHeaderTitle"</code> method in your custom bean class.</p>
+    	<p>Set programmatically via calling the <code class="wb-prettify">"setHeaderTitle"</code> method in your custom bean class.</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 @Override
-public void setHeaderTitle() {
-	this.headerTitle = "My Title";
+public void onWebTemplateInitialize() {
+//...
+    this.setHeaderTitle("My Title");
+//...    
 }
 			</pre>
     	</div>
     	<h2>Metatags</h2>
     	<p>A string collection is available to be included as part of the HTML Elements, including Meta Tag, to the head section of the master page site.</p>
     	<p>Set programmatically by populating the <code class="wb-prettify">"htmlHeaderElements"</code> collection of the Web Template Master Page.</p>
-    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag for your MetaTag to include should be supplied.  The collection can be populated by overriding the <code class="wb-prettify">setHtmlHeaderElements</code> method in your custom bean class.</p>
+    	<p>The collection is of type <code class="wb-prettify">"String"</code>, and the complete html tag for your MetaTag to include should be supplied.  The collection can be populated by calling the <code class="wb-prettify">getHtmlHeaderElements</code> method in your custom bean class.</p>
     	<p>Note: this collections can also be used to add script tags for javascript and/or link tag to include CSSs.</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 @Override
-public void setHtmlHeaderElements() {
-	this.htmlHeaderElements.add("&lt;meta charset='UTF-8' /&gt;");
-	this.htmlHeaderElements.add("&lt;meta name='singer' content='Elvis' /&gt;");
-	this.htmlHeaderElements.add("&lt;meta http-equiv='default-style' content='sample' /&gt;");
+public void onWebTemplateInitialize() {
+//...
+    this.getHtmlHeaderElements().add("&lt;meta charset='UTF-8' /&gt;");
+    this.getHtmlHeaderElements().add("&lt;meta name='singer' content='Elvis' /&gt;");
+    this.getHtmlHeaderElements().add("&lt;meta http-equiv='default-style' content='sample' /&gt;");
+//...
 }
 			</pre>
     	</div>
     	<h2>Date Modified</h2>
     	<p>The date modified is displayed near the bottom of the page.</p>
-    	<p>Set programmatically by populating the <code class="wb-prettify">"dateModified"</code> value of the Web Template Master Page.  This value can be populated by overriding the <code class="wb-prettify">setDateModified</code> method in your custom bean class.</p>
+    	<p>Set programmatically by populating the <code class="wb-prettify">"dateModified"</code> value of the Web Template Master Page.  This value can be populated by calling the <code class="wb-prettify">setDateModified</code> method in your custom bean class.</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
 @Override
-public void setDateModified() {
-	this.dateModified = new java.util.Date();
+public void onWebTemplateInitialize() {
+//...
+    this.setDateModified(new java.util.Date());
+//...
 }
 			</pre>
     	</div>
 <h2>Change Language Link</h2>
 <p>You can set a custom link for changing the language of your site</p>
-<p>This can be set programmatically by overriding the <code class="wb-prettify">setLanguageLinkUrl</code> method in your custom bean class.</p>
+<p>This can be set programmatically by calling the <code class="wb-prettify">setLanguageLinkUrl</code> method in your custom bean class.</p>
 <h2>Version Identifier</h2>
 <p>The Version Identifier is displayed near the bottom of the page. This element shares the same location as "DateModified" and only one of the two can be displayed at once. If a "DateModified" is supplied the date will take precedence over the "VersionIdentifier".</p>
 <p>Set programmatically via the <code class="wb-prettify">"VersionIdentifier"</code> property of the Web Template.</p>
@@ -65,31 +71,14 @@ public void setDateModified() {
 <div class="wb-prettify all-pre lang-vb linenums">
     <pre>
 @Override
-public void setScreenIdentifier() {
-    this.screenIdentifier = "PAGE001"; 
+public void onWebTemplateInitialize() {
+//...
+    this.setScreenIdentifier("PAGE001"); 
+//...
 }
     </pre>
 </div>
     	
-    	<div>
-        	<h3>Other Web Template Samples</h3>
-        	<ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

@@ -1,7 +1,7 @@
 <h1>GoC Web Template Samples - Leaving Secure Site</h1>
 <p>In certain scenarios (ex: secure sites) we want to notify the user that the link or action they have just performed will exit the current secured site/session and it is possible that data could be lost. The message allows the user to cancel the redirect or continue with the redirect.</p>
 <h2>Pre-requisite</h2>
-<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.LeaveSecureSiteSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
 <p>The custom bean name must be <strong>goctemplateclientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
@@ -46,35 +46,27 @@
 <h2>Steps to implement:</h2>
 <h3>Enable the leaving secure site feature</h3>
 <ul>
-    <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteWarningEnabled"</code> to <strong>"true"</strong></li>
-    <li>Provide the message to be displayed by setting the <code class="wb-prettify">"leavingSecureSiteWarningMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarningMessage</code> method in your custom bean class.</li>
-    <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteRedirectUrl"</code> to your action class which will execute your clean up code and then redirect to the selected url.</li>
-    <li>Set, via the cdn.properties or programmatically in your custom bean class, <code class="wb-prettify">"leavingSecureSiteExcludedDomain"</code> the list of domains you do not want to raise the warning</li>
+    <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"Enabled"</code> to <strong>"true"</strong></li>
+    <li>Provide the message to be displayed by setting the <code class="wb-prettify">"Message"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
+    <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"RedirectUrl"</code> to your action class which will execute your clean up code and then redirect to the selected url.</li>
+    <li>Set, via the cdn.properties or programmatically in your custom bean class, <code class="wb-prettify">"ExcludedDomain"</code> the list of domains you do not want to raise the warning</li>
 </ul>
 <div class="wb-prettify all-pre lang-vb linenums">
    	<pre>
 @Override
-public void setLeavingSecureSiteRedirectUrl() {
-	this.leavingSecureSiteRedirectUrl = "leavesecuresiteredirect.action";
+public void onWebTemplateInitialize() {
+//...
+    LeavingSecureSiteWarning lssw = new LeavingSecureSiteWarning();
+
+    lssw.setEnabled(true);
+    lssw.setMessage("You are about to leave a secure site, do you wish to continue?");
+    lssw.setRedirectUrl("leavesecuresiteredirect.action");
+    lssw.setExcludedDomains("www.esdc.gc.ca,www.jobbank.gc.ca,www.readseal.ca");
+    lssw.setDisplayModalWindow(true);
+    
+    this.setLeavingSecureSiteWarning(lssw);
+//...
 }
-
-@Override
-public void setLeavingSecureSiteWarningEnabled() { this.leavingSecureSiteWarningEnabled = true; }
-
-@Override
-public void setLeavingSecureSiteWarningMessage() {
-	this.leavingSecureSiteWarningMessage = "You are about to leave a secure site, do you wish to continue?";
-}
-
-@Override
-public void setLeavingSecureSiteExcludedDomains() {
-	this.leavingSecureSiteExcludedDomain = "www.esdc.gc.ca,www.jobbank.gc.ca,www.redseal.ca";
-}
-
-@Override
-public void setLeavingSecureSiteDisplayModalWindow() {
-	// this.leavingSecureSiteDisplayModalWindow = false;
-}	
    	</pre>
 </div>
 <h3>Created your custom "redirect" class</h3>
@@ -99,23 +91,4 @@ public class LeaveSecureSiteAction {
 }
    </pre>
 </div>
-<div>
-    <h3>Other Web Template Samples</h3>
-    <ul>
-    	<li><a href="splashpagesample.action">Splash Page</a></li>
-        <li><a href="addjsandcssfilessample.action">Adding CSS or JS</a></li>
-        <li><a href="basesettingssample.action">Basic Settings</a></li>
-        <li><a href="breadcrumbsample.action">Breadcrumbs</a></li>
-        <li><a href="errorsample.action">Errors</a></li>
-        <li><a href="extendedbasepagesample.action">Extended Base Page</a></li>
-        <li><a href="feedbackandsharethispagesample.action">Feedback and Share This Page Links</a></li>
-        <li><a href="footerlinkssample.action">Footer Links</a></li>
-        <li><a href="leavingsecureSitesample.action">Leaving Secure Site Warning</a></li>
-        <li><a href="leftsidemenusample.action">Left Side Menu</a></li>
-        <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
-        <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
-        <li><a href="transactionalsample.action">Transactional Page</a></li>
-        <li><a href="applicationsample.action">Application Page</a></li>
-        <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
-    </ul>
-</div>
+<%@ include file="_sampleslist.jsp" %>

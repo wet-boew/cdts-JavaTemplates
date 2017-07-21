@@ -1,7 +1,7 @@
 <h1>GoC Web Template Samples - Footer Links</h1>
 <p>The footer links consist of the Contact, News and About links located at the bottom of the page.  The theme you specify for your site determines which category and links are displayed.  The theme also determines which of the categories can be modified by the application.  Example in the "GCWeb" theme, only the Contact links can be customized.</p>
 <h2>Pre-requisite</h2>
-<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
 <p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsp.samplebeans.FooterLinksSampleBean</code> bean class.</p>
 <p>The bean must be included and initialized in a jsp page as part of the <strong>beaninit</strong> attribute that is defined by the master template tiles definition outline in the tiles.xml configuration file:</p>
 <p>The custom bean name must be <strong>goctemplateclientbean</strong> and the <strong>request</strong> param must be also be present as it is.</p>
@@ -17,29 +17,11 @@
 <div class="wb-prettify all-pre lang-vb linenums">
     <pre>
 @Override
-public void setContactLinkUrl()
-{
-    this.contactLinkUrl = "http://travel.gc.ca/";
+public void onWebTemplateInitialize() {
+//...
+    this.setContactLinkUrl("http://travel.gc.ca/");
+//...
 }
     </pre>
 </div>		
-<div>
-    <h3>Other Web Template Samples</h3>
-    <ul>
-    	<li><a href="splashpagesample.action">Splash Page</a></li>
-        <li><a href="addjsandcssfilessample.action">Adding CSS or JS</a></li>
-        <li><a href="basesettingssample.action">Basic Settings</a></li>
-        <li><a href="breadcrumbsample.action">Breadcrumbs</a></li>
-        <li><a href="errorsample.action">Errors</a></li>
-        <li><a href="extendedbasepagesample.action">Extended Base Page</a></li>
-        <li><a href="feedbackandsharethispagesample.action">Feedback and Share This Page Links</a></li>
-        <li><a href="footerlinkssample.action">Footer Links</a></li>
-        <li><a href="leavingsecureSitesample.action">Leaving Secure Site Warning</a></li>
-        <li><a href="leftsidemenusample.action">Left Side Menu</a></li>
-        <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
-        <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
-        <li><a href="transactionalsample.action">Transactional Page</a></li>
-        <li><a href="applicationsample.action">Application Page</a></li>
-        <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
-    </ul>
-</div>
+<%@ include file="_sampleslist.jsp" %>

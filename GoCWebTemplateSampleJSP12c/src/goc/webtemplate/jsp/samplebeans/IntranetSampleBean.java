@@ -1,6 +1,6 @@
 package goc.webtemplate.jsp.samplebeans;
 
-import goc.webtemplate.ApplicationTitle;
+import goc.webtemplate.Link;
 
 import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
@@ -14,6 +14,6 @@ public class IntranetSampleBean extends DefaultTemplateCoreBean {
         this.setTheme("gcintranet");
         this.setSubTheme("esdc");
 
-        this.setApplicationTitle(new ApplicationTitle("GCIntranet Site", "http://www.google.ca"));
+        this.setIntranetTitle(new Link("http://www.google.ca", "GCIntranet Site"));
     }
 }

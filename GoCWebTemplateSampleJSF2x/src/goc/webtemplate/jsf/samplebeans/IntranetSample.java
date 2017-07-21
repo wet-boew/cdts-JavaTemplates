@@ -3,7 +3,7 @@ package goc.webtemplate.jsf.samplebeans;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import goc.webtemplate.ApplicationTitle;
+import goc.webtemplate.Link;
 
 import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
 
@@ -19,6 +19,6 @@ public class IntranetSample extends DefaultTemplateCoreBean {
         this.setTheme("gcintranet");
         this.setSubTheme("esdc");
 
-        this.setApplicationTitle(new ApplicationTitle("GCIntranet Site", "http://www.google.ca"));
+        this.setIntranetTitle(new Link("http://www.google.ca", "GCIntranet Site"));
     }
 }

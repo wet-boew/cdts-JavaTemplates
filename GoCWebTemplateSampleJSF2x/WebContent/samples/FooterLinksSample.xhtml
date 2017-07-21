@@ -6,7 +6,7 @@
         <h1>GoC Web Template Samples - Footer Links</h1>
 		<p>The footer links consist of the Contact, News and About links located at the bottom of the page.  The theme you specify for your site determines which category and links are displayed.  The theme also determines which of the categories can be modified by the application.  Example in the "GCWeb" theme, only the Contact links can be customized.</p>
 		<h2>Pre-requisite</h2>
-    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
     	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.FooterLinksSample</code> bean class, and the bean name is <code class="wb-prettify">"footerlinkssamplebean"</code>.</p>
     	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
@@ -21,31 +21,13 @@
 		<div class="wb-prettify all-pre lang-vb linenums">
 		    <pre>
 @Override
-public void setContactLinkUrl()
-{
-    this.contactLinkUrl = "http://travel.gc.ca/";
+public void onWebTemplateInitialize() {
+//...
+    this.setContactLinkUrl("http://travel.gc.ca/");
+//...
 }
 		    </pre>
 		</div>      
-	     <div>
-	        <h3>Other Web Template Samples</h3>
-	        <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

@@ -103,7 +103,6 @@ public abstract class BaseComponent extends AbstractCoreBean {
 	protected String subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
 	protected boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
 	protected boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
-	protected String cdnLocalPathRender = null; //see getRenderLocalPath
 	protected String cdnLocalPath = null;
 	protected String headerTitle = "";
 	protected String applicationTitleText = "";

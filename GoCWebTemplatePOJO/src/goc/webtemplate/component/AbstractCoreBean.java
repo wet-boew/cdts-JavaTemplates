@@ -29,6 +29,7 @@ import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.PreFooter;
 import goc.webtemplate.component.jsonentities.RefFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
+import goc.webtemplate.component.jsonentities.SecMenu;
 import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.Top;
 
@@ -1420,6 +1421,14 @@ public abstract class AbstractCoreBean {
     
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "secmenu"
+     */
+    public String getRenderLeftMenuSections() {
+        return gson.toJson(new SecMenu(this.getLeftMenuSections()));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
      * as parameter for the "refTop"
      */
     public String getRenderRefTop() {
@@ -1904,72 +1913,6 @@ public abstract class AbstractCoreBean {
         
         return "";
     }
-    
-    /**
-     * @deprecated  This method should not be used, it will be removed in a futrue version.
-     */
-    @Deprecated
-    public String getRenderLeftMenuSections() {//TODO: Remove this method once the templates are modified to use JSON serialization
-        ArrayList<MenuSection>   sourceList = this.getLeftMenuSections();
-        
-        StringBuilder sb = new StringBuilder();
-        if (sourceList != null && sourceList.size() > 0){
-            sb.append("sections: [");
-            for (MenuSection menuSection : sourceList)
-            {
-                // add section name
-                sb.append(" {sectionName: '");
-                sb.append(StringEscapeUtils.escapeHtml4(menuSection.getName()));
-                sb.append("',");
-        
-                // add section link
-                if (!Utility.isNullOrEmpty(menuSection.getLink())) {
-                    sb.append("sectionLink: '" + BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(menuSection.getLink())) + "',");
-                    sb.append(menuSection.isOpenInNewWindow() ? "newWindow: true," : "");
-                }
-                
-                // add menu items
-                if (menuSection.getItems() != null && menuSection.getItems().size() > 0) {
-                    sb.append(" menuLinks: [");
-                    for (Link lk : menuSection.getItems()) {
-                        sb.append("{href: '");
-                        sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(lk.getHref())));
-                        sb.append("', text: '");
-                        sb.append(StringEscapeUtils.escapeHtml4(lk.getText()));
-                        sb.append("'");
-                        //sb.append("'},");
-                        
-                        // add 3rd level sub items, NOTE: template is limiting to 3 levels deep even if the POJO class allows more
-                        if (lk instanceof MenuItem) {
-                            MenuItem mi = (MenuItem)lk;
-                            sb.append(mi.isOpenInNewWindow() ? ", newWindow: true" : "");
-                            
-                            if (mi.getSubItems() != null && mi.getSubItems().size() > 0) {
-                                sb.append(", subLinks: [");
-                                for (MenuItem sublk : mi.getSubItems()) {
-                                    sb.append("{subhref: '");
-                                    sb.append(BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(sublk.getHref())));
-                                    sb.append("', subtext: '");
-                                    sb.append(StringEscapeUtils.escapeHtml4(sublk.getText()));
-                                    sb.append("',");
-                                    sb.append(sublk.isOpenInNewWindow() ? " newWindow: true" : "");
-                                    sb.append("},");
-                                }
-                                sb.append("]");
-                            }
-                        }
-                        sb.append("},");
-                    }
-                    sb.append("]");
-                }
-                sb.append("},");
-            }
-            sb.append("]");
-        }
-        
-        return sb.toString();
-    }
-    
     
     /**
      * @deprecated  This method should not be used, it will be removed in a futrue version.

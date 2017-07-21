@@ -76,9 +76,7 @@
 		        <!-- Write closure template -->
 	            <script type="text/javascript">
 	                var secondarymenu = document.getElementById("wb-sec");
-	                secondarymenu.innerHTML = wet.builder.secmenu({
-	                	<s:property value="#goctemplateclientbean.renderLeftMenuSections" />
-	                });
+	                secondarymenu.innerHTML = wet.builder.secmenu(<s:property escape="false" value="#goctemplateclientbean.renderLeftMenuSections" />);
 	            </script>	
         	</div>
         </div>        

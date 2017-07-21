@@ -36,10 +36,7 @@
         </noscript>
         <!-- Write closure template -->
         <script type="text/javascript">
-            document.write(wet.builder.splashTop({
-                cdnEnv: "<s:property value="#goctemplateclientbean.cdtsCdnEnv" />",
-                <s:property escape="false" value="#goctemplateclientbean.renderLocalPath" />
-            }));
+            document.write(wet.builder.splashTop(<s:property escape="false" value="#goctemplateclientbean.renderSplashTop" />));
         </script>
         <s:property escape="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->

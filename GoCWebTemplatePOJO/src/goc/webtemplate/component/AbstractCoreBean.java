@@ -17,7 +17,6 @@ import goc.webtemplate.FooterLink;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
-import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
@@ -31,6 +30,7 @@ import goc.webtemplate.component.jsonentities.RefFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.SecMenu;
 import goc.webtemplate.component.jsonentities.ShareList;
+import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
 
 /**
@@ -1509,6 +1509,17 @@ public abstract class AbstractCoreBean {
         this.checkIfBothShowSignInAndOutAreSet();
 
         return gson.toJson(appTop);
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "appTop"
+     */
+    public String getRenderSplashTop() {
+        return gson.toJson(new SplashTop(
+                this.getCdtsCdnEnv(),
+                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+              ));
     }
     
     /**

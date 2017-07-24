@@ -10,7 +10,7 @@
     	<p>The WET plugin is reponsible for the pop up to display.  It is up to you to write the neccessay code to update the session timeout on the server as the plug in does not take care of this.  This sample has a complete example on how to implement the plug in properly and update your server session.</p>
 		
 		<h2>Pre-requisite</h2>
-    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
     	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.SessionTimeoutSample</code> bean class, and the bean name is <code class="wb-prettify">"sessiontimeoutsamplebean"</code>.</p>
     	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
@@ -25,9 +25,9 @@
 	    <h4>To Enable the session timeout:</h4>
 	    <ul>
 	        <li>Set the key <code class="wb-prettify">"session.timeout.enabled"</code> in the cdn.properties file to "true".</li>
-	        <li>or set the property programmatically via overriding the <code class="wb-prettify">"setSessionTimeoutEnabled"</code> method in your custom bean class</li>
+	        <li>or set the property programmatically via the <code class="wb-prettify">"setSessionTimeoutConfiguration"</code> method in your custom bean class</li>
 	    </ul>
-	    <p>The rest of the configuration are set in the cdn.properties resource bundle or programmatically via the <code class="wb-prettify">setSessionTimeoutConfigurations</code> method using the goc.webtemplate.SessionTimeout object: </p>
+	    <p>The rest of the configuration are set in the cdn.properties resource bundle or programmatically via the <code class="wb-prettify">setSessionTimeoutConfiguration</code> method using the goc.webtemplate.SessionTimeout object: </p>
 	    <ul>
 	        <li><strong>session.inactivity.value</strong>: inactivity period of time after which the modal dialog will appear (default 20 minutes)</li>
 	        <li><strong>session.reactiontime.value</strong>: period of time the user has to perform an action once the modal dialog is displayed (default 3 minutes)</li>
@@ -59,92 +59,68 @@
 	    	<h4>Custom Bean Sample Code</h4>
 	        <pre>
 @Override
-public void setSessionTimeoutEnabled() { this.sessionTimeoutEnabled = true; }
+public void onWebTemplateInitialize() {
+//...
+    SessionTimeout sconfig = new SessionTimeout();
+    
+    sconfig.setEnabled(true);
+    sconfig.setInactivity(30000);
+    sconfig.setReactionTime(10000);
+    sconfig.setSessionAlive(30000);
+    sconfig.setLogoutUrl("SessionTimeoutLogout.xhtml");            
+    sconfig.setRefreshCallbackUrl("SessionTimeoutValidity.xhtml");
+    sconfig.setRefreshOnClick(false);
+    sconfig.setRefreshLimit(3);
+    sconfig.setMethod("");
+    sconfig.setAdditionalData("");
+    
+    this.setSessionTimeoutConfiguration(sconfig);
+//...    
+}
 
-@Override
-public void setSessionTimeoutConfigurations() { 
-	SessionTimeout configs = new SessionTimeout();
-	
-	configs.setInActivity(30000);
-	configs.setReactionTime(10000);
-	configs.setSessionAlive(30000);
-	configs.setLogoutUrl("SessionTimeoutLogout.xhtml");            
-	configs.setRefreshCallbackUrl("SessionTimeoutValidity.xhtml");
-	configs.setRefreshOnClick(false);
-	configs.setRefreshLimit(3);
-	configs.setMethod("");
-	configs.setAdditionalData("");
-	
-	this.sessionTimeoutConfigurations = configs;
+//This is invoked from SessionTimeoutLogout.xhtml
+public String getLogoutAction() {
+    try {
+        HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = currentReq.getSession(false);
+        if (session != null) session.invalidate();
+        ((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect("AddJSandCSSFilesSample.xhtml");
+    }
+    catch (Exception ex) {}
+    return "";
+}
+
+//This is invoked from SessionTimeoutValidity.xhtml
+public String getSessionValidity() {
+    String sessionValid = "true";
+    try {
+        HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpSession session = currentReq.getSession(false);
+        sessionValid = (session == null ? "false" : "true");
+    }
+    catch (Exception ex) {}
+    return sessionValid;
 }
 	        </pre>
 	    </div>
-	    <div class="wb-prettify all-pre lang-vb linenums">
-	    	<h4>SessionTimeoutLogout.xhtml</h4>
-	        <pre>
+        <div class="wb-prettify all-pre lang-vb linenums">
+            <h4>SessionTimeoutLogout.xhtml</h4>
+            <pre>
 &lt;ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/master-template.xhtml" xmlns:h="http://java.sun.com/jsf/html"&gt;
     &lt;ui:define name="beaninit"&gt;
-		&lt;ui:param name="goctemplateclientbean" value="<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean&#125;" escape="false" /> /&gt;		
-	&lt;/ui:define&gt;
+        &lt;ui:param name="goctemplateclientbean" value="<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean&#125;" escape="false" /> /&gt;        
+    &lt;/ui:define&gt;
     &lt;ui:define name="content"&gt;
-    	<h:outputText value="&amp;#35;&#123;goctemplateclientbean.logoutAction&#125;" escape="false" />
+        <h:outputText value="&amp;#35;&#123;goctemplateclientbean.logoutAction&#125;" escape="false" />
     &lt;/ui:define&gt;
 &lt;/ui:composition&gt;
-
-// In the session timeout bean class, the getLogoutAction property that is 
-// invoked simply does the Session cleanup code as required and performs a server redirect.
-public String getLogoutAction() {
-	try {
-		HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		HttpSession session = currentReq.getSession(false);
-		if (session != null) session.invalidate();
-		((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect("AddJSandCSSFilesSample.xhtml");
-	}
-	catch (Exception ex) {}
-	return "";
-}
-	        </pre>
-	    </div>
-	    <div class="wb-prettify all-pre lang-vb linenums">
-	    	<h4>SessionTimeoutValidity.xhtml</h4>
-	        <pre>
-&lt;f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"&gt;
-	<h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean.sessionValidity&#125;" escape="false" />
-&lt;/f:view&gt;
-
-// In the session timeout bean class, the getSessionValidity property simply returns the 
-// string "true" or "false" depending on the current session state
-public String getSessionValidity() {
-	String sessionValid = "true";
-	try {
-		HttpServletRequest currentReq = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		HttpSession session = currentReq.getSession(false);
-		sessionValid = (session == null ? "false" : "true");
-	}
-	catch (Exception ex) {}
-	return sessionValid;
-}
-	        </pre>
-	    </div>
-     	<div>
-	        <h3>Other Web Template Samples</h3>
-	        <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
+            </pre>
+        </div>
+        <div class="wb-prettify all-pre lang-vb linenums">
+            <h4>SessionTimeoutValidity.xhtml</h4>
+            (All instructions are on a single line to avoid injecting whitespaces/blank lines into the response)
+            <pre>&lt;f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"&gt;    <h:outputText value="&amp;#35;&#123;sessiontimeoutsamplebean.sessionValidity&#125;" escape="false" />&lt;/f:view&gt;</pre>
+        </div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

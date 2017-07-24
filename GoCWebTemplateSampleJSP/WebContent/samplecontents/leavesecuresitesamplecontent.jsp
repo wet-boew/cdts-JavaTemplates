@@ -41,7 +41,7 @@
         </ul>
     </li>
 </ul>
-<p>Here is a local link that will not display the warning: <a href="BaseSettingsSample.xhtml">Link to Local Page</a></p>
+<p>Here is a local link that will not display the warning: <a href="basesettingssample.action">Link to Local Page</a></p>
 <p>Here is an external link that will display the warning:<a href="http://www.google.ca">Link to External Page</a></p>
 <h2>Steps to implement:</h2>
 <h3>Enable the leaving secure site feature</h3>

@@ -172,7 +172,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
     
     /**
      * This method "converts" the new way of overriding values into the old way, 
-     * as a stop-gad measure to support old code.
+     * as a stop-gap measure to support old code.
      */
     @Override
     public void onWebTemplateInitialize() {

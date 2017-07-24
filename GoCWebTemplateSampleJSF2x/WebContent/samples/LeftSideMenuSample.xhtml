@@ -6,7 +6,7 @@
         <h1>GoC Web Template Samples - Left Side Menu</h1>
 	    <p>This sample uses the <code class="wb-prettify">"/templates/leftmenu-master-template.xhtml"</code> master page to demonstrate how the left menu is displayed and configured.</p>
 	    <h2>Pre-requisite</h2>
-    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
+    	<p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsf.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>
     	<p>For this particular sample page, we are using the <code class="wb-prettify">goc.webtemplate.jsf.samplebeans.LeftSideMenuSample</code> bean class, and the bean name is <code class="wb-prettify">"leftsidemenusamplebean"</code>.</p>
     	<p>The bean must be included at the top of your jsf (xhtml) page as part of the <strong>beaninit</strong> section that is exposed by the master template page as following:</p>
     	<div class="wb-prettify all-pre lang-vb linenums">
@@ -17,7 +17,7 @@
         	</pre>
     	</div>
     	<h2>Left Side Menu</h2>
-	    <p>The menu is set programmatically by populating the <code class="wb-prettify">"leftMenuSections"</code> collection of the Web Template Master Page via overriding the <code class="wb-prettify">setLeftMenuSections</code> method in your custom bean class.</p>
+	    <p>The menu is set programmatically by populating the <code class="wb-prettify">"leftMenuSections"</code> collection of the Web Template Master Page via the <code class="wb-prettify">setLeftMenuSections</code> method in your custom bean class.</p>
 	    <p>The collection expects an object of type <code class="wb-prettify">"goc.webtemplate.MenuSection"</code>, which has the following methods:</p>
 	    <ul>
 	        <li><code class="wb-prettify">setName</code>: name of the menu section.  This is the header of the menu</li>
@@ -36,42 +36,28 @@
 	    <div class="wb-prettify all-pre lang-vb linenums">
 	        <pre>
 @Override
-public void setLeftMenuSections() {
-	MenuSection leftMenu = new MenuSection();
-	leftMenu.setName("Section A");
-	leftMenu.setLink("http://www.google.ca");
-	leftMenu.setOpenInNewWindow(true);
-	leftMenu.getItems().add(new Link("http://www.tsn.ca", "TSN"));
-	
-	MenuItem item = new MenuItem("", "Sports");
-	item.getSubItems().add(new MenuItem("http://www.nhl.com", "NHL", null, true));
-	item.getSubItems().add(new MenuItem("http://www.mlb.com", "MLB"));
-	
-	leftMenu.getItems().add(item);
-       
-	this.leftMenuSections.add(leftMenu);
+public void onWebTemplateInitialize() {
+//...
+    ArrayList&lt;MenuSection&gt;  sections = new ArrayList&lt;MenuSection&gt;();
+    
+    MenuSection leftMenu = new MenuSection();
+    leftMenu.setName("Section A");
+    leftMenu.setLink("http://www.google.ca");
+    leftMenu.setOpenInNewWindow(true);
+    leftMenu.getItems().add(new Link("http://www.tsn.ca", "TSN"));
+    
+    MenuItem item = new MenuItem("", "Sports");
+    item.getSubItems().add(new MenuItem("http://www.nhl.com", "NHL", null, true));
+    item.getSubItems().add(new MenuItem("http://www.mlb.com", "MLB"));    
+    leftMenu.getItems().add(item);
+    
+    sections.add(leftMenu);
+    
+    this.setLeftMenuSections(sections);
+//...    
 }
 	        </pre>
 	    </div>
-     	<div>
-	        <h3>Other Web Template Samples</h3>
-	        <ul>
-	        	<li><a href="SplashPageSample.xhtml">Splash Page</a></li>
-	            <li><a href="AddJSandCSSFilesSample.xhtml">Adding CSS or JS</a></li>
-	            <li><a href="BaseSettingsSample.xhtml">Basic Settings</a></li>
-	            <li><a href="BreadcrumbSample.xhtml">Breadcrumbs</a></li>
-	            <li><a href="ErrorSample.xhtml">Errors</a></li>
-	            <li><a href="ExtendedBasePageSample.xhtml">Extended Base Page</a></li>
-	            <li><a href="FeedbackandShareThisPageSample.xhtml">Feedback and Share This Page Links</a></li>
-	            <li><a href="FooterLinksSample.xhtml">Footer Links</a></li>
-	            <li><a href="LeavingSecureSiteSample.xhtml">Leaving Secure Site Warning</a></li>
-	            <li><a href="LeftSideMenuSample.xhtml">Left Side Menu</a></li>
-	            <li><a href="NestedMasterPageSample.xhtml">Nested Master Page</a></li>
-	            <li><a href="SessionTimeoutSample.xhtml">Session Timeout</a></li>
-	            <li><a href="TransactionalSample.xhtml">Transactional Page</a></li>
-                <li><a href="ApplicationSample.xhtml">Application Page</a></li>
-	            <li><a href="IntranetSample.xhtml">GCIntranet Theme Page</a></li>
-	        </ul>
-	    </div>
+<ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

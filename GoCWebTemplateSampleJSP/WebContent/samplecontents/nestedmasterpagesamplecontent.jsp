@@ -62,19 +62,16 @@
 <div class="wb-prettify all-pre lang-vb linenums">
     <h3>Code Sample of the Nested Bean Class</h3>
     <pre>
-import goc.webtemplate.component.jsp.BaseBean;
+import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
-public class NestedMasterPageSample extends BaseBean {
+public class NestedMasterPageTemplateBean extends DefaultTemplateCoreBean {
 
-	...
-
-	@Override
-	public void setDateModified() { 
-		this.dateModified = new java.util.Date();
-	}
-	
-	...
-	
+    @Override
+    public void onWebTemplateInitialize() {
+//...    
+        this.setDateModified(new java.util.Date());
+//...        
+    }
 }
     </pre>
 </div>
@@ -91,31 +88,17 @@ public class NestedMasterPageSample extends BaseBean {
 <div class="wb-prettify all-pre lang-vb linenums">
     <h3>Code Sample of the Child Content Page Custom Bean</h3>
     <pre>
-public class NestedChildPageSample extends NestedMasterPageSample {
-	@Override
-	public void setHeaderTitle() {
-		this.headerTitle = "Nested Master Page Sample";
-	}
+public class NestedMasterPageSampleBean extends NestedMasterPageTemplateBean {
+    
+    @Override 
+    public void onWebTemplateInitialize() {
+        super.onWebTemplateInitialize(); //call our parent first, we'll override the values we need
+
+//...        
+        this.setHeaderTitle("Nested Master Page Sample");
+//...        
+    }
 }
     </pre>
 </div>
-<div>
-    <h3>Other Web Template Samples</h3>
-    <ul>
-    	<li><a href="splashpagesample.action">Splash Page</a></li>
-        <li><a href="addjsandcssfilessample.action">Adding CSS or JS</a></li>
-        <li><a href="basesettingssample.action">Basic Settings</a></li>
-        <li><a href="breadcrumbsample.action">Breadcrumbs</a></li>
-        <li><a href="errorsample.action">Errors</a></li>
-        <li><a href="extendedbasepagesample.action">Extended Base Page</a></li>
-        <li><a href="feedbackandsharethispagesample.action">Feedback and Share This Page Links</a></li>
-        <li><a href="footerlinkssample.action">Footer Links</a></li>
-        <li><a href="leavingsecureSitesample.action">Leaving Secure Site Warning</a></li>
-        <li><a href="leftsidemenusample.action">Left Side Menu</a></li>
-        <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>
-        <li><a href="sessiontimeoutsample.action">Session Timeout</a></li>
-        <li><a href="transactionalsample.action">Transactional Page</a></li>
-        <li><a href="applicationsample.action">Application Page</a></li>
-        <li><a href="gcintranetsample.action">GCIntranet Theme Page</a></li>
-    </ul>
-</div>
+<%@ include file="_sampleslist.jsp" %>

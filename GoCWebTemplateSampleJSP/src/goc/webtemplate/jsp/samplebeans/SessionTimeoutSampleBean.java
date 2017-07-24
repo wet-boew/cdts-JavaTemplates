@@ -31,8 +31,8 @@ public class SessionTimeoutSampleBean extends DefaultTemplateCoreBean {
         sconfig.setInactivity(30000);
         sconfig.setReactionTime(10000);
         sconfig.setSessionAlive(30000);
-        sconfig.setLogoutUrl("sessiontimeoutlogout.jsp");            
-        sconfig.setRefreshCallbackUrl("sessiontimeoutvalidity.jsp");
+        sconfig.setLogoutUrl("samplecontents/sessiontimeoutlogout.jsp");            
+        sconfig.setRefreshCallbackUrl("samplecontents/sessiontimeoutvalidity.jsp");
         sconfig.setRefreshOnClick(false);
         sconfig.setRefreshLimit(3);
         sconfig.setMethod("");

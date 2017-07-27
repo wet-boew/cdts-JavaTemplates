@@ -12,6 +12,19 @@
 &lt;/s:bean&gt;
     </pre>
 </div>
+<h2>CDNEnvironment Value</h2>
+<p>The "GCIntranet" theme is not available on the "Akamai" CDTS and therefore you must set the CDN Environment to something other than "Akamai".</p>
+<p>Set the cdn.properties key <code class="wb-prettify">"cdn_environment"</code> to the environment of choice (other than Akamai) example "ESDC_Prod". It can also be set programmatically via the <code class="wb-prettify">"setCDNEnvironment"</code> method in your custom bean class.</p>
+<div class="wb-prettify all-pre lang-vb linenums">
+    <pre>
+@Override
+public void onWebTemplateInitialize() {
+//...
+    this.setCDNEnvironment("ESDC_Prod");
+//...    
+}
+    </pre>
+</div>
 <h2>Theme and SubTheme values</h2>
 <p>Set the cdn.properties value to "gcintranet" for the key "<strong>wettemplate_theme</strong>"; </p>
 <p>or set programmatically via the <code class="wb-prettify">"setTheme"</code> method in your custom bean class.</p>
@@ -22,21 +35,9 @@
 @Override
 public void onWebTemplateInitialize() {
 //...
+    //Setting the environment will load proper theme/subtheme values, but we can override them if needed 
     this.setTheme("gcintranet");
     this.setSubTheme("esdc");
-//...    
-}
-	</pre>
-</div>
-<h2>CDNEnvironment Value</h2>
-<p>The "GCIntranet" theme is not available on the "Akamai" CDTS and therefore you must set the CDN Environment to something other than "Akamai".</p>
-<p>Set the cdn.properties key <code class="wb-prettify">"cdn_environment"</code> to the environment of choice (other than Akamai) example "ESDCProd". It can also be set programmatically via the <code class="wb-prettify">"setCDNEnvironment"</code> method in your custom bean class.</p>
-<div class="wb-prettify all-pre lang-vb linenums">
-   	<pre>
-@Override
-public void onWebTemplateInitialize() {
-//...
-    this.setCDNEnvironment("ESDCProd");
 //...    
 }
 	</pre>

@@ -1,9 +1,11 @@
 package goc.webtemplate.component;
 
 import java.text.SimpleDateFormat;
+import java.text.MessageFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.MissingResourceException;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -23,6 +25,7 @@ import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
+import goc.webtemplate.component.jsonentities.CDTSEnvironment;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.PreFooter;
@@ -58,6 +61,11 @@ public abstract class AbstractCoreBean {
                                         .create();
 
     /**
+     * Hold the table of CDTS environment configuration objects (loaded the first time it is accessed).
+     */
+    private static HashMap<String, CDTSEnvironment> cdtsEnvironments = null;
+    
+    /**
      * SimpleDateFormat object used to format dateModified-type dates.
      */
     private static ThreadLocal<SimpleDateFormat>    dateModifiedFormat = new ThreadLocal<SimpleDateFormat>() {
@@ -78,11 +86,11 @@ public abstract class AbstractCoreBean {
     private String cdnEnvironment = this.getResourceBundleString("cdn", "cdn_environment");
     private String cdtsCdnEnv = null; // initialized in getCdtsCdnEnv
     private String templateVersion = this.getResourceBundleString("cdn", "wettemplate_version");
-    private String theme = this.getResourceBundleString("cdn", "wettemplate_theme");
-    private String subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
+    private String theme = null; // initialized in getTheme 
+    private String subTheme = null; // initialized in getSubTheme
     private boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
     private boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
-    private String cdnLocalPath = null;
+    private String cdnLocalPath = null; //initialized in getLocalPath
     private String headerTitle = "";
     private ApplicationTitle applicationTitle = new ApplicationTitle();
     private Link intranetTitle = null;    
@@ -129,7 +137,8 @@ public abstract class AbstractCoreBean {
     //-------------------------------------------------------
     //---[ Caching of calculated values
     //-------------------------------------------------------
-    private String partialCDNPath = null;
+    private String          partialCDNPath = null;
+    private CDTSEnvironment currentCDTSEnvironment = null;
     //-------------------------------------------------------
     
     //-------------------------------------------------------
@@ -148,12 +157,147 @@ public abstract class AbstractCoreBean {
      * configuration defined in cdn.properties on a bean basis
      */
     public abstract void onWebTemplateInitialize();
+
+    
+    /**
+     * Returns the CDTSEnvironment object with the specified name, otherwise returns null.
+     * @param name The name of the environment to look for, must be lowercase. 
+     */
+    private static CDTSEnvironment getCDTSEnvironmentByName(String name) {
+        if (cdtsEnvironments == null) loadCDTSEnvironments();        
+        return cdtsEnvironments.get(name);    
+    }
+    
+    /**
+     * Load environment json file (converts all environment names to lowercase)
+     */
+    private static synchronized void loadCDTSEnvironments() { //note the "static synchronized"... i.e. synchronized on AbstractCoreBean.class 
+        HashMap<String, CDTSEnvironment>    map = new HashMap<String, CDTSEnvironment>();
+        CDTSEnvironment.CDTSEnvironmentList tmpList;
+        java.io.InputStream                 is = null;
+        
+        try {
+            is = AbstractCoreBean.class.getResourceAsStream("/goc/webtemplate/global/config/CDTSEnvironments.json");
+            if (is == null) {
+                System.err.println("ERROR: CDTSEnvironment.json could not be read. Environment list will be empty. (/goc/webtemplate/global/config/CDTSEnvironments.json not found in jar)");
+                cdtsEnvironments = map;
+                return;
+            }
+            
+            tmpList = gson.fromJson(new java.io.InputStreamReader(is, "UTF-8"), CDTSEnvironment.CDTSEnvironmentList.class);
+            for (CDTSEnvironment cdtsenv: tmpList.getEnvironments()) {
+                //(convert name to all lower-case)
+                map.put(cdtsenv.getName().toLowerCase(), cdtsenv);                    
+            }
+        }
+        catch (Exception ex) {
+            System.err.println("ERROR: CDTSEnvironment.json could not be read. Environment list will be empty. Exception:  " + ex);
+            cdtsEnvironments = map; 
+        }
+        finally {
+            try {is.close();} catch (Throwable e) {}
+        }
+        
+        cdtsEnvironments = map;
+    }
+    
+    private CDTSEnvironment getCurrentCDTSEnvironment() {
+       if (this.currentCDTSEnvironment == null) this.currentCDTSEnvironment = getCDTSEnvironmentByName(this.getCDNEnvironment().toLowerCase());
+       return this.currentCDTSEnvironment;
+    }
     
     private void initializeOnce() {
         if (!this.initialized) {
             this.initialized = true; //do it BEFORE calling onWebTemplateInitialize to avoid endless loops
             this.onWebTemplateInitialize();
         }
+    }
+    
+    /**
+     * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
+     */
+    public String getLocalPath()
+    {
+        CDTSEnvironment currentEnvironment;
+        String          templateVersion;
+        
+        if (this.cdnLocalPath == null)
+        {
+            //cdnLocalPath is not set, is it overriden in properties?
+            this.cdnLocalPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
+            
+            if (Utility.isNullOrEmpty(this.cdnLocalPath))
+            {
+                //...no value from properties, load from current environment
+                currentEnvironment = this.getCurrentCDTSEnvironment();
+                if (currentEnvironment != null) this.cdnLocalPath = currentEnvironment.getLocalPath();
+            }
+            
+            if (!Utility.isNullOrEmpty(this.cdnLocalPath))
+            {
+                //we finally have a value, format it correctly
+                templateVersion = this.getTemplateVersion();
+                if (templateVersion == null) templateVersion = "";
+                
+                this.cdnLocalPath = MessageFormat.format(this.cdnLocalPath, this.getTheme(), templateVersion);
+            }
+            else
+            {
+                this.cdnLocalPath = ""; //(make sure it is blank, not null)
+            }
+        }
+
+        return this.cdnLocalPath;
+    }
+    
+    private String getPartialCDNPath() {
+        CDTSEnvironment environment;
+        String          envName;
+        String          envUrl = "";
+        String          envTheme = "";
+        String          https = null;
+        String          envRun;
+        String          templateVersion;        
+        String          tmpS;
+
+        if (this.partialCDNPath != null) return this.partialCDNPath; //return cached value if found
+        
+        envName = this.getCDNEnvironment().toLowerCase();
+        
+        //---[ Look for environment in our static list...
+        environment = getCDTSEnvironmentByName(envName);
+        this.currentCDTSEnvironment = environment; //might as well set our cached environment value 
+        if (environment != null) 
+        {
+            //...environment was found, setup accordingly
+            envUrl = environment.getPath();
+            https = environment.isSSLModifiable() && this.getUseHttps()?  "s": "";
+        }
+        envTheme = this.getTheme(); //getTheme() will load from current environment or use override from properties file, so all is good 
+        
+        //---[ whether or not an envirionment was found in previous step, settings are overridable if found in properties file
+        tmpS = this.getResourceBundleString("cdn", "cdn_" + envName + "_url");
+        if (!Utility.isNullOrEmpty(tmpS)) envUrl = tmpS;
+        if (https == null) https = this.getUseHttps() ? "s" : "";
+
+        templateVersion = this.getTemplateVersion();
+        envRun = "";
+        if (Utility.isNullOrEmpty(templateVersion)) {
+            if ((environment != null) && environment.isVersionRnCombined()) {
+                templateVersion = "rn/";
+                //(envRun stays blank)
+            } else {
+                envRun = "rn";
+                templateVersion = "";
+            }
+        } else {
+            templateVersion = templateVersion + "/";
+            envRun = "app";
+        }
+        
+        this.partialCDNPath = MessageFormat.format(envUrl, https, envRun, envTheme, templateVersion);
+
+        return this.partialCDNPath;
     }
     
     /**
@@ -178,7 +322,15 @@ public abstract class AbstractCoreBean {
      * can be overriden programatically.  
      */
     public void setCDNEnvironment(String value) {
-        this.cdnEnvironment = value;
+        this.cdnEnvironment = value; 
+        
+        //---[ The environment anme changed, we have a few cached values to clear so they are re-loaded from the proper environment
+        this.currentCDTSEnvironment = null;
+        this.cdtsCdnEnv = null;
+        this.partialCDNPath = null;
+        this.cdnLocalPath = null;
+        this.theme = null;
+        this.subTheme = null;
     }
 
     /**
@@ -189,9 +341,26 @@ public abstract class AbstractCoreBean {
      * can be overriden programmatically.
      */
     public String getCdtsCdnEnv() {
+        CDTSEnvironment currentEnvironment;
+        
         this.initializeOnce();
-        if (this.cdtsCdnEnv == null)this.cdtsCdnEnv = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_env");
-        return (Utility.isNullOrEmpty(this.cdtsCdnEnv) ? "prod" : this.cdtsCdnEnv);
+        
+        if (this.cdtsCdnEnv == null)
+        {
+            //cdtsCdnEnv is not set, is it overriden in properties?
+            this.cdtsCdnEnv = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_env");
+            
+            if (Utility.isNullOrEmpty(this.cdtsCdnEnv))
+            {
+                //...no value from properties, load from current environment
+                currentEnvironment = this.getCurrentCDTSEnvironment();
+                if (currentEnvironment != null) this.cdtsCdnEnv = currentEnvironment.getCDN();
+            }
+            
+            if (Utility.isNullOrEmpty(this.cdtsCdnEnv)) this.cdtsCdnEnv = "prod"; //default to "prod"
+        }
+        
+        return this.cdtsCdnEnv;
     }
     
     /**
@@ -281,8 +450,24 @@ public abstract class AbstractCoreBean {
      * can be overriden programatically.  
      */
     public String getTheme() {
+        CDTSEnvironment currentEnvironment;
+        
         this.initializeOnce();
-        return (!Utility.isNullOrEmpty(this.theme) ? StringEscapeUtils.escapeHtml4(this.theme) : "");
+
+        if (this.theme == null)
+        {
+            //theme is not set, is it overriden in properties?
+            this.theme = this.getResourceBundleString("cdn", "wettemplate_theme");
+            
+            if (Utility.isNullOrEmpty(this.theme))
+            {
+                //...no value from properties, load from current environment
+                currentEnvironment = this.getCurrentCDTSEnvironment();
+                if (currentEnvironment != null) this.theme = currentEnvironment.getTheme();
+            }
+        }
+        
+        return StringEscapeUtils.escapeHtml4(this.theme);
     }
 
     /**
@@ -302,8 +487,24 @@ public abstract class AbstractCoreBean {
      * can be overriden programatically.  
      */
     public String getSubTheme() {
+        CDTSEnvironment currentEnvironment;
+        
         this.initializeOnce();
-        return (!Utility.isNullOrEmpty(this.subTheme) ? StringEscapeUtils.escapeHtml4(this.subTheme) : "");
+
+        if (this.subTheme == null)
+        {
+            //subTheme is not set, is it overriden in properties?
+            this.subTheme = this.getResourceBundleString("cdn", "wettemplate_subtheme");
+            
+            if (Utility.isNullOrEmpty(this.subTheme))
+            {
+                //...no value from properties, load from current environment
+                currentEnvironment = this.getCurrentCDTSEnvironment();
+                if (currentEnvironment != null) this.subTheme = currentEnvironment.getSubTheme();
+            }
+        }
+        
+        return StringEscapeUtils.escapeHtml4(this.subTheme);
     }
     
     /**
@@ -454,14 +655,16 @@ public abstract class AbstractCoreBean {
      * Note that '- Canada.ca'  will be automatically added to all pages served under the 'gcweb' theme. 
      */
     public String getHeaderTitle() {
+        CDTSEnvironment currentEnvironment;
+        
         this.initializeOnce();
         
         if (this.headerTitle == null) this.headerTitle = "";
         
-        if (this.getTheme().toLowerCase().equals("gcweb") &&  //NOTE: Hardcoding, should this be a new "titleSuffix" variable?
-            !this.headerTitle.endsWith(" - Canada.ca") )            
-        {
-            return StringEscapeUtils.escapeHtml4(this.headerTitle + " - Canada.ca");
+        currentEnvironment = this.getCurrentCDTSEnvironment();
+        if ( (currentEnvironment != null) && !Utility.isNullOrEmpty(currentEnvironment.getAppendToTitle()) && 
+              (!this.headerTitle.endsWith(currentEnvironment.getAppendToTitle())) ) {
+            return StringEscapeUtils.escapeHtml4(this.headerTitle + " " + currentEnvironment.getAppendToTitle()); //NOTE: Adding a space... questionable... maybe JSON file should be changed instead?
         }
         
         return StringEscapeUtils.escapeHtml4(this.headerTitle);
@@ -1060,91 +1263,6 @@ public abstract class AbstractCoreBean {
 
     
     /**
-     * Returns the value of cdn_XXXX_localpath (where XXXX is the cdn environment), or blank if not specified.
-     */
-    public String getLocalPath()
-    {
-        String  tmpPath;
-        String  templateVersion;
-        
-        if (this.cdnLocalPath == null)
-        {
-            try
-            {
-                tmpPath = this.getResourceBundleString("cdn", "cdn_" + this.getCDNEnvironment().toLowerCase() + "_localpath");
-            }
-            catch (java.util.MissingResourceException ex)
-            {
-                tmpPath = null;
-            }
-            if (!Utility.isNullOrEmpty(tmpPath))
-            {
-                templateVersion = this.getTemplateVersion();
-                if (templateVersion == null) templateVersion = "";
-                
-                this.cdnLocalPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(String.format(tmpPath, this.getTheme(), templateVersion)));
-            }
-            else
-            {
-                this.cdnLocalPath = "";
-            }
-        }
-        
-        return this.cdnLocalPath;
-    }
-    
-    private String getPartialCDNPath() {
-        String https;
-        String envName;
-        String envUrl;
-        String templateVersion;
-        String cdnUrl;
-
-        if (this.partialCDNPath != null) return this.partialCDNPath; //return cached value if found
-        
-        https = this.getUseHttps() ? "s" : "";
-        envName = this.getCDNEnvironment().toLowerCase();
-        envUrl = this.getResourceBundleString("cdn", "cdn_" + envName + "_url");
-        envUrl = (Utility.isNullOrEmpty(envUrl) ? "" : envUrl);
-        templateVersion = this.getTemplateVersion();
-        
-        if (envName.equals("akamai")) {
-            // Using Akamai CDTS
-            if (Utility.isNullOrEmpty(templateVersion)) {
-                cdnUrl = String.format(envUrl, https, this.getTheme(), "rn");
-            } else {
-                cdnUrl = String.format(envUrl, https, this.getTheme(), templateVersion);
-            }
-        } else {
-            // Using ESDC CDTS (SSL)
-            if (Utility.isNullOrEmpty(templateVersion)) {
-                cdnUrl = String.format(envUrl, https, "rn", this.getTheme(), "");
-            } else {
-                cdnUrl = String.format(envUrl, https, "app", this.getTheme(), templateVersion + "/");
-            }
-        }
-        
-        this.partialCDNPath = BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(cdnUrl));
-        
-        return this.partialCDNPath;
-    }
-    
-    /**
-     * Outputs the portion of the SoyUtils and WET url in each of the master template page, the value 
-     * outputted is determined by the current WET Template Version identified in cdn.properties, if 
-     * no value is specified the "run" version of the WET Template will be utilized.
-     *   
-     * @return either "rn" or "app", this is used strictly by the various master template page
-     */
-    private String getRunOrVersionValue() {
-        if (Utility.isNullOrEmpty(this.getTemplateVersion())) { 
-            return "rn";
-        } else {
-            return "app";
-        }
-    }
-    
-    /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
      */
     private ArrayList<Breadcrumb> getEncodedBreadcrumbs() {
@@ -1613,20 +1731,5 @@ public abstract class AbstractCoreBean {
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
                 JsonValueUtils.GetNonEmptyString(this.getLocalPath())
             ));        
-    }
-    
-    /**
-     * Outputs the portion of the SoyUtils and WET url in each of the master template page, the value 
-     * outputted is determined by the current WET Template Version identified in cdn.properties, if 
-     * no value is specified the "run" version of the WET Template will be utilized.
-     *   
-     * @return either "" if in "Run" mode or the wet template version value, this is used strictly by the various master template page
-     */
-    public String getThemeVersionValue() {//TODO: Possibly review this method when switching to JSON file for environments.
-        if (this.getRunOrVersionValue().equals("rn")) {
-            return "";
-        } else {
-            return this.getTemplateVersion() + "/";
-        }
     }
 }

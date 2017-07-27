@@ -45,7 +45,12 @@ public abstract class BaseCoreBean extends AbstractCoreBean {
     
     @Override
     public String getResourceBundleString(String resourceBundleName, String resourceBundleKey) throws MissingResourceException {
-        return (java.util.ResourceBundle.getBundle("goc.webtemplate.global.config." + resourceBundleName)).getString(resourceBundleKey);
+        try {
+            return (java.util.ResourceBundle.getBundle("goc.webtemplate.global.config." + resourceBundleName)).getString(resourceBundleKey);
+        }
+        catch (Exception ex) {
+            return "";
+        }
     }
     
     @Override

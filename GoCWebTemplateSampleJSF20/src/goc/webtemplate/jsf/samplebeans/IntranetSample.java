@@ -10,7 +10,8 @@ public class IntranetSample extends DefaultTemplateCoreBean {
     public void onWebTemplateInitialize() {
         this.setHeaderTitle("GCIntranet Sample Page"); 
         
-        this.setCDNEnvironment("ESDCProd");
+        this.setCDNEnvironment("ESDC_Prod");
+        //Setting the environment will load proper theme/subtheme values, but we can override them if needed 
         this.setTheme("gcintranet");
         this.setSubTheme("esdc");
 

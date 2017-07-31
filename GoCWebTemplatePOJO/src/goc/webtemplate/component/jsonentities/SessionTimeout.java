@@ -39,11 +39,11 @@ public class SessionTimeout implements Serializable {
         this.reactionTime = otherObj.getReactionTime();
         this.sessionalive = otherObj.getSessionAlive();
         this.logouturl = otherObj.getLogoutUrl();
-        this.refreshCallbackUrl = JsonValueUtils.GetNonEmptyString(otherObj.getRefreshCallbackUrl());        
+        this.refreshCallbackUrl = JsonValueUtils.getNonEmptyString(otherObj.getRefreshCallbackUrl());        
         this.refreshOnClick = otherObj.isRefreshOnClick();
         this.refreshLimit = otherObj.getRefreshLimit() > 0? otherObj.getRefreshLimit(): null;
-        this.method = JsonValueUtils.GetNonEmptyString(otherObj.getMethod());
-        this.additionalData = JsonValueUtils.GetNonEmptyString(otherObj.getAdditionalData());
+        this.method = JsonValueUtils.getNonEmptyString(otherObj.getMethod());
+        this.additionalData = JsonValueUtils.getNonEmptyString(otherObj.getAdditionalData());
     }
     
     public SessionTimeout(Integer inactivity, Integer reactionTime, Integer sessionalive,

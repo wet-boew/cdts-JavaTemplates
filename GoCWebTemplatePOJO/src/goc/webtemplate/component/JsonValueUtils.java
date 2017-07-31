@@ -11,7 +11,7 @@ public final class JsonValueUtils {
     /**
      * Returns the specified String value if non-empty, or null 
      */
-    public static String GetNonEmptyString(String value)
+    public static String getNonEmptyString(String value)
     {
         return Utility.isNullOrEmpty(value)? null: value;
     }
@@ -21,7 +21,7 @@ public final class JsonValueUtils {
      * 
      *  NOTE: Formatting of value is done by calling String.format
      */
-    public static String GetNonEmptyFormattedString(String value, Object... formatArgs)
+    public static String getNonEmptyFormattedString(String value, Object... formatArgs)
     {
         //NOTE: Consider switching to MessageFormat.format instead... but this has repercusions for existing clients
         return Utility.isNullOrEmpty(value)? null: String.format(value, formatArgs);
@@ -30,7 +30,7 @@ public final class JsonValueUtils {
     /**
      * Returns the specified String value, encoded for use as a URL if non-empty, or null 
      */
-    public static String GetNonEmptyURLEscapedString(String value)
+    public static String getNonEmptyURLEscapedString(String value)
     {
         return Utility.isNullOrEmpty(value)? null: BaseUtil.encodeUrl(value);
     }
@@ -38,7 +38,7 @@ public final class JsonValueUtils {
     /**
      * Returns a copy of the specified link list with its entries URL-escaped and blanks transformed into nulls.
      */
-    public static ArrayList<Link> GetNonEmptyLinkList(List<Link> links)
+    public static ArrayList<Link> getNonEmptyLinkList(List<Link> links)
     {
         ArrayList<Link> vtr;
         
@@ -48,7 +48,7 @@ public final class JsonValueUtils {
         for (Link l: links) {
             if (l.getHref() == null) continue;
             vtr.add(new Link(BaseUtil.encodeUrl(l.getHref()), 
-                             JsonValueUtils.GetNonEmptyString(l.getText())));
+                             JsonValueUtils.getNonEmptyString(l.getText())));
         }
 
         return vtr;

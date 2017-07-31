@@ -1273,9 +1273,9 @@ public abstract class AbstractCoreBean {
             tmpBreadcrumbs = new ArrayList<Breadcrumb>();
             for (Breadcrumb bc: sourceList) {
                 tmpBreadcrumbs.add(new Breadcrumb(
-                                        BaseUtil.encodeUrl(bc.getHref()), 
-                                        JsonValueUtils.GetNonEmptyString(bc.getTitle()), 
-                                        JsonValueUtils.GetNonEmptyString(bc.getAcronym())) );                
+                                        JsonValueUtils.getNonEmptyURLEscapedString(bc.getHref()), 
+                                        JsonValueUtils.getNonEmptyString(bc.getTitle()), 
+                                        JsonValueUtils.getNonEmptyString(bc.getAcronym())) );                
             }
         }
         
@@ -1533,9 +1533,9 @@ public abstract class AbstractCoreBean {
     public String getRenderRefTop() {
         return gson.toJson(new RefTop(
                     this.getCdtsCdnEnv(),
-                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                    JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                    JsonValueUtils.getNonEmptyString(this.getLocalPath())
                 ));        
     }
     
@@ -1546,13 +1546,13 @@ public abstract class AbstractCoreBean {
     public String getRenderTop() {
         return gson.toJson(new Top(
                     this.getCdtsCdnEnv(),
-                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     this.buildIntranetTitleList(),
                     this.showSearch,
                     this.buildLanguageLinkList(),
                     this.showPreContent,
                     this.getEncodedBreadcrumbs(),
-                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     true, //siteMenu
                     this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                 ));        
@@ -1565,13 +1565,13 @@ public abstract class AbstractCoreBean {
     public String getRenderTransactionalTop() {
         return gson.toJson(new Top(
                     this.getCdtsCdnEnv(),
-                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     this.buildIntranetTitleList(),
                     this.showSearch,
                     this.buildLanguageLinkList(),
                     false, //preContent
                     this.getEncodedBreadcrumbs(),
-                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     false, //siteMenu
                     this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                 ));        
@@ -1586,12 +1586,12 @@ public abstract class AbstractCoreBean {
 
         appTop = new AppTop(
                     this.getCdtsCdnEnv(),
-                    JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
-                    JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
-                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getText()),
-                    JsonValueUtils.GetNonEmptyString(this.applicationTitle.getUrl()),
+                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getText()),
+                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getUrl()),
                     this.buildIntranetTitleList(),
-                    JsonValueUtils.GetNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
+                    JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
                     this.buildLanguageLinkList(),
                     this.getShowSiteMenu(),
                     this.getShowSecureIcon(),
@@ -1600,7 +1600,7 @@ public abstract class AbstractCoreBean {
                     this.showSearch,
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
-                    JsonValueUtils.GetNonEmptyString(this.getCustomSearch()),
+                    JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
                     this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                     );
 
@@ -1617,7 +1617,7 @@ public abstract class AbstractCoreBean {
     public String getRenderSplashTop() {
         return gson.toJson(new SplashTop(
                 this.getCdtsCdnEnv(),
-                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getNonEmptyString(this.getLocalPath())
               ));
     }
     
@@ -1633,7 +1633,7 @@ public abstract class AbstractCoreBean {
                 this.showPostContent,
                 new FeedbackLink(this.showFeedbackLink, this.feedbackUrl),
                 new ShareList(this.showSharePageLink, this.sharePageMediaSites),
-                JsonValueUtils.GetNonEmptyString(this.getScreenIdentifier())
+                JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
               ));
     }
     
@@ -1649,7 +1649,7 @@ public abstract class AbstractCoreBean {
                 false, //showPostContent,
                 new FeedbackLink(false, null),
                 new ShareList(false, null),
-                JsonValueUtils.GetNonEmptyString(this.getScreenIdentifier())
+                JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
               ));
     }
     
@@ -1660,13 +1660,13 @@ public abstract class AbstractCoreBean {
     public String getRenderFooter() {
         return gson.toJson(new Footer(
                 this.getCdtsCdnEnv(),
-                JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
                 this.getShowFeature(),
-                JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
+                JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
                 null, //privacyLink
                 null, //termsLink
-                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getNonEmptyString(this.getLocalPath())
             ));        
     }
     
@@ -1677,13 +1677,13 @@ public abstract class AbstractCoreBean {
     public String getRenderTransactionalFooter() {
         return gson.toJson(new Footer(
                 this.getCdtsCdnEnv(),
-                JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
+                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
                 this.getShowFeature(),
-                JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
-                JsonValueUtils.GetNonEmptyString(this.getPrivacyLinkUrl()),
-                JsonValueUtils.GetNonEmptyString(this.getTermsConditionsLinkUrl()),
-                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
+                JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
+                JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
+                JsonValueUtils.getNonEmptyString(this.getLocalPath())
             ));        
     }
     
@@ -1701,19 +1701,19 @@ public abstract class AbstractCoreBean {
             tmpFooterLinks = new ArrayList<FooterLink>();
             for (FooterLink fl: this.customFooterLinks)
                 tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
-                                   JsonValueUtils.GetNonEmptyString(fl.getText()), 
+                                   JsonValueUtils.getNonEmptyString(fl.getText()), 
                                    fl.getNewWindow()));
         }
         
         appFooter = new AppFooter(
                         this.getCdtsCdnEnv(),
-                        JsonValueUtils.GetNonEmptyString(this.getSubTheme()),
-                        JsonValueUtils.GetNonEmptyString(this.getLocalPath()),
+                        JsonValueUtils.getNonEmptyString(this.getSubTheme()),
+                        JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                         this.getShowGlobalNav(),
                         tmpFooterLinks,
-                        JsonValueUtils.GetNonEmptyLinkList(this.getContactList()),
-                        JsonValueUtils.GetNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
-                        JsonValueUtils.GetNonEmptyURLEscapedString(this.privacyLinkUrl),
+                        JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
+                        JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
+                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
                         this.getShowFeature()                        
                 );
         
@@ -1729,7 +1729,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 this.getLeavingSecureSiteWarning(),
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                JsonValueUtils.GetNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getNonEmptyString(this.getLocalPath())
             ));        
     }
 }

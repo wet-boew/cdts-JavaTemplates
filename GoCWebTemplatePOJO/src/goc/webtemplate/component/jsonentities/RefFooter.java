@@ -52,7 +52,7 @@ public class RefFooter implements Serializable {
             this.exitScript = true;
             this.exitURL = lssw.getRedirectUrl();
             this.exitMsg = lssw.getMessage();
-            this.exitDomains = JsonValueUtils.GetNonEmptyURLEscapedString(lssw.getExcludedDomains());
+            this.exitDomains = JsonValueUtils.getNonEmptyURLEscapedString(lssw.getExcludedDomains());
             this.displayModal = lssw.getDisplayModalWindow();
         }
         

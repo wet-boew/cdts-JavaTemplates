@@ -1,91 +1,95 @@
 ************************************************************************************************************
+4.0.25.2 - 2017-08-01
+    - Fixed a problem with orphaned "a" end tag in WebContent/StaticFallbackFiles/gcweb/transactTop-en.html (issue #8) 
+
+************************************************************************************************************
 4.0.25.1 - 2017-07-10
-    -Implementation of WET/CDTS v4.0.25
-    -Updated static fallback files
-    -Added an URL to the application title in the Application Template
-    -Added an Intranet Title to the Application Template 
-    -Bug fixes
+    - Implementation of WET/CDTS v4.0.25
+    - Updated static fallback files
+    - Added an URL to the application title in the Application Template
+    - Added an Intranet Title to the Application Template 
+    - Bug fixes
 
 ************************************************************************************************************
 4.0.24.1 - 2017-04-18
-    -Implementation of WET/CDTS v4.0.24
-    -Updated static fallback files
-    -The value '- Canada.ca' is now automatically appended to the headerTitle when the theme is 'gcweb', as requested by Treasury Board.
-    -Introduction of JSON serialization library 'gson-2.8.0.jar' as a dependency in WEB-INF/lib, now required for internal generation of JSON object values passed to closure templates.
-    -BaseComponent.newsLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
-    -BaseComponent.aboutLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
-    -BaseComponent.contactLinks and its associated methods have been marked deprecated. They are replaced by contactLinkUrl. Will be removed in a futrue release.
-    -Added new master pages for the Application Template:
-        -/templates/application-master-template.xhtml
-        -/templates/application-leftmenu-master-template.xhtml
-        -New sample page: /samples/ApplicationSample.xhtml
-    -Added new Application Template specific configuration proeprties (cdn.properties) values:
-        -goc.webtemplate.showglobalnav - Override the default footer and display the global navigation menu for Canada.ca
-        -goc.webtemplate.showsitemenu - Hide or show the site menu
-        -goc.webtemplate.customsitemenuurl - Custom Menu used to override the CDTS Menu Config value can be pointed to a dynamic page
-        -goc.webtemplate.signinlinkurl - Link used by the sign-in button on the menu
-        -goc.webtemplate.signoutlinkurl - Link used by the sign-out button on the menu
-    -Added new Application Template configuration variables in BaseComponent, with associated override methods:
-        -showGlobalNav - Override the default footer and display the global navigation menu for Canada.ca
-        -showSiteMenu - Hide or show the site menu
-        -customSiteMenuUrl - Custom Menu used to override the CDTS Menu 
-        -signInLinkUrl - Link used by the sign-in button on the menu
-        -signOutLinkUrl - Link used by the sign-out button on the menu
-        -showSecureIcon - Whether or not to display the lock icon beside the application name 
-        -showSignInLink - Show the sign in link on the page.cannot be true when ShowSignOutLink is true
-        -showSignOutLink - Show the sign out link on the page. cannot be true when ShowSignInLink is true
-        -customFooterLinks - Will create a custom set of columns for your footer links
-    -Bug fixes
+    - Implementation of WET/CDTS v4.0.24
+    - Updated static fallback files
+    - The value '- Canada.ca' is now automatically appended to the headerTitle when the theme is 'gcweb', as requested by Treasury Board.
+    - Introduction of JSON serialization library 'gson-2.8.0.jar' as a dependency in WEB-INF/lib, now required for internal generation of JSON object values passed to closure templates.
+    - BaseComponent.newsLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
+    - BaseComponent.aboutLinks and its associated methods have been marked deprecated as they are not used by the templates. Will be removed in a future release.
+    - BaseComponent.contactLinks and its associated methods have been marked deprecated. They are replaced by contactLinkUrl. Will be removed in a futrue release.
+    - Added new master pages for the Application Template:
+        - /templates/application-master-template.xhtml
+        - /templates/application-leftmenu-master-template.xhtml
+        - New sample page: /samples/ApplicationSample.xhtml
+    - Added new Application Template specific configuration proeprties (cdn.properties) values:
+        - goc.webtemplate.showglobalnav - Override the default footer and display the global navigation menu for Canada.ca
+        - goc.webtemplate.showsitemenu - Hide or show the site menu
+        - goc.webtemplate.customsitemenuurl - Custom Menu used to override the CDTS Menu Config value can be pointed to a dynamic page
+        - goc.webtemplate.signinlinkurl - Link used by the sign-in button on the menu
+        - goc.webtemplate.signoutlinkurl - Link used by the sign-out button on the menu
+    - Added new Application Template configuration variables in BaseComponent, with associated override methods:
+        - showGlobalNav - Override the default footer and display the global navigation menu for Canada.ca
+        - showSiteMenu - Hide or show the site menu
+        - customSiteMenuUrl - Custom Menu used to override the CDTS Menu 
+        - signInLinkUrl - Link used by the sign-in button on the menu
+        - signOutLinkUrl - Link used by the sign-out button on the menu
+        - showSecureIcon - Whether or not to display the lock icon beside the application name 
+        - showSignInLink - Show the sign in link on the page.cannot be true when ShowSignOutLink is true
+        - showSignOutLink - Show the sign out link on the page. cannot be true when ShowSignInLink is true
+        - customFooterLinks - Will create a custom set of columns for your footer links
+    - Bug fixes
 
 ************************************************************************************************************
 4.0.23.2 - 2017-03-14
-    -Implementation of "_localpath" environment property in cdn.properties to allow for CDTS files hosted locally for development and/or load testing.
-    -Bug fixes
+    - Implementation of "_localpath" environment property in cdn.properties to allow for CDTS files hosted locally for development and/or load testing.
+    - Bug fixes
 
 ************************************************************************************************************
 4.0.23.1 - 2016-12-16
-	-Implementation of WET v4.0.23
-	-Updated static fallback files
-	-Bug fixes
-	
+    - Implementation of WET v4.0.23
+    - Updated static fallback files
+    - Bug fixes
+    
 ************************************************************************************************************
 4.0.22.3 - 2016-11-18
-	-New config and property related to Leaving Secure Site named "DisplayModalWindow"
-	-New property related to the MenuItem named "OpenInNewWindow"
-	-New property related to the MenuSection named "OpenInNewWindow"
-	-GCWeb footer static file update. new link to GCNews
-	-Updated LeavingSecureSite sample with "DisplayModalWindow"
-	-Update LeftSideMenu sample with "OpenInNewWindow"
+    - New config and property related to Leaving Secure Site named "DisplayModalWindow"
+    - New property related to the MenuItem named "OpenInNewWindow"
+    - New property related to the MenuSection named "OpenInNewWindow"
+    - GCWeb footer static file update. new link to GCNews
+    - Updated LeavingSecureSite sample with "DisplayModalWindow"
+    - Update LeftSideMenu sample with "OpenInNewWindow"
 
 ************************************************************************************************************
 4.0.22.2 - 2016-10-19
-	-All configs are now read/write properties
-	-The page title can now be changed for intranet themes only
-	-Screen Identifier control is now available
-	-New Splash Page and GCIntranet theme sample pages
+    - All configs are now read/write properties
+    - The page title can now be changed for intranet themes only
+    - Screen Identifier control is now available
+    - New Splash Page and GCIntranet theme sample pages
 
 ************************************************************************************************************
 4.0.22.1 - 2016-09-28
-	-Implementation of WET v4.0.22
-	-Integration of Akamai
-		-revisited how the url is built
-	-New configs:
-		-useHTTPS: determine if https or http is used when retreiving the files
-		-cdtsEnvironments: lists the available CDTS with their url and cdnEnv
-		-showLanguageLink: determine if the language toggle link is to be displayed
-		-loadJQueryFromGoogle: determines if the jQuery files will be loaded on the CDTS or from Google directly
-		-feedbackLinkUrl: determines the url to use for the "Feedback/Report a problem" link.
-	-master/layout pages: updated to use new path logic
-	-Transactional master/layout pages may now display the language toggle link
-	-WebTemplateTheme and WebTemplateSubTheme are now writeable
+    - Implementation of WET v4.0.22
+    - Integration of Akamai
+        - revisited how the url is built
+    - New configs:
+        - useHTTPS: determine if https or http is used when retreiving the files
+        - cdtsEnvironments: lists the available CDTS with their url and cdnEnv
+        - showLanguageLink: determine if the language toggle link is to be displayed
+        - loadJQueryFromGoogle: determines if the jQuery files will be loaded on the CDTS or from Google directly
+        - feedbackLinkUrl: determines the url to use for the "Feedback/Report a problem" link.
+    - master/layout pages: updated to use new path logic
+    - Transactional master/layout pages may now display the language toggle link
+    - WebTemplateTheme and WebTemplateSubTheme are now writeable
 
 ************************************************************************************************************
 4.0.21.2 - 2016-07-26
-	-New property "subTheme" implemented
-	-Left Menu can now have 3 levels, with the use of a new class "MenuItem"
+    - New property "subTheme" implemented
+    - Left Menu can now have 3 levels, with the use of a new class "MenuItem"
 
 ************************************************************************************************************
 4.0.21.1 - 2016-05-06
-	-Implemenation of WET v4.0.21
-	-New property "Link" in the "MenuSection".   menu section can now be a link
-	-Updated static fallback files
+    - Implemenation of WET v4.0.21
+    - New property "Link" in the "MenuSection".   menu section can now be a link
+    - Updated static fallback files

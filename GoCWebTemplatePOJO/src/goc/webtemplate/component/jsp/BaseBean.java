@@ -46,7 +46,12 @@ public abstract class BaseBean extends BaseComponent {
 	}
 	
 	public String getResourceBundleString(String resourceBundleName, String resourceBundleKey) throws MissingResourceException {
-    	return (java.util.ResourceBundle.getBundle("goc.webtemplate.global.config." + resourceBundleName)).getString(resourceBundleKey);
+        try {
+            return (java.util.ResourceBundle.getBundle("goc.webtemplate.global.config." + resourceBundleName)).getString(resourceBundleKey);
+        }
+        catch (Exception ex) {
+            return "";
+        }
 	}
     
     public String getTwoLetterCultureLanguage() {

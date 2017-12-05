@@ -21,7 +21,7 @@
 	      pages, please do NOT remove or modify -->
 	<managed-bean>
 		<managed-bean-name>defaulttemplatejsfbean</managed-bean-name>
-		<managed-bean-class>goc.webtemplate.component.jsf.DefaultTemplateBean</managed-bean-class>
+		<managed-bean-class>goc.webtemplate.component.jsf.DefaultTemplateCoreBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

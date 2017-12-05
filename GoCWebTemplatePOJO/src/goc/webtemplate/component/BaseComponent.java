@@ -10,6 +10,7 @@ import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
+import goc.webtemplate.Utility;
 
 /**
  * This is the base class that will be shared with either the JSF 
@@ -163,12 +164,12 @@ public abstract class BaseComponent extends AbstractCoreBean {
      * @deprecated showGlobalNav should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
      */
     @Deprecated
-    protected boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
+    protected boolean showGlobalNav = false;//Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
     /**
      * @deprecated showSiteMenu should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
      */
     @Deprecated
-    protected boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
+    protected boolean showSiteMenu = false;//Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
     protected String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
     protected String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
     protected String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
@@ -248,6 +249,9 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setShowSignOutLink();
         this.setCustomFooterLinks();
         this.setCustomSearch();
+        
+        if (Utility.isNullOrEmpty(this.mainTheme)) this.mainTheme = null;
+        if (Utility.isNullOrEmpty(this.subTheme)) this.subTheme = null;
         
         //---[ Set set all values from our variables that were (potentially overriden)
         this.setCDNEnvironment(this.cdnEnvironment);

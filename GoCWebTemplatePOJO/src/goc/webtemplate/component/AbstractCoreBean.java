@@ -12,13 +12,13 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.google.gson.Gson;
 
-import goc.webtemplate.ApplicationTitle;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
+import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.Utility;
@@ -32,6 +32,7 @@ import goc.webtemplate.component.jsonentities.PreFooter;
 import goc.webtemplate.component.jsonentities.RefFooter;
 import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.SecMenu;
+import goc.webtemplate.component.jsonentities.SecMenuItem;
 import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
@@ -92,11 +93,11 @@ public abstract class AbstractCoreBean {
     private boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
     private String cdnLocalPath = null; //initialized in getLocalPath
     private String headerTitle = "";
-    private ApplicationTitle applicationTitle = new ApplicationTitle();
+    private Link applicationTitle = new Link();
     private Link intranetTitle = null;    
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
-    private String contactLinkUrl = null;
+    private Link contactLink = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalwindow")),
@@ -118,12 +119,11 @@ public abstract class AbstractCoreBean {
     private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
     private ArrayList<String> htmlBodyElements = new ArrayList<String>();
     private String staticFallbackFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
-    private boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
-    private boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
     private String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
+    private ArrayList<MenuItem> menuLinks = null;
     private String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
     private String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
-    private boolean showSecureIcon = false;
+    private String  appSettingsUrl = this.getResourceBundleString("cdn", "goc.webtemplate.appsettingsurl");
     private boolean showSignInLink = false;
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
@@ -541,7 +541,7 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the title that will be displayed in the header above the top menu.
      */
-    public ApplicationTitle getApplicationTitle() {
+    public Link getApplicationTitle() {
         this.initializeOnce();
         return this.applicationTitle;
     }
@@ -549,7 +549,7 @@ public abstract class AbstractCoreBean {
     /**
      * Sets the title that will be displayed in the header above the top menu.
      */
-    public void setApplicationTitle(ApplicationTitle value) {
+    public void setApplicationTitle(Link value) {
         this.applicationTitle = value;
     }
     
@@ -785,16 +785,16 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the URL to be used to the contact link.
      */
-    public String getContactLinkUrl() {
+    public Link getContactLink() {
         this.initializeOnce();
-        return this.contactLinkUrl;
+        return this.contactLink;
     }
     
     /**
      * Returns the URL to be used to the contact link.
      */
-    public void setContactLinkUrl(String value) {
-        this.contactLinkUrl = value;
+    public void setContactLink(Link value) {
+        this.contactLink = value;
     }
     
     /**
@@ -1038,32 +1038,6 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     *  Returns whether the Global Nav bar in the footer is to be displayed.
-     *  
-     * Set at application level via "goc.webtemplate.showglobalnav" property in cdn.properties, 
-     * can be overriden programatically.  
-     *  
-     *  Only available in the Application Template
-     */
-    public boolean getShowGlobalNav() {
-        this.initializeOnce();
-        return this.showGlobalNav;
-    }
-    
-    /**
-     * Sets whether the Global Nav bar in the footer is to be displayed.
-     *  
-     * Set at application level via "goc.webtemplate.showglobalnav" property in cdn.properties, 
-     * can be overriden programatically.  
-     *  
-     *  Only available in the Application Template
-     */
-    public void setShowGlobalNav(boolean value)
-    {
-        this.showGlobalNav = value;
-    }
-    
-    /**
      * Returns the  custom site menu to be used in place of the standard canada.ca site menu
      * This defaults to null (use standard menu)
      * 
@@ -1089,32 +1063,36 @@ public abstract class AbstractCoreBean {
     public void setCustomSiteMenuUrl(String value) {
         this.customSiteMenuUrl = value;
     }
-    
+
     /**
-     *  Returns whether the Site Menu is to appear at the top of the page. 
-     *  If set to false only a band will still be seen.
-     *  
-     * Set at application level via "goc.webtemplate.showsitemenu" property in cdn.properties, 
-     * can be overriden programatically.  
-     *  
-     *  Only available in the Application Template
+     * Returns the custom site menu item to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu).  For another option for specifying a custom menu,
+     * see the getCustomSiteMenuUrl property.
+     * 
+     * Set programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see getCustomSiteMenuUrl()
      */
-    public boolean getShowSiteMenu() {
+    public ArrayList<MenuItem> getMenuLinks() {
         this.initializeOnce();
-        return this.showSiteMenu;
+        return this.menuLinks;
     }
     
     /**
-     *  Sets whether the Site Menu is to appear at the top of the page. 
-     *  If set to false only a band will still be seen.
-     *  
-     * Set at application level via "goc.webtemplate.showsitemenu" property in cdn.properties, 
-     * can be overriden programatically.  
-     *  
-     *  Only available in the Application Template
+     * Sets the custom site menu item to be used in place of the standard canada.ca site menu
+     * This defaults to null (use standard menu).  For another option for specifying a custom menu,
+     * see the getCustomSiteMenuUrl property.
+     * 
+     * Set programatically.  
+     * 
+     * Only available in the Application Template
+     * 
+     * @see setCustomSiteMenuUrl()
      */
-    public void setShowSiteMenu(boolean value) {
-        this.showSiteMenu = value;
+    public void setMenuLinks(ArrayList<MenuItem> value) {
+        this.menuLinks = value;
     }
 
     /**
@@ -1176,22 +1154,28 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Returns whether the secure icon is displayed next to the applicaiton name in the header.
-     * Set by application programmatically
+     * Returns the "app settings" URL of the application template.
+     * 
+     * Set at application level via "goc.webtemplate.appsettingsurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
      * Only available in the Application Template
      */
-    public boolean getShowSecureIcon() {
+    public String getAppSettingsUrl() {
         this.initializeOnce();
-        return this.showSecureIcon;
+        return this.appSettingsUrl;      
     }
     
     /**
-     * Sets whether the secure icon is displayed next to the applicaiton name in the header.
-     * Set by application programmatically
+     * Sets the "app settings" URL of the application template.
+     * 
+     * Set at application level via "goc.webtemplate.appsettingsurl" property in cdn.properties, 
+     * can be overriden programatically.  
+     * 
      * Only available in the Application Template
      */
-    public void setShowSecureIcon(boolean value) {
-        this.showSecureIcon = value;
+    public void setAppSettingsUrl(String value) {
+        this.appSettingsUrl = value;
     }
 
     /**
@@ -1284,8 +1268,13 @@ public abstract class AbstractCoreBean {
     
     private ArrayList<Link> getContactList()
     {
+        Link cl = this.getContactLink();
+        
+        if ((cl == null) || Utility.isNullOrEmpty(cl.getHref())) return null;
+        
         ArrayList<Link> vtr = new ArrayList<Link>();
-        vtr.add(new Link(this.getContactLinkUrl(), ""));
+        vtr.add(cl);
+        
         return vtr;
     }
     
@@ -1425,22 +1414,11 @@ public abstract class AbstractCoreBean {
     private String buildDateModified() {
         Date    sourceDate = this.getDateModified();
 
+        if (sourceDate == null) return null;
+        
         //If we have a date set, return it
-        if (sourceDate != null) return dateModifiedFormat.get().format(sourceDate);
-        //If we don't have a date, but we have a versionIdentifier: no date modified at all!
-        if (!Utility.isNullOrEmpty(this.getVersionIdentifier())) return null;
-        //If we don't have a date nor a versionIdentifier, return epoc date as default
-        return dateModifiedFormat.get().format(new Date(0));       
+        return dateModifiedFormat.get().format(sourceDate);
     }    
-    
-    private String buildVersionIdentifier() {
-        //If we have a date set or no versionIdentifier specified: return null
-        if ((this.getDateModified() != null) ||
-             Utility.isNullOrEmpty(this.getVersionIdentifier())) return null;
-                
-        //If we don't have a date set, but we have a versionIdentifier, return the version
-        return this.getVersionIdentifier();
-    }
     
     private ArrayList<LanguageLink> buildLanguageLinkList()
     {
@@ -1470,6 +1448,15 @@ public abstract class AbstractCoreBean {
     
     private boolean getHasLeftMenuSections() {
         return (this.leftMenuSections != null && this.leftMenuSections.size() > 0);
+    }
+    
+    private ArrayList<SecMenuItem> buildMenuLinksList() {
+        this.initializeOnce();
+        if ((this.menuLinks == null) || (this.menuLinks.size() <= 0)) return null;
+        
+        ArrayList<SecMenuItem>  vtr = new ArrayList<SecMenuItem>();
+        for (MenuItem mi: this.menuLinks) vtr.add(new SecMenuItem(mi));
+        return vtr;
     }
     
     private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
@@ -1529,14 +1516,25 @@ public abstract class AbstractCoreBean {
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
      * as parameter for the "refTop"
+     * 
+     * Applications will actually use property "renderRefTop" or "renderRefTopForApp" depending
+     * on the case, since passing argument when calling properties is not support in JSF2.0, having two
+     * differently named get methods seemed the next simplest solution.
      */
-    public String getRenderRefTop() {
+    private String buildRefTopValue(boolean isApplication) {
         return gson.toJson(new RefTop(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                    this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                    JsonValueUtils.getNonEmptyString(this.getLocalPath())
-                ));        
+                this.getCdtsCdnEnv(),
+                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
+                this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
+                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                isApplication
+            ));        
+    }
+    public String getRenderRefTop() { 
+        return this.buildRefTopValue(false);
+    }    
+    public String getRenderRefTopForApp() {
+        return this.buildRefTopValue(true);
     }
     
     /**
@@ -1584,28 +1582,53 @@ public abstract class AbstractCoreBean {
     public String getRenderAppTop() {
         AppTop  appTop;
 
-        appTop = new AppTop(
+        this.initializeOnce();
+        this.checkIfBothShowSignInAndOutAreSet();
+
+        //For v4.0.26.x we have to render this section differently depending on the theme, 
+        //GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render it as a List of Links. 
+        if (this.getTheme().toLowerCase().equals("gcweb")) {
+            ArrayList<Link> appName = new ArrayList<Link>();
+            appName.add(this.applicationTitle);
+            
+            appTop = new AppTop.AppTopGCWeb(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getText()),
-                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getUrl()),
-                    this.buildIntranetTitleList(),
                     JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
+                    this.buildMenuLinksList(),
                     this.buildLanguageLinkList(),
-                    this.getShowSiteMenu(),
-                    this.getShowSecureIcon(),
                     this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
                     this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.buildHideableHrefOnlyLink(this.getAppSettingsUrl(), true),
                     this.showSearch,
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
                     JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
-                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    appName
                     );
-
-        //NOTE: We do this here because variables are not initialize until after the call to getShowSignInLink/getShowSignOutLink (because it calls its corresponding setXXX method)
-        this.checkIfBothShowSignInAndOutAreSet();
+        } else {
+            appTop = new AppTop.AppTopGCIntranet(
+                    this.getCdtsCdnEnv(),
+                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
+                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                    JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
+                    this.buildMenuLinksList(),
+                    this.buildLanguageLinkList(),
+                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
+                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
+                    this.buildHideableHrefOnlyLink(this.getAppSettingsUrl(), true),
+                    this.showSearch,
+                    this.getEncodedBreadcrumbs(),
+                    this.showPreContent,
+                    JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getText()),
+                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getHref()),
+                    this.buildIntranetTitleList()
+                    );
+        }
 
         return gson.toJson(appTop);
     }
@@ -1628,7 +1651,7 @@ public abstract class AbstractCoreBean {
     public String getRenderPreFooter() {
         return gson.toJson(new PreFooter(
                 this.getCdtsCdnEnv(),
-                this.buildVersionIdentifier(),
+                JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                 this.buildDateModified(),
                 this.showPostContent,
                 new FeedbackLink(this.showFeedbackLink, this.feedbackUrl),
@@ -1644,7 +1667,7 @@ public abstract class AbstractCoreBean {
     public String getRenderTransactionalPreFooter() {
         return gson.toJson(new PreFooter(
                 this.getCdtsCdnEnv(),
-                this.buildVersionIdentifier(),
+                JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                 this.buildDateModified(),
                 false, //showPostContent,
                 new FeedbackLink(false, null),
@@ -1709,9 +1732,8 @@ public abstract class AbstractCoreBean {
                         this.getCdtsCdnEnv(),
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                        this.getShowGlobalNav(),
                         tmpFooterLinks,
-                        JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
+                        (this.contactLink != null? JsonValueUtils.getNonEmptyString(this.contactLink.getHref()): null),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
                         this.getShowFeature()                        

@@ -12,22 +12,23 @@ import goc.webtemplate.Link;
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.appTop' JavaScript function in the template
  * pages. 
+ * 
+ * NOTE: For v4.0.26.x we have to render AppTop differently depending on the theme,
+ *       GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render 
+ *       it as a List of Links. So, see also AppTopGCIntranet and AppTopGCWeb at the 
+ *       bottom of this file.         
  */
-public class AppTop implements Serializable {
+public abstract class AppTop implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private String              cdnEnv;
     private String              subTheme;
     private String              localPath;
-    private String              appName;
-    private String              appUrl;
-    private List<Link>          intranetTitle;
     
     private String              menuPath;
+    private List<SecMenuItem>   menuLinks;
     private List<LanguageLink>  lngLinks;
-    private boolean             siteMenu;
     
-    private boolean             secure;
     /**
      * This is a List but should only have one item in it.
      */
@@ -36,6 +37,10 @@ public class AppTop implements Serializable {
      * This is a List but should only have one item in it.
      */
     private List<Link>          signOut;
+    /**
+     * This is a List but should only have one item in it.
+     */
+    private List<Link>          appSettings;
     private boolean             search;
     private List<Breadcrumb>    breadcrumbs;
     private boolean             showPreContent;
@@ -49,21 +54,18 @@ public class AppTop implements Serializable {
     {
     }
 
-    public AppTop(String cdnEnv, String subTheme, String localPath, String appName, String appUrl, List<Link> intranetTitle, String menuPath,
-            List<LanguageLink> lngLinks, boolean siteMenu, boolean secure, List<Link> signIn, List<Link> signOut,
+    public AppTop(String cdnEnv, String subTheme, String localPath, String menuPath,
+            List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
             boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
-        this.appName = appName;
-        this.appUrl = appUrl;
-        this.intranetTitle = intranetTitle;
         this.menuPath = menuPath;
+        this.menuLinks = menuLinks;
         this.lngLinks = lngLinks;
-        this.siteMenu = siteMenu;
-        this.secure = secure;
         this.signIn = signIn;
         this.signOut = signOut;
+        this.appSettings = appSettings;
         this.search = search;
         this.breadcrumbs = breadcrumbs;
         this.showPreContent = showPreContent;
@@ -95,30 +97,6 @@ public class AppTop implements Serializable {
         this.localPath = localPath;
     }
 
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-    
-    public String getAppUrl() {
-        return appUrl;
-    }
-
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl;
-    }
-
-    public List<Link> getIntranetTitle() {
-        return intranetTitle;
-    }
-
-    public void setIntranetTitle(List<Link> intranetTitle) {
-        this.intranetTitle = intranetTitle;
-    }
-
     public String getMenuPath() {
         return menuPath;
     }
@@ -127,28 +105,20 @@ public class AppTop implements Serializable {
         this.menuPath = menuPath;
     }
 
+    public List<SecMenuItem> getMenuLinks() {
+        return menuLinks;
+    }
+
+    public void setMenuLinks(List<SecMenuItem> menuLinks) {
+        this.menuLinks = menuLinks;
+    }
+
     public List<LanguageLink> getLngLinks() {
         return lngLinks;
     }
 
     public void setLngLinks(List<LanguageLink> lngLinks) {
         this.lngLinks = lngLinks;
-    }
-
-    public boolean isSiteMenu() {
-        return siteMenu;
-    }
-
-    public void setSiteMenu(boolean siteMenu) {
-        this.siteMenu = siteMenu;
-    }
-
-    public boolean isSecure() {
-        return secure;
-    }
-
-    public void setSecure(boolean secure) {
-        this.secure = secure;
     }
 
     public List<Link> getSignIn() {
@@ -165,6 +135,14 @@ public class AppTop implements Serializable {
 
     public void setSignOut(List<Link> signOut) {
         this.signOut = signOut;
+    }
+
+    public List<Link> getAppSettings() {
+        return appSettings;
+    }
+
+    public void setAppSettings(List<Link> appSettings) {
+        this.appSettings = appSettings;
     }
 
     public boolean isSearch() {
@@ -205,5 +183,103 @@ public class AppTop implements Serializable {
 
     public void setTopSecMenu(boolean topSecMenu) {
         this.topSecMenu = topSecMenu;
+    }
+
+    
+    /**
+     * For v4.0.26.x we have to render AppTop differently depending on the theme,
+     * GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render 
+     * it as a List of Links. 
+     * 
+     * This is the GCIntranet-specific implementation
+     */
+    public static class AppTopGCIntranet extends AppTop
+    {
+        private static final long serialVersionUID = 1L;
+        
+        private String              appName;
+        private String              appUrl;
+        private List<Link>          intranetTitle;
+        
+        
+        public AppTopGCIntranet()
+        {
+        }
+
+        public AppTopGCIntranet(String cdnEnv, String subTheme, String localPath, String menuPath,
+                List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
+                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu, 
+                String appName, String appUrl, List<Link> intranetTitle) {
+            
+            super(cdnEnv, subTheme, localPath, menuPath,
+                    menuLinks, lngLinks, signIn, signOut, appSettings,
+                    search, breadcrumbs, showPreContent, customSearch, topSecMenu);
+            
+            this.appName = appName;
+            this.appUrl = appUrl;
+            this.intranetTitle = intranetTitle;
+        }
+        
+        public String getAppName() {
+            return appName;
+        }
+
+        public void setAppName(String appName) {
+            this.appName = appName;
+        }
+        
+        public String getAppUrl() {
+            return appUrl;
+        }
+
+        public void setAppUrl(String appUrl) {
+            this.appUrl = appUrl;
+        }
+
+        public List<Link> getIntranetTitle() {
+            return intranetTitle;
+        }
+
+        public void setIntranetTitle(List<Link> intranetTitle) {
+            this.intranetTitle = intranetTitle;
+        }
+    }
+    
+    /**
+     * For v4.0.26.x we have to render AppTop differently depending on the theme,
+     * GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render 
+     * it as a List of Links. 
+     * 
+     * This is the GCWeb-specific implementation
+     */
+    public static class AppTopGCWeb extends AppTop
+    {
+        private static final long serialVersionUID = 1L;
+        
+        private List<Link>  appName;
+        
+        public AppTopGCWeb()
+        {
+        }
+
+        public AppTopGCWeb(String cdnEnv, String subTheme, String localPath, String menuPath,
+                List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
+                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu, 
+                List<Link> appName) {
+            
+            super(cdnEnv, subTheme, localPath, menuPath,
+                    menuLinks, lngLinks, signIn, signOut, appSettings,
+                    search, breadcrumbs, showPreContent, customSearch, topSecMenu);
+            
+            this.appName = appName;
+        }
+        
+        public List<Link> getAppName() {
+            return this.appName;
+        }
+        
+        public void setAppName(List<Link> value) {
+            this.appName = value;
+        }
     }
 }

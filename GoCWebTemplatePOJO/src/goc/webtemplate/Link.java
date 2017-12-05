@@ -9,6 +9,11 @@ public class Link implements Serializable {
     
     public Link() {}
 
+    public Link(String href)
+    {
+        this(href, "");
+    }
+    
     public Link(String href, String text)
     {   
         this.href = href;

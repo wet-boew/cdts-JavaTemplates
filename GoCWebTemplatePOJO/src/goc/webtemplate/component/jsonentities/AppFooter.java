@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import goc.webtemplate.FooterLink;
-import goc.webtemplate.Link;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
@@ -18,9 +17,8 @@ public class AppFooter implements Serializable {
     private String              cdnEnv; 
     private String              subTheme;
     private String              localPath;
-    private boolean             globalNav;
     private List<FooterLink>    footerSections;
-    private List<Link>          contactLinks;
+    private String              contactLink;
     private String              termsLink;
     private String              privacyLink;
     private boolean             showFeatures;
@@ -29,15 +27,14 @@ public class AppFooter implements Serializable {
     {
     }
 
-    public AppFooter(String cdnEnv, String subTheme, String localPath, boolean globalNav,
-            List<FooterLink> footerSections, List<Link> contactLinks, String termsLink, String privacyLink,
+    public AppFooter(String cdnEnv, String subTheme, String localPath,
+            List<FooterLink> footerSections, String contactLink, String termsLink, String privacyLink,
             boolean showFeatures) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
-        this.globalNav = globalNav;
         this.footerSections = footerSections;
-        this.contactLinks = contactLinks;
+        this.contactLink = contactLink;
         this.termsLink = termsLink;
         this.privacyLink = privacyLink;
         this.showFeatures = showFeatures;
@@ -67,14 +64,6 @@ public class AppFooter implements Serializable {
         this.localPath = localPath;
     }
 
-    public boolean isGlobalNav() {
-        return globalNav;
-    }
-
-    public void setGlobalNav(boolean globalNav) {
-        this.globalNav = globalNav;
-    }
-
     public List<FooterLink> getFooterSections() {
         return footerSections;
     }
@@ -83,12 +72,12 @@ public class AppFooter implements Serializable {
         this.footerSections = footerSections;
     }
 
-    public List<Link> getContactLinks() {
-        return contactLinks;
+    public String getContactLinks() {
+        return contactLink;
     }
 
-    public void setContactLinks(List<Link> contactLinks) {
-        this.contactLinks = contactLinks;
+    public void setContactLinks(String value) {
+        this.contactLink = value;
     }
 
     public String getTermsLink() {

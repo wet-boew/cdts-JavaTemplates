@@ -29,23 +29,6 @@ public void onWebTemplateInitialize() {
 }
             </pre>
         </div>
-    	<h2>Theme and SubTheme values</h2>
-    	<p>Set the cdn.properties value to "gcintranet" for the key "<strong>wettemplate_theme</strong>"; </p>
-    	<p>or set programmatically via the <code class="wb-prettify">"setTheme"</code> method in your custom bean class.</p>
-    	<p>The "SubTheme" is an optional parameter.  The default is a blank value which will be interpreted as the "GCIntranet" theme. The only possible value at this time is "esdc", which is the internal theme for the esdc department.  It consists of a different color scheme and menu items.
-	       If you wish to use the subTheme, set the cdn.properties key <code class="wb-prettify">"wettemplate_subtheme"</code> to "esdc". It can also be set programmatically via the <code class="wb-prettify">"setSubTheme"</code> method in your custom bean class.</p>
-    	<div class="wb-prettify all-pre lang-vb linenums">
-        	<pre>
-@Override
-public void onWebTemplateInitialize() {
-//...
-    //Setting the environment will load proper theme/subtheme values, but we can override them if needed 
-    this.setTheme("gcintranet");
-    this.setSubTheme("esdc");
-//...    
-}
-			</pre>
-    	</div>
     	<h2>Intranet Title</h2>
     	<p>When using the "GCIntranet" theme in your application, you can optionally set the Intranet Title text and its url. The intranet title is displayed at the top of the page, above the menu.</p>
     	<p>Set programmatically via the <code class="wb-prettify">"setIntranetTitle"</code> method in your custom bean class.</p>

@@ -13,13 +13,13 @@
 	</pre>
 </div>
 <h2>Setting the Contact Us link</h2>
-<p>The "Contact Us" link at the bottom of the page can be customized by populating the <code class="wb-prettify">contactLinkUrl</code> variable:</p>
+<p>The "Contact Us" link at the bottom of the page can be customized by populating the <code class="wb-prettify">contactLink</code> variable:</p>
 <div class="wb-prettify all-pre lang-vb linenums">
     <pre>
 @Override
 public void onWebTemplateInitialize() {
 //...
-    this.setContactLinkUrl("http://travel.gc.ca/");
+    this.setContactLink(new Link("http://travel.gc.ca/"));
 //...
 }
     </pre>

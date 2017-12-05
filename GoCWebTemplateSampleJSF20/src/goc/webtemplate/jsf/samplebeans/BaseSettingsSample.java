@@ -8,6 +8,7 @@ public class BaseSettingsSample extends DefaultTemplateCoreBean {
     public void onWebTemplateInitialize() {
         this.setHeaderTitle("My Title");
         this.setDateModified(new java.util.Date());
+        this.setVersionIdentifier("ver01");
         this.setScreenIdentifier("PAGE001"); 
         
         this.getHtmlHeaderElements().add("<meta charset='UTF-8' />");

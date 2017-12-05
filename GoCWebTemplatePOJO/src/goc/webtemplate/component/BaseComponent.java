@@ -3,7 +3,6 @@ package goc.webtemplate.component;
 import java.util.ArrayList;
 import java.util.Date;
 
-import goc.webtemplate.ApplicationTitle;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
@@ -82,11 +81,23 @@ public abstract class BaseComponent extends AbstractCoreBean {
     public abstract void setLeftMenuSections();
     public abstract void setPrivacyLinkUrl();
     public abstract void setTermsConditionsLinkUrl();
+    /**
+     * @deprecated showGlobalNav should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setShowGlobalNav();
+    /**
+     * @deprecated showSiteMenu should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setShowSiteMenu();
     public abstract void setCustomSiteMenuUrl();
     public abstract void setSignInLinkUrl();
     public abstract void setSignOutLinkUrl();
+    /**
+     * @deprecated showSecureIcon should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     public abstract void setShowSecureIcon();
     public abstract void setShowSignInLink();
     public abstract void setShowSignOutLink();
@@ -148,11 +159,23 @@ public abstract class BaseComponent extends AbstractCoreBean {
     protected ArrayList<String> htmlBodyElements = new ArrayList<String>();
     protected String staticFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
     protected String contentCreatorTitle = "";
+    /**
+     * @deprecated showGlobalNav should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected boolean showGlobalNav = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showglobalnav"));
+    /**
+     * @deprecated showSiteMenu should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected boolean showSiteMenu = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsitemenu"));
     protected String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
     protected String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
     protected String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
+    /**
+     * @deprecated showSecureIcon should not be overriden as it is no longer used anywhere.  WILL BE REMOVED IN A FUTURE RELEASE.
+     */
+    @Deprecated
     protected boolean showSecureIcon = false;
     protected boolean showSignInLink = false;
     protected boolean showSignOutLink = false;
@@ -234,7 +257,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setUseHttps(this.useHttps);
         this.setLoadJQueryFromGoogle(this.loadjQueryFromGoogle);
         this.setHeaderTitle(this.headerTitle);
-        this.setApplicationTitle(new ApplicationTitle(this.applicationTitleText, this.applicationTitleUrl));
+        this.setApplicationTitle(new Link(this.applicationTitleUrl, this.applicationTitleText));
         this.setIntranetTitle(this.intranetTitle);
         this.setShowSearch(this.showSearch);
         this.setLanguageLinkUrl(this.langLinkUrl);
@@ -255,16 +278,13 @@ public abstract class BaseComponent extends AbstractCoreBean {
         this.setSharePageMediaSites(this.sharePageMediaSites);
         this.setShowFeature(this.showFeature);
         this.setBreadcrumbs(this.breadCrumbsList);
-        this.setContactLinkUrl(this.contactLinkUrl);
+        this.setContactLink(new Link(this.contactLinkUrl, ""));
         this.setHtmlHeaderElements(this.htmlHeaderElements);
         this.setHtmlBodyElements(this.htmlBodyElements);
         this.setStaticFallbackFilePath(this.staticFilePath);
-        this.setShowGlobalNav(this.showGlobalNav);
-        this.setShowSiteMenu(this.showSiteMenu);
         this.setCustomSiteMenuUrl(this.customSiteMenuUrl);
         this.setSignInLinkUrl(this.signInLinkUrl);
         this.setSignOutLinkUrl(this.signOutLinkUrl);
-        this.setShowSecureIcon(this.showSecureIcon);
         this.setShowSignInLink(this.showSignInLink);
         this.setShowSignOutLink(this.showSignOutLink);
         this.setCustomFooterLinks(this.customFooterLinks);

@@ -10,19 +10,21 @@ import java.io.Serializable;
 public class RefTop implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String cdnEnv;
-    private String subTheme;
-    private String jqueryEnv;
-    private String localPath;
+    private String  cdnEnv;
+    private String  subTheme;
+    private String  jqueryEnv;
+    private String  localPath;
+    private boolean isApplication;
     
     public RefTop() {
     }
     
-    public RefTop(String cdnEnv, String subTheme, String jqueryEnv, String localPath) {
+    public RefTop(String cdnEnv, String subTheme, String jqueryEnv, String localPath, boolean isApplication) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
+        this.isApplication = isApplication;
     }
 
     public String getCdnEnv() {
@@ -55,5 +57,13 @@ public class RefTop implements Serializable {
 
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
+    }
+
+    public boolean getIsApplication() {
+        return isApplication;
+    }
+
+    public void setApplication(boolean isApplication) {
+        this.isApplication = isApplication;
     }    
 }

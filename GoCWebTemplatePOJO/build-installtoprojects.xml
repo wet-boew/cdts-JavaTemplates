@@ -74,11 +74,11 @@
         <pathelement location="${weblibs.dir}/freemarker-2.3.22.jar"/>
         <pathelement location="${weblibs.dir}/glassfish.jstl_1.2.0.1.jar"/>
         <pathelement location="${weblibs.dir}/javassist-3.11.0.GA.jar"/>
-        <pathelement location="${weblibs.dir}/ognl-3.0.19.jar"/>
+        <pathelement location="${weblibs.dir}/ognl-3.0.21.jar"/>
         <pathelement location="${weblibs.dir}/slf4j-api-1.7.24.jar"/>
         <pathelement location="${weblibs.dir}/slf4j-simple-1.7.24.jar"/>
-        <pathelement location="${weblibs.dir}/struts2-core-2.3.32.jar"/>
-        <pathelement location="${weblibs.dir}/struts2-tiles-plugin-2.3.32.jar"/>
+        <pathelement location="${weblibs.dir}/struts2-core-2.3.34.jar"/>
+        <pathelement location="${weblibs.dir}/struts2-tiles-plugin-2.3.34.jar"/>
         <pathelement location="${weblibs.dir}/tiles-api-2.2.2.jar"/>
         <pathelement location="${weblibs.dir}/tiles-compat-3.0.1.jar"/>
         <pathelement location="${weblibs.dir}/tiles-core-2.2.2.jar"/>
@@ -88,7 +88,7 @@
         <pathelement location="${weblibs.dir}/tiles-ognl-2.2.2.jar"/>
         <pathelement location="${weblibs.dir}/tiles-servlet-2.2.2.jar"/>
         <pathelement location="${weblibs.dir}/tiles-template-2.2.2.jar"/>
-        <pathelement location="${weblibs.dir}/xwork-core-2.3.32.jar"/>
+        <pathelement location="${weblibs.dir}/xwork-core-2.3.34.jar"/>
         <pathelement location="${weblibs.dir}/gson-2.8.0.jar"/>
     </path>
     <path id="GoCWebTemplatePOJO.classpath">

@@ -6,6 +6,7 @@ import java.util.Date;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuSection;
@@ -310,5 +311,22 @@ public abstract class BaseComponent extends AbstractCoreBean {
     @Deprecated
     public String getDefaultLangLinkUrl() {
         return this.getDefaultLanguageLinkUrl();
+    }
+    
+    /**
+     * @deprecated Should no longer be used, will be removed in a future version
+     */
+    @Deprecated
+    public String getPluginJsPath() {
+        return String.format("%splugins-%s.js",  this.getPartialCDNPath(), this.getTwoLetterCultureLanguage());
+    }
+
+
+    /**
+     * @deprecated Should no longer be used, is replaced with setIntranetTitle(IntranetTitle)
+     */
+    @Deprecated
+    public void setIntranetTitle(Link value) {
+        this.setIntranetTitle(new IntranetTitle(value));
     }
 }

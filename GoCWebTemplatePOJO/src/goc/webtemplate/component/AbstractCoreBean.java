@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Link;
@@ -26,6 +27,7 @@ import goc.webtemplate.Utility;
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
+import goc.webtemplate.component.jsonentities.CdnEnvironment;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.PreFooter;
@@ -36,6 +38,7 @@ import goc.webtemplate.component.jsonentities.SecMenuItem;
 import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
+import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
 
 /**
  * This is the base class from all template configuration beans, inherited by both
@@ -94,7 +97,7 @@ public abstract class AbstractCoreBean {
     private String cdnLocalPath = null; //initialized in getLocalPath
     private String headerTitle = "";
     private Link applicationTitle = new Link();
-    private Link intranetTitle = null;    
+    private IntranetTitle intranetTitle = null;    
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
     private Link contactLink = null;
@@ -250,7 +253,8 @@ public abstract class AbstractCoreBean {
         return this.cdnLocalPath;
     }
     
-    private String getPartialCDNPath() {
+    //NOTE: Settign this method's visibility to "package" so it is accessible to BaseComponent.  Once BaseComponent is gone, this can go back to being private
+    /*package*/ String getPartialCDNPath() {
         CDTSEnvironment environment;
         String          envName;
         String          envUrl = "";
@@ -271,7 +275,7 @@ public abstract class AbstractCoreBean {
         {
             //...environment was found, setup accordingly
             envUrl = environment.getPath();
-            https = environment.isSSLModifiable() && this.getUseHttps()?  "s": "";
+            https = environment.isEncryptionModifiable() && this.getUseHttps()?  "s": "";
         }
         envTheme = this.getTheme(); //getTheme() will load from current environment or use override from properties file, so all is good 
         
@@ -556,14 +560,14 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the "intranet title" (displayed at very top) for ESDC intranet theme. 
      */
-    public Link getIntranetTitle() {
+    public IntranetTitle getIntranetTitle() {
         return this.intranetTitle;
     }
     
     /**
      * Sets the "intranet title" (displayed at very top) for ESDC intranet theme. 
      */
-    public void setIntranetTitle(Link value) {
+    public void setIntranetTitle(IntranetTitle value) {
         this.intranetTitle = value;
     }
     
@@ -1338,15 +1342,6 @@ public abstract class AbstractCoreBean {
     public String getWetJsPath() {
         return String.format("%swet-%s.js", this.getPartialCDNPath(), this.getTwoLetterCultureLanguage()); 
     }
-    
-    /**
-     * Returns the CDN path to the plugins javascript file.
-     * 
-     * (Used by template files when rendering)
-     */
-    public String getPluginJsPath() {
-        return String.format("%splugins-%s.js",  this.getPartialCDNPath(), this.getTwoLetterCultureLanguage());
-    }
 
     /**
      * Outputs the Lang attribute of the language toggle link
@@ -1434,14 +1429,15 @@ public abstract class AbstractCoreBean {
         return vtr;
     }    
     
-    private ArrayList<Link> buildIntranetTitleList() {
-        ArrayList<Link> vtr;
+    private ArrayList<IntranetTitle> buildIntranetTitleList() {
+        ArrayList<IntranetTitle> vtr;
         
         if (this.intranetTitle == null) return null;
         
-        vtr = new ArrayList<Link>(1);
-        vtr.add(new Link(BaseUtil.encodeUrl(this.intranetTitle.getHref()), 
-                         this.intranetTitle.getText()));
+        vtr = new ArrayList<IntranetTitle>(1);
+        vtr.add(new IntranetTitle(BaseUtil.encodeUrl(this.intranetTitle.getHref()), 
+                         this.intranetTitle.getText(), 
+                         JsonValueUtils.getNonEmptyString(this.intranetTitle.getAcronym())));
         
         return vtr;
     }
@@ -1585,16 +1581,17 @@ public abstract class AbstractCoreBean {
         this.initializeOnce();
         this.checkIfBothShowSignInAndOutAreSet();
 
+        ArrayList<Link> appName = new ArrayList<Link>();
+        appName.add(this.applicationTitle);
+        
         //For v4.0.26.x we have to render this section differently depending on the theme, 
         //GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render it as a List of Links. 
         if (this.getTheme().toLowerCase().equals("gcweb")) {
-            ArrayList<Link> appName = new ArrayList<Link>();
-            appName.add(this.applicationTitle);
-            
-            appTop = new AppTop.AppTopGCWeb(
+            appTop = new AppTop(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                    appName,
                     JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
                     this.buildMenuLinksList(),
                     this.buildLanguageLinkList(),
@@ -1605,14 +1602,14 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
                     JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
-                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    appName
+                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                     );
         } else {
             appTop = new AppTop.AppTopGCIntranet(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                    appName,
                     JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
                     this.buildMenuLinksList(),
                     this.buildLanguageLinkList(),
@@ -1624,8 +1621,6 @@ public abstract class AbstractCoreBean {
                     this.showPreContent,
                     JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getText()),
-                    JsonValueUtils.getNonEmptyString(this.applicationTitle.getHref()),
                     this.buildIntranetTitleList()
                     );
         }
@@ -1674,6 +1669,12 @@ public abstract class AbstractCoreBean {
                 new ShareList(false, null),
                 JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
               ));
+    }
+    
+    public String getRenderUnilingualErrorPreFooter() {
+        return gson.toJson(new UnilingualErrorPreFooter(this.getCdtsCdnEnv(),
+                false
+                ));
     }
     
     /**
@@ -1753,5 +1754,22 @@ public abstract class AbstractCoreBean {
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
             ));        
+    }
+    
+    public String getRenderServerTop() {
+        return this.getRenderCdnEnvironment();
+    }
+    public String getRenderServerBottom() {
+        return this.getRenderCdnEnvironment();
+    }
+    public String getRenderServerRefTop() {
+        return this.getRenderCdnEnvironment();
+    }
+    public String getRenderServerRefFooter() {
+        return this.getRenderCdnEnvironment();
+    }
+    
+    private String getRenderCdnEnvironment() {
+        return gson.toJson(new CdnEnvironment(this.getCdtsCdnEnv()));
     }
 }

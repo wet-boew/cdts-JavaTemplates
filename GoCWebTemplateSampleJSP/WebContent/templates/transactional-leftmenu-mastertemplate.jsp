@@ -30,7 +30,6 @@
         <!-- Load closure template scripts -->
        	<script type="text/javascript" src="<s:property value="#goctemplateclientbean.soyUtilPath"/>"></script>
         <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.pluginJsPath"/>"></script>
         <noscript>
             <!-- Write closure fall-back static file -->
             <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'refTop.html')}" />

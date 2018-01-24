@@ -23,7 +23,7 @@ public class CDTSEnvironment implements Serializable {
     private String  CDN; 
     
     private boolean IsVersionRnCombined;
-    private boolean IsSSLModifiable;
+    private boolean IsEncryptionModifiable;
     private String  AppendToTitle;
     
     
@@ -86,12 +86,12 @@ public class CDTSEnvironment implements Serializable {
         this.IsVersionRnCombined = isVersionRnCombined;
     }
 
-    public boolean isSSLModifiable() {
-        return IsSSLModifiable;
+    public boolean isEncryptionModifiable() {
+        return IsEncryptionModifiable;
     }
 
-    public void setSSLModifiable(boolean isSSLModifiable) {
-        this.IsSSLModifiable = isSSLModifiable;
+    public void setEncryptionModifiable(boolean value) {
+        this.IsEncryptionModifiable = value;
     }
 
     public String getAppendToTitle() {

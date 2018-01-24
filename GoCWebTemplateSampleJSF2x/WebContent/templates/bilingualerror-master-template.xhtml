@@ -20,11 +20,11 @@
 	        <script type="text/javascript" src="#{goctemplateclientbean.wetJsPath}"></script>
 	        <noscript>
 	            <!-- Write closure fall-back static file -->
-	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')}" escape="false" />
+	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'serverRefTop.html')}" escape="false" />
 	        </noscript>
 	        <!-- Write closure template -->
 	        <script type="text/javascript">
-	            document.write(wet.builder.refTop(#{goctemplateclientbean.renderRefTop}));
+	            document.write(wet.builder.refTop(#{goctemplateclientbean.renderServerRefTop}));
 	        </script>
 	        <h:outputText value="#{goctemplateclientbean.renderHtmlHeaderElements}" escape="false" />
 	        <!--  GoC Web Template Build Version #{goctemplateclientbean.webTemplateDistributionVersion} -->
@@ -33,39 +33,30 @@
 	        <h:outputText value="#{goctemplateclientbean.renderSessionTimeoutControl}" escape="false" />
 	        <div id="def-top">
 	            <!-- Write closure fall-back static file -->
-	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" escape="false" />
+	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'serverTop.html'))}" escape="false" />
 	        </div>
 	        <!-- Write closure template -->
 	        <script type="text/javascript">
 	            var defTop = document.getElementById("def-top");
-	            defTop.outerHTML = wet.builder.top(#{goctemplateclientbean.renderTop});
+	            defTop.outerHTML = wet.builder.serverTop(#{goctemplateclientbean.renderServerTop});
 	        </script>
 	        <main role="main" property="mainContentOfPage" class="container">
 	            <!-- the main content -->
 	            <ui:insert name="content"></ui:insert>
 	            <!-- end main content -->
-	            <div id="def-preFooter">
-	                <!-- Write closure fall-back static file -->
-	                <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" escape="false" />
-	        	</div>
-	            <!-- Write closure template -->
-	            <script type="text/javascript">
-	                var defPreFooter = document.getElementById("def-preFooter");
-	                defPreFooter.outerHTML = wet.builder.preFooter(#{goctemplateclientbean.renderPreFooter});
-	            </script>
 	        </main>
 	        <div id="def-footer">
 	            <!-- Write closure fall-back static file -->
-	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'footer-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" escape="false" />
+	            <h:outputText value="#{applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'serverBottom.html'))}" escape="false" />
 	        </div>
 	        <!-- Write closure template -->
 	        <script type="text/javascript">
 	            var defFooter = document.getElementById("def-footer");
-	            defFooter.outerHTML = wet.builder.footer(#{goctemplateclientbean.renderFooter});
+	            defFooter.outerHTML = wet.builder.serverBottom(#{goctemplateclientbean.renderServerBottom});
 	        </script>
 	        <!-- Write closure template -->
             <script type="text/javascript">
-                document.write(wet.builder.refFooter(#{goctemplateclientbean.renderRefFooter}));
+                document.write(wet.builder.refFooter(#{goctemplateclientbean.renderServerRefFooter}));
             </script>
 	        <h:outputText value="#{goctemplateclientbean.renderHtmlBodyElements}" escape="false" />
 	    </body>

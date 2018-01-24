@@ -45,15 +45,12 @@
 		<s:property escape="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
         <div id="def-top">
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'transactTop-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
-        	<!-- Google Tag Manager DO NOT REMOVE OR MODIFY - NE PAS SUPPRIMER OU MODIFIER -->
-            <noscript><iframe title="Google Tag Manager" src="//www.googletagmanager.com/ns.html?id=GTM-TLGQ9K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-            <!-- End Google Tag Manager -->
+            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'top-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         </div>
         <!-- Write closure template -->
         <script type="text/javascript">
             var defTop = document.getElementById("def-top");
-            defTop.outerHTML = wet.builder.top(<s:property escape="false" value="#goctemplateclientbean.renderTransactionalTop" />);
+            defTop.outerHTML = wet.builder.top(<s:property escape="false" value="#goctemplateclientbean.renderTop" />);
         </script>
         <main role="main" property="mainContentOfPage" class="container">
             <!-- the main content -->
@@ -66,22 +63,22 @@
             <!-- Write closure template -->
             <script type="text/javascript">
                 var defPreFooter = document.getElementById("def-preFooter");
-                defPreFooter.outerHTML = wet.builder.preFooter(<s:property escape="false" value="#goctemplateclientbean.renderTransactionalPreFooter" />);
+                defPreFooter.outerHTML = wet.builder.preFooter(<s:property escape="false" value="#goctemplateclientbean.renderUnilingualErrorPreFooter" />);
             </script>
         </main>	
         <div id="def-footer">
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'transactFooter-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
+            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'footer-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         </div>
         <!-- Write closure template -->
         <script type="text/javascript">
             var defFooter = document.getElementById("def-footer");
-            defFooter.outerHTML = wet.builder.footer(<s:property escape="false" value="#goctemplateclientbean.renderTransactionalFooter" />);
+            defFooter.outerHTML = wet.builder.footer(<s:property escape="false" value="#goctemplateclientbean.renderFooter" />);
         </script>
         <!-- Write closure template -->
-        <script type="text/javascript">
-            document.write(wet.builder.refFooter(<s:property escape="false" value="#goctemplateclientbean.renderRefFooter" />));
-        </script>
+		<script type="text/javascript">
+			document.write(wet.builder.refFooter(<s:property escape="false" value="#goctemplateclientbean.renderRefFooter" />));
+		</script>
         <s:property escape="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>
 </html>

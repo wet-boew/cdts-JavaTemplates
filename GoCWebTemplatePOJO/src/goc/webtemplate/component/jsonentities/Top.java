@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import goc.webtemplate.Breadcrumb;
+import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
-import goc.webtemplate.Link;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
@@ -18,7 +18,7 @@ public class Top implements Serializable {
 
     private String              cdnEnv;
     private String              subTheme;
-    private List<Link>          intranetTitle;
+    private List<IntranetTitle> intranetTitle;
     private boolean             search;
     private List<LanguageLink>  lngLinks;
     private boolean             showPreContent;
@@ -33,7 +33,7 @@ public class Top implements Serializable {
     public Top() {
     }
 
-    public Top(String cdnEnv, String subTheme, List<Link> intranetTitle, boolean search, List<LanguageLink> lngLinks,
+    public Top(String cdnEnv, String subTheme, List<IntranetTitle> intranetTitle, boolean search, List<LanguageLink> lngLinks,
             boolean showPreContent, List<Breadcrumb> breadcrumbs, String localPath, boolean siteMenu,
             boolean topSecMenu) {
         this.cdnEnv = cdnEnv;
@@ -64,11 +64,11 @@ public class Top implements Serializable {
         this.subTheme = subTheme;
     }
 
-    public List<Link> getIntranetTitle() {
+    public List<IntranetTitle> getIntranetTitle() {
         return intranetTitle;
     }
 
-    public void setIntranetTitle(List<Link> intranetTitle) {
+    public void setIntranetTitle(List<IntranetTitle> intranetTitle) {
         this.intranetTitle = intranetTitle;
     }
 

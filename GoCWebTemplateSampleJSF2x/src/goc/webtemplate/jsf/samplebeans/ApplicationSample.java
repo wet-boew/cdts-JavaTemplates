@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.Link;
 
 import goc.webtemplate.component.jsf.DefaultTemplateCoreBean;
@@ -24,7 +25,7 @@ public class ApplicationSample extends DefaultTemplateCoreBean {
         this.setApplicationTitle(new Link("#myapplicationurl", "My Application"));
         
         //(this will only take effect for ESDC's GCIntranet theme)
-        this.setIntranetTitle(new Link("#intranetlink", "My Intranet"));
+        this.setIntranetTitle(new IntranetTitle("#intranetlink", "My Intranet", "ACRONYM"));
 
         this.setCustomFooterLinks(new ArrayList<FooterLink>(Arrays.asList( 
                 new FooterLink[] {

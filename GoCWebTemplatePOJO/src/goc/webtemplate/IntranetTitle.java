@@ -8,7 +8,14 @@ public class IntranetTitle extends Link {
 
     public IntranetTitle()
     {
-        this("", "", "");
+        this("", "", null);
+    }
+
+    public IntranetTitle(String href, String text)
+    {
+        super(href, text);
+        
+        this.acronym = null;
     }
     
     public IntranetTitle(String href, String text, String acronym)

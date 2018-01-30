@@ -6,7 +6,8 @@
         <li><a href="addjsandcssfilessample.action">Adding CSS or JS</a></li>
         <li><a href="basesettingssample.action">Basic Settings</a></li>
         <li><a href="breadcrumbsample.action">Breadcrumbs</a></li>
-        <li><a href="errorsample.action">Errors</a></li>
+        <li><a href="errorbilingualsample.action">Bilingual Error Page</a></li>
+        <li><a href="errorsample.action">Unilingual Error Page</a></li>
         <li><a href="extendedbasepagesample.action">Extended Base Page</a></li>
         <li><a href="feedbackandsharethispagesample.action">Feedback and Share This Page Links</a></li>
         <li><a href="footerlinkssample.action">Footer Links</a></li>

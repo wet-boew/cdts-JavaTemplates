@@ -29,6 +29,7 @@
 		<action name="basesettingssample"><result type="tiles">baseSettingsSample</result></action>
 		<action name="breadcrumbsample"><result type="tiles">breadcrumbsSample</result></action>
 		<action name="errorsample"><result type="tiles">errorSample</result></action>
+        <action name="errorbilingualsample"><result type="tiles">errorBilingualSample</result></action>
 		<action name="extendedbasepagesample"><result type="tiles">extendedBasePageSample</result></action>
 		<action name="feedbackandsharethispagesample"><result type="tiles">feedbackAndShareThisPageSample</result></action>
 		<action name="footerlinkssample"><result type="tiles">footerLinksSample</result></action>

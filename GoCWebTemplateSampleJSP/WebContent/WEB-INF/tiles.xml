@@ -93,9 +93,12 @@
 		<put-attribute name="beaninit" value="/samplebeans/breadcrumbssamplebean.jsp" />
 		<put-attribute name="body" value="/samplecontents/breadcrumbssamplecontent.jsp" />
 	</definition>
-	<definition name="errorSample" extends="gocWebTemplateLayout">
+	<definition name="errorSample" extends="gocWebTemplateUnilingualErrorLayout">
 		<put-attribute name="body" value="/samplecontents/errorsamplecontent.jsp" />
 	</definition>
+    <definition name="errorBilingualSample" extends="gocWebTemplateBilingualErrorLayout">
+        <put-attribute name="body" value="/samplecontents/errorbilingualsamplecontent.jsp" />
+    </definition>
 	<definition name="extendedBasePageSample" extends="gocWebTemplateLayout">
 		<put-attribute name="beaninit" value="/samplebeans/extendedbasepagesamplebean.jsp" />
 		<put-attribute name="body" value="/samplecontents/extendedbasepagesamplecontent.jsp" />

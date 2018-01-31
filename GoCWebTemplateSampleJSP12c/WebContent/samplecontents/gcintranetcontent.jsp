@@ -35,7 +35,7 @@ the <code class="wb-prettify">"setIntranetTitle"</code> in your custom bean clas
 @Override
 public void onWebTemplateInitialize() {
 //...
-    this.setIntranetTitle(new Link("http://www.google.ca", "GCIntranet Site"));
+    this.setIntranetTitle(new IntranetTitle("http://www.google.ca", "GCIntranet Site", "ACRONYM"));
 //...    
 }
 	</pre>

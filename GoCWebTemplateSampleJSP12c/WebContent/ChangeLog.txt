@@ -1,4 +1,14 @@
 ************************************************************************************************************
+4.0.27.1 - 2018-01-31
+    - Implementation of WET/CDTS v4.0.27
+    - Added new master page: Unilingual Error Page
+    - Added new master page: Bilingual Error Page
+    - Removed references to plugins-{en|fr}.js from the master pages
+    - ApplicationTitle's type was changed to from Link to IntranetTitle
+    - Updated static fallback files
+    - Bug fixes
+
+************************************************************************************************************
 4.0.26.1 - 2017-12-01
     ***This version introduces changes to the internal "engine" which can have some impact on existing applications
     ***(at the very least to the main configuration file, cdn.properties). 
@@ -14,7 +24,7 @@
                                     NOW USE {0}, {1},...{n} INSTEAD OF %s for placeholders (see cdn_localdev_url for an example).
                                   - The cdn_*_env properties were removed. If present, will override default value.
                                   - The webtemplate_theme property is now blank (which means the theme proper for each environment will be used).
-    - MAJOR UPDATE: The BaseBean/DefaultTemplateBean class hierarchy has been deprecated.  Custom beans should now inherit from 
+    - MAJOR UPDATE: THE BaseBean/DefaultTemplateBean CLASS HIERARCHY HAS BEEN DEPRECATED.  Custom beans should now inherit from 
                     BaseCoreBean/DefaultTemplateCoreBean instead.   Instead of overriding multiple no-arg "set" methods to set the value of 
                     instance variables, a single "onWebTemplateInitialize" method must now be overriden and the proper "set" method for each 
                     property called to set its value. This change brings the Java template more in line with the Java standard and recommendations

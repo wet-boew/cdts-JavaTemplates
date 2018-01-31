@@ -1,4 +1,14 @@
 ************************************************************************************************************
+4.0.27.1 - 2018-01-31
+    - Implementation of WET/CDTS v4.0.27
+    - Added new master page: Unilingual Error Page
+    - Added new master page: Bilingual Error Page
+    - Removed references to plugins-{en|fr}.js from the master pages
+    - ApplicationTitle's type was changed to from Link to IntranetTitle
+    - Updated static fallback files
+    - Bug fixes
+
+************************************************************************************************************
 4.0.26.1 - 2017-12-01
     ***This version introduces changes to the internal "engine" which can have some impact on existing applications
     ***(at the very least to the main configuration file, cdn.properties). 

@@ -4,7 +4,7 @@
     - Added new master page: Unilingual Error Page
     - Added new master page: Bilingual Error Page
     - Removed references to plugins-{en|fr}.js from the master pages
-    - ApplicationTitle's type was changed to from Link to IntranetTitle
+    - IntranetTitle's type was changed to from Link to IntranetTitle
     - Updated static fallback files
     - Bug fixes
 

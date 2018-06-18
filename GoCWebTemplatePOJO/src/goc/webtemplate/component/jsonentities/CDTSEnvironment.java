@@ -11,95 +11,93 @@ import java.util.ArrayList;
 public class CDTSEnvironment implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //NOTE: Name of instance variable will have a capital first letter
-    //      to match the format of the JSON file.
-    private String  Name;
+    private String  name;
     
-    private String  Path;
-    private String  LocalPath;
+    private String  path;
+    private String  localPath;
     
-    private String  Theme;
-    private String  SubTheme;
-    private String  CDN; 
+    private String  theme;
+    private String  subTheme;
+    private String  cdn; 
     
-    private boolean IsVersionRnCombined;
-    private boolean IsEncryptionModifiable;
-    private String  AppendToTitle;
+    private boolean isVersionRnCombined;
+    private boolean isEncryptionModifiable;
+    private String  appendToTitle;
     
     
     public CDTSEnvironment() {
     }
     
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
 
     public String getPath() {
-        return Path;
+        return path;
     }
 
     public void setPath(String path) {
-        this.Path = path;
+        this.path = path;
     }
 
     public String getLocalPath() {
-        return LocalPath;
+        return localPath;
     }
 
     public void setLocalPath(String localPath) {
-        this.LocalPath = localPath;
+        this.localPath = localPath;
     }
 
     public String getTheme() {
-        return Theme;
+        return theme;
     }
 
     public void setTheme(String theme) {
-        this.Theme = theme;
+        this.theme = theme;
     }
 
     public String getSubTheme() {
-        return SubTheme;
+        return subTheme;
     }
 
     public void setSubTheme(String subTheme) {
-        this.SubTheme = subTheme;
+        this.subTheme = subTheme;
     }
 
     public String getCDN() {
-        return this.CDN;
+        return this.cdn;
     }
     
     public void setCDN(String value) {
-        this.CDN = value;
+        this.cdn = value;
     }
     
     public boolean isVersionRnCombined() {
-        return IsVersionRnCombined;
+        return isVersionRnCombined;
     }
 
     public void setVersionRNCombined(boolean isVersionRnCombined) {
-        this.IsVersionRnCombined = isVersionRnCombined;
+        this.isVersionRnCombined = isVersionRnCombined;
     }
 
     public boolean isEncryptionModifiable() {
-        return IsEncryptionModifiable;
+        return isEncryptionModifiable;
     }
 
     public void setEncryptionModifiable(boolean value) {
-        this.IsEncryptionModifiable = value;
+        this.isEncryptionModifiable = value;
     }
 
     public String getAppendToTitle() {
-        return this.AppendToTitle;
+        return this.appendToTitle;
     }
     
     public void setAppendToTitle(String value) {
-        this.AppendToTitle = value;
+        this.appendToTitle = value;
     }
     
     /**
@@ -107,19 +105,17 @@ public class CDTSEnvironment implements Serializable {
      * JSON file the data is read from.
      */
     public static class CDTSEnvironmentList {
-        //NOTE: Name of instance variable will have a capital first letter
-        //      to match the format of the JSON file.
-        private ArrayList<CDTSEnvironment>  Environments;
+        private ArrayList<CDTSEnvironment>  environments;
         
         public CDTSEnvironmentList() {
         }
         
         public ArrayList<CDTSEnvironment> getEnvironments() {
-            return this.Environments;
+            return this.environments;
         }
         
         public void setEnvironments(ArrayList<CDTSEnvironment> value) {
-            this.Environments = value;
+            this.environments = value;
         }
     }
 }

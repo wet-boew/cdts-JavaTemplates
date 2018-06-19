@@ -34,9 +34,11 @@
 		            <o:resourceInclude path="#{goctemplateclientbean.staticFallbackFilePath}/#{goctemplateclientbean.theme}/splash.html" />
 		            <!-- Write closure template -->
 	            </noscript>
-	            <!-- the main content -->
-	            <ui:insert name="content"></ui:insert>
-	            <!-- end main content -->
+	            
+		        <script type="text/javascript">
+		            var contentSplash = document.getElementById("splashContent");
+		            contentSplash.innerHTML = wet.builder.splash(#{goctemplateclientbean.renderSplash});
+		        </script>
 	        </div>
 	    </body>
 	</html>

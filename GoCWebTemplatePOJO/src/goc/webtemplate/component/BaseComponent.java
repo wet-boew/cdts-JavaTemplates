@@ -138,7 +138,7 @@ public abstract class BaseComponent extends AbstractCoreBean {
     protected String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
     protected boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
     protected ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
-    protected boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
+    protected boolean showFeature = false;// = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     protected ArrayList<Breadcrumb> breadCrumbsList = new ArrayList<Breadcrumb>();
     protected String contactLinkUrl = null;
     /**

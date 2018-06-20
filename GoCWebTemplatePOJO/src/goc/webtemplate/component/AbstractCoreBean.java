@@ -118,7 +118,6 @@ public abstract class AbstractCoreBean {
     private boolean showLanguageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showlanguagelink"));
     private boolean showFeedbackLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink"));
     private boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
-    private boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     private ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
     private ArrayList<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
     private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
@@ -808,11 +807,14 @@ public abstract class AbstractCoreBean {
      * Returns whether the features of the footer are to be displayed.
      * 
      * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
-     * can be overriden programatically.  
+     * can be overriden programatically.
+     * 
+     * @deprecated Will be removed in future version
      */
+    @Deprecated
     public boolean getShowFeature() {
         this.initializeOnce();
-        return this.showFeature;
+        return false;
     }
 
     /**
@@ -820,9 +822,11 @@ public abstract class AbstractCoreBean {
      * 
      * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
      * can be overriden programatically.  
+     * 
+     * @deprecated No longer has any effect, will be removed in future version
      */
+    @Deprecated
     public void setShowFeature(boolean value) {
-        this.showFeature = value;
     }
 
     /**
@@ -1730,7 +1734,6 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
-                this.getShowFeature(),
                 JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
                 null, //privacyLink
                 null, //termsLink
@@ -1747,7 +1750,6 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
-                this.getShowFeature(),
                 JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
@@ -1780,8 +1782,7 @@ public abstract class AbstractCoreBean {
                         tmpFooterLinks,
                         (this.contactLink != null? JsonValueUtils.getNonEmptyString(this.contactLink.getHref()): null),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
-                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
-                        this.getShowFeature()                        
+                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl)
                 );
         
         return gson.toJson(appFooter);

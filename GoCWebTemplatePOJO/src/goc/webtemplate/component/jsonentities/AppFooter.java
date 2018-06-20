@@ -21,15 +21,14 @@ public class AppFooter implements Serializable {
     private String              contactLink;
     private String              termsLink;
     private String              privacyLink;
-    private boolean             showFeatures;
+    private boolean             showFeatures = false; //NOTE: No longer exposed to user/always false (meant to be removed in future)
     
     public AppFooter()
     {
     }
 
     public AppFooter(String cdnEnv, String subTheme, String localPath,
-            List<FooterLink> footerSections, String contactLink, String termsLink, String privacyLink,
-            boolean showFeatures) {
+            List<FooterLink> footerSections, String contactLink, String termsLink, String privacyLink) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -37,7 +36,6 @@ public class AppFooter implements Serializable {
         this.contactLink = contactLink;
         this.termsLink = termsLink;
         this.privacyLink = privacyLink;
-        this.showFeatures = showFeatures;
     }
 
     public String getCdnEnv() {
@@ -98,9 +96,5 @@ public class AppFooter implements Serializable {
 
     public boolean isShowFeatures() {
         return showFeatures;
-    }
-
-    public void setShowFeatures(boolean showFeatures) {
-        this.showFeatures = showFeatures;
     }
 }

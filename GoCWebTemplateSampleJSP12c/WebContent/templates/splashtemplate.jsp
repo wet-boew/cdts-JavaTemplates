@@ -47,9 +47,11 @@
 				<!-- Write closure fall-back static file -->
 	            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splash.html')}" />
 			</noscript>
-            <!-- the main content -->
-            <tiles:insertAttribute name="body" />
-            <!-- end main content -->
+			
+			<script type="text/javascript">
+			    var contentSplash = document.getElementById("splashContent");
+			    contentSplash.innerHTML = wet.builder.splash(<s:property escape="false" value="#goctemplateclientbean.renderSplash" />);
+			</script>			
 		</div>
 	</body>
 </html>

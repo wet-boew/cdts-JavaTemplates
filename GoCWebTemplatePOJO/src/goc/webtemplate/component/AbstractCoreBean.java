@@ -22,6 +22,7 @@ import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
+import goc.webtemplate.SplashPageInfo;
 import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
@@ -36,6 +37,7 @@ import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.SecMenu;
 import goc.webtemplate.component.jsonentities.SecMenuItem;
 import goc.webtemplate.component.jsonentities.ShareList;
+import goc.webtemplate.component.jsonentities.Splash;
 import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
 import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
@@ -131,7 +133,8 @@ public abstract class AbstractCoreBean {
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
     private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
-    private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method 
+    private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
+    private SplashPageInfo splashPageInfo = null; //initialization in get method
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private String privacyLinkUrl = "";
     private String termsConditionsLinkUrl = "";
@@ -1022,6 +1025,29 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns the configuration object containing the various splash page settings.
+     * 
+     * Set by application programmatically.
+     */
+    public SplashPageInfo getSplashPageInfo() {
+        this.initializeOnce();
+        
+        //if not override, create a default/empty object
+        if (this.splashPageInfo == null) this.splashPageInfo = new SplashPageInfo();
+        
+        return this.splashPageInfo;
+    }
+    
+    /**
+     * Returns the configuration object containing the various splash page settings.
+     * 
+     * Sets by application programmatically.
+     */
+    public void setSplashPageInfo(SplashPageInfo value) {
+        this.splashPageInfo = value;
+    }
+    
+    /**
      * Returns the url to be used for the Terms & Conditions link in transactional mode.
      * 
      * Set by application programmatically.
@@ -1630,13 +1656,31 @@ public abstract class AbstractCoreBean {
     
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
-     * as parameter for the "appTop"
+     * as parameter for the "splashTop"
      */
     public String getRenderSplashTop() {
         return gson.toJson(new SplashTop(
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
               ));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "splash"
+     */
+    public String getRenderSplash() {
+        SplashPageInfo  spi = this.getSplashPageInfo();
+        
+        return gson.toJson(new Splash(
+                    this.getCdtsCdnEnv(),
+                    spi.getEnglishHomeUrl(), 
+                    spi.getFrenchHomeUrl(),
+                    JsonValueUtils.getNonEmptyString(spi.getEnglishTermsUrl()),
+                    JsonValueUtils.getNonEmptyString(spi.getFrenchTermsUrl()),
+                    spi.getEnglishName(),
+                    spi.getFrenchName()
+                ));
     }
     
     /**

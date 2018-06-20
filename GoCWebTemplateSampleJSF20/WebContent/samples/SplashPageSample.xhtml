@@ -1,16 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/splash-template.xhtml" xmlns:h="http://java.sun.com/jsf/html">
-    <ui:define name="content">
-    	<script type="text/javascript">
-            var contentSplash = document.getElementById("splashContent");
-            contentSplash.innerHTML = wet.builder.splash({
-                cdnEnv: "#{goctemplateclientbean.cdtsCdnEnv}",
-                indexEng: "/GoCWebTemplateSampleJSF20/faces/index.xhtml",
-                indexFra: "/GoCWebTemplateSampleJSF20/faces/index.xhtml",
-                termsEng: "http://www.canada.ca/en/transparency/terms.html",
-                termsFra: "http://www.canada.ca/fr/transparence/avis.html",
-                nameEng: "[My web asset]",
-                nameFra: "[Mon actif web]"
-            });
-        </script>
+    <ui:define name="beaninit">
+        <ui:param name="goctemplateclientbean" value="#{splashpagesamplebean}" />     
     </ui:define>
 </ui:composition>

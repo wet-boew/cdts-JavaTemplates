@@ -13,7 +13,7 @@ public abstract class Constants {
     
     public static final String CACHE_KEY_STATICFILES_PREFIX = "GoC.Template.CacheKey";
     
-    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "4.0.27.1";
+    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "1.28.0";
     
     public static enum SocialMediaSites {
 		bitly, blogger, delicious, digg, diigo, email, facebook, gmail, googleplus, 

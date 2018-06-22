@@ -1,4 +1,21 @@
 ************************************************************************************************************
+1.28.0 (4.0.28.1) - 2018-06-22
+    *** IMPORTANT *** 
+    NEW VERSION SCHEME: To avoid further confusion with the CDTS version, starting with this release, the 
+                        Java Web Template will be published using a new version scheme.
+    WebLogic 11g SUPPORT: This is the last version supporting WebLogic 11g. Future versions will not  
+                          include a package pre-configured for WebLogic 11g.               
+    DEPRECATED CLASSES: This is the last version containing the legacy BaseBean/DefaultTemplateBean class
+                        hierarchy, which was deprecated in version 4.0.26.1. 
+                        BaseCoreBean/DefaultTemplateCoreBean must be used instead.      
+    ******
+    - Implementation of WET/CDTS v4.0.28
+    - Fixed implementation of splash master page
+    - Removed references to showFeatures configuration item (no longer supported by CDTS)
+    - Updated static fallback files
+    - Bug fixes
+
+************************************************************************************************************
 4.0.27.1 - 2018-01-31
     - Implementation of WET/CDTS v4.0.27
     - Added new master page: Unilingual Error Page

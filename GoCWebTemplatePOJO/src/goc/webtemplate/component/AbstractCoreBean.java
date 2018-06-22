@@ -22,6 +22,7 @@ import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
+import goc.webtemplate.SplashPageInfo;
 import goc.webtemplate.Utility;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
@@ -36,6 +37,7 @@ import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.SecMenu;
 import goc.webtemplate.component.jsonentities.SecMenuItem;
 import goc.webtemplate.component.jsonentities.ShareList;
+import goc.webtemplate.component.jsonentities.Splash;
 import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
 import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
@@ -116,7 +118,6 @@ public abstract class AbstractCoreBean {
     private boolean showLanguageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showlanguagelink"));
     private boolean showFeedbackLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink"));
     private boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
-    private boolean showFeature = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     private ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
     private ArrayList<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
     private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
@@ -131,7 +132,8 @@ public abstract class AbstractCoreBean {
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
     private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
-    private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method 
+    private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
+    private SplashPageInfo splashPageInfo = null; //initialization in get method
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private String privacyLinkUrl = "";
     private String termsConditionsLinkUrl = "";
@@ -805,11 +807,14 @@ public abstract class AbstractCoreBean {
      * Returns whether the features of the footer are to be displayed.
      * 
      * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
-     * can be overriden programatically.  
+     * can be overriden programatically.
+     * 
+     * @deprecated Will be removed in future version
      */
+    @Deprecated
     public boolean getShowFeature() {
         this.initializeOnce();
-        return this.showFeature;
+        return false;
     }
 
     /**
@@ -817,9 +822,11 @@ public abstract class AbstractCoreBean {
      * 
      * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
      * can be overriden programatically.  
+     * 
+     * @deprecated No longer has any effect, will be removed in future version
      */
+    @Deprecated
     public void setShowFeature(boolean value) {
-        this.showFeature = value;
     }
 
     /**
@@ -1021,6 +1028,29 @@ public abstract class AbstractCoreBean {
         this.sessionTimeoutConfiguration = value;
     }
 
+    /**
+     * Returns the configuration object containing the various splash page settings.
+     * 
+     * Set by application programmatically.
+     */
+    public SplashPageInfo getSplashPageInfo() {
+        this.initializeOnce();
+        
+        //if not override, create a default/empty object
+        if (this.splashPageInfo == null) this.splashPageInfo = new SplashPageInfo();
+        
+        return this.splashPageInfo;
+    }
+    
+    /**
+     * Returns the configuration object containing the various splash page settings.
+     * 
+     * Sets by application programmatically.
+     */
+    public void setSplashPageInfo(SplashPageInfo value) {
+        this.splashPageInfo = value;
+    }
+    
     /**
      * Returns the url to be used for the Terms & Conditions link in transactional mode.
      * 
@@ -1630,13 +1660,31 @@ public abstract class AbstractCoreBean {
     
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
-     * as parameter for the "appTop"
+     * as parameter for the "splashTop"
      */
     public String getRenderSplashTop() {
         return gson.toJson(new SplashTop(
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
               ));
+    }
+    
+    /**
+     * Builds a string with the format required by the closure template to represent the JSON object used 
+     * as parameter for the "splash"
+     */
+    public String getRenderSplash() {
+        SplashPageInfo  spi = this.getSplashPageInfo();
+        
+        return gson.toJson(new Splash(
+                    this.getCdtsCdnEnv(),
+                    spi.getEnglishHomeUrl(), 
+                    spi.getFrenchHomeUrl(),
+                    JsonValueUtils.getNonEmptyString(spi.getEnglishTermsUrl()),
+                    JsonValueUtils.getNonEmptyString(spi.getFrenchTermsUrl()),
+                    spi.getEnglishName(),
+                    spi.getFrenchName()
+                ));
     }
     
     /**
@@ -1686,7 +1734,6 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
-                this.getShowFeature(),
                 JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
                 null, //privacyLink
                 null, //termsLink
@@ -1703,7 +1750,6 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
-                this.getShowFeature(),
                 JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
@@ -1736,8 +1782,7 @@ public abstract class AbstractCoreBean {
                         tmpFooterLinks,
                         (this.contactLink != null? JsonValueUtils.getNonEmptyString(this.contactLink.getHref()): null),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
-                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
-                        this.getShowFeature()                        
+                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl)
                 );
         
         return gson.toJson(appFooter);

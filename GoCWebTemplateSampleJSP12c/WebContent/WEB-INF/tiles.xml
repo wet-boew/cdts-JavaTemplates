@@ -78,7 +78,7 @@
 		<put-attribute name="body" value="/samplecontents/gcintranetcontent.jsp" />
 	</definition>
 	<definition name="splashPageSample" extends="splashPageTemplateLayout">
-		<put-attribute name="body" value="/samplecontents/splashpagesamplecontent.jsp" />
+        <put-attribute name="beaninit" value="/samplebeans/splashpage.jsp" />
 	</definition>
 	<definition name="addJSAndCSSFilesSample" extends="gocWebTemplateLayout">
 		<put-attribute name="beaninit" value="/samplebeans/addjsandcssfilessamplebean.jsp" />

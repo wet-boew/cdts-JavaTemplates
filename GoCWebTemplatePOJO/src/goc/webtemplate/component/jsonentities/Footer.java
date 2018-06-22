@@ -17,7 +17,7 @@ public class Footer implements Serializable {
     private String              cdnEnv;
     private String              subTheme;
     private boolean             showFooter;
-    private boolean             showFeatures;
+    private boolean             showFeatures = false; //NOTE: No longer exposed to user/always false (meant to be removed in future)
     private List<Link>          contactLinks;
     private String              privacyLink;
     private String              termsLink;
@@ -26,12 +26,11 @@ public class Footer implements Serializable {
     public Footer() {
     }
 
-    public Footer(String cdnEnv, String subTheme, boolean showFooter, boolean showFeatures, List<Link> contactLinks,
+    public Footer(String cdnEnv, String subTheme, boolean showFooter, List<Link> contactLinks,
             String privacyLink, String termsLink, String localPath) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.showFooter = showFooter;
-        this.showFeatures = showFeatures;
         this.contactLinks = contactLinks;
         this.privacyLink = privacyLink;
         this.termsLink = termsLink;
@@ -64,10 +63,6 @@ public class Footer implements Serializable {
 
     public boolean isShowFeatures() {
         return showFeatures;
-    }
-
-    public void setShowFeatures(boolean showFeatures) {
-        this.showFeatures = showFeatures;
     }
 
     public List<Link> getContactLinks() {

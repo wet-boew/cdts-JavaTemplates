@@ -168,9 +168,6 @@ public void onWebTemplateInitialize() {
 <h2>Show/Hide Search</h2>
 <p>This setting allows you to hide or show the search bar on the page.</p>
 <p>The setting <code class="wb-prettify">showSearch</code> can be set programmatically or in the cdn.properties.</p>
-<h2>Features</h2>
-<p>This will be used by the Principal Publisher to insert GoC activities and initiatives into your page. By default this is ALWAYS shown on all pages. You will need authorization from the Principal Publisher to not include this content in your web asset.</p>
-<p>If you receive such authorization then you can programmatically turn this off by calling the <code class="wb-prettify">setShowFeature</code> method in your custom bean class  or in the cdn.properties</p>
 <h2>Pre-Content</h2>
 <p>This will be used by Principal Publisher to insert content into the pre content space of your page. By default this is ALWAYS shown on all pages. You will need authorization from the Principal Publisher to not include this content in your web asset.</p>
 <p>If you recieve such authorization then you can turn off the pre-content programmatically by calling the <code class="wb-prettify">setShowPreContent</code> method in your custom bean class or in the cdn.properties.</p>

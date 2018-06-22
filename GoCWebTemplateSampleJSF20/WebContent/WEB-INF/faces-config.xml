@@ -50,6 +50,11 @@
 		<managed-bean-class>goc.webtemplate.jsf.samplebeans.BaseSettingsSample</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+    <managed-bean>
+        <managed-bean-name>splashpagesamplebean</managed-bean-name>
+        <managed-bean-class>goc.webtemplate.jsf.samplebeans.SplashPageSample</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 	<managed-bean>
 		<managed-bean-name>breadcrumbsamplebean</managed-bean-name>
 		<managed-bean-class>goc.webtemplate.jsf.samplebeans.BreadcrumbSample</managed-bean-class>

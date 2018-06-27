@@ -28,9 +28,7 @@
     </target>
 
 	<target depends="clean,init" name="package">
-	    <create-archive project-name="GoCWebTemplateSampleJSF20" />
         <create-archive project-name="GoCWebTemplateSampleJSF2x" />
-        <create-archive project-name="GoCWebTemplateSampleJSP" />
         <create-archive project-name="GoCWebTemplateSampleJSP12c" />
 		
 		<echo message="Done.  Release packages available in ${package.targetdir}..." />

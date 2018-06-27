@@ -802,32 +802,6 @@ public abstract class AbstractCoreBean {
     public void setContactLink(Link value) {
         this.contactLink = value;
     }
-    
-    /**
-     * Returns whether the features of the footer are to be displayed.
-     * 
-     * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
-     * can be overriden programatically.
-     * 
-     * @deprecated Will be removed in future version
-     */
-    @Deprecated
-    public boolean getShowFeature() {
-        this.initializeOnce();
-        return false;
-    }
-
-    /**
-     * Sets whether the features of the footer are to be displayed.
-     * 
-     * Set at application level via "goc.webtemplate.showfeatures" property in cdn.properties, 
-     * can be overriden programatically.  
-     * 
-     * @deprecated No longer has any effect, will be removed in future version
-     */
-    @Deprecated
-    public void setShowFeature(boolean value) {
-    }
 
     /**
      * Returns whether the Share Page Link of the footer are to be displayed.

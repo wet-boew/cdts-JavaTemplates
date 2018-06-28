@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: 
-Implementation-Title: "goc.webtemplate.pojo"
-Implementation-Version: "1.28.0"

@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   
   <groupId>ca.gc.gocwebtemplate</groupId>
-  <artifactId>gocwebtamplet-sample-jsp</artifactId>
+  <artifactId>gocwebtemplate-sample-jsp</artifactId>
   <version>1.29.0-SNAPSHOT</version>
   <packaging>war</packaging>
   
-  <name>gocwebtamplet-sample-jsp</name>
+  <name>gocwebtemplate-sample-jsp</name>
   <description>A sample JSP/Struts2 project utilizing Java GoC Web Template.</description>
 
   <properties>
@@ -23,7 +23,7 @@
   </properties>
 
   <build>
-    <finalName>gocwebtamplet-sample-jsp</finalName>
+    <finalName>gocwebtemplate-sample-jsp</finalName>
     
     <plugins>
       <plugin>

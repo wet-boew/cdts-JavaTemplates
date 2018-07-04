@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="maven-deploys" name="gocwebtemplate-archetype-build">
+    <property environment="env"/>
+    
+    <property name="package.targetdir" value="./target" />
+    <property file="./build.properties" />
+
+	<condition property="isWindows">
+	    <os family="windows" />
+	</condition>
+	<condition property="isUnix">
+	    <os family="unix" />
+	</condition>
+
+    <macrodef name="create-archetype-project">
+        <attribute name="project-name"/>
+        <sequential>
+            <echo message="Creating Maven project for archetype of [@{project-name}]" />
+
+            <mkdir dir="${package.targetdir}/@{project-name}-archetype" />
+            
+            <!-- Copy archetype skeleton -->
+            <copy file="./@{project-name}-archetype/pom.xml" todir="${package.targetdir}/@{project-name}-archetype" 
+                  overwrite="true" verbose="true">
+                  <filterset filtersfile="./build.properties" />
+            </copy>
+            <copy todir="${package.targetdir}/@{project-name}-archetype" 
+                  overwrite="true" verbose="true" filtering="false">
+                  <fileset dir="./@{project-name}-archetype/src/.." includes="src/**" />
+            </copy>
+
+            <!-- Copy "actual" project files -->
+            <copy todir="${package.targetdir}/@{project-name}-archetype/src/main/resources/archetype-resources" 
+                  overwrite="true" verbose="false" filtering="false">
+                  <fileset dir="../@{project-name}/src/.." includes="src/**" />
+            </copy>
+            <xslt in="../@{project-name}/pom.xml" 
+                  out="${package.targetdir}/@{project-name}-archetype/src/main/resources/archetype-resources/pom.xml"
+                  style="./build-archetype-pom.xslt"
+                  force="true">
+                <param name="gocwebtemplate.build.version" expression="${gocwebtemplate.build.version}"/>
+            </xslt>
+        </sequential>
+    </macrodef>
+    
+    <target name="mvn_windows_setup" if="isWindows">
+        <property name="mvn.executable" value="cmd" />
+        <property name="mvn.args" value="/c" />
+    </target>
+    <target name="mvn_unix_setup" if="isUnix">
+        <property name="mvn.executable" value="sh" />
+        <property name="mvn.args" value="-c" />
+    </target>
+    <target name="run-mvn-goals" depends="mvn_windows_setup, mvn_unix_setup">
+        <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
+        <exec dir="${basedir}" executable="${mvn.executable}">
+            <arg line="${mvn.args} 'mvn ${p_goals}'" />
+        </exec>
+    </target>    
+    
+    <target name="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <mkdir dir="${package.targetdir}"/>
+    </target>
+    <target name="clean">
+        <delete dir="${package.targetdir}"/>
+    </target>
+
+    <target depends="clean,init" name="create-archetype-project-jsp">
+        <create-archetype-project project-name="gocwebtemplate-sample-jsp" />
+    </target>
+    <target depends="clean,init" name="create-archetype-project-jsf">
+        <create-archetype-project project-name="gocwebtemplate-sample-jsf" />
+    </target>
+    <target depends="create-archetype-project-jsp,create-archetype-project-jsf" name="create-archetype-projects">
+    </target>
+    
+    <target depends="create-archetype-project-jsp" name="maven-package-jsp">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_goals" value="clean package" />
+        </antcall>
+    </target>
+    <target depends="create-archetype-project-jsf" name="maven-package-jsf">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
+            <param name="p_goals" value="clean package" />
+        </antcall>
+    </target>    
+    <target depends="maven-package-jsp,maven-package-jsf" name="maven-packages">
+    </target>
+
+    <target depends="create-archetype-project-jsp" name="maven-install-jsp">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_goals" value="clean install" />
+        </antcall>
+    </target>
+    <target depends="create-archetype-project-jsf" name="maven-install-jsf">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
+            <param name="p_goals" value="clean install" />
+        </antcall>
+    </target>    
+    <target depends="maven-install-jsp,maven-install-jsf" name="maven-installs">
+    </target>
+
+    <target depends="create-archetype-project-jsp" name="maven-deploy-jsp">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_goals" value="clean deploy" />
+        </antcall>
+    </target>
+    <target depends="create-archetype-project-jsf" name="maven-deploy-jsf">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
+            <param name="p_goals" value="clean deploy" />
+        </antcall>
+    </target>    
+    <target depends="maven-deploy-jsp,maven-deploy-jsf" name="maven-deploys">
+    </target>
+    
+</project>

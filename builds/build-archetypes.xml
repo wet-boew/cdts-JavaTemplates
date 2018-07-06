@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." default="maven-deploys" name="gocwebtemplate-archetype-build">
+<!-- 
+        This Ant script is used to produce (and deploy to Maven repo) Maven
+        Archetypes corresponding to the sample projects.
+-->
+
+
     <property environment="env"/>
     
     <property name="package.targetdir" value="./target" />

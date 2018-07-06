@@ -114,39 +114,4 @@
         <url>http://localhost:8081/artifactory/libs-snapshot-local</url>  
     </snapshotRepository>
   </distributionManagement>
-  
-  <profiles>
-    <profile> <!-- TODO: This profile should be removed once we're fully mavenized -->
-        <id>LEGACY-COPYTOPROJECTS</id>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
-                    <executions>
-                        <execution>
-                            <id>copy-to-projects</id>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <phase>install</phase>
-                            <configuration>
-                                <target>
-                                    <echo message="Copying ${project.build.directory}/${project.build.finalName} as ${project.artifactId} to legacy projects..." />
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                          tofile="../../GoCWebTemplateSampleJSF2x/WebContent/WEB-INF/lib/${project.artifactId}.jar"
-                                          preservelastmodified="true" overwrite="true" force="true" failonerror="false" verbose="true" />
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                          tofile="../../GoCWebTemplateSampleJSP12c/WebContent/WEB-INF/lib/${project.artifactId}.jar"
-                                          preservelastmodified="true" overwrite="true" force="true" failonerror="false" verbose="true" />
-                                </target>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>                
-        </build>
-    </profile>
-  </profiles>  
 </project>

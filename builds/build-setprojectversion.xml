@@ -64,6 +64,6 @@
         <echo message="Done." />
         <echo message="Project version is now [${gocwebtemplate.build.version}] in all pom and build files." />
         <echo message="Changes should be commited/pushed to git repository." />
-        <echo message="***** A 'MAVEN UPDATE' SHOULD NOW BE PERFORMED ON ALL PROJECTS. *****" />
+        <echo message="***** A 'MAVEN UPDATE' SHOULD NOW BE PERFORMED ON ALL ECLIPSE PROJECTS. *****" />
     </target>
 </project>

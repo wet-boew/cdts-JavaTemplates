@@ -23,7 +23,7 @@ Once all development/changes have been merged back from the version branch
 to 'master', do the following before creating the release build:
 
 - Make sure your local repository is on branch 'master' with no outstanding 
-  files or commit and that iit is up to date with origin.
+  files or commit and that it is up to date with origin.
 - Open a Git bash window
 - "cd" to the root directory of the Git repository (e.g. cd /c/git/JavaTemplates)
 - Run the command: ./builds/prepare-release.sh
@@ -55,7 +55,7 @@ finalizing the release by calling prepare-release.sh, see above)
 
 ### build-setprojectversion.xml
 
-This scripts is used to update the version number in all pom.xml and
+This script is used to update the version number in all pom.xml and
 configuration files so they all match.  
 
 This script is meant to be launched by the release shell scripts, but can be 

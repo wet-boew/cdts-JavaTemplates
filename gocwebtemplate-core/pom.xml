@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ca.gc.gocwebtemplate</groupId>
+  <artifactId>gocwebtemplate-core</artifactId>
+  <version>1.29.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <name>gocwebtemplate-core</name>
+  <description>The parent porject for all modules of the "core" library.</description>
+  
+  <organization>
+    <name>ESDC - Solution Design Services</name>
+  </organization>
+  <issueManagement>
+    <url>https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/issues</url>
+  </issueManagement>
+
+  <modules>
+    <module>gocwebtemplate-core-base</module>
+    <module>gocwebtemplate-core-jsp</module>
+    <module>gocwebtemplate-core-jsf</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <java.version>1.7</java.version>
+    <webtemplate.version>${project.version}</webtemplate.version>
+        
+    <build_number>local</build_number>
+    <maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>
+    <timestamp>${maven.build.timestamp}</timestamp>
+  </properties>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <!-- Add a few custom attributes to the manifest -->          
+            <archive>
+              <manifest>
+                  <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+              <manifestEntries>
+                <Build-Timestamp>"${timestamp}-UTC"</Build-Timestamp>
+                <Build-Version>${project.version}-${build_number}</Build-Version>
+              </manifestEntries>
+            </archive>           
+          </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+		<configuration>
+		  <failOnError>false</failOnError>
+		</configuration>
+      </plugin>                
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <distributionManagement>
+    <repository>    
+        <id>central</id> 
+        <name>jade-repos.intra.dev-releases</name>    
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-release-local</url>   
+    </repository>   
+    <snapshotRepository>    
+        <id>snapshots</id> 
+        <name>jade-repos.intra.dev-snapshots</name>   
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-snapshot-local</url>  
+    </snapshotRepository>
+  </distributionManagement>
+</project>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="set-project-version" name="gocwebtemplate-set-project-version">
+<!-- 
+        This Ant script is used to update all pom (and other) files in the 
+        project to a specified version.
+-->
+
+    <property environment="env"/>
+
+    <property name="package.targetdir" value="./target" />
+
+    <macrodef name="transform-xml-file">
+        <attribute name="xslt-file" />
+        <attribute name="target-file" />
+        <sequential>
+            <echo message="Applying XLST [@{xslt-file}] to [@{target-file}]" />
+
+            <!-- We can't read and write from same file, copy it first-->
+            <!-- Copy project files -->
+            <copy file="@{target-file}" tofile="${package.targetdir}/tmpsource.xml" 
+                  overwrite="true" verbose="false" filtering="false" />
+            <xslt in="${package.targetdir}/tmpsource.xml" 
+                  out="@{target-file}"
+                  style="@{xslt-file}"
+                  force="true">
+                <param name="gocwebtemplate.build.version" expression="${gocwebtemplate.build.version}"/>
+            </xslt>
+        </sequential>
+    </macrodef>
+    
+    <target name="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <fail message="Property 'gocwebtemplate.build.version' is not defined.">
+            <condition>
+                <not>
+                    <isset property="gocwebtemplate.build.version" />
+                </not>
+            </condition>
+        </fail>
+        <mkdir dir="${package.targetdir}"/>        
+    </target>
+    <target name="clean">
+        <delete dir="${package.targetdir}"/>
+    </target>
+
+    <target depends="clean,init" name="set-project-version">
+    
+        <transform-xml-file xslt-file="./build-setproject-version-core-pom.xslt" target-file="../gocwebtemplate-core/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-jsp/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-jsf/pom.xml" />
+
+        <transform-xml-file xslt-file="./build-setproject-version-sample-pom.xslt" target-file="../gocwebtemplate-sample-jsp/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-sample-pom.xslt" target-file="../gocwebtemplate-sample-jsf/pom.xml" />
+    
+        <copy file="./build.properties.in" tofile="./build.properties" overwrite="true" verbose="true">
+            <filterset>
+                <propertyset>
+                    <propertyref prefix="gocwebtemplate." />
+                </propertyset>
+            </filterset>
+        </copy>
+    
+        <echo message="Done." />
+        <echo message="Project version is now [${gocwebtemplate.build.version}] in all pom and build files." />
+        <echo message="Changes should be commited/pushed to git repository." />
+        <echo message="***** A 'MAVEN UPDATE' SHOULD NOW BE PERFORMED ON ALL ECLIPSE PROJECTS. *****" />
+    </target>
+</project>

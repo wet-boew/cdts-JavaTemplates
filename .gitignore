@@ -1,0 +1,8 @@
+**/bin/
+**/target/
+**/.settings/
+**/.metadata/
+**/.checkstyle
+**/.classpath
+**/.pmd
+**/.project

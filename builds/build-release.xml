@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="packages" name="gocwebtemplate-release-package-build">
+<!-- 
+        This Ant script is used to produce release packages meant to be used
+        by developers outside the ESDC network (ie with no access to SADE's 
+        Artifactory Maven repository).
+         
+        Unlike the Maven archetypes, these release packages will include the
+        internal dependencies directly in the project (as opposed to leaving 
+        them as Maven managed dependencies).
+-->
+
+    <property environment="env"/>
+    
+    <property name="package.targetdir" value="./target" />
+    <property name="package.project.prefix" value="gocwebtemplate-sample-" />
+    <property file="./build.properties" />
+
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+    <condition property="isUnix">
+        <os family="unix" />
+    </condition>
+
+    <macrodef name="create-project-package">
+        <attribute name="project-type"/>
+        <sequential>
+            <echo message="Creating project for [${package.project.prefix}@{project-type}]" />
+
+            <mkdir dir="${package.targetdir}/${package.project.prefix}@{project-type}" />
+            
+            <!-- Copy project files -->
+            <copy todir="${package.targetdir}/${package.project.prefix}@{project-type}" 
+                  overwrite="true" verbose="false" filtering="false">
+                  <fileset dir="../${package.project.prefix}@{project-type}/src/.." includes="src/**" />
+            </copy>
+            <xslt in="../${package.project.prefix}@{project-type}/pom.xml" 
+                  out="${package.targetdir}/${package.project.prefix}@{project-type}/pom.xml"
+                  style="./build-release-packaged-pom.xslt"
+                  force="true">
+                <param name="gocwebtemplate.build.version" expression="${gocwebtemplate.build.version}"/>
+            </xslt>
+            
+            <!-- Copy Maven ("internal") dependencies in a Maven repository that will be local
+                 to the project -->
+            <mkdir dir="${package.targetdir}/tmplib" />
+            <mkdir dir="${package.targetdir}/${package.project.prefix}@{project-type}/local-maven-repo" />
+	        <antcall target="run-mvn-goals">
+	            <param name="basedir" value="${basedir}/../${package.project.prefix}@{project-type}" />            
+	            <param name="p_goals" value="-DoutputDirectory=${basedir}/${package.targetdir}/tmplib -DincludeGroupIds=ca.gc.gocwebtemplate -Dmdep.stripVersion=true -DoverWriteIfNewer=true dependency:copy-dependencies" />
+	        </antcall>
+            <antcall target="run-mvn-goals">
+                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_goals" value="-Dfile=../../../gocwebtemplate-core/pom.xml -DpomFile=../../../gocwebtemplate-core/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
+            </antcall>
+            <antcall target="run-mvn-goals">
+                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_goals" value="-Dfile=./gocwebtemplate-core-@{project-type}.jar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-@{project-type}/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
+            </antcall>
+            <antcall target="run-mvn-goals">
+                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_goals" value="-Dfile=./gocwebtemplate-core-base.jar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
+            </antcall>
+	        
+	        <!-- Zip it up! -->
+            <zip destfile="${package.targetdir}/${package.project.prefix}@{project-type}-${gocwebtemplate.build.version}.zip" defaultexcludes="yes">
+                <fileset dir="${package.targetdir}">
+                    <include name="${package.project.prefix}@{project-type}/**" />
+                </fileset>
+            </zip>
+        </sequential>
+    </macrodef>
+    
+    <target name="mvn_windows_setup" if="isWindows">
+        <property name="mvn.executable" value="cmd" />
+        <property name="mvn.args" value="/c" />
+    </target>
+    <target name="mvn_unix_setup" if="isUnix">
+        <property name="mvn.executable" value="sh" />
+        <property name="mvn.args" value="-c" />
+    </target>
+    <target name="run-mvn-goals" depends="mvn_windows_setup, mvn_unix_setup">
+        <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
+        <exec dir="${basedir}" executable="${mvn.executable}">
+            <arg line="${mvn.args} 'mvn ${p_goals}'" />
+        </exec>
+    </target>    
+
+    <target name="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <mkdir dir="${package.targetdir}"/>
+    </target>
+    <target name="clean">
+        <delete dir="${package.targetdir}"/>
+    </target>
+
+    <target depends="clean,init" name="package-jsp">
+        <create-project-package project-type="jsp" />
+    </target>
+    <target depends="clean,init" name="package-jsf">
+        <create-project-package project-type="jsf" />
+    </target>
+    <target depends="package-jsp,package-jsf" name="packages">
+    </target>
+</project>

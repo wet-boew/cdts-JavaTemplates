@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ca.gc.gocwebtemplate</groupId>
+  <artifactId>gocwebtemplate-sample-jsf-archetype</artifactId>
+  <version>@gocwebtemplate.build.version@</version>
+  <packaging>maven-archetype</packaging>
+
+  <name>gocwebtemplate-sample-jsf-archetype</name>
+  <description>A sample JSF project utilizing Java Goc Web Template.</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>    
+  </properties>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>3.0.1</version>
+      </extension>
+    </extensions>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <distributionManagement>
+    <repository>    
+        <id>central</id> 
+        <name>jade-repos.intra.dev-releases</name>    
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-release-local</url>   
+    </repository>   
+    <snapshotRepository>    
+        <id>snapshots</id> 
+        <name>jade-repos.intra.dev-snapshots</name>   
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-snapshot-local</url>  
+    </snapshotRepository>
+  </distributionManagement>
+</project>

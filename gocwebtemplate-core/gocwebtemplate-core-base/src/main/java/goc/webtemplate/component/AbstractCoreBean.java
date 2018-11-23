@@ -102,7 +102,7 @@ public abstract class AbstractCoreBean {
     private IntranetTitle intranetTitle = null;    
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
-    private Link contactLink = null;
+    private ArrayList<Link> contactLinks = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalwindow")),
@@ -789,18 +789,26 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the URL to be used to the contact link.
+     * Returns the list of contact links, null if no contact list is currently specified.
      */
-    public Link getContactLink() {
+    public ArrayList<Link> getContactLink() {
         this.initializeOnce();
-        return this.contactLink;
+        return this.contactLinks;
     }
     
     /**
-     * Returns the URL to be used to the contact link.
+     * Sets the list of contact links to the specified value.
+     */
+    public void setContactLinks(ArrayList<Link> value) {
+    	this.contactLinks = value;
+    }
+    
+    /**
+     * Convenience method to specify a single contact link.
      */
     public void setContactLink(Link value) {
-        this.contactLink = value;
+    	if (this.contactLinks == null) this.contactLinks = new ArrayList<Link>();
+        this.contactLinks.add(value);
     }
 
     /**
@@ -1274,18 +1282,6 @@ public abstract class AbstractCoreBean {
         return tmpBreadcrumbs;
     }
     
-    private ArrayList<Link> getContactList()
-    {
-        Link cl = this.getContactLink();
-        
-        if ((cl == null) || Utility.isNullOrEmpty(cl.getHref())) return null;
-        
-        ArrayList<Link> vtr = new ArrayList<Link>();
-        vtr.add(cl);
-        
-        return vtr;
-    }
-    
     /**
      * helper method to build the default SessionTimeout configuration object using default value 
      * specified in the resource bundle
@@ -1708,7 +1704,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
+                JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
                 null, //privacyLink
                 null, //termsLink
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1724,7 +1720,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.getContactList()),
+                JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1754,7 +1750,7 @@ public abstract class AbstractCoreBean {
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                         tmpFooterLinks,
-                        (this.contactLink != null? JsonValueUtils.getNonEmptyString(this.contactLink.getHref()): null),
+                        JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl)
                 );

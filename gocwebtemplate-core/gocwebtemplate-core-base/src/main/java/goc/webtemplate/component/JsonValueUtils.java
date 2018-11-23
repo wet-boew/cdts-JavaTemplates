@@ -46,9 +46,13 @@ public final class JsonValueUtils {
         
         vtr = new ArrayList<Link>();
         for (Link l: links) {
-            if (l.getHref() == null) continue;
-            vtr.add(new Link(BaseUtil.encodeUrl(l.getHref()), 
-                             JsonValueUtils.getNonEmptyString(l.getText())));
+            if (l.getHref() == null) continue;  //don't add entries without hrefs
+            
+            Link normalisedLink = l.clone(); //can be of type Link of any sub-class
+            normalisedLink.setHref(BaseUtil.encodeUrl(l.getHref()));
+            normalisedLink.setText(JsonValueUtils.getNonEmptyString(l.getText()));
+            
+            vtr.add(normalisedLink);
         }
 
         return vtr;

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.Link;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
@@ -18,7 +19,7 @@ public class AppFooter implements Serializable {
     private String              subTheme;
     private String              localPath;
     private List<FooterLink>    footerSections;
-    private String              contactLink;
+    private List<Link>          contactLink; //NOTE: Name not being plural is intentional/what CDTS requires
     private String              termsLink;
     private String              privacyLink;
     private boolean             showFeatures = false; //NOTE: No longer exposed to user/always false (meant to be removed in future)
@@ -28,7 +29,7 @@ public class AppFooter implements Serializable {
     }
 
     public AppFooter(String cdnEnv, String subTheme, String localPath,
-            List<FooterLink> footerSections, String contactLink, String termsLink, String privacyLink) {
+            List<FooterLink> footerSections, List<Link> contactLink, String termsLink, String privacyLink) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -70,11 +71,11 @@ public class AppFooter implements Serializable {
         this.footerSections = footerSections;
     }
 
-    public String getContactLinks() {
+    public List<Link> getContactLinks() {
         return contactLink;
     }
 
-    public void setContactLinks(String value) {
+    public void setContactLinks(List<Link> value) {
         this.contactLink = value;
     }
 

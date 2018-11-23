@@ -791,7 +791,7 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the list of contact links, null if no contact list is currently specified.
      */
-    public ArrayList<Link> getContactLink() {
+    public ArrayList<Link> getContactLinks() {
         this.initializeOnce();
         return this.contactLinks;
     }
@@ -808,6 +808,7 @@ public abstract class AbstractCoreBean {
      */
     public void setContactLink(Link value) {
     	if (this.contactLinks == null) this.contactLinks = new ArrayList<Link>();
+    	this.contactLinks.clear();
         this.contactLinks.add(value);
     }
 
@@ -1704,7 +1705,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
+                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
                 null, //privacyLink
                 null, //termsLink
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1720,7 +1721,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
+                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1750,7 +1751,7 @@ public abstract class AbstractCoreBean {
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                         tmpFooterLinks,
-                        JsonValueUtils.getNonEmptyLinkList(this.contactLinks),
+                        JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl)
                 );

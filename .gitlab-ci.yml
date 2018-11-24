@@ -1,0 +1,24 @@
+variables:
+  JAVA_HOME: 'c:\\java\\jdk1.8.0_172'  
+  ANT_HOME: 'c:\\java\\apache-ant-1.10.4'
+  MAVEN_HOME: 'c:\java\apache-maven-3.5.2'
+  
+stages:
+  - testCore
+  - testSamples
+  
+testCore:
+  stage: testCore
+  script:
+    - echo "Running Maven on Core packages..."
+    - cd gocwebtemplate-core
+    - "%MAVEN_HOME%\bin\mvn --batch-mode test 
+
+testSamples:
+  stage: testSamples
+  script:
+    - echo "Running Maven on Sample packages..."
+    - cd gocwebtemplate-sample-jsf
+    - "%MAVEN_HOME%\bin\mvn --batch-mode test 
+    - cd ..\gocwebtemplate-sample-jsp
+    - "%MAVEN_HOME%\bin\mvn --batch-mode test 

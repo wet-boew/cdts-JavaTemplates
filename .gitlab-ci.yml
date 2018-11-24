@@ -1,10 +1,10 @@
 variables:
   JAVA_HOME: 'c:\\java\\jdk1.8.0_172'  
   ANT_HOME: 'c:\\java\\apache-ant-1.10.4'
-  MAVEN_HOME: 'c:\java\apache-maven-3.5.2'
+  MAVEN_HOME: 'c:\\java\\apache-maven-3.5.2'
   
 before_script:
-  - set PATH=%JAVA_HOME%\bin;%ANT_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
+  - set PATH=%JAVA_HOME%\\bin;%ANT_HOME%\\bin;%MAVEN_HOME%\\bin;%PATH%
  
 stages:
   - testCore
@@ -23,5 +23,5 @@ testSamples:
     - echo "Running Maven on Sample packages..."
     - cd gocwebtemplate-sample-jsf
     - mvn --batch-mode test 
-    - cd ..\gocwebtemplate-sample-jsp
+    - cd ..\\gocwebtemplate-sample-jsp
     - mvn --batch-mode test 

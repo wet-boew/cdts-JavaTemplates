@@ -47,7 +47,7 @@
 	        </li>
 	    </ul>
 	    <p>Here is a local link that will not display the warning: <a href="BaseSettingsSample.xhtml">Link to Local Page</a></p>
-	    <p>Here is an external link that will display the warning:<a href="http://www.google.ca">Link to External Page</a></p>
+	    <p>Here is an external link that will display the warning:<a href="https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Redirect-Page">Link to External Page</a></p>
 	    <h2>Steps to implement:</h2>
 	    <h3>Enable the leaving secure site feature</h3>
 	    <ul>
@@ -65,7 +65,7 @@ public void onWebTemplateInitialize() {
 
     lssw.setEnabled(true);
     lssw.setMessage("You are about to leave a secure site, do you wish to continue?");
-    lssw.setRedirectUrl("leavesecuresiteredirect.action");
+    lssw.setRedirectUrl("leavesecuresiteredirect.xhtml");
     lssw.setExcludedDomains("www.esdc.gc.ca,www.jobbank.gc.ca,www.readseal.ca");
     lssw.setDisplayModalWindow(true);
     
@@ -74,14 +74,12 @@ public void onWebTemplateInitialize() {
 }
         	</pre>
     	</div>
-	    <h3>Created your custom "redirect" class</h3>
+	    <h3>Create your custom "redirect" page</h3>
 	    <ul>
-	        <li>Create a class and a public method will be invoked by the preRenderView event of the redirect url</li>
-	        <li>enter your clean up code if required</li>
-	        <li>redirect to the <code class="wb-prettify">"targetURL"</code> parameter value in the querystring</li>
+	        <li>A bean called <code class="wb-prettify">leavesecuresiteredirectbean</code> alreay exists whit a doRedirect method that can be used to perform the redirect.</li>
 	    </ul>
 	    <div class="wb-prettify all-pre lang-vb linenums">
-	        <h3>Code Sample for your Redirect url and class</h3>
+	        <h4>Code Sample for your Redirect page</h4>
 	        <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml" 
@@ -89,27 +87,38 @@ public void onWebTemplateInitialize() {
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http//java.sun.com/jsf/core"&gt;
 	&lt;f:metadata&gt;
-		&lt;f:event type="preRenderView" listener="<h:outputText value="&amp;#35;&#123;customredirectbean.doRedirect()&#125;" escape="false" />" /&gt;
+		&lt;f:event type="preRenderView" listener="<h:outputText value="&amp;#35;&#123;leavesecuresiteredirectbean.doRedirect()&#125;" escape="false" />" /&gt;
 	&lt;/f:metadata&gt;
 &lt;/html&gt;
-
+	        </pre>
+	     </div>
+        <h3>Create your custom "redirect" bean</h3>
+        If extra cleanup code is required, a custom bean can be created: 
+        <ul>
+            <li>Create a class and a public method will be invoked by the preRenderView event of the redirect url (see above).</li>
+            <li>enter your clean up code if required</li>
+            <li>redirect to the <code class="wb-prettify">"targetURL"</code> parameter value in the querystring</li>
+        </ul>
+        <div class="wb-prettify all-pre lang-vb linenums">
+            <h4>Code Sample for your Redirect url and class</h4>
+            <pre>
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named("customredirectbean")
 @RequestScoped
 public class CustomRedirect {
-	public void doRedirect() {
-		try {
-			HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-			String redirectUrl = URLDecoder.decode(req.getParameter("targetUrl"), "UTF-8");
-			((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect(redirectUrl);
-		}
-		catch (Exception ex) {}
-	}
+    public void doRedirect() {
+        try {
+            HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String redirectUrl = URLDecoder.decode(req.getParameter("targetUrl"), "UTF-8");
+            ((HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect(redirectUrl);
+        }
+        catch (Exception ex) {}
+    }
 }
-	        </pre>
-	     </div>
+            </pre>
+         </div>
 <ui:include src="_sampleslist.xhtml" />
     </ui:define>
 </ui:composition>

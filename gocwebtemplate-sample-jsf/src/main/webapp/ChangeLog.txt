@@ -1,4 +1,22 @@
 ************************************************************************************************************
+1.29.0 - 2018-11-27
+    *** IMPORTANT ***
+    PROJECT REFACTORING: The Java Web Templates are now Maven projects and archetypes.  The way the libraries
+                         are referenced and the way to create projects from the samples has changed. Projects
+                         are no longer tied to a particular Java container (ie WebLogic) or Eclipse version. 
+                         Refer to the wiki of usage details.
+    WebLogic 11g SUPPORT: Java Web Templates are now developped and tested using WebLogic 12c. Version 11g is
+                          no longer supported.
+    MAJOR CLEANUP: Previsouly deprecated classes have been removed. In particular, the DefaultTemplateBean class
+                   hierarchy has been removed, DefaultTemplateCoreBean should be used instead.
+    ******
+    - (JSP project) Update of Struts version from 2.3.34 to 2.3.36 
+    - Implementation of WET/CDTS v4.0.29
+    - ContactLink has been changed to ContactLinks (setContactLink(...) has been kept for convenience, see sample for details)
+    - Updated static fallback files
+    - Bug fixes
+
+************************************************************************************************************
 1.28.0 (4.0.28.1) - 2018-06-22
     *** IMPORTANT *** 
     NEW VERSION SCHEME: To avoid further confusion with the CDTS version, starting with this release, the 

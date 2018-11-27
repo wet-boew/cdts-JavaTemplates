@@ -1,4 +1,4 @@
-# Building the Java Web Plates
+# Building the Java Web Templates
 
 ## Work flow
 

@@ -59,8 +59,9 @@
     </target>
     <target name="run-mvn-goals" depends="mvn_windows_setup, mvn_unix_setup">
         <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
+        <echo message="${mvn.args} '/u01/app/maven/bin/mvn ${p_goals}'" />
         <exec dir="${basedir}" executable="${mvn.executable}">
-            <arg line="${mvn.args} 'mvn ${p_goals}'" />
+            <arg line="${mvn.args} '/u01/app/maven/bin/mvn ${p_goals}'" />
         </exec>
     </target>    
     

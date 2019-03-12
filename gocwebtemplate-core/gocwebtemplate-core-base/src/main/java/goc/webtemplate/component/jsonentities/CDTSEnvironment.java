@@ -24,6 +24,9 @@ public class CDTSEnvironment implements Serializable {
     private boolean isEncryptionModifiable;
     private String  appendToTitle;
     
+    private int 	footerSectionLimit;
+    private boolean	canHaveMultiContactLinks;
+    private boolean	canHaveContactLinkInAppTemplate;
     
     public CDTSEnvironment() {
     }
@@ -100,7 +103,31 @@ public class CDTSEnvironment implements Serializable {
         this.appendToTitle = value;
     }
     
-    /**
+    public int getFooterSectionLimit() {
+		return footerSectionLimit;
+	}
+
+	public void setFooterSectionLimit(int footerSectionLimit) {
+		this.footerSectionLimit = footerSectionLimit;
+	}
+
+	public boolean getCanHaveMultiContactLinks() {
+		return canHaveMultiContactLinks;
+	}
+
+	public void setCanHaveMultiContactLinks(boolean canHaveMultiContactLinks) {
+		this.canHaveMultiContactLinks = canHaveMultiContactLinks;
+	}
+
+	public boolean getCanHaveContactLinkInAppTemplate() {
+		return canHaveContactLinkInAppTemplate;
+	}
+
+	public void setCanHaveContactLinkInAppTemplate(boolean canHaveContactLinkInAppTemplate) {
+		this.canHaveContactLinkInAppTemplate = canHaveContactLinkInAppTemplate;
+	}
+
+	/**
      * Exists as a container of CDTSEnvironment matching the format of the
      * JSON file the data is read from.
      */

@@ -102,6 +102,7 @@ public abstract class AbstractCoreBean {
     private IntranetTitle intranetTitle = null;    
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
+    private String feedbackUrlFr = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl_fr");
     private ArrayList<Link> contactLinks = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
@@ -971,6 +972,28 @@ public abstract class AbstractCoreBean {
     }
     
     /**
+     * Returns the french FeedBack link URL.
+     * 
+     * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public String getFeedbackUrlFr() {
+        this.initializeOnce();
+        return this.feedbackUrlFr;
+    }
+    
+    /**
+     * Sets the french FeedBack link URL.
+     * 
+     * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties, 
+     * can be overriden programatically.  
+     */
+    public void setFeedbackUrlFr(String value) {
+        this.feedbackUrlFr = value;
+    }
+    
+    
+    /**
      * Returns a unique string to identify a web page. Used by user to identify the screen where an issue occured.
      */
     public String getScreenIdentifier() {
@@ -1668,10 +1691,13 @@ public abstract class AbstractCoreBean {
                 JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                 this.buildDateModified(),
                 this.showPostContent,
-                new FeedbackLink(this.showFeedbackLink, this.feedbackUrl),
+                new FeedbackLink(this.showFeedbackLink, 
+                        (this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.ENGLISH_ACCRONYM.toUpperCase()) || Utility.isNullOrEmpty(this.getFeedbackUrlFr()) ?
+                                this.feedbackUrl:
+                                this.feedbackUrlFr) ),
                 new ShareList(this.showSharePageLink, this.sharePageMediaSites),
                 JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
-              ));
+              )); 
     }
     
     /**

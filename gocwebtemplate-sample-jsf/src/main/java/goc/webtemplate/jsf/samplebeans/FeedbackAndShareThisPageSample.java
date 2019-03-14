@@ -14,6 +14,7 @@ public class FeedbackAndShareThisPageSample extends DefaultTemplateCoreBean {
     public void onWebTemplateInitialize() {
         this.setShowFeedbackLink(true);
         this.setFeedbackUrl("http://www.google.ca"); 
+        this.setFeedbackUrlFr("http://www.google.ca/?hl=fr");
 
         this.setShowSharePageLink(true);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.bitly);

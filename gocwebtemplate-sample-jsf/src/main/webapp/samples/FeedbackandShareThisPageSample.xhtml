@@ -19,24 +19,26 @@
 	    <h2>Feedback Link</h2>
 	    <p>The Feedback Link is a way for the users of your site to provide feedback on their experience navigating through the site.  Displaying the link is optional and Portfolio Web or the Principal Publisher should be contacted to help you determine if it should be displayed on your site.</p>
 	    <p>To display the Feedback link</p>
-        <ul>
-            <li>Set the key <code class="wb-prettify">"goc.webtemplate.showfeedbacklink"</code> in the cdn.properties file to <strong>"true"</strong>.</li>
-            <li>or set the property programmatically via the <code class="wb-prettify">setShowFeedbackLink</code> method in your custom bean class.</li>
-            <li>If you wish to redirect the user to your own pages instead of the default canada.ca page, set the key <code class="wb-prettify">"goc.webtemplate.feedbackurl"</code> in the cdn.properties file to the url of your page.</li>
-            <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackUrl</code> method in your custom bean class.</li>
-        </ul>
-        <div class="wb-prettify all-pre lang-vb linenums">
-        	<pre>
-@Override
-public void onWebTemplateInitialize() {
-//...
-    this.setShowFeedbackLink(true);
-    this.setFeedbackUrl("http://www.google.ca");
-//...
-} 
-        	</pre>
-    	</div>
-	    <p>The URL of the link is pre-defined by the theme and cannot be modified.</p>
+		<ul>
+		    <li>Set the key <code class="wb-prettify">"goc.webtemplate.showfeedbacklink"</code> in the cdn.properties file to <strong>"true"</strong>.</li>
+		    <li>or set the property programmatically via the <code class="wb-prettify">setShowFeedbackLink</code> method in your custom bean class.</li>
+		    <li>If you wish to redirect the user to your own pages instead of the default canada.ca page, set the key <code class="wb-prettify">"goc.webtemplate.feedbackurl"</code> and optionally <code class="wb-prettify">"goc.webtemplate.feedbackurl_fr"</code> in the cdn.properties file to the url of your page.</li>
+		    <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackUrl</code> method and optionally the <code class="wb-prettify">setFeedbackUrlFr</code> method in your custom bean class.</li>
+		    <li>If no french URL is specified, the english one wil be used for both languages.</li>
+		</ul>
+		<div class="wb-prettify all-pre lang-vb linenums">
+		    <pre>
+		@Override
+		public void onWebTemplateInitialize() {
+		//...
+		    this.setShowFeedbackLink(true);
+		    this.setFeedbackUrl("http://www.google.ca");
+		    this.setFeedbackUrlFr("http://www.google.ca/?hl=fr");
+		//...
+		} 
+		    </pre>
+		</div>
+		<p>The text of the link is pre-defined by the theme and cannot be modified.</p>
 	    <h2>Share This Page Link</h2>
 	    <p>The "Share This Page" Link is a way for the users to share the URL of the site via Social Media .  Displaying the link is optional and Portfolio Web or the Principal Publisher should be contacted to help you determine if it should be displayed on your site.</p>
 	    <p>To display the Share This Page link</p>

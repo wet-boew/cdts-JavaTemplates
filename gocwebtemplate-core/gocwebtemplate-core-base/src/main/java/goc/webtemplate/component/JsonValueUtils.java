@@ -3,6 +3,7 @@ package goc.webtemplate.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.Utility;
 
@@ -45,6 +46,37 @@ public final class JsonValueUtils {
         if ((links == null) || (links.size() <= 0)) return null;
         
         vtr = new ArrayList<Link>();
+        
+        copyNonEmptyLinkList(links, vtr);
+
+        return vtr;
+    }
+    
+    /**
+     * Returns a copy of the specified link list with its entries URL-escaped and blanks transformed into nulls.
+     */
+    @SuppressWarnings("unchecked")
+    public static ArrayList<FooterLink> getNonEmptyFooterLinkList(List<FooterLink> links)
+    {
+        ArrayList<FooterLink> vtr;
+        
+        if ((links == null) || (links.size() <= 0)) return null;
+        
+        vtr = new ArrayList<FooterLink>();
+        
+        //NOTE: That weird double-typecast is necessary because Java's handling of wildcard generics
+        //      so the second parameter of the following function can't be List<? extends Link>
+        //      (A FooterLink is a Link, so it is ok to typecast to List<Link>)
+        copyNonEmptyLinkList(links, (List<Link>)(List<? extends Link>)vtr);
+
+        return vtr;
+    }
+
+    /**
+     * Update specified target list with a copy of the specified link list with its entries URL-escaped and blanks transformed into nulls.
+     */
+    public static void copyNonEmptyLinkList(List<? extends Link> links, List<Link> target)
+    {
         for (Link l: links) {
             if (l.getHref() == null) continue;  //don't add entries without hrefs
             
@@ -52,9 +84,7 @@ public final class JsonValueUtils {
             normalisedLink.setHref(BaseUtil.encodeUrl(l.getHref()));
             normalisedLink.setText(JsonValueUtils.getNonEmptyString(l.getText()));
             
-            vtr.add(normalisedLink);
+            target.add(normalisedLink);
         }
-
-        return vtr;
     }
 }

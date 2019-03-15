@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import java.util.List;
 
-import goc.webtemplate.FooterLink;
+import goc.webtemplate.IFooterSection;
 import goc.webtemplate.Link;
 
 /**
@@ -15,21 +15,21 @@ import goc.webtemplate.Link;
 public class AppFooter implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String              cdnEnv; 
-    private String              subTheme;
-    private String              localPath;
-    private List<FooterLink>    footerSections;
-    private List<Link>          contactLink; //NOTE: Name not being plural is intentional/what CDTS requires
-    private String              termsLink;
-    private String              privacyLink;
-    private boolean             showFeatures = false; //NOTE: No longer exposed to user/always false (meant to be removed in future)
+    private String                  cdnEnv; 
+    private String                  subTheme;
+    private String                  localPath;
+    private List<IFooterSection>    footerSections;
+    private List<Link>              contactLink; //NOTE: Name not being plural is intentional/what CDTS requires
+    private String                  termsLink;
+    private String                  privacyLink;
+    private boolean                 showFeatures = false; //NOTE: No longer exposed to user/always false (meant to be removed in future)
     
     public AppFooter()
     {
     }
 
     public AppFooter(String cdnEnv, String subTheme, String localPath,
-            List<FooterLink> footerSections, List<Link> contactLink, String termsLink, String privacyLink) {
+            List<IFooterSection> footerSections, List<Link> contactLink, String termsLink, String privacyLink) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -63,11 +63,11 @@ public class AppFooter implements Serializable {
         this.localPath = localPath;
     }
 
-    public List<FooterLink> getFooterSections() {
+    public List<IFooterSection> getFooterSections() {
         return footerSections;
     }
 
-    public void setFooterSections(List<FooterLink> footerSections) {
+    public void setFooterSections(List<IFooterSection> footerSections) {
         this.footerSections = footerSections;
     }
 

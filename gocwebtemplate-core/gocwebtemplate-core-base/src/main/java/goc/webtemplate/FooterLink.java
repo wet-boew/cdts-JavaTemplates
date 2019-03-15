@@ -1,7 +1,8 @@
 package goc.webtemplate;
 
 @SuppressWarnings("serial")
-public class FooterLink extends Link {
+public class FooterLink extends Link implements IFooterSection {
+    
     private boolean newWindow = false;
     
     public FooterLink()

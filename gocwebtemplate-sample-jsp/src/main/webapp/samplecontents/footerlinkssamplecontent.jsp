@@ -14,7 +14,7 @@
 &lt;/s:bean&gt;
 	</pre>
 </div>
-<h2>Setting the Contact Us link</h2>
+<h2>Setting the Contact Us link(s)</h2>
 <p>The "Contact Us" link(s) at the bottom of the page can be customized by populating the <code class="wb-prettify">contactLinks</code> variable:</p>
 <p><code class="wb-prettify">contactLinks</code> is a List of <code class="wb-prettify">Link</code> objects. Each link has two properties:</p>
 <ul>
@@ -28,7 +28,7 @@
 <h3>Special Considerations</h3>
 <ul>
     <li>
-        For the application template, <code class="wb-prettify">contactLinks</code> can only be used if the environment is <em>NOT</em> GCWeb (AKAMAI). If a custom link is needed with AKAMAI, <code class="wb-prettify">customFooterLinks</code> can be used instead.
+        For the application template, <code class="wb-prettify">contactLinks</code> can only be used if the environment is <em>NOT</em> GCWeb (AKAMAI). If a custom link is needed with AKAMAI, <code class="wb-prettify">customFooterLinks</code> can be used instead (see the <a href="applicationsample.action">Application Template</a> sample for details).
         <ul><li>For environments other than GCWeb (AKAMAI), the application template supports a single contact link (multiple not allowed).</li></ul>
     </li> 
     <li>For all other templates, the GCWeb (AKAMAI) environment only supports ONE link (multiple links are acceptable when using other environments).</li>

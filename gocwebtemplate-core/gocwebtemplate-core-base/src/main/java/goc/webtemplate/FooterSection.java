@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class FooterSection implements Serializable, IFooterSection {
     
-    private String              name;
+    private String              sectionName;
     private List<FooterLink>    customFooterLinks;
     
     
@@ -20,18 +20,18 @@ public class FooterSection implements Serializable, IFooterSection {
         this("", new ArrayList<FooterLink>());
     }
     
-    public FooterSection(String name, List<FooterLink> customFooterLinks) {
-        this.name = name;
+    public FooterSection(String sectionName, List<FooterLink> customFooterLinks) {
+        this.sectionName = sectionName;
         this.customFooterLinks = customFooterLinks;
     }
     
     
-    public String getName() {
-        return name;
+    public String getSectionName() {
+        return sectionName;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
     }
     
     public List<FooterLink> getCustomFooterLinks() {

@@ -1532,7 +1532,7 @@ public abstract class AbstractCoreBean {
                 
                 footerSections = new ArrayList<IFooterSection>();
                 for (FooterSection fs: this.customFooterSections) { 
-                    footerSections.add(new FooterSection(fs.getName(), 
+                    footerSections.add(new FooterSection(fs.getSectionName(), 
                                             JsonValueUtils.getNonEmptyFooterLinkList(fs.getCustomFooterLinks()))
                                       );
                 }

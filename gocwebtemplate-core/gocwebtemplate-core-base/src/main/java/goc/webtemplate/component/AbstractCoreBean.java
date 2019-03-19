@@ -1559,6 +1559,16 @@ public abstract class AbstractCoreBean {
         return footerSections;
     }
     
+    public ArrayList<Link> buildContactLinks() {
+        ArrayList<Link> links = this.getContactLinks();
+        
+        if (!this.getCurrentCDTSEnvironment().getCanHaveMultiContactLinks()) {
+            if ((links != null) && links.size() > 1) throw new IllegalArgumentException("Having multiple contact links is not allowed for environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
+        }
+        
+        return JsonValueUtils.getNonEmptyLinkList(links);
+    }
+    
     /**
      * NOTE: This method assumes the instance variable values are already defined.
      */
@@ -1799,7 +1809,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                this.buildContactLinks(),
                 null, //privacyLink
                 null, //termsLink
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1815,7 +1825,7 @@ public abstract class AbstractCoreBean {
                 this.getCdtsCdnEnv(),
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
-                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                this.buildContactLinks(),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1831,12 +1841,18 @@ public abstract class AbstractCoreBean {
         
         this.initializeOnce();
         
+        if (!this.getCurrentCDTSEnvironment().getCanHaveContactLinkInAppTemplate()) {
+            if ((this.getContactLinks() != null) && (this.getContactLinks().size() > 0)) {
+                throw new IllegalArgumentException("Custom Footer must be used to provide a contact link in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
+            }
+        }       
+        
         appFooter = new AppFooter(
                         this.getCdtsCdnEnv(),
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                         this.buildCustomFooterSections(),
-                        JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                        this.buildContactLinks(),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl)
                 );

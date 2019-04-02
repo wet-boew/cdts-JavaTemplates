@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import goc.webtemplate.FooterLink;
+//import goc.webtemplate.FooterSection;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.Link;
 
@@ -21,11 +22,30 @@ public class ApplicationSampleBean extends DefaultTemplateCoreBean {
         //(this will only take effect for ESDC's GCIntranet theme)
         this.setIntranetTitle(new IntranetTitle("#intranetlink", "My Intranet", "ACRONYM"));
 
+        // Custom Footer Links - GCweb theme only
         this.setCustomFooterLinks(new ArrayList<FooterLink>(Arrays.asList( 
                 new FooterLink[] {
                         new FooterLink("#", "Footer Link 1", false),
                         new FooterLink("#", "Footer Link 2", true)
                 })));
+
+        // Custom Footer Sections - GCintranet theme only
+        /*
+        FooterSection footerSection1 = new FooterSection("Section One", 
+                new ArrayList<FooterLink>(Arrays.asList( 
+                        new FooterLink[] {
+                                new FooterLink("#", "Footer Section 1 Link 1", false),
+                                new FooterLink("#", "Footer Section 1 Link 2", true)
+                        })));
+        FooterSection footerSection2 = new FooterSection("Section Two", 
+                new ArrayList<FooterLink>(Arrays.asList( 
+                        new FooterLink[] {
+                                new FooterLink("#", "Footer Section 2 Link 1", false),
+                                new FooterLink("#", "Footer Section 2 Link 2", true)
+                        })));
+        this.setCustomFooterSections(new ArrayList<FooterSection>(Arrays.asList(new FooterSection[] {
+                footerSection1, footerSection2})));
+        */      
         
         //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
         //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)

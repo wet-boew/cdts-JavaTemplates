@@ -44,7 +44,7 @@ public void onWebTemplateInitialize() {
 </div>
 <h2>Custom Footer Links</h2>
 <p>
-    A list of <code class="wb-prettify">customFooterLinks</code> is available for you to provide your own links in the application footer.
+    <strong>This property is only available while using the GCweb theme. For the GCIntranet theme, see Custom Footer Sections below.</strong> A list of <code class="wb-prettify">customFooterLinks</code> is available for you to provide your own links in the application footer.
 </p>
 <p>
     <code class="wb-prettify">customFooterLinks</code> expects a list of <code class="wb-prettify">FooterLink</code> objects that have the following properties.
@@ -64,6 +64,40 @@ public void onWebTemplateInitialize() {
                     new FooterLink("#", "Footer Link 1", false),
                     new FooterLink("#", "Footer Link 2", true)
             })));
+//...
+}
+   </pre>
+</div>
+<h2>Custom Footer Sections</h2>
+<p>
+    <strong>This property is only available while using the GCIntranet theme and has a maximum of 3 sections. For the GCweb theme, see Custom Footer Links above.</strong> A list of <code class="wb-prettify">customFooterSections</code> is available for you to provide your own links in the application footer, grouped in sections each with its title.
+</p>
+<p>
+    <code class="wb-prettify">customFooterSections</code> expects a list of <code class="wb-prettify">FooterSection</code> objects that have the following properties.
+</p>
+<ul>
+    <li><code class="wb-prettify">Name</code> the title of the section</li>
+    <li><code class="wb-prettify">CustomFooterLinks</code> the list of links for the section.</li>
+</ul>
+<div class="wb-prettify all-pre lang-c# linenums">
+    <pre>
+@Override
+public void onWebTemplateInitialize() {
+//...
+    FooterSection footerSection1 = new FooterSection("Section One", 
+            new ArrayList&lt;FooterLink>(Arrays.asList( 
+                    new FooterLink[] {
+                            new FooterLink("#", "Footer Section 1 Link 1", false),
+                            new FooterLink("#", "Footer Section 1 Link 2", true)
+                    })));
+    FooterSection footerSection2 = new FooterSection("Section Two", 
+            new ArrayList&lt;FooterLink>(Arrays.asList( 
+                    new FooterLink[] {
+                            new FooterLink("#", "Footer Section 2 Link 1", false),
+                            new FooterLink("#", "Footer Section 2 Link 2", true)
+                    })));
+    this.setCustomFooterSections(new ArrayList&lt;FooterSection>(Arrays.asList(new FooterSection[] {
+            footerSection1, footerSection2})));
 //...
 }
    </pre>

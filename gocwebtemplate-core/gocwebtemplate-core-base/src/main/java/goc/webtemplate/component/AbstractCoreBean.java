@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.FooterSection;
+import goc.webtemplate.IFooterSection;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
@@ -133,6 +135,7 @@ public abstract class AbstractCoreBean {
     private boolean showSignInLink = false;
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
+    private ArrayList<FooterSection> customFooterSections = new ArrayList<FooterSection>();
     private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
     private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
     private SplashPageInfo splashPageInfo = null; //initialization in get method
@@ -1288,10 +1291,11 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns this custom links.
-     * If null uses standard links if not null overrides the existing footer links
+     * Returns the custom footer links.
+     * If null, uses standard links. If not null, overrides the existing footer links.
+     * 
      * Set by application programmatically
-     * Only available in the Application Template
+     * Only available in the Application Template when using the GCweb theme.
      */
     public ArrayList<FooterLink> getCustomFooterLinks() {
         this.initializeOnce();
@@ -1299,15 +1303,38 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets this custom links.
-     * If null uses standard links if not null overrides the existing footer links
+     * Sets the custom footer links.
+     * If null, uses standard links. If not null, overrides the existing footer links.
+     * 
      * Set by application programmatically
-     * Only available in the Application Template
+     * Only available in the Application Template when using the GCweb theme.
      */
     public void setCustomFooterLinks(ArrayList<FooterLink> value) {
         this.customFooterLinks = value;
     }
+    
+    /**
+     * Returns the custom footer sections (ie groups of footer links with a name).
+     * If null, uses standard links. If not null, overrides the existing footer links.
+     * 
+     * Set by application programmatically
+     * Only available in the Application Template when using a theme other than GCweb.
+     */
+    public ArrayList<FooterSection> getCustomFooterSections() {
+        this.initializeOnce();
+        return this.customFooterSections;
+    }
 
+    /**
+     * Sets the custom footer sections (ie groups of footer links with a name).
+     * If null, uses standard links. If not null, overrides the existing footer links.
+     * 
+     * Set by application programmatically
+     * Only available in the Application Template when using a theme other than GCweb.
+     */
+    public void setCustomFooterSections(ArrayList<FooterSection> value) {
+        this.customFooterSections = value;
+    }
     
     /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
@@ -1502,8 +1529,7 @@ public abstract class AbstractCoreBean {
         return vtr;
     }
     
-    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink)
-    {
+    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink) {
         ArrayList<Link> vtr;
         
         if ((!showLink) || Utility.isNullOrEmpty(href)) return null;
@@ -1512,6 +1538,58 @@ public abstract class AbstractCoreBean {
         vtr.add(new Link(BaseUtil.encodeUrl(href), null));
         
         return vtr;
+    }
+    
+    /**
+     * Builds the footer link list from custom links or sections depending on selected environment/theme.
+     */
+    private ArrayList<IFooterSection> buildCustomFooterSections() {
+        ArrayList<IFooterSection>   footerSections = null;
+        CDTSEnvironment             env = this.getCurrentCDTSEnvironment();
+        
+        //---[ Build list
+        if (env.getFooterSectionLimit() > 0) {
+            //Use customFooterSection
+            if ((this.customFooterSections != null) && !this.customFooterSections.isEmpty()) {
+                if (this.customFooterSections.size() > env.getFooterSectionLimit()) throw new IllegalArgumentException("Too many sections found in customFooterSections, maximum for environment [" + env.getName() + "] is [" + env.getFooterSectionLimit() + "].");
+                
+                footerSections = new ArrayList<IFooterSection>();
+                for (FooterSection fs: this.customFooterSections) { 
+                    footerSections.add(new FooterSection(fs.getSectionName(), 
+                                            JsonValueUtils.getNonEmptyFooterLinkList(fs.getCustomFooterLinks()))
+                                      );
+                }
+            } 
+            else if ((this.customFooterLinks != null) && !this.customFooterLinks.isEmpty()) {
+                throw new IllegalArgumentException("customFooterLinks cannot be used for this environment/theme [\" + env.getName() + \"], please use customFooterSections.");
+            }
+        } 
+        else {
+            //Use customFooterLinks
+            if ((this.customFooterLinks != null) && !this.customFooterLinks.isEmpty()) {
+                footerSections = new ArrayList<IFooterSection>();
+                for (FooterLink fl: this.customFooterLinks) {
+                    footerSections.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
+                                       JsonValueUtils.getNonEmptyString(fl.getText()), 
+                                       fl.getNewWindow()));
+                }
+            }
+            else if ((this.customFooterSections != null) && !this.customFooterSections.isEmpty()) {
+                throw new IllegalArgumentException("customFooterSections cannot be used for this environment/theme [" + env.getName() + "], please use customFooterLinks.");
+            }
+        }
+       
+        return footerSections;
+    }
+    
+    public ArrayList<Link> buildContactLinks() {
+        ArrayList<Link> links = this.getContactLinks();
+        
+        if (!this.getCurrentCDTSEnvironment().getCanHaveMultiContactLinks()) {
+            if ((links != null) && links.size() > 1) throw new IllegalArgumentException("Having multiple contact links is not allowed for environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
+        }
+        
+        return JsonValueUtils.getNonEmptyLinkList(links);
     }
     
     /**
@@ -1755,7 +1833,7 @@ public abstract class AbstractCoreBean {
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 true, //showFooter,
                 this.getShowFeatures(),
-                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                this.buildContactLinks(),
                 null, //privacyLink
                 null, //termsLink
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1772,7 +1850,7 @@ public abstract class AbstractCoreBean {
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 false, //showFooter
                 this.getShowFeatures(),
-                JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                this.buildContactLinks(),
                 JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
@@ -1784,25 +1862,22 @@ public abstract class AbstractCoreBean {
      * as parameter for the "appFooter"
      */
     public String getRenderAppFooter() {
-        AppFooter               appFooter;
-        ArrayList<FooterLink>   tmpFooterLinks = null;
+        AppFooter                   appFooter;
         
         this.initializeOnce();
         
-        if ((this.customFooterLinks != null) && (this.customFooterLinks.size() > 0)) {
-            tmpFooterLinks = new ArrayList<FooterLink>();
-            for (FooterLink fl: this.customFooterLinks)
-                tmpFooterLinks.add(new FooterLink(BaseUtil.encodeUrl(fl.getHref()), 
-                                   JsonValueUtils.getNonEmptyString(fl.getText()), 
-                                   fl.getNewWindow()));
-        }
+        if (!this.getCurrentCDTSEnvironment().getCanHaveContactLinkInAppTemplate()) {
+            if ((this.getContactLinks() != null) && (this.getContactLinks().size() > 0)) {
+                throw new IllegalArgumentException("Custom Footer must be used to provide a contact link in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
+            }
+        }       
         
         appFooter = new AppFooter(
                         this.getCdtsCdnEnv(),
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                        tmpFooterLinks,
-                        JsonValueUtils.getNonEmptyLinkList(this.getContactLinks()),
+                        this.buildCustomFooterSections(),
+                        this.buildContactLinks(),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
                         JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
                         this.getShowFeatures()

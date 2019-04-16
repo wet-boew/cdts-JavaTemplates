@@ -1,0 +1,185 @@
+/**
+   Jenkins pipeline project (declarative)
+
+   This pipeline sets up SCM pooling on specific branches and paths, and contains the SCM info.
+   This facilitates support for repos with multiple projects while only buliding project having changes.
+   (also see notes in the "Checkout" stage and getGitBranchName function)
+*/
+
+def applicationName = 'gocwebtemplate-core'
+
+def projectGitURL = 'https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates.git'
+
+def projectPom = applicationName + '/pom.xml'
+def projectGitCredsName = ''
+def projectGitWatchedPathRegex = applicationName + '/.*'
+def projectGitWatchedBranches = [[name: '*/arrandee-jenkinsfile'], [name: '*/dev']]
+def projectReleaseBranchRegex = 'master.*'
+
+def deploySADEBuildName = '/ca.gc.sade/Deployments/deploy-springboot'
+def deploySADEServer = 'mlwbesd4081.intra.dev'
+
+// Email extension plugin base parameters
+def emailextConfig = [
+    to: 'pierre.lupien@hrdc-drhc.net', //comma-separated lits of addresses
+    from: 'Jenkins-CI <jenkins-ci@jade-build.intra.dev>',
+    body: '${SCRIPT, template="groovy-html.template"}', //for details on body: https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin#Email-extplugin-Scriptcontent
+    mimeType: 'text/html'    
+    ]
+
+
+def getGitBranchName() {
+    //There is another way to get the branch name: By reading the BRANCH_NAME
+    //environment variable.  But that variable is only populated for multibranch
+    //pipeline projects. Because we're making use of "path restriction" in our 
+    //SCM polling (which doesn't work too well with multibranch pipelines),
+    //we'll fall back on this less savory option:
+    
+    def branchName = sh(script: 'git branch | grep "\\* "', returnStdout: true).replace("* ", "").trim()
+    echo('Detected Git Branch: [' + branchName + ']')
+    
+    return branchName
+}
+
+
+pipeline {
+    
+    agent any; //any: Run on any available agent - agent is same for all stages
+               //none: No top-level setting.  Each stage must declare its own agent
+               
+    options {
+        buildDiscarder logRotator(artifactNumToKeepStr: '5', numToKeepStr: '5')
+        disableConcurrentBuilds()
+        timestamps()
+        skipDefaultCheckout() //skip SCM pull before first stage, we'll do our own
+    }
+    
+    tools {
+        maven('maven')
+    }
+    
+    triggers {
+        //   pollSCM 'H/30 * * * *' //every 30 minutes
+        pollSCM('H/30 * * * *')
+        snapshotDependencies()
+    }    
+    
+    stages {
+        stage('Checkout from SCM') {
+            steps {
+                //We won't be using the simple "checkout(scm)" here because:
+                //  - For simple pipeline from SCM, the branch filtering does not work properly.
+                //  - Switching multibranch project would only be practicle if the repo contained only one project
+                //     (and/or requires extra code to "manually" detect which projects actually needs building)             
+                //checkout(scm)
+                
+                checkout([$class: 'GitSCM', 
+                    userRemoteConfigs: [[credentialsId: projectGitCredsName, 
+                                         url: projectGitURL]],
+                    branches: projectGitWatchedBranches, 
+                    extensions: [[$class: 'PathRestriction', //SCM poll filter by path
+                                    excludedRegions: '', 
+                                    includedRegions: projectGitWatchedPathRegex],
+                                 [$class: 'LocalBranch',  //Checkout as named local branch, required for our getGitBranchName to work
+                                    localBranch: '**']]])
+            }
+        }
+        
+        stage('Project Artifact Version Check') {
+            //Could only use "when branch" in a multibranch build
+            //when {branch('master')}
+            //Could also use "when expression" for the "if", but we have an "else" and dont' want to create two stages for this
+            //when { expression {return getGitBranchName().matches(projectReleaseBranchRegex)} }
+
+            steps {
+                script {
+                    def projectModel = readMavenPom(file: projectPom)
+                    
+                    if (getGitBranchName().matches(projectReleaseBranchRegex)) {
+                        //RELEASE build: make sure our dependencies are not snapshots
+                        def mavenDesc = Artifactory.mavenDescriptor()
+                        
+                        mavenDesc.pomFile = projectPom
+                        if (mavenDesc.hasSnapshots()) {
+                            currentBuild.result = 'ABORTED'
+                            error('Snapshot(s) detected in dependencies.  Based on the branch, this is a release build.  Snapshot dependencies are not allowed.')
+                        }
+                        
+                        //Also make sure our own version is not a snapshot
+                        if (projectModel.version.toUpperCase().endsWith('-SNAPSHOT')) {
+                            currentBuild.result = 'ABORTED'
+                            error('Trying to build a SNAPSHOT project version from a release branch.  Please update the pom.xml')
+                        }
+                    } else {
+                        //NOT a release build: Warn if building a release version.
+                        if (!projectModel.version.toUpperCase().endsWith('-SNAPSHOT')) {
+                            currentBuild.result = 'UNSTABLE'
+                            echo('WARNING: Trying to build RELEASE (ie non-SNAPSHOT) project version from a non-release branch.  Are you sure this is what you want? If not you will want to update the pom.xml.')
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Build and Deploy to Artifactory') {
+            steps {
+                withMaven() {
+                    sh(script: "mvn --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -f ${applicationName} clean install")
+                }
+            }
+        }
+        
+        /*stage("Deployment to SADE") {
+            steps {
+                script {
+                    def projectModel = readMavenPom(file: projectPom)
+                    
+                    build(job: deploySADEBuildName, wait: true, propagate: true,
+                        parameters: [
+                            string(name: 'DEPLOY_TARGET_SERVER', value: deploySADEServer), 
+                            string(name: 'DEPLOY_GROUPID', value: projectModel.groupId), 
+                            string(name: 'DEPLOY_ARTIFACTID', value: projectModel.artifactId), 
+                            string(name: 'DEPLOY_ARTIFACT_VERSION', value: projectModel.version)
+                            ])
+                }
+            }
+        }*/
+    }
+
+    post {
+        always { //Always run, regardless of build status
+            //archiveArtifacts(artifacts: "${applicationName}/target/*.?ar", allowEmptyArchive: true, fingerprint: true)
+            
+            junit(testResults: "${applicationName}/target/surefire-reports/TEST-*.xml", allowEmptyResults: true)
+            
+            script {
+                // Make code coverage report produced by Jacoco available in Jenkins UI
+                try {
+                    publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
+                                            reportDir: "${applicationName}/target/site/jacoco", 
+                                            reportFiles: 'index.html', 
+                                            reportName: 'Manual Code Coverage', 
+                                            includes: "**/*"])
+                } 
+                catch (Throwable err) {
+                    echo("Caught error while publishing HTML reports (is the plug-in installed?). Error: [${err}]")
+                }
+            }
+        }
+        regression { //Run if the current builds status is worse than the previous builds status
+            emailext(to: emailextConfig.to,
+                     from: emailextConfig.from,
+                     body: emailextConfig.body,
+                     mimeType: emailextConfig.mimeType,
+                     subject: "Jenkins Build [${currentBuild.fullDisplayName}] Regression - [${currentBuild.result}] for application [${applicationName}]")
+        } 
+        fixed { //Run if the previous build was not successful and the current builds status is "Success"
+            emailext(to: emailextConfig.to,
+                     from: emailextConfig.from,
+                     body: emailextConfig.body,
+                     mimeType: emailextConfig.mimeType,
+                     subject: "Jenkins Build [${currentBuild.fullDisplayName}] Success - [${currentBuild.result}] for application [${applicationName}]")
+        }
+    }
+
+}

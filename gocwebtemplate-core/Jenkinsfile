@@ -92,6 +92,7 @@ pipeline {
             //when { expression {return getGitBranchName().matches(projectReleaseBranchRegex)} }
 
             steps {
+                sh(script: 'printenv | sort')
                 script {
                     def projectModel = readMavenPom(file: projectPom)
                     
@@ -123,7 +124,7 @@ pipeline {
         
         stage('Build and Deploy to Artifactory') {
             steps {
-                withMaven() {
+                withMaven(maven: 'maven') {
                     sh(script: "mvn --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -f ${applicationName} clean install")
                 }
             }

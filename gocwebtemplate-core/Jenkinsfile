@@ -123,9 +123,8 @@ pipeline {
         
         stage('Build and Deploy to Artifactory') {
             steps {
-                withMaven(maven: 'maven', mavenOpts: '-Djavax.net.ssl.trustStore=/u01/certs/custom_cacerts.jks') {
-                    sh(script: 'printenv | sort')
-                    sh(script: "MAVEN_OPTS=-Djavax.net.ssl.trustStore=/u01/certs/custom_cacerts.jks mvn -X --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -f ${applicationName} clean install")
+                withMaven() {
+                    sh(script: "mvn --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -f ${applicationName} clean install")
                 }
             }
         }

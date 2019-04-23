@@ -156,15 +156,31 @@ pipeline {
                 // Make code coverage report produced by Jacoco available in Jenkins UI
                 try {
                     publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
-                                            reportDir: "${applicationName}/target/site/jacoco", 
+                                            reportDir: "${applicationName}/gocwebtemplate-core-base/target/site/jacoco", 
                                             reportFiles: 'index.html', 
-                                            reportName: 'Manual Code Coverage', 
+                                            reportName: 'Manual Code Coverage - Core', 
+                                            includes: "**/*"])
+                    publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
+                                            reportDir: "${applicationName}/gocwebtemplate-core-jsf/target/site/jacoco", 
+                                            reportFiles: 'index.html', 
+                                            reportName: 'Manual Code Coverage - JSP', 
+                                            includes: "**/*"])
+                    publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
+                                            reportDir: "${applicationName}/gocwebtemplate-core-jsp/target/site/jacoco", 
+                                            reportFiles: 'index.html', 
+                                            reportName: 'Manual Code Coverage - JSF', 
                                             includes: "**/*"])
                 } 
                 catch (Throwable err) {
                     echo("Caught error while publishing HTML reports (is the plug-in installed?). Error: [${err}]")
                 }
             }
+            
+            emailext(to: emailextConfig.to,
+                     from: emailextConfig.from,
+                     body: emailextConfig.body,
+                     mimeType: emailextConfig.mimeType,
+                     subject: "Jenkins Build [${currentBuild.fullDisplayName}] TEST - [${currentBuild.result}] for application [${applicationName}]")
         }
         regression { //Run if the current builds status is worse than the previous builds status
             emailext(to: emailextConfig.to,

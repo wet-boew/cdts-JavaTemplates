@@ -163,12 +163,12 @@ pipeline {
                     publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
                                             reportDir: "${applicationName}/gocwebtemplate-core-jsf/target/site/jacoco", 
                                             reportFiles: 'index.html', 
-                                            reportName: 'Manual Code Coverage - JSP', 
+                                            reportName: 'Manual Code Coverage - JSF', 
                                             includes: "**/*"])
                     publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, 
                                             reportDir: "${applicationName}/gocwebtemplate-core-jsp/target/site/jacoco", 
                                             reportFiles: 'index.html', 
-                                            reportName: 'Manual Code Coverage - JSF', 
+                                            reportName: 'Manual Code Coverage - JSP', 
                                             includes: "**/*"])
                 } 
                 catch (Throwable err) {

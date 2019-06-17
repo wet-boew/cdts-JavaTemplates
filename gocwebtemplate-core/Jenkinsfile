@@ -60,7 +60,7 @@ pipeline {
     
     triggers {
         //   pollSCM 'H/30 * * * *' //every 30 minutes
-        pollSCM('H/30 * * * *')
+        pollSCM('H H/4 * * *') //every 4 hours
         snapshotDependencies()
     }    
     

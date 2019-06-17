@@ -45,7 +45,7 @@ def getGitBranchName() {
 pipeline {
     
     agent any; //any: Run on any available agent - agent is same for all stages
-               //none: No top-level setting.  Each stage must declare its own agent
+               //none: No top-level setting.  Each stage must declare its own agent. Needed for non-blocking input.
                
     options {
         buildDiscarder logRotator(artifactNumToKeepStr: '5', numToKeepStr: '5')

@@ -35,7 +35,8 @@ def getGitBranchName() {
     //SCM polling (which doesn't work too well with multibranch pipelines),
     //we'll fall back on this less savory option:
     
-    def branchName = sh(script: 'git branch | grep "\\* "', returnStdout: true).replace("* ", "").trim()
+    def git = tool('git')
+    def branchName = sh(script: "'${git}' branch | grep \"\\* \"", returnStdout: true).replace("* ", "").trim()
     echo('Detected Git Branch: [' + branchName + ']')
     
     return branchName

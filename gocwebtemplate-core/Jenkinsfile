@@ -56,6 +56,7 @@ pipeline {
     
     tools {
         maven('maven')
+        git('git')
     }
     
     triggers {

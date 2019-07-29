@@ -1,6 +1,6 @@
 /**
    Jenkins Pipeline Project 
-   (MULTIBRANCH - MULTIPROJECT - SADE DEPLOY - declarative)
+   (MULTIBRANCH - MULTIPROJECT - declarative)
 
    NOTES: 
      - This pipeline contains the SCM info/url and ignores the parent's 
@@ -55,6 +55,48 @@ def getGitBranchName() {
     return branchName
 }
 
+/* Returns the specified projectModel's version by looking 
+   first to see if a version is defined, and if not go to 
+   the parent's version
+
+   Fails build is no version is found at all.
+*/
+def getEffectiveVersionFromProjectModel(projectModel) {
+    
+    def projectVersion = projectModel.version
+    
+    if (!projectVersion) { //version is null, get from parent (if any) 
+        if (projectModel.parent) projectVersion = projectModel.parent.version
+    }
+    
+    if (!projectVersion) { //still no version... fail
+        error('Could not find version in project model. Make sure pom.xml specifies a version or a parent pom version.')
+    }
+    
+    return projectVersion
+}
+
+/* Returns the specified projectModel's groupId by looking 
+   first to see if a groupId is defined, and if not go to 
+   the parent's groupId
+
+   Fails build is no groupId is found at all.
+*/
+def getEffectiveGroupIdFromProjectModel(projectModel) {
+    
+    def projectGroupId = projectModel.groupId
+    
+    if (!projectGroupId) { //groupId is null, get from parent (if any) 
+        if (projectModel.parent) projectGroupId = projectModel.parent.groupId
+    }
+    
+    if (!projectGroupId) { //still no groupId... fail
+        error('Could not find groupId in project model. Make sure pom.xml specifies a groupId or a parent pom groupId.')
+    }
+    
+    return projectGroupId
+}
+
 
 pipeline {
     
@@ -62,7 +104,7 @@ pipeline {
                //none: No top-level setting.  Each stage must declare its own agent. Needed for non-blocking input.
     
     options {
-        buildDiscarder logRotator(artifactNumToKeepStr: '5', numToKeepStr: '5')
+        buildDiscarder logRotator(artifactNumToKeepStr: '5', numToKeepStr: '10')
         disableConcurrentBuilds()
         timestamps()
         skipDefaultCheckout() //skip SCM pull before first stage, we'll do our own
@@ -119,13 +161,13 @@ pipeline {
                         }
                         
                         // Also make sure our own version is not a snapshot
-                        if (projectModel.version.toUpperCase().endsWith('-SNAPSHOT')) {
+                        if (getEffectiveVersionFromProjectModel(projectModel).toUpperCase().endsWith('-SNAPSHOT')) {
                             currentBuild.result = 'ABORTED'
                             error('Trying to build a SNAPSHOT project version from a release branch.  Please update the pom.xml')
                         }
                     } else {
                         //NOT a release build: Warn if building a release version.
-                        if (!projectModel.version.toUpperCase().endsWith('-SNAPSHOT')) {
+                        if (!getEffectiveVersionFromProjectModel(projectModel).toUpperCase().endsWith('-SNAPSHOT')) {
                             currentBuild.result = 'UNSTABLE'
                             echo('WARNING: Trying to build RELEASE (ie non-SNAPSHOT) project version from a non-release branch.  Are you sure this is what you want? If not you will want to update the pom.xml.')
                         }

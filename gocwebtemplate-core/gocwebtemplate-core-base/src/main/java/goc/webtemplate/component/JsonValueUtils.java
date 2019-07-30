@@ -1,6 +1,7 @@
 package goc.webtemplate.component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import goc.webtemplate.FooterLink;
@@ -34,6 +35,17 @@ public final class JsonValueUtils {
     public static String getNonEmptyURLEscapedString(String value)
     {
         return Utility.isNullOrEmpty(value)? null: BaseUtil.encodeUrl(value);
+    }
+    
+    /**
+     * Returns a list containing the specified item if not null and is a link
+     * with an href value, otherwise returns null.
+     */
+    public static <T extends Link> List<T> getNonEmptySingleItemLinkList(T link)
+    {
+        if ( (link == null) || Utility.isNullOrEmpty(link.getHref()) ) return null;
+        
+        return Arrays.asList(link); 
     }
     
     /**

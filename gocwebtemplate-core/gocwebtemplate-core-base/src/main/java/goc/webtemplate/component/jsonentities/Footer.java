@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 
 /**
@@ -19,15 +20,15 @@ public class Footer implements Serializable {
     private boolean             showFooter;
     private boolean             showFeatures;
     private List<Link>          contactLinks;
-    private String              privacyLink;
-    private String              termsLink;
+    private List<FooterLink>    privacyLink;
+    private List<FooterLink>    termsLink;
     private String              localPath;
 
     public Footer() {
     }
 
     public Footer(String cdnEnv, String subTheme, boolean showFooter, boolean showFeatures, List<Link> contactLinks,
-            String privacyLink, String termsLink, String localPath) {
+            List<FooterLink> privacyLink, List<FooterLink> termsLink, String localPath) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.showFooter = showFooter;
@@ -78,19 +79,19 @@ public class Footer implements Serializable {
         this.contactLinks = contactLinks;
     }
 
-    public String getPrivacyLink() {
+    public List<FooterLink> getPrivacyLink() {
         return privacyLink;
     }
 
-    public void setPrivacyLink(String privacyLink) {
+    public void setPrivacyLink(List<FooterLink> privacyLink) {
         this.privacyLink = privacyLink;
     }
 
-    public String getTermsLink() {
+    public List<FooterLink> getTermsLink() {
         return termsLink;
     }
 
-    public void setTermsLink(String termsLink) {
+    public void setTermsLink(List<FooterLink> termsLink) {
         this.termsLink = termsLink;
     }
 

@@ -140,8 +140,8 @@ public abstract class AbstractCoreBean {
     private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
     private SplashPageInfo splashPageInfo = null; //initialization in get method
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
-    private String privacyLinkUrl = "";
-    private String termsConditionsLinkUrl = "";
+    private FooterLink privacyLink = new FooterLink();
+    private FooterLink termsConditionsLink = new FooterLink();
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -778,21 +778,45 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the URL to be used for the Privacy link in transactional mode. 
+     * Returns the URL to be used for the Privacy link in transactional mode.
+     * 
+     *  @deprecated {@link #getPrivacyLink()} should be used instead.
      */
+    @Deprecated
     public String getPrivacyLinkUrl() {
         this.initializeOnce();
-        //return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.privacyLinkUrl));
-        return this.privacyLinkUrl;
+        return this.privacyLink.getHref();
     }
     
     /**
-     * Sets the URL to be used for the Privacy link in transactional mode. 
+     * Sets the URL to be used for the Privacy link in transactional mode.
+     *  
+     * @deprecated {@link #setPrivacyLink()} should be used instead.
      */
+    @Deprecated
     public void setPrivacyLinkUrl(String value) {
-        this.privacyLinkUrl = value;
+        this.privacyLink.setHref(value);
     }
     
+    
+    /**
+     * Returns the Link to be used for the Privacy link in transactional mode.
+     * 
+     *  @since 1.31.0
+     */
+    public FooterLink getPrivacyLink() {
+        this.initializeOnce();
+        return this.privacyLink;
+    }
+    
+    /**
+     * Sets the link to be used for the Privacy link in transactional mode.
+     *  
+     *  @since 1.31.0
+     */
+    public void setPrivacyLink(FooterLink value) {
+        this.privacyLink = value;
+    }
     
     /**
      * Returns whether the features of the footer are to be displayed.
@@ -1087,20 +1111,44 @@ public abstract class AbstractCoreBean {
      * Returns the url to be used for the Terms & Conditions link in transactional mode.
      * 
      * Set by application programmatically.
+     * 
+     * @deprecated {@link #getTermsConditionsLink()} should be used instead.
      */
+    @Deprecated
     public String getTermsConditionsLinkUrl() {
         this.initializeOnce();
-        //return BaseUtil.encodeUrl(StringEscapeUtils.escapeHtml4(this.termsConditionsLinkUrl));
-        return this.termsConditionsLinkUrl;
+        return this.termsConditionsLink.getHref();
     }
     
     /**
      * Sets the url to be used for the Terms & Conditions link in transactional mode.
      * 
      * Set by application programmatically.
+     * 
+     * @deprecated {@link #setTermsConditionsLink(FooterLink)} should be used instead.
      */
+    @Deprecated
     public void setTermsConditionsLinkUrl(String value) {
-        this.termsConditionsLinkUrl = value;
+        this.termsConditionsLink.setHref(value);
+    }
+    
+    /**
+     * Returns the link to be used for the Terms & Conditions link in transactional mode.
+     * 
+     * Set by application programmatically.
+     */
+    public FooterLink getTermsConditionsLink() {
+        this.initializeOnce();
+        return this.termsConditionsLink;
+    }
+    
+    /**
+     * Sets the link to be used for the Terms & Conditions link in transactional mode.
+     * 
+     * Set by application programmatically.
+     */
+    public void setTermsConditionsLink(FooterLink value) {
+        this.termsConditionsLink = value;
     }
     
     /**
@@ -1851,8 +1899,8 @@ public abstract class AbstractCoreBean {
                 false, //showFooter
                 this.getShowFeatures(),
                 this.buildContactLinks(),
-                JsonValueUtils.getNonEmptyString(this.getPrivacyLinkUrl()),
-                JsonValueUtils.getNonEmptyString(this.getTermsConditionsLinkUrl()),
+                JsonValueUtils.getNonEmptySingleItemLinkList(this.getPrivacyLink()),
+                JsonValueUtils.getNonEmptySingleItemLinkList(this.getTermsConditionsLink()),
                 JsonValueUtils.getNonEmptyString(this.getLocalPath())
             ));        
     }
@@ -1878,8 +1926,8 @@ public abstract class AbstractCoreBean {
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                         this.buildCustomFooterSections(),
                         this.buildContactLinks(),
-                        JsonValueUtils.getNonEmptyURLEscapedString(this.termsConditionsLinkUrl),
-                        JsonValueUtils.getNonEmptyURLEscapedString(this.privacyLinkUrl),
+                        JsonValueUtils.getNonEmptySingleItemLinkList(this.termsConditionsLink),
+                        JsonValueUtils.getNonEmptySingleItemLinkList(this.privacyLink),
                         this.getShowFeatures()
                 );
         

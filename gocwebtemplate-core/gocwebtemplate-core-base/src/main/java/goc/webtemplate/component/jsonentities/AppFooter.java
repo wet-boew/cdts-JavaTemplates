@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import goc.webtemplate.FooterLink;
 import goc.webtemplate.IFooterSection;
 import goc.webtemplate.Link;
 
@@ -20,8 +21,8 @@ public class AppFooter implements Serializable {
     private String              	localPath;
     private List<IFooterSection>    footerSections;
     private List<Link>          	contactLink; //NOTE: Name not being plural is intentional/what CDTS requires
-    private String              	termsLink;
-    private String              	privacyLink;
+    private List<FooterLink>        termsLink;
+    private List<FooterLink>        privacyLink;
     private boolean             	showFeatures;
     
     public AppFooter()
@@ -29,7 +30,8 @@ public class AppFooter implements Serializable {
     }
 
     public AppFooter(String cdnEnv, String subTheme, String localPath,
-            List<IFooterSection> footerSections, List<Link> contactLink, String termsLink, String privacyLink, boolean showFeatures) {
+            List<IFooterSection> footerSections, List<Link> contactLink, 
+            List<FooterLink> termsLink, List<FooterLink> privacyLink, boolean showFeatures) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -80,19 +82,19 @@ public class AppFooter implements Serializable {
         this.contactLink = value;
     }
 
-    public String getTermsLink() {
+    public List<FooterLink> getTermsLink() {
         return termsLink;
     }
 
-    public void setTermsLink(String termsLink) {
+    public void setTermsLink(List<FooterLink> termsLink) {
         this.termsLink = termsLink;
     }
 
-    public String getPrivacyLink() {
+    public List<FooterLink> getPrivacyLink() {
         return privacyLink;
     }
 
-    public void setPrivacyLink(String privacyLink) {
+    public void setPrivacyLink(List<FooterLink> privacyLink) {
         this.privacyLink = privacyLink;
     }
 

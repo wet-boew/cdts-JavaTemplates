@@ -8,7 +8,17 @@ public class FooterLink extends Link implements IFooterSection {
     public FooterLink()
     {
     }
-    
+
+    public FooterLink(String href)
+    {
+        this(href, "", false);
+    }
+
+    public FooterLink(String href, boolean newWindow)
+    {
+        this(href, "", newWindow);
+    }
+
     public FooterLink(String href, String text, boolean newWindow)
     {
         super(href, text);

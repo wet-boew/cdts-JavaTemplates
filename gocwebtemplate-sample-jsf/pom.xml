@@ -3,7 +3,7 @@
   
   <groupId>ca.gc.gocwebtemplate</groupId>
   <artifactId>gocwebtemplate-sample-jsf</artifactId>
-  <version>1.30.0</version>
+  <version>1.31.0-SNAPSHOT</version>
   <packaging>war</packaging>
   
   <name>gocwebtemplate-sample-jsf</name>
@@ -14,7 +14,7 @@
     <m2eclipse.wtp.contextRoot>GoCWebTemplateSampleJSF2x</m2eclipse.wtp.contextRoot>    <!-- Set the context root for running locally here!  This will keep Eclipse from overriding weblogic.xml with the project's name on every Maven Update operations -->
     
     <java.version>1.8</java.version>
-    <webtemplate.version>1.30.0</webtemplate.version>
+    <webtemplate.version>1.31.0-SNAPSHOT</webtemplate.version>
         
     <build_number>local</build_number>
     <maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>

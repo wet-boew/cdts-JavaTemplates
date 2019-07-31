@@ -1633,7 +1633,7 @@ public abstract class AbstractCoreBean {
     public ArrayList<Link> buildContactLinks() {
         ArrayList<Link> links = this.getContactLinks();
         
-        if (!this.getCurrentCDTSEnvironment().getCanHaveMultiContactLinks()) {
+        if (!this.getCurrentCDTSEnvironment().getCanHaveMultipleContactLinks()) {
             if ((links != null) && links.size() > 1) throw new IllegalArgumentException("Having multiple contact links is not allowed for environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
         }
         

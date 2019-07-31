@@ -25,7 +25,7 @@ public class CDTSEnvironment implements Serializable {
     private String  appendToTitle;
     
     private int 	footerSectionLimit;
-    private boolean	canHaveMultiContactLinks;
+    private boolean	canHaveMultipleContactLinks;
     private boolean	canHaveContactLinkInAppTemplate;
     
     public CDTSEnvironment() {
@@ -111,12 +111,12 @@ public class CDTSEnvironment implements Serializable {
         this.footerSectionLimit = footerSectionLimit;
     }
 
-    public boolean getCanHaveMultiContactLinks() {
-        return canHaveMultiContactLinks;
+    public boolean getCanHaveMultipleContactLinks() {
+        return canHaveMultipleContactLinks;
     }
 
-    public void setCanHaveMultiContactLinks(boolean canHaveMultiContactLinks) {
-        this.canHaveMultiContactLinks = canHaveMultiContactLinks;
+    public void setCanHaveMultipleContactLinks(boolean canHaveMultiContactLinks) {
+        this.canHaveMultipleContactLinks = canHaveMultiContactLinks;
     }
 
     public boolean getCanHaveContactLinkInAppTemplate() {

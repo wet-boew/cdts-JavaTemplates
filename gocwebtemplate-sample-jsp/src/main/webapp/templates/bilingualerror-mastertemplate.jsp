@@ -52,7 +52,7 @@
             var defTop = document.getElementById("def-top");
             defTop.outerHTML = wet.builder.serverTop(<s:property escape="false" value="#goctemplateclientbean.renderServerTop" />);
         </script>
-        <main role="main" property="mainContentOfPage" class="container">
+        <main role="main" property="mainContentOfPage" class="container" typeof="WebPageElement">
             <!-- the main content -->
             <tiles:insertAttribute name="body" />
             <!-- end main content -->

@@ -57,7 +57,7 @@
         </script>
         <div class="container">
         	<div class="row">
-        		<main role="main" property="mainContentOfPage" class="col-md-9 col-md-push-3">
+        		<main role="main" property="mainContentOfPage" class="col-md-9 col-md-push-3" typeof="WebPageElement">
 		            <!-- the main content -->
 		            <tiles:insertAttribute name="body" />
 		            <!-- end main content -->

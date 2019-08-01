@@ -15,6 +15,6 @@ public class IntranetSampleBean extends DefaultTemplateCoreBean {
         this.setTheme("gcintranet");
         this.setSubTheme("esdc");
 
-        this.setIntranetTitle(new IntranetTitle("http://www.google.ca", "GCIntranet Site", "ACRONYM"));
+        this.setIntranetTitle(new IntranetTitle("http://www.google.ca", "GCIntranet Site", "ACRONYM", "Optional Bold Text"));
     }
 }

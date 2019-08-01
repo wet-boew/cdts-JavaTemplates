@@ -1559,7 +1559,8 @@ public abstract class AbstractCoreBean {
         vtr = new ArrayList<IntranetTitle>(1);
         vtr.add(new IntranetTitle(BaseUtil.encodeUrl(this.intranetTitle.getHref()), 
                          this.intranetTitle.getText(), 
-                         JsonValueUtils.getNonEmptyString(this.intranetTitle.getAcronym())));
+                         JsonValueUtils.getNonEmptyString(this.intranetTitle.getAcronym()),
+                         JsonValueUtils.getNonEmptyString(this.intranetTitle.getBoldText())) );
         
         return vtr;
     }

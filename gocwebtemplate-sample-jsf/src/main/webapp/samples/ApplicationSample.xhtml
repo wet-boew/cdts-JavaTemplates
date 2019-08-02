@@ -110,13 +110,19 @@ public void onWebTemplateInitialize() {
 </div>
 <h2>Custom Search</h2>
 <p>This setting allows you to override the default search behaviour.</p>
-<p>Before setting <code class="wb-prettify">customSearch</code> You need to contact the CDTS team to enable this option, as it needs to be added to the CDTS Template.</p>
+<p>Get more details in the code hints and from <a href="http://www.gcpedia.gc.ca/wiki/Centrally_Deployed_Templates_Solution_(CDTS)/Intranet#Section_top_references">CDTS documentation</a></p>
 <div class="wb-prettify all-pre lang-c# linenums">
     <pre>
 @Override
 public void onWebTemplateInitialize() {
 //...
-    this.setCustomSearch("SDS");        
+    CustomSearch customSearch = new CustomSearch("mysearchaction.action", "Search MyApp", null, "POST");    
+    java.util.HashMap<String, String> hiddenInputs = new java.util.HashMap<>();
+    
+    hiddenInputs.put("name1", "value1");
+    customSearch.setHiddenInput(hiddenInputs);
+    
+    this.setCustomSearch(customSearch);
 //...
 }
     </pre>

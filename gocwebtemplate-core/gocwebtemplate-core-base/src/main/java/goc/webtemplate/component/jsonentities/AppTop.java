@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import goc.webtemplate.Breadcrumb;
+import goc.webtemplate.CustomSearch;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.Link;
@@ -45,7 +46,7 @@ public class AppTop implements Serializable {
     private boolean             search;
     private List<Breadcrumb>    breadcrumbs;
     private boolean             showPreContent;
-    private String              customSearch;
+    private List<CustomSearch>  customSearch;
     /**
      * Must be true if there is a left section/left side menu, otherwise must be false.
      */
@@ -57,7 +58,7 @@ public class AppTop implements Serializable {
 
     public AppTop(String cdnEnv, String subTheme, String localPath, List<Link> appName, String menuPath,
             List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
-            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu) {
+            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -179,11 +180,11 @@ public class AppTop implements Serializable {
         this.showPreContent = showPreContent;
     }
     
-    public String getCustomSearch() {
+    public List<CustomSearch> getCustomSearch() {
         return this.customSearch;
     }
     
-    public void setCustomSearch(String customSearch) {
+    public void setCustomSearch(List<CustomSearch> customSearch) {
         this.customSearch = customSearch;
     }
 
@@ -215,7 +216,7 @@ public class AppTop implements Serializable {
 
         public AppTopGCIntranet(String cdnEnv, String subTheme, String localPath, List<Link> appName, String menuPath,
                 List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
-                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, String customSearch, boolean topSecMenu, 
+                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu, 
                 List<IntranetTitle> intranetTitle) {
             
             super(cdnEnv, subTheme, localPath, appName, menuPath,

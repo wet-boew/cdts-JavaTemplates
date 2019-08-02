@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.MissingResourceException;
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
+import goc.webtemplate.CustomSearch;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.FooterSection;
 import goc.webtemplate.IFooterSection;
@@ -136,7 +138,7 @@ public abstract class AbstractCoreBean {
     private boolean showSignOutLink = false;
     private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
     private ArrayList<FooterSection> customFooterSections = new ArrayList<FooterSection>();
-    private String customSearch = this.getResourceBundleString("cdn", "goc.webtemplate.customsearch");;
+    private CustomSearch customSearch = null;
     private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
     private SplashPageInfo splashPageInfo = null; //initialization in get method
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
@@ -950,7 +952,7 @@ public abstract class AbstractCoreBean {
     /**
      * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
      */
-    public String getCustomSearch() {
+    public CustomSearch getCustomSearch() {
         this.initializeOnce();
         return this.customSearch;
     }
@@ -958,7 +960,7 @@ public abstract class AbstractCoreBean {
     /**
      * Allows for a custom search to be used in the application, you must contact CDTS to have one created.
      */
-    public void setCustomSearch(String value) {
+    public void setCustomSearch(CustomSearch value) {
         this.customSearch = value;
     }
     
@@ -1775,7 +1777,7 @@ public abstract class AbstractCoreBean {
                     this.showSearch,
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
-                    JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
+                    this.customSearch != null? Arrays.asList(this.customSearch): null,
                     this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
                     );
         } else {
@@ -1793,7 +1795,7 @@ public abstract class AbstractCoreBean {
                     this.showSearch,
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
-                    JsonValueUtils.getNonEmptyString(this.getCustomSearch()),
+                    this.customSearch != null? Arrays.asList(this.customSearch): null,
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
                     this.buildIntranetTitleList()
                     );

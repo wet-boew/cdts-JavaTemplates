@@ -52,10 +52,12 @@
     <target name="mvn_windows_setup" if="isWindows">
         <property name="mvn.executable" value="cmd" />
         <property name="mvn.args" value="/c" />
+        <property name="mvn.path" value="" />
     </target>
     <target name="mvn_unix_setup" if="isUnix">
         <property name="mvn.executable" value="sh" />
-	<property name="mvn.args" value="-c" />
+        <property name="mvn.args" value="-c" />
+        <property name="mvn.path" value="/u01/app/maven/bin/" />
 	<!--NOTE: Jenkins build needs the following defined in command line because the mvn command somehow
 		  ignores server configuration (ie MAVEN_OPTS environment variable) when we execute it. 
 		  So, at the very least for now, we must have this server-specific value here.
@@ -68,7 +70,7 @@
         <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
 	<echo message="${mvn.args} 'mvn ${mvn.defs} ${p_goals}'" />
         <exec dir="${basedir}" executable="${mvn.executable}">
-	    <arg line="${mvn.args} 'mvn ${mvn.defs} ${p_goals}'" />
+            <arg line="${mvn.args} '${mvn.path}mvn ${mvn.defs} ${p_goals}'" />
         </exec>
     </target>    
     

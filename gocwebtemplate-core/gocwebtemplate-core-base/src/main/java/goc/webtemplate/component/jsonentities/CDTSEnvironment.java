@@ -27,6 +27,7 @@ public class CDTSEnvironment implements Serializable {
     private int 	footerSectionLimit;
     private boolean	canHaveMultipleContactLinks;
     private boolean	canHaveContactLinkInAppTemplate;
+    private boolean canUseWebAnalytics;
     
     public CDTSEnvironment() {
     }
@@ -125,6 +126,14 @@ public class CDTSEnvironment implements Serializable {
 
     public void setCanHaveContactLinkInAppTemplate(boolean canHaveContactLinkInAppTemplate) {
         this.canHaveContactLinkInAppTemplate = canHaveContactLinkInAppTemplate;
+    }
+    
+    public boolean getCanUseWebAnalytics() {
+        return this.canUseWebAnalytics;
+    }
+    
+    public void setCanUseWebAnalytics(boolean canUseWebAnalytics) {
+        this.canUseWebAnalytics = canUseWebAnalytics;
     }
 
 	/**

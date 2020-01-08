@@ -28,6 +28,7 @@ import goc.webtemplate.MenuSection;
 import goc.webtemplate.SessionTimeout;
 import goc.webtemplate.SplashPageInfo;
 import goc.webtemplate.Utility;
+import goc.webtemplate.WebAnalyticsInfo;
 
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
@@ -144,6 +145,7 @@ public abstract class AbstractCoreBean {
     private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private FooterLink privacyLink = new FooterLink();
     private FooterLink termsConditionsLink = new FooterLink();
+    private WebAnalyticsInfo webAnalytics = new WebAnalyticsInfo(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.usewebanalytics"))); //will be false if not specified in config
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -1152,6 +1154,25 @@ public abstract class AbstractCoreBean {
     public void setTermsConditionsLink(FooterLink value) {
         this.termsConditionsLink = value;
     }
+
+    /**
+     * Returns the configuration info for the Adobe Analytics (AA).
+     * 
+     * @since 1.32.0
+     */
+    public WebAnalyticsInfo getWebAnalytics() {
+        this.initializeOnce();
+        return this.webAnalytics;
+    }
+    
+    /**
+     * Sets the configuration info for the Adobe Analytics (AA).
+     * 
+     * @since 1.32.0
+     */
+    public void setWebAnalytics(WebAnalyticsInfo value) {
+        this.webAnalytics = (value != null? value: new WebAnalyticsInfo(false));
+    }
     
     /**
      * Returns the  custom site menu to be used in place of the standard canada.ca site menu
@@ -1699,7 +1720,8 @@ public abstract class AbstractCoreBean {
                 JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
                 JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                isApplication
+                isApplication,
+                this.getWebAnalytics().isActive()? Arrays.asList(this.getWebAnalytics()): null
             ));        
     }
     public String getRenderRefTop() { 
@@ -1942,11 +1964,16 @@ public abstract class AbstractCoreBean {
      * as parameter for the "refFooter"
      */
     public String getRenderRefFooter() {
+        if (this.getWebAnalytics().isActive() && !this.getCurrentCDTSEnvironment().getCanUseWebAnalytics()) {
+            throw new IllegalArgumentException("The WebAnalytics feature is not supported in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
+        }
+        
         return gson.toJson(new RefFooter(
                 this.getCdtsCdnEnv(),
                 this.getLeavingSecureSiteWarning(),
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                JsonValueUtils.getNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                this.getWebAnalytics()
             ));        
     }
     

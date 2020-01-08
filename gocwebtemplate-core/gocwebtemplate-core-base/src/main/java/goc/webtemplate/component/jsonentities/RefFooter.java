@@ -5,6 +5,8 @@ import java.io.Serializable;
 import goc.webtemplate.LeavingSecureSiteWarning;
 
 import goc.webtemplate.Utility;
+import goc.webtemplate.WebAnalyticsInfo;
+
 import goc.webtemplate.component.JsonValueUtils;
 
 /**
@@ -23,12 +25,13 @@ public class RefFooter implements Serializable {
     private boolean displayModal;
     private String  jqueryEnv;
     private String  localPath;
+    private boolean webAnalytics;  
     
     public RefFooter() {
     }
 
     public RefFooter(String cdnEnv, boolean exitScript, String exitURL, String exitMsg, String exitDomains,
-            boolean displayModal, String jqueryEnv, String localPath) {
+            boolean displayModal, String jqueryEnv, String localPath, boolean webAnalytics) {
         this.cdnEnv = cdnEnv;
         this.exitScript = exitScript;
         this.exitURL = exitURL;
@@ -37,6 +40,7 @@ public class RefFooter implements Serializable {
         this.displayModal = displayModal;
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
+        this.webAnalytics = webAnalytics;
     }
     
     /**
@@ -44,7 +48,7 @@ public class RefFooter implements Serializable {
      * object.  
      */
     public RefFooter(String cdnEnv, LeavingSecureSiteWarning lssw, 
-            String jqueryEnv, String localPath) {
+            String jqueryEnv, String localPath, WebAnalyticsInfo webAnalyticsInfo) {
         this.cdnEnv = cdnEnv;
         
         this.exitScript = false;
@@ -58,6 +62,8 @@ public class RefFooter implements Serializable {
         
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
+        
+        this.webAnalytics = (webAnalyticsInfo != null && webAnalyticsInfo.isActive());
     }
 
     public String getCdnEnv() {
@@ -123,4 +129,12 @@ public class RefFooter implements Serializable {
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
     }
+
+    public boolean isWebAnalytics() {
+        return webAnalytics;
+    }
+
+    public void setWebAnalytics(boolean webAnalytics) {
+        this.webAnalytics = webAnalytics;
+    }    
 }

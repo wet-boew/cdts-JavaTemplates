@@ -178,8 +178,13 @@ pipeline {
         
         stage('Build and Deploy to Artifactory') {
             steps {
-                withMaven(maven: 'maven') {
-                    sh(script: "mvn --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -f ${applicationName} clean deploy")
+                script {
+                    def git = tool('git')
+                    def gitCommitId = sh(script: "'${git}' rev-parse HEAD", returnStdout: true).trim()
+                    
+                    withMaven(maven: 'maven') {
+                        sh(script: "mvn --batch-mode --errors --update-snapshots -Dbuild_number=${BUILD_NUMBER} -Dbuild_git_commitid=${gitCommitId} -f ${applicationName} clean deploy")
+                    }
                 }
             }
         }

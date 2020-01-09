@@ -28,6 +28,7 @@
     <webtemplate.version>${project.version}</webtemplate.version>
         
     <build_number>local</build_number>
+    <build_git_commitid>na</build_git_commitid>
     <maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>
     <timestamp>${maven.build.timestamp}</timestamp>
   </properties>
@@ -55,6 +56,7 @@
               <manifestEntries>
                 <Build-Timestamp>"${timestamp}-UTC"</Build-Timestamp>
                 <Build-Version>${project.version}-${build_number}</Build-Version>
+                <SCM-Revision>${build_git_commitid}</SCM-Revision>
               </manifestEntries>
             </archive>           
           </configuration>

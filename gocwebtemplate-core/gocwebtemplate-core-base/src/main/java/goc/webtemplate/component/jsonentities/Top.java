@@ -1,10 +1,10 @@
 package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
-
 import java.util.List;
 
 import goc.webtemplate.Breadcrumb;
+import goc.webtemplate.CustomSearch;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
 
@@ -29,13 +29,14 @@ public class Top implements Serializable {
      * Must be true if there is a left section/left side menu, otherwise must be false.
      */
     private boolean             topSecMenu;
+    private List<CustomSearch>  customSearch;
     
     public Top() {
     }
 
     public Top(String cdnEnv, String subTheme, List<IntranetTitle> intranetTitle, boolean search, List<LanguageLink> lngLinks,
             boolean showPreContent, List<Breadcrumb> breadcrumbs, String localPath, boolean siteMenu,
-            boolean topSecMenu) {
+            boolean topSecMenu, List<CustomSearch> customSearch) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.intranetTitle = intranetTitle;
@@ -46,6 +47,7 @@ public class Top implements Serializable {
         this.localPath = localPath;
         this.siteMenu = siteMenu;
         this.topSecMenu = topSecMenu;
+        this.customSearch = customSearch;
     }
 
     public String getCdnEnv() {
@@ -127,4 +129,12 @@ public class Top implements Serializable {
     public void setTopSecMenu(boolean topSecMenu) {
         this.topSecMenu = topSecMenu;
     }
+
+    public List<CustomSearch> getCustomSearch() {
+        return customSearch;
+    }
+
+    public void setCustomSearch(List<CustomSearch> customSearch) {
+        this.customSearch = customSearch;
+    }    
 }

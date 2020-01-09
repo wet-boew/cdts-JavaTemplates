@@ -1746,7 +1746,8 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     true, //siteMenu
-                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    this.customSearch != null? Arrays.asList(this.customSearch): null
                 ));        
     }
     
@@ -1765,7 +1766,8 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     false, //siteMenu
-                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    this.customSearch != null? Arrays.asList(this.customSearch): null
                 ));        
     }
     

@@ -25,13 +25,15 @@ public class RefFooter implements Serializable {
     private boolean displayModal;
     private String  jqueryEnv;
     private String  localPath;
+    private String  cancelMsg;
+    private String  yesMsg;
     private boolean webAnalytics;  
     
     public RefFooter() {
     }
 
     public RefFooter(String cdnEnv, boolean exitScript, String exitURL, String exitMsg, String exitDomains,
-            boolean displayModal, String jqueryEnv, String localPath, boolean webAnalytics) {
+            boolean displayModal, String jqueryEnv, String localPath, String cancelMsg, String yesMsg, boolean webAnalytics) {
         this.cdnEnv = cdnEnv;
         this.exitScript = exitScript;
         this.exitURL = exitURL;
@@ -40,6 +42,8 @@ public class RefFooter implements Serializable {
         this.displayModal = displayModal;
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
+        this.cancelMsg = cancelMsg;
+        this.yesMsg = yesMsg;
         this.webAnalytics = webAnalytics;
     }
     
@@ -58,6 +62,8 @@ public class RefFooter implements Serializable {
             this.exitMsg = lssw.getMessage();
             this.exitDomains = JsonValueUtils.getNonEmptyURLEscapedString(lssw.getExcludedDomains());
             this.displayModal = lssw.getDisplayModalWindow();
+            this.cancelMsg = lssw.getCancelMessage();
+            this.yesMsg = lssw.getYesMessage();
         }
         
         this.jqueryEnv = jqueryEnv;
@@ -128,6 +134,22 @@ public class RefFooter implements Serializable {
 
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
+    }
+
+    public String getCancelMsg() {
+        return cancelMsg;
+    }
+
+    public void setCancelMsg(String cancelMsg) {
+        this.cancelMsg = cancelMsg;
+    }
+
+    public String getYesMsg() {
+        return yesMsg;
+    }
+
+    public void setYesMsg(String yesMsg) {
+        this.yesMsg = yesMsg;
     }
 
     public boolean isWebAnalytics() {

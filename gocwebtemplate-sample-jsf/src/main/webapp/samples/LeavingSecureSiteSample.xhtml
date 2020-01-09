@@ -29,8 +29,8 @@
 	        <li>If <code class="wb-prettify">DisplayModalWindow</code> is set to true (default):
             	<ul>
 	                <li>When the user clicks an external link, the modal window will be displayed to the user.</li>
-	                <li>A "Cancel" button appears on the window to allow the user to return to their page.</li>
-	                <li>A "Yes" button appears on the window to allow the user to continue with the redirection to the selected link.</li>
+	                <li>A "Cancel" button appears on the window to allow the user to return to their page. (Text can be customized, see below.)</li>
+	                <li>A "Yes" button appears on the window to allow the user to continue with the redirection to the selected link. (Text can be customized, see below.)</li>
 	            </ul>
         	</li>
         	<li>if the "Yes" button is clicked:
@@ -55,6 +55,8 @@
 	        <li>Provide the message to be displayed by setting the <code class="wb-prettify">"Message"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
 	        <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"RedirectUrl"</code> to your page which will execute your clean up code and then redirect to the selected url.</li>
 	        <li>Set, via the cdn.properties or programmatically in your custom bean class, <code class="wb-prettify">"ExcludedDomain"</code> the list of domains you do not want to raise the warning</li>
+		    <li>Optionally, provide a cancel message by setting the <code class="wb-prettify">"CancelMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
+		    <li>Optionally, provide a yes message by setting the <code class="wb-prettify">"YesMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
 	    </ul>
 	    <div class="wb-prettify all-pre lang-vb linenums">
         	<pre>
@@ -67,6 +69,8 @@ public void onWebTemplateInitialize() {
     lssw.setMessage("You are about to leave a secure site, do you wish to continue?");
     lssw.setRedirectUrl("leavesecuresiteredirect.xhtml");
     lssw.setExcludedDomains("www.esdc.gc.ca,www.jobbank.gc.ca,www.readseal.ca");
+    lssw.setCancelMessage("Don't leave");
+    lssw.setYesMessage("Yes, leave this site");
     lssw.setDisplayModalWindow(true);
     
     this.setLeavingSecureSiteWarning(lssw);

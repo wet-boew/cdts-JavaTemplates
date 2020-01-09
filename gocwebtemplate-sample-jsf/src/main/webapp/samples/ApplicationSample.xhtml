@@ -117,7 +117,7 @@ public void onWebTemplateInitialize() {
 public void onWebTemplateInitialize() {
 //...
     CustomSearch customSearch = new CustomSearch("mysearchaction.action", "Search MyApp", null, "POST");    
-    java.util.HashMap<String, String> hiddenInputs = new java.util.HashMap<>();
+    java.util.HashMap&lt;String, String&gt; hiddenInputs = new java.util.HashMap&lt;&gt;();
     
     hiddenInputs.put("name1", "value1");
     customSearch.setHiddenInput(hiddenInputs);

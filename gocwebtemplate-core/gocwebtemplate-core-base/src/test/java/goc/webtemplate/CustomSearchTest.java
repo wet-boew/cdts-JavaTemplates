@@ -2,8 +2,8 @@ package goc.webtemplate;
 
 import java.util.HashMap;
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.Gson;
 
@@ -32,15 +32,15 @@ public class CustomSearchTest {
         
         //NOTE: Since there is no guarantee for the order of items in an HashMap,
         //      we can't just do a "is json string equal" assert, we'll do:
-        Assert.assertTrue("Unexpected JSON string: '" + json + "'.  Expected to start with: '" + expectedStartValue + "'", 
-                json.startsWith(expectedStartValue));
-        Assert.assertTrue("Unexpected JSON string: '" + json + "'.  Expected to end with: '" + expectedEndValue + "'", 
-                json.endsWith(expectedEndValue));
+        assertTrue(json.startsWith(expectedStartValue), 
+        		"Unexpected JSON string: '" + json + "'.  Expected to start with: '" + expectedStartValue + "'");
+        assertTrue(json.endsWith(expectedEndValue), 
+        		"Unexpected JSON string: '" + json + "'.  Expected to end with: '" + expectedEndValue + "'");
         
-        Assert.assertTrue("Unexpected JSON string: '" + json + "'.  Expected to contain: '" + hiddenInput1Value + "'", 
-                json.contains(hiddenInput1Value));
+        assertTrue(json.contains(hiddenInput1Value), 
+        		"Unexpected JSON string: '" + json + "'.  Expected to contain: '" + hiddenInput1Value + "'");
         
-        Assert.assertTrue("Unexpected JSON string: '" + json + "'.  Expected to contain: '" + hiddenInput2Value + "'", 
-                json.contains(hiddenInput2Value));
+        assertTrue(json.contains(hiddenInput2Value),
+        		"Unexpected JSON string: '" + json + "'.  Expected to contain: '" + hiddenInput2Value + "'");
     }
 }

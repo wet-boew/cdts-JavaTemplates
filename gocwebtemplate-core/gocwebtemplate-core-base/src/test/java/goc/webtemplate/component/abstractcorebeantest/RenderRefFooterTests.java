@@ -1,9 +1,9 @@
 package goc.webtemplate.component.abstractcorebeantest;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class RenderRefFooterTests {
 
@@ -11,8 +11,8 @@ public class RenderRefFooterTests {
     public void renderWithoutSecureSite() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
-        assertTrue("RefFooter rendering: Not rendered as expected. (" + sut.getRenderRefFooter() + ")", 
-                sut.getRenderRefFooter().contains("\"cdnEnv\":\"prod\",\"exitScript\":false,\"displayModal\":false"));
+        assertTrue(sut.getRenderRefFooter().contains("\"cdnEnv\":\"prod\",\"exitScript\":false,\"displayModal\":false"),
+        		"RefFooter rendering: Not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
     @Test
@@ -21,8 +21,8 @@ public class RenderRefFooterTests {
         
         sut.getLeavingSecureSiteWarning().setEnabled(true);
         
-        assertTrue("RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")", 
-                sut.getRenderRefFooter().contains("\"exitScript\":true,\"exitURL\":\"leave.action\",\"exitMsg\":\"\",\"displayModal\":true"));
+        assertTrue(sut.getRenderRefFooter().contains("\"exitScript\":true,\"exitURL\":\"leave.action\",\"exitMsg\":\"\",\"displayModal\":true"),
+        		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
     @Test
@@ -33,8 +33,8 @@ public class RenderRefFooterTests {
         sut.getLeavingSecureSiteWarning().setCancelMessage("Test Cancel Message");
         sut.getLeavingSecureSiteWarning().setYesMessage("Test Yes Message");
         
-        assertTrue("RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")", 
-                sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\""));
+        assertTrue(sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\""),
+        		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
     @Test
@@ -42,8 +42,8 @@ public class RenderRefFooterTests {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.getWebAnalytics().setActive(false);
-        assertTrue("RefFooter rendering: WebAnalytics not rendered as expected.", 
-                sut.getRenderRefFooter().contains("\"webAnalytics\":false"));
+        assertTrue(sut.getRenderRefFooter().contains("\"webAnalytics\":false"), 
+        		"RefFooter rendering: WebAnalytics not rendered as expected.");
     }
     
     @Test
@@ -58,7 +58,8 @@ public class RenderRefFooterTests {
             fail("Expected RuntimeException thrown.");
         }
         catch (IllegalArgumentException ex) {
-            assertTrue("Unexpected exception message.", ex.getMessage().contains("WebAnalytics feature is not supported"));
+            assertTrue(ex.getMessage().contains("WebAnalytics feature is not supported"), 
+            		"Unexpected exception message.");
         }
     }
 }

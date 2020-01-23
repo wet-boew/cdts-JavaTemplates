@@ -1,8 +1,8 @@
 package goc.webtemplate.component.abstractcorebeantest;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.CustomSearch;
 
@@ -13,15 +13,15 @@ public class RenderTransactionalTopTests {
 
         sut.setCustomSearch(new CustomSearch("#", "Custom Search Placeholder", null, "get"));
         
-        assertTrue("getRenderTransactionalTop: CustomSearch not rendered as expected.", 
-                sut.getRenderTransactionalTop().contains("\"customSearch\":[{\"action\":\"#\",\"placeholder\":\"Custom Search Placeholder\",\"method\":\"get\"}]"));
+        assertTrue(sut.getRenderTransactionalTop().contains("\"customSearch\":[{\"action\":\"#\",\"placeholder\":\"Custom Search Placeholder\",\"method\":\"get\"}]"),
+        		"getRenderTransactionalTop: CustomSearch not rendered as expected.");
     }
     
     @Test
     public void customSearchDefaultNotRendered() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
-        assertTrue("getRenderTransactionalTop: CustomSearch should not be rendered when not specified.", 
-                !sut.getRenderTransactionalTop().contains("\"customSearch\":"));
+        assertTrue(!sut.getRenderTransactionalTop().contains("\"customSearch\":"),
+        		"getRenderTransactionalTop: CustomSearch should not be rendered when not specified.");
     }
 }

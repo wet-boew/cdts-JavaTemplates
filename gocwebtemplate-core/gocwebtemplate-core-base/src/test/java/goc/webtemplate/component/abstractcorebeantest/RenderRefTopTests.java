@@ -1,8 +1,8 @@
 package goc.webtemplate.component.abstractcorebeantest;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.WebAnalyticsInfo;
 
@@ -14,8 +14,8 @@ public class RenderRefTopTests {
         
         sut.setWebAnalytics(new WebAnalyticsInfo(true, WebAnalyticsInfo.EnvironmentOption.STAGING, 1));
         
-        assertTrue("RefFooter rendering: WebAnalytics not rendered as expected (" + sut.getRenderRefTop() + ").", 
-                sut.getRenderRefTop().contains("\"webAnalytics\":[{\"environment\":\"staging\",\"version\":1}]"));
+        assertTrue(sut.getRenderRefTop().contains("\"webAnalytics\":[{\"environment\":\"staging\",\"version\":1}]"),
+        		"RefFooter rendering: WebAnalytics not rendered as expected (" + sut.getRenderRefTop() + ").");
     }
     
     @Test
@@ -23,7 +23,7 @@ public class RenderRefTopTests {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         //(Test test cdn.properties files default WebAnalytics to true)
-        assertTrue("RefFooter rendering: WebAnalytics not rendered as expected (" + sut.getRenderRefTop() + ").", 
-                sut.getRenderRefTop().contains("\"webAnalytics\":"));
+        assertTrue(sut.getRenderRefTop().contains("\"webAnalytics\":"),
+        		"RefFooter rendering: WebAnalytics not rendered as expected (" + sut.getRenderRefTop() + ").");
     }
 }

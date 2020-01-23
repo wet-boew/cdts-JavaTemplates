@@ -1,8 +1,8 @@
 package goc.webtemplate.jsp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This is just a place-holder unit test class to show where to put Unit test 

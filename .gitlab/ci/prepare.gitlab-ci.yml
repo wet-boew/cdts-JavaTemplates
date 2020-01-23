@@ -1,0 +1,18 @@
+# by product, CD
+
+.version:
+  stage: prepare
+  allow_failure: true
+  artifacts:
+    expire_in: 1 hour
+
+version_productX:
+  extends: .version
+  only:
+    variables:
+      - $PRODUCTX_VERSION != null
+  script:
+    - #script to update the version with %PRODUCTX_VERSION%
+  artifacts:
+    paths:
+      - #path to any changed files

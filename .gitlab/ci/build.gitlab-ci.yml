@@ -1,0 +1,14 @@
+# by solution, always
+
+.build
+  stage: build
+  # before_script:
+  #   - # add any global secrets here
+  # after_script:
+  #   - # removed any global added secrets here
+  artifacts:
+    expire_in: 1 hour
+
+build_slnX:
+  extends: .build
+  

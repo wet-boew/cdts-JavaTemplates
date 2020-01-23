@@ -1,0 +1,24 @@
+stages:
+  - prepare
+  - build
+  - test
+  - package
+  - deploy
+  - cleanup
+
+# Define variables - they should be agnostic to this script
+# variables:
+
+# Define any steps that should be done before or after every job
+# before_script:
+#
+# after_script:
+#
+
+include:
+  - local: .gitlab/ci/prepare.gitlab-ci.yml
+  - local: .gitlab/ci/build.gitlab-ci.yml
+  - local: .gitlab/ci/test.gitlab-ci.yml
+  - local: .gitlab/ci/package.gitlab-ci.yml
+  - local: .gitlab/ci/deploy.gitlab-ci.yml
+  - local: .gitlab/ci/cleanup.gitlab-ci.yml

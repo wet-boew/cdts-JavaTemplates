@@ -1,0 +1,20 @@
+# by product, CI/CD
+
+.deploy:
+  stage: deploy
+  only:
+    refs:
+      - master
+
+deploy_productX:
+  extends: .deploy
+  only:
+    variables:
+      - $PRODUCTX_VERSION != null
+  depends:
+    - package_productX
+  environment:
+    name: LocationOfHost-ProductX
+    url: #url of host
+  script:
+    - #script to deploy product

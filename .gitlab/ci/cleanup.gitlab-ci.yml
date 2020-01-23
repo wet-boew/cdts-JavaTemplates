@@ -1,0 +1,13 @@
+# by product, CD
+
+.tag
+  stage: cleanup
+
+tag_productX:
+  extends: .tag
+  only:
+    variables:
+      - $PRODUCTX_VERSION != null
+  needs: deploy_productX
+  script:
+    - # add tag to repo using API and pull release notes from file

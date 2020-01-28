@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.CustomSearch;
 
-public class RenderTransactionalTopTests {
+public class RenderTransactionalTopTest {
     @Test
-    public void customSearchRenders() {
+    public void testCustomSearchRenders() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
 
         sut.setCustomSearch(new CustomSearch("#", "Custom Search Placeholder", null, "get"));
@@ -18,7 +18,7 @@ public class RenderTransactionalTopTests {
     }
     
     @Test
-    public void customSearchDefaultNotRendered() {
+    public void testCustomSearchDefaultNotRendered() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         assertTrue(!sut.getRenderTransactionalTop().contains("\"customSearch\":"),

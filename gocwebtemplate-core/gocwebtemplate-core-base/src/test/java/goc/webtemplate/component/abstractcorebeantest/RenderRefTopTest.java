@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.WebAnalyticsInfo;
 
-public class RenderRefTopTests {
+public class RenderRefTopTest {
 
     @Test
-    public void webAnalyticsRenders() {
+    public void testWebAnalyticsRenders() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.setWebAnalytics(new WebAnalyticsInfo(true, WebAnalyticsInfo.EnvironmentOption.STAGING, 1));
@@ -19,7 +19,7 @@ public class RenderRefTopTests {
     }
     
     @Test
-    public void webAnalyticsFromConfig() {
+    public void testWebAnalyticsFromConfig() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         //(Test test cdn.properties files default WebAnalytics to true)

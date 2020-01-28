@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.CustomSearch;
 
-public class RenderTopTests {
+public class RenderTopTest {
 
     @Test
-    public void customSearchRenders() {
+    public void testCustomSearchRenders() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
 
         sut.setCustomSearch(new CustomSearch("#", "Custom Search Placeholder", null, "get"));
@@ -19,7 +19,7 @@ public class RenderTopTests {
     }
     
     @Test
-    public void customSearchDefaultNotRendered() {
+    public void testCustomSearchDefaultNotRendered() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         assertTrue(!sut.getRenderTop().contains("\"customSearch\":"),

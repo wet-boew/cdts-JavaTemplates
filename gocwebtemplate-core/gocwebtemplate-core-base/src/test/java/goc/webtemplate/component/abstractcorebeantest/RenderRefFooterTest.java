@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class RenderRefFooterTests {
+public class RenderRefFooterTest {
 
     @Test
-    public void renderWithoutSecureSite() {
+    public void testRenderWithoutSecureSite() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         assertTrue(sut.getRenderRefFooter().contains("\"cdnEnv\":\"prod\",\"exitScript\":false,\"displayModal\":false"),
@@ -16,7 +16,7 @@ public class RenderRefFooterTests {
     }
     
     @Test
-    public void renderWithSecureSite() {
+    public void testRenderWithSecureSite() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.getLeavingSecureSiteWarning().setEnabled(true);
@@ -26,7 +26,7 @@ public class RenderRefFooterTests {
     }
     
     @Test
-    public void renderWithSecureSiteAndYesCancelMessages() {
+    public void testRenderWithSecureSiteAndYesCancelMessages() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.getLeavingSecureSiteWarning().setEnabled(true);
@@ -38,7 +38,7 @@ public class RenderRefFooterTests {
     }
     
     @Test
-    public void webAnalyticsRenders() {
+    public void testWebAnalyticsRenders() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.getWebAnalytics().setActive(false);
@@ -47,7 +47,7 @@ public class RenderRefFooterTests {
     }
     
     @Test
-    public void webAnalyticsOnlyIfSupportedInEnv() {
+    public void testWebAnalyticsOnlyIfSupportedInEnv() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
         sut.getWebAnalytics().setActive(true);

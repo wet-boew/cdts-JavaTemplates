@@ -1,0 +1,28 @@
+# per project / test type;
+
+.test
+  stage: test
+  dependencies:
+    - compile_slnX
+
+.unit_test
+  extends: .test
+
+.codequality
+  extends: .test
+
+unit_test_projX
+  extends: .unit_test
+  script:
+    - # execute the tests
+  artifacts:
+    reports:
+      junit: # path to the junit export of the test results
+
+codequality_projX
+  extends: .codequality
+  script:
+    - # execute the tests
+  artifacts:
+    reports:
+      codequality: # path to json report https://github.com/codeclimate/spec/blob/master/SPEC.md#data-types

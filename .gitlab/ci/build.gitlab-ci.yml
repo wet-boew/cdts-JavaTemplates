@@ -1,0 +1,19 @@
+# by solution, always
+
+.compile
+  stage: build
+  # before_script:
+  #   - # add any global steps here
+  # after_script:
+  #   - # removed any global added secrets here
+  artifacts:
+    expire_in: 1 hour
+
+compile_slnX:
+  extends: .compile
+  script:
+    - # compile the solution
+  artifacts:
+    paths:
+      - # Add paths to all the comiled assets that are used for tests or deployment
+  

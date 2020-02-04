@@ -1,7 +1,10 @@
 # by solution, always
+variables:
+ - MAVEN_CLI_OPTS = "--errors --batch-mode"
 
 .compile
-  stage: build
+  tags:
+    - maven
   # before_script:
   #   - # add any global steps here
   # after_script:
@@ -9,11 +12,25 @@
   artifacts:
     expire_in: 1 hour
 
-compile_slnX:
+.core:compile
   extends: .compile
+  stage: core:build
+
+.sample:compile
+  extends: .compile
+  stage: sample:build
+
+compile_core:
+  extends: .core:compile
   script:
-    - # compile the solution
-  artifacts:
-    paths:
-      - # Add paths to all the comiled assets that are used for tests or deployment
-  
+    - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-core/pom.xml clean compile
+
+compile_jsp_samples:
+  extends: .sample:compile
+  script:
+    - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-jsp/pom.xml clean compile
+
+compile_spring_samples:
+  extends: .sample:compile
+  script:
+    - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-spring/pom.xml clean compile

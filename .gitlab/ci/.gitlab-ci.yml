@@ -3,19 +3,31 @@
 # cleanup could be done in after_script of deploy depending on solution/product
 stages:
   - prepare
-  - build
-  - test
-  - package
+  - core:build
+  - core:test
+  - core:package
+  - sample:build
+  - sample:test
+  - sample:package
   - deploy
   - cleanup
 
 include:
   - local: .gitlab/ci/build.gitlab-ci.yml
   - local: .gitlab/ci/test.gitlab-ci.yml
-  - local: .gitlab/ci/productX.gitlab-ci.yml
+  - local: .gitlab/ci/core.gitlab-ci.yml
+  - local: .gitlab/ci/sample.gitlab-ci.yml
 
 # Define variables - they should be agnostic to this script
-# variables:
+variables:
+  MAVEN_OPTS: ${ESDC_MAVEN_OPTS} ${SDS_MAVEN_OPTS}
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - gocwebtemplate-core/target
+    - gocwebtemplate-sample-jsp/target
+    - gocwebtemplate-sample-spring/target
 
 # Define any steps that should be done before or after every job
 # before_script:

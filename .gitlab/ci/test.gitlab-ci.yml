@@ -11,8 +11,9 @@
 .codequality
   extends: .test
 
-unit_test_projX
+core:unit_test
   extends: .unit_test
+  stage: core:test
   script:
     - # execute the tests
   artifacts:

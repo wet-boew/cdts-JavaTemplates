@@ -1,23 +1,15 @@
 # per project / test type;
 
-# .test
-#   stage: test
-#   dependencies:
-#     - compile_slnX
-
-# .unit_test
-#   extends: .test
+.test
+  tags:
+    - maven
 
 .unit_test:sample:
-#  extends: .unit_test
+  extends: .test
   stage: sample:test
-  
-
-# .codequality
-#   extends: .test
 
 unit_test:core:
-  # extends: .unit_test
+  extends: .test
   stage: core:test
   dependencies: 
     - compile:core

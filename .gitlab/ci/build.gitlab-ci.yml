@@ -1,4 +1,5 @@
 # by solution, always
+
 variables:
  - MAVEN_CLI_OPTS = "--errors --batch-mode"
 
@@ -12,25 +13,25 @@ variables:
   artifacts:
     expire_in: 1 hour
 
-.core:compile
+.compile:core
   extends: .compile
   stage: core:build
 
-.sample:compile
+.compile:sample
   extends: .compile
   stage: sample:build
 
-compile_core:
-  extends: .core:compile
+compile:core:
+  extends: .compile:core
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-core/pom.xml clean compile
 
-compile_jsp_samples:
-  extends: .sample:compile
+compile:sample:jsp:
+  extends: .compile:sample
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-jsp/pom.xml clean compile
 
-compile_spring_samples:
-  extends: .sample:compile
+compile:sample:spring:
+  extends: .compile:sample
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-spring/pom.xml clean compile

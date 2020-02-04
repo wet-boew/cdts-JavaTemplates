@@ -1,9 +1,6 @@
 # by solution, always
 
-variables:
- - MAVEN_CLI_OPTS = "--errors --batch-mode"
-
-.compile
+.compile:
   tags:
     - maven
   # before_script:
@@ -13,11 +10,11 @@ variables:
   artifacts:
     expire_in: 1 hour
 
-.compile:core
+.compile:core:
   extends: .compile
   stage: core:build
 
-.compile:sample
+.compile:sample:
   extends: .compile
   stage: sample:build
 

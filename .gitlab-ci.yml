@@ -21,6 +21,7 @@ include:
 # Define variables - they should be agnostic to this script
 variables:
   MAVEN_OPTS: ${ESDC_MAVEN_OPTS} ${SDS_MAVEN_OPTS}
+  MAVEN_CLI_OPTS: "--errors --batch-mode"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -60,5 +61,5 @@ cache:
       - master
 
 # base job for tagging a release
-.tag
+.tag:
   stage: cleanup

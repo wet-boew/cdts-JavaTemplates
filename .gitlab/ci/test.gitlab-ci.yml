@@ -8,7 +8,7 @@
 # .unit_test
 #   extends: .test
 
-.unit_test:sample
+.unit_test:sample:
 #  extends: .unit_test
   stage: sample:test
   
@@ -16,28 +16,31 @@
 # .codequality
 #   extends: .test
 
-unit_test:core
+unit_test:core:
   # extends: .unit_test
   stage: core:test
-  dependencies: compile:core
+  dependencies: 
+    - compile:core
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-core/pom.xml test
   artifacts:
     reports:
       junit: # path to the junit export of the test results
 
-unit_test:sample:jsp
+unit_test:sample:jsp:
   extends: .unit_test:sample
-  dependencies: compile:sample:jsp
+  dependencies: 
+    - compile:sample:jsp
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-jsp/pom.xml test
   artifacts:
     reports:
       junit: # path to the junit export of the test results
 
-unit_test:sample:spring
+unit_test:sample:spring:
   extends: .unit_test:sample
-  dependencies: compile:sample:spring
+  dependencies: 
+    - compile:sample:spring
   script:
     - mvn $MAVEN_OPTS $MAVEN_CLI_OPTS -f gocwebtemplate-sample-spring/pom.xml test
   artifacts:

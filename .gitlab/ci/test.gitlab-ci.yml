@@ -1,6 +1,6 @@
 # per project / test type;
 
-.test
+.test:
   tags:
     - maven
 

@@ -15,8 +15,8 @@ stages:
 include:
   - local: .gitlab/ci/build.gitlab-ci.yml
   - local: .gitlab/ci/test.gitlab-ci.yml
-  - local: .gitlab/ci/core.gitlab-ci.yml
-  - local: .gitlab/ci/sample.gitlab-ci.yml
+  # - local: .gitlab/ci/core.gitlab-ci.yml
+  # - local: .gitlab/ci/sample.gitlab-ci.yml
 
 # Define variables - they should be agnostic to this script
 variables:

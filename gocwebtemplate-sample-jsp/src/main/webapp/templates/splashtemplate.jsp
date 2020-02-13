@@ -32,25 +32,25 @@
         <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
         <noscript>
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splashTop.html')}" />
+            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splashTop.html')}" />
         </noscript>
         <!-- Write closure template -->
         <script type="text/javascript">
-            document.write(wet.builder.splashTop(<s:property escape="false" value="#goctemplateclientbean.renderSplashTop" />));
+            document.write(wet.builder.splashTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashTop" />));
         </script>
-        <s:property escape="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
+        <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" class="splash" typeof="WebPage">
 		<div id="splashContent">
 			<noscript>
 				<!-- Write closure fall-back static file -->
-	            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splash.html')}" />
+	            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splash.html')}" />
 			</noscript>
 			
 			<script type="text/javascript">
 			    var contentSplash = document.getElementById("splashContent");
-			    contentSplash.innerHTML = wet.builder.splash(<s:property escape="false" value="#goctemplateclientbean.renderSplash" />);
+			    contentSplash.innerHTML = wet.builder.splash(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplash" />);
 			</script>			
 		</div>
 	</body>

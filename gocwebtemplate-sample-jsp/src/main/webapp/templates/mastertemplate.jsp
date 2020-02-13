@@ -32,25 +32,25 @@
         <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
         <noscript>
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'refTop.html')}" />
+            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'refTop.html')}" />
         </noscript>
         <!-- Write closure template -->
         <script type="text/javascript">
-            document.write(wet.builder.refTop(<s:property escape="false" value="#goctemplateclientbean.renderRefTop" />));
+            document.write(wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefTop" />));
         </script>
-        <s:property escape="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
+        <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" typeof="WebPage">		
-		<s:property escape="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
+		<s:property escapeHtml="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
         <div id="def-top">
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'top-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
+            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'top-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         </div>
         <!-- Write closure template -->
         <script type="text/javascript">
             var defTop = document.getElementById("def-top");
-            defTop.outerHTML = wet.builder.top(<s:property escape="false" value="#goctemplateclientbean.renderTop" />);
+            defTop.outerHTML = wet.builder.top(<s:property escapeHtml="false" value="#goctemplateclientbean.renderTop" />);
         </script>
         <main role="main" property="mainContentOfPage" class="container" typeof="WebPageElement">
             <!-- the main content -->
@@ -58,27 +58,27 @@
             <!-- end main content -->
             <div id="def-preFooter">
                 <!-- Write closure fall-back static file -->
-                <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'preFooter-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
+                <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'preFooter-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         	</div>
             <!-- Write closure template -->
             <script type="text/javascript">
                 var defPreFooter = document.getElementById("def-preFooter");
-                defPreFooter.outerHTML = wet.builder.preFooter(<s:property escape="false" value="#goctemplateclientbean.renderPreFooter" />);
+                defPreFooter.outerHTML = wet.builder.preFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderPreFooter" />);
             </script>
         </main>	
         <div id="def-footer">
             <!-- Write closure fall-back static file -->
-            <s:property escape="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'footer-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
+            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'footer-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />
         </div>
         <!-- Write closure template -->
         <script type="text/javascript">
             var defFooter = document.getElementById("def-footer");
-            defFooter.outerHTML = wet.builder.footer(<s:property escape="false" value="#goctemplateclientbean.renderFooter" />);
+            defFooter.outerHTML = wet.builder.footer(<s:property escapeHtml="false" value="#goctemplateclientbean.renderFooter" />);
         </script>
         <!-- Write closure template -->
 		<script type="text/javascript">
-			document.write(wet.builder.refFooter(<s:property escape="false" value="#goctemplateclientbean.renderRefFooter" />));
+			document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />));
 		</script>
-        <s:property escape="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
+        <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>
 </html>

@@ -2,15 +2,15 @@ package goc.webtemplate.component;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class JsonValueUtilsTest {
@@ -31,9 +31,9 @@ public class JsonValueUtilsTest {
         assertEquals("href1", results.get(0).getHref());
         assertEquals("text1", results.get(0).getText());
         assertEquals("href2", results.get(1).getHref());
-        assertNull("Link text should be null.", results.get(1).getText());
+        assertNull(results.get(1).getText(), "Link text should be null.");
         assertEquals("href3", results.get(2).getHref());
-        assertNull("Link text should be null.", results.get(2).getText());
+        assertNull(results.get(2).getText(), "Link text should be null.");
     }
     
     @Test
@@ -71,21 +71,21 @@ public class JsonValueUtilsTest {
 
         assertEquals(3, results.size());
         
-        assertTrue("Object should be instanceof Link.", results.get(0) instanceof Link);
-        assertTrue("Object should be instanceof FooterLink", results.get(1) instanceof FooterLink);
+        assertTrue(results.get(0) instanceof Link, "Object should be instanceof Link.");
+        assertTrue(results.get(1) instanceof FooterLink, "Object should be instanceof FooterLink");
         assertEquals(true, ((FooterLink)results.get(1)).getNewWindow());
-        assertTrue("Object should be instanceof MenuItem", results.get(2) instanceof MenuItem);
+        assertTrue(results.get(2) instanceof MenuItem, "Object should be instanceof MenuItem");
         assertEquals(false, ((MenuItem)results.get(2)).isOpenInNewWindow());        
     }   
 
     @Test
     public void testGetNonEmptyLinkList_NullList() {
-        assertNull("Return value should be null.", JsonValueUtils.getNonEmptyLinkList(null));
+        assertNull(JsonValueUtils.getNonEmptyLinkList(null), "Return value should be null.");
     }
 
     @Test
     public void testGetNonEmptyLinkList_EmptyList() {
-        assertNull("Return value should be null.", JsonValueUtils.getNonEmptyLinkList(new ArrayList<Link>()));
+        assertNull(JsonValueUtils.getNonEmptyLinkList(new ArrayList<Link>()), "Return value should be null.");
     }
 
     @Test
@@ -105,20 +105,20 @@ public class JsonValueUtilsTest {
         assertEquals("text1", results.get(0).getText());
         assertEquals(true, results.get(0).getNewWindow());
         assertEquals("href2", results.get(1).getHref());
-        assertNull("Link text should be null.", results.get(1).getText());
+        assertNull(results.get(1).getText(), "Link text should be null.");
         assertEquals(false, results.get(1).getNewWindow());
         assertEquals("href3", results.get(2).getHref());
-        assertNull("Link text should be null.", results.get(2).getText());
+        assertNull(results.get(2).getText(), "Link text should be null.");
         assertEquals(true, results.get(2).getNewWindow());
     }
 
     @Test
     public void testGetNonEmptyFooterLinkList_NullList() {
-        assertNull("Return value should be null.", JsonValueUtils.getNonEmptyFooterLinkList(null));
+        assertNull(JsonValueUtils.getNonEmptyFooterLinkList(null), "Return value should be null.");
     }
 
     @Test
     public void testGetNonEmptyFooterLinkList_EmptyList() {
-        assertNull("Return value should be null.", JsonValueUtils.getNonEmptyFooterLinkList(new ArrayList<FooterLink>()));
+        assertNull(JsonValueUtils.getNonEmptyFooterLinkList(new ArrayList<FooterLink>()), "Return value should be null.");
     }
 }

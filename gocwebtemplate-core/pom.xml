@@ -18,7 +18,6 @@
   <modules>
     <module>gocwebtemplate-core-base</module>
     <module>gocwebtemplate-core-jsp</module>
-    <module>gocwebtemplate-core-jsf</module>
   </modules>
 
   <properties>

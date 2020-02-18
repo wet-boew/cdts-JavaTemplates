@@ -1,3 +1,0 @@
-For the up to date release/change log, please refer to:
-
-  https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/releases

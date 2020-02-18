@@ -1,7 +1,0 @@
-This archetype skeleton was originally created by usign the command
-
-    mvn archetype:create-from-project
-    
-from the sample project's directory.  Resulting files were then taken from
-<project dir>/target/generated-sources/archetype and modified for our 
-purposes.

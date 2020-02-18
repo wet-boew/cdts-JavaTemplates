@@ -49,10 +49,10 @@ import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
 
 /**
  * This is the base class from all template configuration beans, inherited by both
- * the JSF or JSP version of the BaseCoreBean class.
+ * the specific version of the BaseCoreBean class.
  * 
  * This class defines the complete list of configuration/customization items 
- * that can be overriden in either the JSF or JSP version of the implementation.
+ * that can be overriden in either the specific version of the implementation.
  * 
  * @author pierre.lupien
  *
@@ -717,7 +717,7 @@ public abstract class AbstractCoreBean {
     
     /**
      * Returns the url to be used for the language toggle, there is a default url already in place for either the 
-     * JSF or JSP implementation of the Template, but can be set by application programmatically.
+     * Specific implementation of the Template, but can be set by application programmatically.
      * 
      * @return the default language toggle url or the value set programmatically
      */
@@ -732,7 +732,7 @@ public abstract class AbstractCoreBean {
     
     /**
      * Sets the url to be used for the language toggle, there is a default url already in place for either the 
-     * JSF or JSP implementation of the Template, but can be set by application programmatically.
+     * Specific implementation of the Template, but can be set by application programmatically.
      */
     public void setLanguageLinkUrl(String value) {
         this.languageLinkUrl = value;
@@ -1711,7 +1711,7 @@ public abstract class AbstractCoreBean {
      * as parameter for the "refTop"
      * 
      * Applications will actually use property "renderRefTop" or "renderRefTopForApp" depending
-     * on the case, since passing argument when calling properties is not support in JSF2.0, having two
+     * on the case, since passing argument when calling properties is not supported in JSF2.0 (not supported anymore), having two
      * differently named get methods seemed the next simplest solution.
      */
     private String buildRefTopValue(boolean isApplication) {

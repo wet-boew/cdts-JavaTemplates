@@ -85,10 +85,7 @@
     <target depends="clean,init" name="create-archetype-project-jsp">
         <create-archetype-project project-name="gocwebtemplate-sample-jsp" />
     </target>
-    <target depends="clean,init" name="create-archetype-project-jsf">
-        <create-archetype-project project-name="gocwebtemplate-sample-jsf" />
-    </target>
-    <target depends="create-archetype-project-jsp,create-archetype-project-jsf" name="create-archetype-projects">
+    <target depends="create-archetype-project-jsp" name="create-archetype-projects">
     </target>
     
     <target depends="create-archetype-project-jsp" name="maven-package-jsp">
@@ -97,13 +94,7 @@
             <param name="p_goals" value="clean package" />
         </antcall>
     </target>
-    <target depends="create-archetype-project-jsf" name="maven-package-jsf">
-        <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
-            <param name="p_goals" value="clean package" />
-        </antcall>
-    </target>    
-    <target depends="maven-package-jsp,maven-package-jsf" name="maven-packages">
+    <target depends="maven-package-jsp" name="maven-packages">
     </target>
 
     <target depends="create-archetype-project-jsp" name="maven-install-jsp">
@@ -112,13 +103,7 @@
             <param name="p_goals" value="clean install" />
         </antcall>
     </target>
-    <target depends="create-archetype-project-jsf" name="maven-install-jsf">
-        <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
-            <param name="p_goals" value="clean install" />
-        </antcall>
-    </target>    
-    <target depends="maven-install-jsp,maven-install-jsf" name="maven-installs">
+    <target depends="maven-install-jsp" name="maven-installs">
     </target>
 
     <target depends="create-archetype-project-jsp" name="maven-deploy-jsp">
@@ -127,13 +112,7 @@
             <param name="p_goals" value="clean deploy" />
         </antcall>
     </target>
-    <target depends="create-archetype-project-jsf" name="maven-deploy-jsf">
-        <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsf-archetype" />            
-            <param name="p_goals" value="clean deploy" />
-        </antcall>
-    </target>    
-    <target depends="maven-deploy-jsp,maven-deploy-jsf" name="maven-deploys">
+	<target depends="maven-deploy-jsp" name="maven-deploys">
     </target>
     
 </project>

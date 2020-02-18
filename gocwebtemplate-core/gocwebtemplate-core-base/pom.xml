@@ -5,7 +5,7 @@
   <packaging>jar</packaging>
   
   <name>gocwebtemplate-core-base</name>
-  <description>GoC WebTemplate Core Library - common base for JSP and JSF implementations</description>
+  <description>GoC WebTemplate Core Library - common base for specific implementations</description>
 
   <parent>
     <groupId>ca.gc.gocwebtemplate</groupId>

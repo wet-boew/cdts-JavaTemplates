@@ -21,7 +21,5 @@ testSamples:
   stage: testSamples
   script:
     - echo "Running Maven on Sample packages..."
-    - cd gocwebtemplate-sample-jsf
-    - mvn --batch-mode test 
-    - cd ..\\gocwebtemplate-sample-jsp
+    - cd gocwebtemplate-sample-jsp
     - mvn --batch-mode test 

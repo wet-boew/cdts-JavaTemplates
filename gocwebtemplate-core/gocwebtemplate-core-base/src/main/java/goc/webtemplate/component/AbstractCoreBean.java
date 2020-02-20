@@ -89,7 +89,9 @@ public abstract class AbstractCoreBean {
     /**
      * Flag indicating whether the onWebTemplateInitialize has already been called. 
      */
-    private boolean initialized = false;    
+    private boolean initialized = false;
+    
+    private enum Themes { GCWEB, GCINTRANET }
     
     //-------------------------------------------------------
     //---[ Main template instance variables
@@ -146,6 +148,7 @@ public abstract class AbstractCoreBean {
     private FooterLink privacyLink = new FooterLink();
     private FooterLink termsConditionsLink = new FooterLink();
     private WebAnalyticsInfo webAnalytics = new WebAnalyticsInfo(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.usewebanalytics"))); //will be false if not specified in config
+    private boolean gcToolsModal = false;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -1175,6 +1178,22 @@ public abstract class AbstractCoreBean {
     }
     
     /**
+     * Returns whether the GcToolsModal will be displayed 
+     * 
+     */
+    public boolean getGcToolsModal() {
+        return gcToolsModal;
+    }
+    
+    /**
+     * Sets the configuration for the GcTools Modal
+     * 
+     */
+    public void setGcToolsModal(boolean value) {
+        this.gcToolsModal = value;
+    }
+    
+    /**
      * Returns the  custom site menu to be used in place of the standard canada.ca site menu
      * This defaults to null (use standard menu)
      * 
@@ -1736,6 +1755,10 @@ public abstract class AbstractCoreBean {
      * as parameter for the "top"
      */
     public String getRenderTop() {
+        if (this.isThemeGcWeb() && this.gcToolsModal){
+            throw new UnsupportedOperationException(String.format("The gcToolsModal is not available in %s", this.getTheme().toLowerCase()));
+        }
+        
         return gson.toJson(new Top(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
@@ -1747,7 +1770,8 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     true, //siteMenu
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.customSearch != null? Arrays.asList(this.customSearch): null
+                    this.customSearch != null? Arrays.asList(this.customSearch): null,      
+                    this.gcToolsModal
                 ));        
     }
     
@@ -1756,6 +1780,10 @@ public abstract class AbstractCoreBean {
      * as parameter for the "top" for transactional pages.
      */
     public String getRenderTransactionalTop() {
+        if (this.isThemeGcWeb() && this.gcToolsModal){
+            throw new UnsupportedOperationException(String.format("The gcToolsModal is not available in %s", this.getTheme().toLowerCase()));
+        }
+        
         return gson.toJson(new Top(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
@@ -1767,7 +1795,8 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.getNonEmptyString(this.getLocalPath()),
                     false, //siteMenu
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.customSearch != null? Arrays.asList(this.customSearch): null
+                    this.customSearch != null? Arrays.asList(this.customSearch): null,
+                    this.gcToolsModal        
                 ));        
     }
     
@@ -1786,7 +1815,7 @@ public abstract class AbstractCoreBean {
         
         //For v4.0.26.x we have to render this section differently depending on the theme, 
         //GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render it as a List of Links. 
-        if (this.getTheme().toLowerCase().equals("gcweb")) {
+        if (isThemeGcWeb()) {
             appTop = new AppTop(
                     this.getCdtsCdnEnv(),
                     JsonValueUtils.getNonEmptyString(this.getSubTheme()),
@@ -1821,7 +1850,8 @@ public abstract class AbstractCoreBean {
                     this.showPreContent,
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.buildIntranetTitleList()
+                    this.buildIntranetTitleList(),
+                    this.gcToolsModal
                     );
         }
 
@@ -1994,5 +2024,13 @@ public abstract class AbstractCoreBean {
     
     private String getRenderCdnEnvironment() {
         return gson.toJson(new CdnEnvironment(this.getCdtsCdnEnv()));
+    }
+    
+    /**
+     * Checks the Theme
+     * @return true if theme is gcweb
+     */
+    public boolean isThemeGcWeb() {
+        return this.getTheme().equalsIgnoreCase(Themes.GCWEB.toString());
     }
 }

@@ -1,5 +1,6 @@
 package goc.webtemplate.component.abstractcorebeantest;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -23,5 +24,27 @@ public class RenderTransactionalTopTest {
         
         assertTrue(!sut.getRenderTransactionalTop().contains("\"customSearch\":"),
         		"getRenderTransactionalTop: CustomSearch should not be rendered when not specified.");
+    }
+    
+    @Test
+    public void testGcToolsModalRendersInIntranet() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+        
+        sut.setTheme("gcintranet");
+        sut.setGcToolsModal(true);
+        
+        assertTrue(sut.getRenderTransactionalTop().contains("\"GCToolsModal\":true"));
+    }
+    
+    @Test
+    public void testGcToolsModalThrowsExceptionInGcWeb() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+        
+        sut.setTheme("gcweb");
+        sut.setGcToolsModal(true);
+        
+        assertThrows(UnsupportedOperationException.class, () -> { 
+            sut.getRenderTransactionalTop(); 
+        });
     }
 }

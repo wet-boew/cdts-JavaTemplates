@@ -3,6 +3,8 @@ package goc.webtemplate.component.jsonentities;
 import java.io.Serializable;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.CustomSearch;
 import goc.webtemplate.IntranetTitle;
@@ -25,6 +27,9 @@ public class Top implements Serializable {
     private List<Breadcrumb>    breadcrumbs;
     private String              localPath;
     private boolean             siteMenu;
+    
+    @SerializedName("GCToolsModal")
+    private boolean             gcToolsModal;
     /**
      * Must be true if there is a left section/left side menu, otherwise must be false.
      */
@@ -36,7 +41,7 @@ public class Top implements Serializable {
 
     public Top(String cdnEnv, String subTheme, List<IntranetTitle> intranetTitle, boolean search, List<LanguageLink> lngLinks,
             boolean showPreContent, List<Breadcrumb> breadcrumbs, String localPath, boolean siteMenu,
-            boolean topSecMenu, List<CustomSearch> customSearch) {
+            boolean topSecMenu, List<CustomSearch> customSearch, boolean gcToolsModal) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.intranetTitle = intranetTitle;
@@ -48,6 +53,7 @@ public class Top implements Serializable {
         this.siteMenu = siteMenu;
         this.topSecMenu = topSecMenu;
         this.customSearch = customSearch;
+        this.gcToolsModal = gcToolsModal;
     }
 
     public String getCdnEnv() {
@@ -137,4 +143,12 @@ public class Top implements Serializable {
     public void setCustomSearch(List<CustomSearch> customSearch) {
         this.customSearch = customSearch;
     }    
+    
+    public boolean getGcToolsModal() {
+        return gcToolsModal;
+    }
+    
+    public void setGcToolsModal(boolean value) {
+        this.gcToolsModal = value;
+    }
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.CustomSearch;
 import goc.webtemplate.IntranetTitle;
@@ -209,6 +211,8 @@ public class AppTop implements Serializable {
         
         private List<IntranetTitle>          intranetTitle;
         
+        @SerializedName("GCToolsModal")
+        private boolean                      gcToolsModal;
         
         public AppTopGCIntranet()
         {
@@ -217,13 +221,14 @@ public class AppTop implements Serializable {
         public AppTopGCIntranet(String cdnEnv, String subTheme, String localPath, List<Link> appName, String menuPath,
                 List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
                 boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu, 
-                List<IntranetTitle> intranetTitle) {
+                List<IntranetTitle> intranetTitle, boolean gcToolsModal) {
             
             super(cdnEnv, subTheme, localPath, appName, menuPath,
                     menuLinks, lngLinks, signIn, signOut, appSettings,
                     search, breadcrumbs, showPreContent, customSearch, topSecMenu);
             
             this.intranetTitle = intranetTitle;
+            this.gcToolsModal = gcToolsModal;
         }
         
         public List<IntranetTitle> getIntranetTitle() {
@@ -232,6 +237,14 @@ public class AppTop implements Serializable {
 
         public void setIntranetTitle(List<IntranetTitle> intranetTitle) {
             this.intranetTitle = intranetTitle;
+        }
+        
+        public boolean getGcToolsModal() {
+            return gcToolsModal;
+        }
+        
+        public void setGcToolsModal(boolean value) {
+            this.gcToolsModal = value;
         }
     }    
 }

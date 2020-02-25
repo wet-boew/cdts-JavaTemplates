@@ -98,6 +98,9 @@
     <target depends="clean,init" name="package-jsp">
         <create-project-package project-type="jsp" />
     </target>
-    <target depends="package-jsp" name="packages">
+    <target depends="clean,init" name="package-spring">
+        <create-project-package project-type="spring" />
+    </target>
+    <target depends="package-jsp,package-spring" name="packages">
     </target>
 </project>

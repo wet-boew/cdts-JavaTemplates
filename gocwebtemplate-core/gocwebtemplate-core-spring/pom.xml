@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>gocwebtemplate-core-spring</artifactId>
+	<packaging>jar</packaging>
+
+	<name>gocwebtemplate-core-spring</name>
+	<description>GoC WebTemplate Core Library - Spring/Thymeleaf implementation</description>
+
+	<parent>
+		<groupId>ca.gc.gocwebtemplate</groupId>
+		<artifactId>gocwebtemplate-core</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+    <dependencyManagement>
+        <!-- Load/import Spring-boot versions -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <!-- <version>${springboot.version}</version>-->
+                <version>2.2.1.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+	<dependencies>
+	    <dependency>
+	      <groupId>${project.groupId}</groupId>
+	      <artifactId>gocwebtemplate-core-base</artifactId>
+	      <version>${project.version}</version>
+	    </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>  
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>

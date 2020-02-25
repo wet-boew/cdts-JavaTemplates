@@ -53,6 +53,7 @@
         <property name="mvn.executable" value="cmd" />
         <property name="mvn.args" value="/c" />
         <property name="mvn.path" value="" />
+	 <property name="mvn.defs" value="" />
     </target>
     <target name="mvn_unix_setup" if="isUnix">
         <property name="mvn.executable" value="sh" />
@@ -85,7 +86,10 @@
     <target depends="clean,init" name="create-archetype-project-jsp">
         <create-archetype-project project-name="gocwebtemplate-sample-jsp" />
     </target>
-    <target depends="create-archetype-project-jsp" name="create-archetype-projects">
+	<target depends="clean,init" name="create-archetype-project-spring">
+        <create-archetype-project project-name="gocwebtemplate-sample-spring" />
+    </target>
+    <target depends="create-archetype-project-jsp,create-archetype-project-spring" name="create-archetype-projects">
     </target>
     
     <target depends="create-archetype-project-jsp" name="maven-package-jsp">
@@ -94,7 +98,13 @@
             <param name="p_goals" value="clean package" />
         </antcall>
     </target>
-    <target depends="maven-package-jsp" name="maven-packages">
+    <target depends="create-archetype-project-spring" name="maven-package-spring">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_goals" value="clean package" />
+        </antcall>
+    </target>  
+    <target depends="maven-package-jsp,maven-package-spring" name="maven-packages">
     </target>
 
     <target depends="create-archetype-project-jsp" name="maven-install-jsp">
@@ -103,7 +113,13 @@
             <param name="p_goals" value="clean install" />
         </antcall>
     </target>
-    <target depends="maven-install-jsp" name="maven-installs">
+    <target depends="create-archetype-project-spring" name="maven-install-spring">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_goals" value="clean install" />
+        </antcall>
+    </target> 	
+    <target depends="maven-install-jsp,maven-install-spring" name="maven-installs">
     </target>
 
     <target depends="create-archetype-project-jsp" name="maven-deploy-jsp">
@@ -112,7 +128,13 @@
             <param name="p_goals" value="clean deploy" />
         </antcall>
     </target>
-	<target depends="maven-deploy-jsp" name="maven-deploys">
+    <target depends="create-archetype-project-spring" name="maven-deploy-spring">
+        <antcall target="run-mvn-goals">
+            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_goals" value="clean deploy" />
+        </antcall>
+    </target>  
+    <target depends="maven-deploy-jsp,maven-deploy-spring" name="maven-deploys">
     </target>
     
 </project>

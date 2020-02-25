@@ -48,8 +48,10 @@
         <transform-xml-file xslt-file="./build-setproject-version-core-pom.xslt" target-file="../gocwebtemplate-core/pom.xml" />
         <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml" />
         <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-jsp/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-spring/pom.xml" />
 
         <transform-xml-file xslt-file="./build-setproject-version-sample-pom.xslt" target-file="../gocwebtemplate-sample-jsp/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-sample-pom.xslt" target-file="../gocwebtemplate-sample-spring/pom.xml" />
     
         <copy file="./build.properties.in" tofile="./build.properties" overwrite="true" verbose="true">
             <filterset>

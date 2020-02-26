@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.MissingResourceException;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.google.gson.Gson;
 

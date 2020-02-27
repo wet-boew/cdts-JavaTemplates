@@ -213,7 +213,7 @@ public void onWebTemplateInitialize() {
 		<h2>Pre-Content</h2>
 		<p>This will be used by Principal Publisher to insert content into the pre content space of your page. By default this is ALWAYS shown on all pages. You will need authorization from the Principal Publisher to not include this content in your web asset.</p>
 		<p>If you recieve such authorization then you can turn off the pre-content programmatically by calling the <code class="wb-prettify">setShowPreContent</code> method in your custom bean class or in the cdn.properties.</p>
-		<div th:replace="/_samplelist :: samplelist"></div>
+		<div th:replace="_samplelist :: samplelist"></div>
 	</section> 
 </body>
 </html>

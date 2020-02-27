@@ -110,7 +110,7 @@ public void SessionTimeoutLogout(HttpServletRequest request, HttpServletResponse
             (All instructions are on a single line to avoid injecting whitespaces/blank lines into the response)
 	        <pre>&lt;span th:remove="tag" th:text = "${@sessiontimeoutsamplebean.sessionValidity}"&gt;&lt;/span&gt;</pre>
 	    </div>
-	<div th:replace="/_samplelist :: samplelist"></div>
+	<div th:replace="_samplelist :: samplelist"></div>
 </section> 
 </body>
 </html>

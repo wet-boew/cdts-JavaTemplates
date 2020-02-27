@@ -60,7 +60,7 @@ public class ExtendedBasePageSampleBean extends DefaultTemplateCoreBean {
 	    <h2>Values from the "ExtendedBasePage"</h2>
 	    <div>Session ID: <strong>[(${goctemplateclientbean.sessionId})]</strong></div>
 	    <div>Today's Weather: <strong>[(${goctemplateclientbean.weather})]</strong></div>
-	<div th:replace="/_samplelist :: samplelist"></div>
+	<div th:replace="_samplelist :: samplelist"></div>
 </section> 
 </body>
 </html>

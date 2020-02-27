@@ -11,7 +11,7 @@ public class PathConfig {
 	@Bean
     public SpringResourceTemplateResolver setLayoutsPath() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setPrefix("classpath:/goc_layouts/");
+        templateResolver.setPrefix("classpath:/goc/webtemplate/goc_layouts/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");

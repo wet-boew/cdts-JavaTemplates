@@ -20,4 +20,20 @@ public class SamplesPathConfig {
         
         return templateResolver;
     }
+	
+	/**
+	 * If you need to provide a customized layout, you can use the location specified in the path below
+	 */
+	@Bean
+    public SpringResourceTemplateResolver setCustomizedLayoutsPath() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setPrefix("classpath:/customized_layouts/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setOrder(3);
+        templateResolver.setCheckExistence(true);
+        
+        return templateResolver;
+    }
 }

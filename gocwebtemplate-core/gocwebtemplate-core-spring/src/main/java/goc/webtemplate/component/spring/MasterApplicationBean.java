@@ -35,6 +35,7 @@ public class MasterApplicationBean {
 					try { 
 						is = this.getClass().getResourceAsStream(filePath + "/" + wetTheme + "/" + fileName);
 						if (is == null) is = this.req.getSession().getServletContext().getResourceAsStream(filePath + "/" + wetTheme + "/" + fileName);
+						if (is == null) is = this.getClass().getResourceAsStream(Constants.STATIC_FALLBACK_FILES_INTERNAL_PATH + "/" + wetTheme + "/" + fileName);
 						isrdr = new InputStreamReader(is, "UTF-8");
 						StringBuilder sb = new StringBuilder();
 						int ch = isrdr.read();

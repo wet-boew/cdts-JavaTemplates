@@ -98,7 +98,7 @@ public abstract class AbstractCoreBean {
     //-------------------------------------------------------
     private String cdnEnvironment = this.getResourceBundleString("cdn", "cdn_environment");
     private String cdtsCdnEnv = null; // initialized in getCdtsCdnEnv
-    private String templateVersion = this.getResourceBundleString("cdn", "wettemplate_version");
+    private String templateVersion = null; // initialized in getTemplateVersion
     private String theme = null; // initialized in getTheme 
     private String subTheme = null; // initialized in getSubTheme
     private boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
@@ -441,18 +441,28 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g 4.0.17)
+     * Returns the version of the CDN files to use to build the page. (e.g v4_0_32)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
      */
     public String getTemplateVersion() {
         this.initializeOnce();
+        
+        if (this.templateVersion == null) {
+        	
+        	this.templateVersion = this.getResourceBundleString("cdn", "wettemplate_version");
+        	
+        	if (Utility.isNullOrEmpty(this.templateVersion)) {
+        		this.templateVersion = Constants.CDTS_DEFAULT_VERSION;
+        	}
+        }
+        
         return StringEscapeUtils.escapeHtml4(this.templateVersion);
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g 4.0.17)
+     * Sets the version of the CDN files to use to build the page. (e.g v4_0_32)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  

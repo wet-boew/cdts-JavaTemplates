@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{master-template}" th:with="goctemplateclientbean=${@applicationsamplebean}"> 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{application-master-template}" th:with="goctemplateclientbean=${@applicationsamplebean}"> 
 <head>
 </head>
 <body>
@@ -12,11 +12,11 @@
 		
 		<p><a rel="external" href="http://www.gcpedia.gc.ca/wiki/Content_Delivery_Network/GoC_.NET_template_guide">Web Template Documentation (GCPedia)</a></p>
 		
-		<p>This sample uses the <code class="wb-prettify">"/goc_layouts/application-master-template.html"</code> master page to demonstrate how pages using the application template are displayed and configured.</p>
+		<p>This sample uses the <code class="wb-prettify">"/goc/webtemplate/goc_layouts/application-master-template.html"</code> master page to demonstrate how pages using the application template are displayed and configured.</p>
 		
 		<div class="alert alert-warning">
 			<h2>Left Menu Variant</h2>
-			<p>There is also a left menu version of this template it's available by using the <code class="wb-prettify">/goc_layouts/application-leftmenu-master-template.html</code> layout for your page.</p>
+			<p>There is also a left menu version of this template it's available by using the <code class="wb-prettify">/goc/webtemplate/goc_layouts/application-leftmenu-master-template.html</code> layout for your page.</p>
 			<p>The Left Menu is implemented in the same way as the Left Menu for the other templates. See <a href="LeftSideMenuSample">Left Side Menu Sample</a> for details on how to implement.</p>
 		</div>
 		
@@ -26,7 +26,7 @@
     	<p>This bean is stored in the variable <strong>goctemplateclientbean</strong> which is defined in the Thymeleaf attribute <strong>th:with</strong> located in the &lt;html&gt; tag.</p>
 		<div class="wb-prettify all-pre lang-vb linenums">
 		    <pre>
-&lt;html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{master-template}" th:with="goctemplateclientbean=${@addjsandcssfilessamplebean}"&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{application-master-template}" th:with="goctemplateclientbean=${@addjsandcssfilessamplebean}"&gt;
 		    </pre>
 		</div>
 		
@@ -146,7 +146,7 @@ public void onWebTemplateInitialize() {
     //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
     //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)
     //NOTE: The menu can also be set by calling setMenuLinks(ArrayList&lt;MenuItem&gt;) instead. 
-    this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/samplecontents/mycustommenu.html" );
+    this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/mycustommenu.html" );
 //...
 }
 		    </pre>

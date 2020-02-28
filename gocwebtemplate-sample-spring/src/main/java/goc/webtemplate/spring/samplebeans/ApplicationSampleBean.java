@@ -60,7 +60,7 @@ public class ApplicationSampleBean extends DefaultTemplateCoreBean {
         //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
         //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)
         //NOTE: The menu can also be set by calling setMenuLinks(ArrayList<MenuItem>) instead. 
-        this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/samplecontents/mycustommenu.html" );
+        this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/mycustommenu.html" );
         
         this.setAppSettingsUrl("#myappsettingsurl");
         

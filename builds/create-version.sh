@@ -34,7 +34,7 @@ echo
 # ##### A chance to turn back...
 echo -e "${RED}This is what is about to happen:"
 echo "  - A 'git pull' will be performed."
-echo "  - A new branch 'b${PROJECT_VERSION}' will be created."
+echo "  - A new branch 'release-${PROJECT_VERSION}' will be created."
 echo "  - An Ant script will be launched to change the version of all projects to '${PROJECT_VERSION}-SNAPSHOT'."
 echo "  - The changes to the version will be commited."
 echo "  - The new branch will be pushed to 'origin' and locally set to track new remote branch."
@@ -53,11 +53,11 @@ fi
 set -x  # Echo executed commands to standard output
 
 git pull
-git checkout -b "b${PROJECT_VERSION}"
+git checkout -b "release-${PROJECT_VERSION}"
 ant -Dgocwebtemplate.build.version="${PROJECT_VERSION}-SNAPSHOT" -f ${VERSION_ANTSCRIPT_LOCATION}
 git commit -a -m "Preparing version branch for version ${PROJECT_VERSION}-SNAPSHOT"
-git push origin "b${PROJECT_VERSION}"
-git branch -u "origin/b${PROJECT_VERSION}"
+git push origin "release-${PROJECT_VERSION}"
+git branch -u "origin/release-${PROJECT_VERSION}"
 
 set +x # Stop echoing commands
 echo -e "${GREEN}Done. You should now be on branch 'b${PROJECT_VERSION}'.${NC}"

@@ -15,8 +15,8 @@
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
 	    </noscript>   
-        <script type="text/javascript">
-		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderRefTopForApp})]));
+        <script id="wt-scr-rt" type="text/javascript">
+            document.getElementById('wt-scr-rt').insertAdjacentHTML('afterend', wet.builder.refTop([(${goctemplateclientbean.renderRefTopForApp})]));
 		</script>
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
@@ -60,8 +60,8 @@
             defFooter.outerHTML = wet.builder.footer([(${goctemplateclientbean.renderAppFooter})]);	            
 		</script>
         <!-- Write closure template -->
-        <script type="text/javascript">
-		    document.write(wet.builder.refFooter([(${goctemplateclientbean.renderRefFooter})]));
+        <script id="wt-scr-rf" type="text/javascript">
+            document.getElementById('wt-scr-rf').insertAdjacentHTML('afterend', wet.builder.refFooter([(${goctemplateclientbean.renderRefFooter})]));
 		</script>
         [(${goctemplateclientbean.renderHtmlBodyElements})]
     </body>

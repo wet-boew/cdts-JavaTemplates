@@ -1,25 +1,91 @@
 variables:
-  JAVA_HOME: 'c:\\java\\jdk1.8.0_172'  
-  ANT_HOME: 'c:\\java\\apache-ant-1.10.4'
-  MAVEN_HOME: 'c:\\java\\apache-maven-3.5.2'
+  MAVEN_CLI_OPTS: "--settings .\\builds\\maven-config\\settings.xml --batch-mode --errors --update-snapshots -Dbuild_number=${CI_PIPELINE_ID} -Dbuild_git_commitid=${CI_COMMIT_SHA}"
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dsettings.security=${CI_PROJECT_DIR}/.m2/settings-security.xml"
+  MAVEN_PROJECT_FILE: ".\\pom.xml"
+  VERSION_ANT_SCRIPT: '.\\builds\\build-setprojectversion.xml'
+  ARCHETYPE_BUILD_ANT_SCRIPT: '.\\builds\\build-archetypes.xml'
+  EXTERNALZIP_BUILD_ANT_SCRIPT: '.\\builds\\build-release.xml'
   
-before_script:
-  - set PATH=%JAVA_HOME%\\bin;%ANT_HOME%\\bin;%MAVEN_HOME%\\bin;%PATH%
- 
 stages:
-  - testCore
-  - testSamples
-  
-testCore:
-  stage: testCore
-  script:
-    - echo "Running Maven on Core packages..."
-    - cd gocwebtemplate-core
-    - mvn --batch-mode test 
+  - prepare
+  - build
+  - test
+  - deploy
 
-testSamples:
-  stage: testSamples
+# Base for Maven repo caching
+.maven_repo_cache:
+  cache:
+    # Setting a "global" cache... to back to per-branch cache uncomment following line:
+    #key: ${CI_COMMIT_REF_SLUG}
+    key: maven-global-cache
+    paths:
+      - .m2
+
+# Base for Java tooling
+.java_job:
+  tags:
+    # Requires Runner defined to use Powershell
+    - ps
+    # Requires JAVA_HOME, MAVEN_HOME and ANT_HOME defined
+    - java
+  variables:
+    # Powershell doesn't stop on error by default, this should tell it to.
+    ErrorActionPreference: "stop"
+  before_script:
+    - '$Env:Path = "$Env:JAVA_HOME\bin;$Env:MAVEN_HOME\bin;$Env:ANT_HOME\bin;" + $Env:Path'
+  
+# Base for any auto-deployment
+.deploy:
+  tags:
+    - ps
+    - java
+    # Requires SECRETS_PATH defined (and pointing to a directory containing settings-security.xml)
+    - secrets
+  before_script:
+    - if ([string]::IsNullOrWhiteSpace($Env:MAVEN_DEPLOY_CREDS_USERNAME) -or [string]::IsNullOrWhiteSpace($Env:MAVEN_DEPLOY_CREDS_PASSWORD_ENC)) {throw "Variables needed for deployment are blank. Could this be because this pipeline is running for a non-protected branch?  (see gitlab doc about protected variables)"}
+    - '$Env:Path = "$Env:JAVA_HOME\bin;$Env:MAVEN_HOME\bin;$Env:ANT_HOME\bin;" + $Env:Path'
+    - if (Test-Path '.m2') {copy "$env:SECRETS_PATH\settings-security.xml" .\.m2\settings-security.xml}
+  after_script:
+    - if (Test-Path '.m2\settings-security.xml') {del .\.m2\settings-security.xml}
+    # Extra cleanup of files generated during build/deployment of archetypes
+    # Because powershell is such a powerful piece of... eh... tool. It can't handle our filenames, so 1- cleanup here because gitlab can't and 2- can't use the following commands, must rely on cmd.exe
+    #- Remove-Item -Path .\builds\target\gocwebtemplate-sample-jsp-archetype -Recurse -Force
+    #- Remove-Item -Path .\builds\target\gocwebtemplate-sample-spring-archetype -Recurse -Force
+    - if (Test-Path '.\builds\target\gocwebtemplate-sample-jsp-archetype') {cmd /c rmdir /s /q .\builds\target\gocwebtemplate-sample-jsp-archetype}
+    - if (Test-Path '.\builds\target\gocwebtemplate-sample-spring-archetype') {cmd /c rmdir /s /q .\builds\target\gocwebtemplate-sample-spring-archetype}
+
+# Base for release auto-deployment
+.deploy_release:
+  extends:
+    - .deploy
+  rules:
+      # Might be a little strict, but release deployment will only be if version variable matches the regex (ie 9.9.9)
+      # (and also only if piepline was triggered through Gitlab's web UI)
+    - if: $CI_PIPELINE_SOURCE == "web" && $DEPLOY_VERSION != null && $DEPLOY_VERSION =~ /^[0-9]+\.[0-9]+\.[0-9]+$/
+
+# Base for development version auto-deployment
+.deploy_snapshot:
+  extends:
+    - .deploy
+  rules:
+      # Snapshot deployment only for when snapshot version is specified
+      # (and also only if piepline was triggered through Gitlab's web UI)
+    - if: $CI_PIPELINE_SOURCE == "web" && $DEPLOY_VERSION != null && $DEPLOY_VERSION =~ /^.*-SNAPSHOT$/
+
+# Include our "stage ymls"      
+include:
+  - local: '.gitlab/ci/prepare.gitlab-ci.yml'
+  - local: '.gitlab/ci/build.gitlab-ci.yml'
+  - local: '.gitlab/ci/test.gitlab-ci.yml'
+  - local: '.gitlab/ci/deploy.gitlab-ci.yml'
+
+# After a release deployment: Create tag
+tag:
+  stage: .post
+  extends: .deploy_release
+  tags:
+    - ps
+    - curl
+    - secrets
   script:
-    - echo "Running Maven on Sample packages..."
-    - cd gocwebtemplate-sample-jsp
-    - mvn --batch-mode test 
+    - 'curl.exe --request POST --header "PRIVATE-TOKEN: $env:GCCODE_API_TOKEN" "https://gccode.ssc-spc.gc.ca/api/v4/projects/$env:CI_PROJECT_ID/repository/tags?tag_name=$env:DEPLOY_VERSION&ref=master&release_description=Automated+Release++%0D%0APlease+review+the+%5BCHANGELOG%5D%28CHANGELOG.md%29+for+details+of+the+release."'

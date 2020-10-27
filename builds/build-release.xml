@@ -47,19 +47,19 @@
             <mkdir dir="${package.targetdir}/tmplib" />
             <mkdir dir="${package.targetdir}/${package.project.prefix}@{project-type}/local-maven-repo" />
 	        <antcall target="run-mvn-goals">
-	            <param name="basedir" value="${basedir}/../${package.project.prefix}@{project-type}" />            
+	            <param name="p_exec_basedir" value="${basedir}/../${package.project.prefix}@{project-type}" />
 	            <param name="p_goals" value="-DoutputDirectory=${basedir}/${package.targetdir}/tmplib -DincludeGroupIds=ca.gc.gocwebtemplate -Dmdep.stripVersion=true -DoverWriteIfNewer=true dependency:copy-dependencies" />
 	        </antcall>
             <antcall target="run-mvn-goals">
-                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
                 <param name="p_goals" value="-Dfile=../../../gocwebtemplate-core/pom.xml -DpomFile=../../../gocwebtemplate-core/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
             </antcall>
             <antcall target="run-mvn-goals">
-                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
                 <param name="p_goals" value="-Dfile=./gocwebtemplate-core-@{project-type}.jar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-@{project-type}/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
             </antcall>
             <antcall target="run-mvn-goals">
-                <param name="basedir" value="${basedir}/${package.targetdir}/tmplib" />            
+                <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
                 <param name="p_goals" value="-Dfile=./gocwebtemplate-core-base.jar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
             </antcall>
 	        
@@ -75,15 +75,17 @@
     <target name="mvn_windows_setup" if="isWindows">
         <property name="mvn.executable" value="cmd" />
         <property name="mvn.args" value="/c" />
+	    <property name="mvn.defs" value="--settings ${basedir}/maven-config/settings.xml --batch-mode --errors --update-snapshots" />
     </target>
     <target name="mvn_unix_setup" if="isUnix">
         <property name="mvn.executable" value="sh" />
         <property name="mvn.args" value="-c" />
+	    <property name="mvn.defs" value="--settings ${basedir}/maven-config/settings.xml --batch-mode --errors --update-snapshots" />
     </target>
     <target name="run-mvn-goals" depends="mvn_windows_setup, mvn_unix_setup">
-        <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
-        <exec dir="${basedir}" executable="${mvn.executable}">
-            <arg line="${mvn.args} 'mvn ${p_goals}'" />
+        <echo message="Executing Maven from [${p_exec_basedir}] with arguments [${p_goals}]..." />
+        <exec dir="${p_exec_basedir}" executable="${mvn.executable}">
+            <arg line="${mvn.args} 'mvn ${mvn.defs} ${p_goals}'" />
         </exec>
     </target>    
 

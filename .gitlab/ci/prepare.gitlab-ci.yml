@@ -1,0 +1,16 @@
+version_set:
+  stage: prepare
+  extends: 
+    - .java_job
+  allow_failure: false
+  only:
+    variables:
+      - $DEPLOY_VERSION != null
+  script:    
+    - ant -buildfile "$env:VERSION_ANT_SCRIPT" "-Dgocwebtemplate.build.version=$env:DEPLOY_VERSION"
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - builds/build.properties
+      - .\**\pom.xml

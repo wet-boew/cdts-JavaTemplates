@@ -53,7 +53,7 @@
         <property name="mvn.executable" value="cmd" />
         <property name="mvn.args" value="/c" />
         <property name="mvn.path" value="" />
-	 <property name="mvn.defs" value="" />
+	    <property name="mvn.defs" value="--settings ${basedir}/maven-config/settings.xml --batch-mode --errors --update-snapshots" />
     </target>
     <target name="mvn_unix_setup" if="isUnix">
         <property name="mvn.executable" value="sh" />
@@ -65,12 +65,12 @@
 		  If running this scripts yields errors from Maven complaning about 
 		  "java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty"
 		  it probably means this path is wrong.  -->
-	<property name="mvn.defs" value="-Djavax.net.ssl.trustStore=/u01/certs/custom_cacerts.jks" />
+	    <property name="mvn.defs" value="-Djavax.net.ssl.trustStore=/u01/certs/custom_cacerts.jks" />
     </target>
     <target name="run-mvn-goals" depends="mvn_windows_setup, mvn_unix_setup">
-        <echo message="Executing Maven from [${basedir}] with arguments [${p_goals}]..." />
-	<echo message="${mvn.args} 'mvn ${mvn.defs} ${p_goals}'" />
-        <exec dir="${basedir}" executable="${mvn.executable}">
+        <echo message="Executing Maven from [${p_exec_basedir}] with arguments [${p_goals}]..." />
+        <echo message="${mvn.args} 'mvn ${mvn.defs} ${p_goals}'" />
+        <exec dir="${p_exec_basedir}" executable="${mvn.executable}">
             <arg line="${mvn.args} '${mvn.path}mvn ${mvn.defs} ${p_goals}'" />
         </exec>
     </target>    
@@ -94,13 +94,13 @@
     
     <target depends="create-archetype-project-jsp" name="maven-package-jsp">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />
             <param name="p_goals" value="clean package" />
         </antcall>
     </target>
     <target depends="create-archetype-project-spring" name="maven-package-spring">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />
             <param name="p_goals" value="clean package" />
         </antcall>
     </target>  
@@ -109,13 +109,13 @@
 
     <target depends="create-archetype-project-jsp" name="maven-install-jsp">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />
             <param name="p_goals" value="clean install" />
         </antcall>
     </target>
     <target depends="create-archetype-project-spring" name="maven-install-spring">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />
             <param name="p_goals" value="clean install" />
         </antcall>
     </target> 	
@@ -124,13 +124,13 @@
 
     <target depends="create-archetype-project-jsp" name="maven-deploy-jsp">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-jsp-archetype" />
             <param name="p_goals" value="clean deploy" />
         </antcall>
     </target>
     <target depends="create-archetype-project-spring" name="maven-deploy-spring">
         <antcall target="run-mvn-goals">
-            <param name="basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />            
+            <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/gocwebtemplate-sample-spring-archetype" />
             <param name="p_goals" value="clean deploy" />
         </antcall>
     </target>  

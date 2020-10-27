@@ -46,6 +46,7 @@
     <target depends="clean,init" name="set-project-version">
     
         <transform-xml-file xslt-file="./build-setproject-version-core-pom.xslt" target-file="../gocwebtemplate-core/pom.xml" />
+        <transform-xml-file xslt-file="./build-setproject-version-core-pom.xslt" target-file="../pom.xml" />
         <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml" />
         <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-jsp/pom.xml" />
         <transform-xml-file xslt-file="./build-setproject-version-corechild-pom.xslt" target-file="../gocwebtemplate-core/gocwebtemplate-core-spring/pom.xml" />

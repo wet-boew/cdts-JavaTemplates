@@ -1,19 +1,15 @@
-# by solution, always
-
-.compile
+build_default:
   stage: build
-  # before_script:
-  #   - # add any global steps here
-  # after_script:
-  #   - # removed any global added secrets here
+  extends: 
+    - .maven_repo_cache
+    - .java_job
+  script:
+    - Invoke-Expression ('mvn ' + $env:MAVEN_CLI_OPTS + ' --file "$env:MAVEN_PROJECT_FILE" clean compile')
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
   artifacts:
     expire_in: 1 hour
-
-compile_slnX:
-  extends: .compile
-  script:
-    - # compile the solution
-  artifacts:
     paths:
-      - # Add paths to all the comiled assets that are used for tests or deployment
-  
+      - .\**\target
+      # Adding the following two lines for the test job to have even when prepare does not run
+      - builds/build.properties
+      - .\**\pom.xml

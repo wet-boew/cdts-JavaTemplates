@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ca.gc.gocwebtemplate</groupId>
+  <artifactId>gocwebtemplate</artifactId>
+  <version>2.0.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <name>gocwebtemplate</name>
+  <description>Top-level gocwebtemplate project</description>
+  
+  <organization>
+    <name>ESDC - Solution Design Services</name>
+  </organization>
+  <issueManagement>
+    <url>https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/issues</url>
+  </issueManagement>
+
+  <modules>
+    <module>gocwebtemplate-core</module>
+    <module>gocwebtemplate-sample-jsp</module>
+    <module>gocwebtemplate-sample-spring</module>
+  </modules>
+
+  <distributionManagement>
+    <repository>    
+        <id>central</id> 
+        <name>jade-repos.intra.dev-releases</name>    
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-release-local</url>   
+    </repository>   
+    <snapshotRepository>    
+        <id>snapshots</id> 
+        <name>jade-repos.intra.dev-snapshots</name>   
+        <url>https://jade-repos.intra.dev/artifactory/ca-gc-sds-libs-snapshot-local</url>  
+    </snapshotRepository>
+  </distributionManagement>
+</project>

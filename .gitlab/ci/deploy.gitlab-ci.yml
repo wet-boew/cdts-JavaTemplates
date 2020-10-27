@@ -1,0 +1,41 @@
+deploy_release:
+  stage: deploy
+  extends: 
+    - .maven_repo_cache
+    - .java_job
+    - .deploy_release
+  dependencies:
+    - version_set
+    - test_default    
+  script:
+    # (doing a "clean" to really rebuild everything)
+    - Invoke-Expression ('mvn ' + $env:MAVEN_CLI_OPTS + ' --file "$env:MAVEN_PROJECT_FILE" clean deploy')
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
+    # (build/deploy the archetypes)
+    - ant -buildfile "$env:ARCHETYPE_BUILD_ANT_SCRIPT"
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
+    # This is a release! Build ZIP files for external clients
+    - ant -buildfile "$env:EXTERNALZIP_BUILD_ANT_SCRIPT"
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - .\builds\target\gocwebtemplate-*-${DEPLOY_VERSION}.zip
+
+    
+deploy_snapshot:
+  stage: deploy
+  extends: 
+    - .maven_repo_cache
+    - .java_job
+    - .deploy_snapshot
+  dependencies:
+    - version_set
+    - test_default    
+  script:
+    # (doing a "clean" to really rebuild everything)
+    - Invoke-Expression ('mvn ' + $env:MAVEN_CLI_OPTS + ' --file "$env:MAVEN_PROJECT_FILE" clean deploy')
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
+    # (build/deploy the archetypes)
+    - ant -buildfile "$env:ARCHETYPE_BUILD_ANT_SCRIPT"
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}

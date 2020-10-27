@@ -1,0 +1,96 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!--<localRepository>${user.home}/.m2/repository</localRepository>-->
+    <interactiveMode/>
+    <usePluginRegistry/>
+    <offline/>
+    <pluginGroups/>
+    <servers>
+        <server>
+            <id>central</id>
+            <!-- Guide for encryption of passwords: http://maven.apache.org/guides/mini/guide-encryption.html -->
+            <username>${env.MAVEN_DEPLOY_CREDS_USERNAME}</username>
+            <password>${env.MAVEN_DEPLOY_CREDS_PASSWORD_ENC}</password>
+        </server>
+        <server>
+            <id>snapshots</id>
+            <!-- Guide for encryption of passwords: http://maven.apache.org/guides/mini/guide-encryption.html -->
+            <username>${env.MAVEN_DEPLOY_CREDS_USERNAME}</username>
+            <password>${env.MAVEN_DEPLOY_CREDS_PASSWORD_ENC}</password>
+        </server>
+    </servers>
+    <mirrors/>
+    <proxies>
+        <proxy>
+            <id>myhttpproxy</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>proxy.prv</host>
+            <port>80</port>
+            <nonProxyHosts>*.dev</nonProxyHosts>
+        </proxy>
+        <proxy>
+            <id>myhttpsproxy</id>
+            <active>true</active>
+            <protocol>https</protocol>
+            <host>proxy.prv</host>
+            <port>80</port>
+            <nonProxyHosts>*.dev</nonProxyHosts>
+        </proxy>
+    </proxies>
+    <profiles>
+        <profile>
+            <id>sade-artifactory</id>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <id>central</id>
+                    <name>SADE2 Maven Libs Repo</name>
+                    <url>https://jade-repos.intra.dev/artifactory/libs-release</url>
+                </repository>
+                <repository>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <id>snapshots</id>
+                    <name>SADE2 Maven Libs Snapshot Repo</name>
+                    <url>https://jade-repos.intra.dev/artifactory/libs-snapshot</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <id>central</id>
+                    <name>SADE2 Maven Plugins Repo</name>
+                    <url>https://jade-repos.intra.dev/artifactory/plugins-release</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <id>snapshots</id>
+                    <name>SADE2 Maven Plugins Snapshot Repo</name>
+                    <url>https://jade-repos.intra.dev/artifactory/plugins-snapshot</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>sade-artifactory</activeProfile>
+    </activeProfiles>
+</settings>

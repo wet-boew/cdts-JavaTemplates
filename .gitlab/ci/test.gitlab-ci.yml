@@ -1,28 +1,13 @@
-# per project / test type;
-
-.test
+test_default:
   stage: test
+  extends: 
+    - .maven_repo_cache
+    - .java_job
   dependencies:
-    - compile_slnX
-
-.unit_test
-  extends: .test
-
-.codequality
-  extends: .test
-
-unit_test_projX
-  extends: .unit_test
+    - build_default
   script:
-    - # execute the tests
+    - Invoke-Expression ('mvn ' + $env:MAVEN_CLI_OPTS + ' --file "$env:MAVEN_PROJECT_FILE" test')
+    - if ($lastexitcode -ne 0) {throw "Shell command failed"}
   artifacts:
     reports:
-      junit: # path to the junit export of the test results
-
-codequality_projX
-  extends: .codequality
-  script:
-    - # execute the tests
-  artifacts:
-    reports:
-      codequality: # path to json report https://github.com/codeclimate/spec/blob/master/SPEC.md#data-types
+      junit: .\**\target\surefire-reports\TEST-*.xml

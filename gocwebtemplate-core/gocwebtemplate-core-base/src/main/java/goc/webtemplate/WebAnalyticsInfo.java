@@ -23,6 +23,7 @@ public class WebAnalyticsInfo implements Serializable {
     private transient boolean active; //Gson will ignore transient fields, equivalent to @Expose(serialize = false, deserialize = false) 
     private EnvironmentOption environment;
     private int version;
+    private String custom;
     
     
     public WebAnalyticsInfo() {
@@ -37,6 +38,12 @@ public class WebAnalyticsInfo implements Serializable {
         this.active = active;
         this.environment = environment;
         this.version = version;
+        this.custom = null;
+    }
+    
+    public WebAnalyticsInfo(boolean active, String custom) {
+        this.active = active;
+        this.custom = custom;
     }
 
     
@@ -89,5 +96,22 @@ public class WebAnalyticsInfo implements Serializable {
      */
     public void setVersion(int version) {
         this.version = version;
+    }
+    
+    /**
+     * Returns the custom script that will be used for version 3 of analytics.
+     * @return A string indicating the analytics script.
+     */
+    public String getCustom() {
+        return this.custom;
+    }
+    
+    /**
+     * Sets the script used for analytics.  
+     * 
+     * @param custom Currently used for version 3 of analytics.
+     */
+    public void setCustom(String custom) {
+        this.custom = custom;
     }
 }

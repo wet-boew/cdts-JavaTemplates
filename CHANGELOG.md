@@ -2,6 +2,13 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.1.0
+
+- Adds support for Adobe Analytics Version 3
+- Temporarily re-introduced document.write to fix a regression (issue will be address in upcoming release)
+- Updated static fallback files
+- [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.39 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.39
+
 ## v2.0.1
 
 - Bug fixes (#120)

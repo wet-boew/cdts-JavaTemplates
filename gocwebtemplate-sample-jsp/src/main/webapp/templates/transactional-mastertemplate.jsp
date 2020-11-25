@@ -35,8 +35,8 @@
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'refTop.html')}" />
         </noscript>
         <!-- Write closure template -->
-        <script id="wt-scr-rt" type="text/javascript">
-            document.getElementById('wt-scr-rt').insertAdjacentHTML('afterend', wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefTop" />));
+        <script type="text/javascript">
+            document.write(wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefTop" />));
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
@@ -79,8 +79,8 @@
             defFooter.outerHTML = wet.builder.footer(<s:property escapeHtml="false" value="#goctemplateclientbean.renderTransactionalFooter" />);
         </script>
         <!-- Write closure template -->
-        <script id="wt-scr-rf" type="text/javascript">
-            document.getElementById('wt-scr-rf').insertAdjacentHTML('afterend', wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />));
+        <script type="text/javascript">
+            document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />));
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>

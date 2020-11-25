@@ -35,8 +35,8 @@
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splashTop.html')}" />
         </noscript>
         <!-- Write closure template -->
-        <script id="wt-scr-rt" type="text/javascript">
-            document.getElementById('wt-scr-rt').insertAdjacentHTML('afterend', wet.builder.splashTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashTop" />));
+        <script type="text/javascript">
+            document.write(wet.builder.splashTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashTop" />));
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->

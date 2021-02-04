@@ -2,6 +2,10 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.1.1
+
+- Added attached artifact "uberjar" to gocwebtemplate-core-spring project (see pom.xml for contents).
+
 ## v2.1.0
 
 - Adds support for Adobe Analytics Version 3

@@ -50,6 +50,7 @@
 	            <param name="p_exec_basedir" value="${basedir}/../${package.project.prefix}@{project-type}" />
 	            <param name="p_goals" value="-DoutputDirectory=${basedir}/${package.targetdir}/tmplib -DincludeGroupIds=ca.gc.gocwebtemplate -Dmdep.stripVersion=true -DoverWriteIfNewer=true dependency:copy-dependencies" />
 	        </antcall>
+
             <antcall target="run-mvn-goals">
                 <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
                 <param name="p_goals" value="-Dfile=../../../gocwebtemplate-core/pom.xml -DpomFile=../../../gocwebtemplate-core/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
@@ -62,7 +63,7 @@
                 <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
                 <param name="p_goals" value="-Dfile=./gocwebtemplate-core-base.jar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-base/pom.xml -DlocalRepositoryPath=../${package.project.prefix}@{project-type}/local-maven-repo install:install-file" />
             </antcall>
-	        
+
 	        <!-- Zip it up! -->
             <zip destfile="${package.targetdir}/${package.project.prefix}@{project-type}-${gocwebtemplate.build.version}.zip" defaultexcludes="yes">
                 <fileset dir="${package.targetdir}">
@@ -72,6 +73,24 @@
         </sequential>
     </macrodef>
     
+    <macrodef name="get-spring-uberjar">
+        <sequential>
+            <echo message="Copy 'uberjar' for spring project..." />
+            <mkdir dir="${package.targetdir}/tmplib" />
+            <mkdir dir="${package.targetdir}/${package.project.prefix}spring/local-maven-repo" />
+
+            <!-- Copy the self-contained "uberjar" (will be zipped in create-project-package) -->
+	        <antcall target="run-mvn-goals">
+	            <param name="p_exec_basedir" value="${basedir}/../${package.project.prefix}spring" />
+	            <param name="p_goals" value="-DoutputDirectory=${basedir}/${package.targetdir}/tmplib -DincludeGroupIds=ca.gc.gocwebtemplate -Dclassifier=uberjar -Dmdep.stripVersion=true -DoverWriteIfNewer=true dependency:copy-dependencies" />
+	        </antcall>
+            <antcall target="run-mvn-goals">
+                <param name="p_exec_basedir" value="${basedir}/${package.targetdir}/tmplib" />
+                <param name="p_goals" value="-Dfile=./gocwebtemplate-core-spring-uberjar.jar -Dclassifier=uberjar -DpomFile=../../../gocwebtemplate-core/gocwebtemplate-core-spring/pom.xml -DlocalRepositoryPath=../${package.project.prefix}spring/local-maven-repo install:install-file" />
+            </antcall>
+        </sequential>
+    </macrodef>
+
     <target name="mvn_windows_setup" if="isWindows">
         <property name="mvn.executable" value="cmd" />
         <property name="mvn.args" value="/c" />
@@ -101,6 +120,7 @@
         <create-project-package project-type="jsp" />
     </target>
     <target depends="clean,init" name="package-spring">
+        <get-spring-uberjar />
         <create-project-package project-type="spring" />
     </target>
     <target depends="package-jsp,package-spring" name="packages">

@@ -14,15 +14,17 @@
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'serverRefTop.html')})]
-	    </noscript>   
-        <script type="text/javascript">
-		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderServerRefTop})]));
-		</script>
+	    </noscript>  
+        <!--/* A script will not be executed using insertAdjacentHTML. Take a look at how refFooter is rendered if a script is added to refTop. */--> 
+        <script id="wt-scr-rt" type="text/javascript">
+            document.getElementById('wt-scr-rt').insertAdjacentHTML('afterend', wet.builder.refTop([(${goctemplateclientbean.renderServerRefTop})]));
+        </script>
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
     </head>
     <body vocab="http://schema.org/" typeof="WebPage">
     	[(${goctemplateclientbean.renderSessionTimeoutControl})]
+    	[(${goctemplateclientbean.renderTemplateJavascript})]
     	<div id="def-top">
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'serverTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
@@ -47,9 +49,12 @@
             defFooter.outerHTML = wet.builder.footer([(${goctemplateclientbean.renderServerBottom})]);	            
 		</script>
         <!-- Write closure template -->
-           <script type="text/javascript">
-		    document.write(wet.builder.refFooter([(${goctemplateclientbean.renderServerRefFooter})]));
-		</script>
+        <script id="wt-scr-rf" type="text/javascript">
+            var s0 = document.getElementById("wt-scr-rf");	
+            var elem = document.createElement("span");  
+            elem.innerHTML = wet.builder.refFooter([(${goctemplateclientbean.renderServerRefFooter})]);
+            s0.parentNode.insertBefore(nodeScriptReplace(elem), s0);
+        </script>
         [(${goctemplateclientbean.renderHtmlBodyElements})]
     </body>
 </html>

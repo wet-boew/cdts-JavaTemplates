@@ -35,8 +35,9 @@
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'refTop.html')}" />
         </noscript>
         <!-- Write closure template -->
-        <script type="text/javascript">
-            document.write(wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefTop" />));
+        <%-- A script will not be executed using insertAdjacentHTML. Take a look at how refFooter is rendered if a script is added to refTop. --%>
+        <script id="wt-scr-rt" type="text/javascript">
+            document.getElementById('wt-scr-rt').insertAdjacentHTML('afterend', wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefTop" />));
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
@@ -79,8 +80,11 @@
             defFooter.outerHTML = wet.builder.footer(<s:property escapeHtml="false" value="#goctemplateclientbean.renderTransactionalFooter" />);
         </script>
         <!-- Write closure template -->
-        <script type="text/javascript">
-            document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />));
+        <script id="wt-scr-rf" type="text/javascript">
+            var s0 = document.getElementById("wt-scr-rf");	
+            var elem = document.createElement("span");  
+            elem.innerHTML = wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />);
+            s0.parentNode.insertBefore(nodeScriptReplace(elem), s0);	
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>

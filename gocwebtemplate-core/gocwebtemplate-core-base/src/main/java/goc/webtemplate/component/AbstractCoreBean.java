@@ -2036,6 +2036,36 @@ public abstract class AbstractCoreBean {
         return gson.toJson(new CdnEnvironment(this.getCdtsCdnEnv()));
     }
     
+    public String getRenderTemplateJavascript() {
+    	/*
+    	 function nodeScriptReplace(node) {	 
+         if ( node.tagName === 'SCRIPT' ) { //<<< weak point?  maybe: node.tagName !== null && node.tagName.toUpperCase() === 'SCRIPT' 
+             node.parentNode.replaceChild( nodeScriptClone(node) , node );
+         }
+         else {
+             var i = -1, children = node.childNodes;
+             while ( ++i < children.length ) nodeScriptReplace( children[i] );
+         }
+
+         return node;
+    	 }
+    	 function nodeScriptClone(node){
+         var script  = document.createElement("script");
+         script.text = node.innerHTML;
+
+         var i = -1;
+         var attrs = node.attributes
+         var attr;
+         while ( ++i < attrs.length ) script.setAttribute( (attr = attrs[i]).name, attr.value );
+     
+         return script;
+    	 }
+    	 */
+        	//return "<script type=\"text/javascript\">function nodeScriptReplace(node){if ( node.tagName==='SCRIPT' ){node.parentNode.replaceChild( nodeScriptClone(node) , node );}else{var i=-1, children=node.childNodes; while ( ++i < children.length ) nodeScriptReplace( children[i] );}return node;}function nodeScriptClone(node){var script=document.createElement(\"script\"); script.text=node.innerHTML; var i=-1; var attrs=node.attributes var attr; while ( ++i < attrs.length ) script.setAttribute( (attr=attrs[i]).name, attr.value ); return script;}</script>";
+    	return "<script>function nodeScriptReplace(e){if(\"SCRIPT\"===e.tagName)e.parentNode.replaceChild(nodeScriptClone(e),e);else for(var t=-1,n=e.childNodes;++t<n.length;)nodeScriptReplace(n[t]);return e}function nodeScriptClone(e){var t=document.createElement(\"script\");t.text=e.innerHTML;for(var n,r=-1,a=e.attributes;++r<a.length;)t.setAttribute((n=a[r]).name,n.value);return t}</script>";
+    	//return "<script>function nodeScriptReplace(e){if(\"SCRIPT\"===e.tagName||\"SPAN\"===e.tagName)e.parentNode.replaceChild(nodeScriptClone(e),e);else for(var t=-1,n=e.childNodes;++t<n.length;)nodeScriptReplace(n[t]);return e}function nodeScriptClone(e){var t=document.createElement(\"script\");t.text=e.innerHTML;for(var n,r=-1,a=e.attributes;++r<a.length;)t.setAttribute((n=a[r]).name,n.value);return t}</script>";
+    }
+    
     /**
      * Checks the Theme
      * @return true if theme is gcweb

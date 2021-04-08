@@ -44,6 +44,7 @@
 	</head>
 	<body vocab="http://schema.org/" typeof="WebPage">		
 		<s:property escapeHtml="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
+		<s:property escapeHtml="false" value="#goctemplateclientbean.renderTemplateJavascript" />
         <div id="def-top">
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'top-'.concat(#goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}" />

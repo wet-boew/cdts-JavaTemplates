@@ -149,6 +149,7 @@ public abstract class AbstractCoreBean {
     private FooterLink termsConditionsLink = new FooterLink();
     private WebAnalyticsInfo webAnalytics = new WebAnalyticsInfo(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.usewebanalytics"))); //will be false if not specified in config
     private boolean gcToolsModal = false;
+    private String footerPath = null;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -265,6 +266,21 @@ public abstract class AbstractCoreBean {
         }
 
         return this.cdnLocalPath;
+    }
+    
+    /**
+     * Returns the path of the custom footer
+     */
+    public String getFooterPath() {
+        this.initializeOnce();
+        return this.footerPath;
+    }
+    
+    /**
+     * Sets the path of the custom footer
+     */
+    public void setFooterPath(String footerPath) {
+        this.footerPath = footerPath;
     }
     
     //NOTE: Settign this method's visibility to "package" so it is accessible to BaseComponent.  Once BaseComponent is gone, this can go back to being private
@@ -441,7 +457,7 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v4_0_39)
+     * Returns the version of the CDN files to use to build the page. (e.g v4_0_43)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -462,7 +478,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v4_0_39)
+     * Sets the version of the CDN files to use to build the page. (e.g v4_0_43)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -1991,6 +2007,7 @@ public abstract class AbstractCoreBean {
                         this.getCdtsCdnEnv(),
                         JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                         JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                        JsonValueUtils.getNonEmptyString(this.getFooterPath()),
                         this.buildCustomFooterSections(),
                         this.buildContactLinks(),
                         JsonValueUtils.getNonEmptySingleItemLinkList(this.termsConditionsLink),

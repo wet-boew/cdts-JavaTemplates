@@ -19,6 +19,7 @@ public class AppFooter implements Serializable {
     private String              	cdnEnv; 
     private String              	subTheme;
     private String              	localPath;
+    private String              	footerPath;
     private List<IFooterSection>    footerSections;
     private List<Link>          	contactLink; //NOTE: Name not being plural is intentional/what CDTS requires
     private List<FooterLink>        termsLink;
@@ -29,12 +30,13 @@ public class AppFooter implements Serializable {
     {
     }
 
-    public AppFooter(String cdnEnv, String subTheme, String localPath,
+    public AppFooter(String cdnEnv, String subTheme, String localPath, String footerPath,
             List<IFooterSection> footerSections, List<Link> contactLink, 
             List<FooterLink> termsLink, List<FooterLink> privacyLink, boolean showFeatures) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
+        this.footerPath = footerPath;
         this.footerSections = footerSections;
         this.contactLink = contactLink;
         this.termsLink = termsLink;
@@ -64,6 +66,14 @@ public class AppFooter implements Serializable {
 
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
+    }
+    
+    public String getFooterPath() {
+        return footerPath;
+    }
+
+    public void setFooterPath(String footerPath) {
+        this.footerPath = footerPath;
     }
 
     public List<IFooterSection> getFooterSections() {

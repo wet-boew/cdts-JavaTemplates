@@ -99,4 +99,12 @@ public final class JsonValueUtils {
             target.add(normalisedLink);
         }
     }
+
+    /**
+     * Returns boolean value but if null or empty, returns selected default value
+     */
+    public static boolean getBooleanValue(String value, boolean defaultValue)
+    {
+        return Utility.isNullOrEmpty(value)? defaultValue: Boolean.parseBoolean(value);
+    }
 }

@@ -7,16 +7,22 @@ public class LeavingSecureSiteWarning implements Serializable {
 
     private boolean enabled;
     private boolean displayModalWindow;
+    private boolean displayModalForNewWindow = true;
     private String message;
     private String redirectUrl;
     private String excludedDomains;
     private String cancelMessage;
     private String yesMessage;
+    private String targetWarning;
     
     public LeavingSecureSiteWarning() {
     }
     
     public LeavingSecureSiteWarning(boolean enabled, boolean displayModalWindow, String message, String redirectUrl, String excludedDomains, String cancelMessage, String yesMessage) {
+        this(enabled, displayModalWindow, message, redirectUrl, excludedDomains, cancelMessage, yesMessage, null, true);
+    }
+    
+    public LeavingSecureSiteWarning(boolean enabled, boolean displayModalWindow, String message, String redirectUrl, String excludedDomains, String cancelMessage, String yesMessage, String targetWarning, boolean displayModalForNewWindow) {
         this.enabled = enabled;
         this.displayModalWindow = displayModalWindow;
         this.message = message;
@@ -24,6 +30,8 @@ public class LeavingSecureSiteWarning implements Serializable {
         this.excludedDomains = excludedDomains;
         this.cancelMessage = cancelMessage;
         this.yesMessage = yesMessage;
+        this.targetWarning = targetWarning;
+        this.displayModalForNewWindow = displayModalForNewWindow; 
     }
 
     public boolean isEnabled() {
@@ -97,4 +105,35 @@ public class LeavingSecureSiteWarning implements Serializable {
     public void setYesMessage(String yesMessage) {
         this.yesMessage = yesMessage;
     }    
+    
+    /**
+     * Returns the text for the targetWarning - a message warning the users that a link will open in a new window
+     * @return String of text, or null if none specified
+     */
+    public String getTargetWarning() {
+        return targetWarning;
+    }
+
+    /**
+     * Sets the text for the targetWarning - a message warning the users that a link will open in a new window
+     * @param targetWarninge The warning message
+     */
+    public void setTargetWarning(String targetWarning) {
+        this.targetWarning = targetWarning;
+    }
+    /**
+     * Returns the value of displayModalForNewWindow - false if user does not want to present a modal for links opening in a new window (secure sites)
+     * @return true or false
+     */
+    public boolean getDisplayModalForNewWindow() {
+        return displayModalForNewWindow;
+    }
+
+    /**
+     * Set the value of displayModalForNewWindow - false if user does not want to present a modal for links opening in a new window (secure sites)
+     * @param displayModalForNewWindow The value true or false
+     */
+    public void setDisplayModalForNewWindow(boolean displayModalForNewWindow) {
+        this.displayModalForNewWindow = displayModalForNewWindow;
+    }  
 }

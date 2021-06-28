@@ -116,7 +116,7 @@ public abstract class AbstractCoreBean {
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalwindow")),
                                             "",
                                             this.getResourceBundleString("cdn", "leavingsecuresitewarning.redirecturl"),
-                                            this.getResourceBundleString("cdn", "leavingsecuresitewarning.excludeddomains"), null, null);
+                                            this.getResourceBundleString("cdn", "leavingsecuresitewarning.excludeddomains"), null, null, null, JsonValueUtils.getBooleanValue(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalfornewwindow"), true));
     private Date dateModified = null;
     private String screenIdentifier = "";
     private String versionIdentifier = "";

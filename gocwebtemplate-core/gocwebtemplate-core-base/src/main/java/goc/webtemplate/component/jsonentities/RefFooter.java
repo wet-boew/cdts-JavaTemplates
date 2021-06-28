@@ -27,13 +27,15 @@ public class RefFooter implements Serializable {
     private String  localPath;
     private String  cancelMsg;
     private String  yesMsg;
+    private String targetWarning;
+    private Boolean displayModalForNewWindow = null;
     private boolean webAnalytics;  
     
     public RefFooter() {
     }
 
     public RefFooter(String cdnEnv, boolean exitScript, String exitURL, String exitMsg, String exitDomains,
-            boolean displayModal, String jqueryEnv, String localPath, String cancelMsg, String yesMsg, boolean webAnalytics) {
+            boolean displayModal, String jqueryEnv, String localPath, String cancelMsg, String yesMsg, String targetWarning, Boolean displayModalForNewWindow, boolean webAnalytics) {
         this.cdnEnv = cdnEnv;
         this.exitScript = exitScript;
         this.exitURL = exitURL;
@@ -44,6 +46,8 @@ public class RefFooter implements Serializable {
         this.localPath = localPath;
         this.cancelMsg = cancelMsg;
         this.yesMsg = yesMsg;
+        this.targetWarning = targetWarning;
+        this.displayModalForNewWindow = displayModalForNewWindow;
         this.webAnalytics = webAnalytics;
     }
     
@@ -64,6 +68,8 @@ public class RefFooter implements Serializable {
             this.displayModal = lssw.getDisplayModalWindow();
             this.cancelMsg = lssw.getCancelMessage();
             this.yesMsg = lssw.getYesMessage();
+            this.targetWarning = lssw.getTargetWarning();
+            this.displayModalForNewWindow = lssw.getDisplayModalForNewWindow();
         }
         
         this.jqueryEnv = jqueryEnv;
@@ -150,6 +156,22 @@ public class RefFooter implements Serializable {
 
     public void setYesMsg(String yesMsg) {
         this.yesMsg = yesMsg;
+    }
+    
+    public String getTargetWarning() {
+        return targetWarning;
+    }
+
+    public void setTargetWarning(String targetWarning) {
+        this.targetWarning = targetWarning;
+    }
+    
+    public boolean getDisplayModalForNewWindow() {
+        return displayModalForNewWindow;
+    }
+
+    public void setDisplayModalForNewWindow(boolean displayModalForNewWindow) {
+        this.displayModalForNewWindow = displayModalForNewWindow;
     }
 
     public boolean isWebAnalytics() {

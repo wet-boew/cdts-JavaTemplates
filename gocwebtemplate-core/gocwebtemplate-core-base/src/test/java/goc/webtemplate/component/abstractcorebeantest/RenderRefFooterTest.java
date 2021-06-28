@@ -32,8 +32,10 @@ public class RenderRefFooterTest {
         sut.getLeavingSecureSiteWarning().setEnabled(true);
         sut.getLeavingSecureSiteWarning().setCancelMessage("Test Cancel Message");
         sut.getLeavingSecureSiteWarning().setYesMessage("Test Yes Message");
+        sut.getLeavingSecureSiteWarning().setTargetWarning("Test Target Warning");
+        sut.getLeavingSecureSiteWarning().setDisplayModalForNewWindow(false);
         
-        assertTrue(sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\""),
+        assertTrue(sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\",\"targetWarning\":\"Test Target Warning\",\"displayModalForNewWindow\":false"),
         		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
@@ -61,5 +63,15 @@ public class RenderRefFooterTest {
             assertTrue(ex.getMessage().contains("WebAnalytics feature is not supported"), 
             		"Unexpected exception message.");
         }
+    }
+
+    @Test
+    public void testDisplayModalNewWinTrueWhenExitscriptDisabled() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        sut.getLeavingSecureSiteWarning().setEnabled(false);
+
+        assertTrue(!sut.getRenderRefFooter().contains("\"displayModalForNewWindow\""),
+        		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
 }

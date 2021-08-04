@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<springboot.version>2.2.1.RELEASE</springboot.version>
+		<springboot.version>2.5.3</springboot.version>
 		<webtemplate.version>2.2.0-SNAPSHOT</webtemplate.version>
 		
 		<build_number>local</build_number>

@@ -116,7 +116,7 @@ public abstract class AbstractCoreBean {
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalwindow")),
                                             "",
                                             this.getResourceBundleString("cdn", "leavingsecuresitewarning.redirecturl"),
-                                            this.getResourceBundleString("cdn", "leavingsecuresitewarning.excludeddomains"), null, null, null, JsonValueUtils.getBooleanValue(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalfornewwindow"), true));
+                                            this.getResourceBundleString("cdn", "leavingsecuresitewarning.excludeddomains"), null, null, null, JsonValueUtils.getBooleanValue(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalfornewwindow"), true), null);
     private Date dateModified = null;
     private String screenIdentifier = "";
     private String versionIdentifier = "";
@@ -457,7 +457,7 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v4_0_43)
+     * Returns the version of the CDN files to use to build the page. (e.g v4_0_44)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -478,7 +478,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v4_0_43)
+     * Sets the version of the CDN files to use to build the page. (e.g v4_0_44)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  

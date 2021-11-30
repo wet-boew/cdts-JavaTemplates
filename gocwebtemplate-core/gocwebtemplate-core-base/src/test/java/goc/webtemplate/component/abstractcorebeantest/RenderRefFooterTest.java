@@ -11,7 +11,7 @@ public class RenderRefFooterTest {
     public void testRenderWithoutSecureSite() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
         
-        assertTrue(sut.getRenderRefFooter().contains("\"cdnEnv\":\"prod\",\"exitScript\":false,\"displayModal\":false"),
+        assertTrue(!sut.getRenderRefFooter().contains("\"exitScript\":false,\"displayModal\":false"),
         		"RefFooter rendering: Not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
@@ -21,7 +21,7 @@ public class RenderRefFooterTest {
         
         sut.getLeavingSecureSiteWarning().setEnabled(true);
         
-        assertTrue(sut.getRenderRefFooter().contains("\"exitScript\":true,\"exitURL\":\"leave.action\",\"exitMsg\":\"\",\"displayModal\":true"),
+        assertTrue(sut.getRenderRefFooter().contains("\"exitSecureSite\":{\"exitScript\":true,\"displayModal\":true,\"displayModalForNewWindow\":true,\"exitMsg\":\"\""),
         		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
@@ -33,9 +33,8 @@ public class RenderRefFooterTest {
         sut.getLeavingSecureSiteWarning().setCancelMessage("Test Cancel Message");
         sut.getLeavingSecureSiteWarning().setYesMessage("Test Yes Message");
         sut.getLeavingSecureSiteWarning().setTargetWarning("Test Target Warning");
-        sut.getLeavingSecureSiteWarning().setDisplayModalForNewWindow(false);
         
-        assertTrue(sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\",\"targetWarning\":\"Test Target Warning\",\"displayModalForNewWindow\":false"),
+        assertTrue(sut.getRenderRefFooter().contains("\"cancelMsg\":\"Test Cancel Message\",\"yesMsg\":\"Test Yes Message\",\"targetWarning\":\"Test Target Warning\""),
         		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
     
@@ -72,6 +71,28 @@ public class RenderRefFooterTest {
         sut.getLeavingSecureSiteWarning().setEnabled(false);
 
         assertTrue(!sut.getRenderRefFooter().contains("\"displayModalForNewWindow\""),
+        		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
+    }
+    
+    @Test
+    public void testDisplayModalNewWinFalse() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        sut.getLeavingSecureSiteWarning().setEnabled(true);
+        sut.getLeavingSecureSiteWarning().setDisplayModalForNewWindow(false);
+
+        assertTrue(sut.getRenderRefFooter().contains("\"displayModalForNewWindow\":false"),
+        		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
+    }
+    
+    @Test
+    public void testMsgBoxHeader() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        sut.getLeavingSecureSiteWarning().setEnabled(true);
+        sut.getLeavingSecureSiteWarning().setMsgBoxHeader("Warning, you are leaving a secure site!");
+
+        assertTrue(sut.getRenderRefFooter().contains("\"msgBoxHeader\":\"Warning, you are leaving a secure site!\""),
         		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
 }

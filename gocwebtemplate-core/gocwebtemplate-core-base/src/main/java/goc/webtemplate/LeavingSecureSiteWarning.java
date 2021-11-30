@@ -14,15 +14,16 @@ public class LeavingSecureSiteWarning implements Serializable {
     private String cancelMessage;
     private String yesMessage;
     private String targetWarning;
+    private String msgBoxHeader;
     
     public LeavingSecureSiteWarning() {
     }
     
     public LeavingSecureSiteWarning(boolean enabled, boolean displayModalWindow, String message, String redirectUrl, String excludedDomains, String cancelMessage, String yesMessage) {
-        this(enabled, displayModalWindow, message, redirectUrl, excludedDomains, cancelMessage, yesMessage, null, true);
+        this(enabled, displayModalWindow, message, redirectUrl, excludedDomains, cancelMessage, yesMessage, null, true, null);
     }
     
-    public LeavingSecureSiteWarning(boolean enabled, boolean displayModalWindow, String message, String redirectUrl, String excludedDomains, String cancelMessage, String yesMessage, String targetWarning, boolean displayModalForNewWindow) {
+    public LeavingSecureSiteWarning(boolean enabled, boolean displayModalWindow, String message, String redirectUrl, String excludedDomains, String cancelMessage, String yesMessage, String targetWarning, boolean displayModalForNewWindow, String msgBoxHeader) {
         this.enabled = enabled;
         this.displayModalWindow = displayModalWindow;
         this.message = message;
@@ -31,7 +32,8 @@ public class LeavingSecureSiteWarning implements Serializable {
         this.cancelMessage = cancelMessage;
         this.yesMessage = yesMessage;
         this.targetWarning = targetWarning;
-        this.displayModalForNewWindow = displayModalForNewWindow; 
+        this.displayModalForNewWindow = displayModalForNewWindow;
+        this.msgBoxHeader = msgBoxHeader;
     }
 
     public boolean isEnabled() {
@@ -135,5 +137,21 @@ public class LeavingSecureSiteWarning implements Serializable {
      */
     public void setDisplayModalForNewWindow(boolean displayModalForNewWindow) {
         this.displayModalForNewWindow = displayModalForNewWindow;
-    }  
+    }
+    
+    /**
+     * Returns the text for the msgBoxHeader - the title of the modal pop up
+     * @return String of text, or null if none specified
+     */
+    public String getMsgBoxHeader() {
+        return msgBoxHeader;
+    }
+
+    /**
+     * Sets the text for the msgBoxHeader - the title of the modal pop up
+     * @param mxgBoxHeader The title of the modal pop up
+     */
+    public void setMsgBoxHeader(String msgBoxHeader) {
+        this.msgBoxHeader = msgBoxHeader;
+    }
 }

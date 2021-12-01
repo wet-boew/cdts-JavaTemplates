@@ -90,7 +90,7 @@
         </script>
         <!-- Write closure template -->
 		<script type="text/javascript">
-		    document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooter" />));
+		    document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderRefFooterForApp" />));
 		</script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>

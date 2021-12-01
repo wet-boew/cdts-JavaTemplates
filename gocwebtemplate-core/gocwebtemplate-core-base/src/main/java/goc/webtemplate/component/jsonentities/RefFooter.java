@@ -21,20 +21,22 @@ public class RefFooter implements Serializable {
     private ExitSecureSite exitSecureSite;
     private String  jqueryEnv;
     private String  localPath;
-    private boolean webAnalytics;  
+    private boolean webAnalytics;
+    private boolean isApplication;
     
     public RefFooter() {
     }
 
-    public RefFooter(String cdnEnv, ExitSecureSite exitSecureSite, String jqueryEnv, String localPath, boolean webAnalytics) {
+    public RefFooter(String cdnEnv, ExitSecureSite exitSecureSite, String jqueryEnv, String localPath, boolean webAnalytics, boolean isApplication) {
         this.cdnEnv = cdnEnv;
         this.exitSecureSite = exitSecureSite;
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
         this.webAnalytics = webAnalytics;
+        this.isApplication = isApplication;
     }
     
-    public RefFooter(String cdnEnv, LeavingSecureSiteWarning lssw, String jqueryEnv, String localPath, WebAnalyticsInfo webAnalyticsInfo) {
+    public RefFooter(String cdnEnv, LeavingSecureSiteWarning lssw, String jqueryEnv, String localPath, WebAnalyticsInfo webAnalyticsInfo, boolean isApplication) {
         this.cdnEnv = cdnEnv;
         this.exitSecureSite = null;
         if ((lssw != null) && lssw.isEnabled() && !Utility.isNullOrEmpty(lssw.getRedirectUrl())) {
@@ -43,6 +45,7 @@ public class RefFooter implements Serializable {
         this.jqueryEnv = jqueryEnv;
         this.localPath = localPath;
         this.webAnalytics = (webAnalyticsInfo != null && webAnalyticsInfo.isActive());
+        this.isApplication = isApplication;
     }
 
     public String getCdnEnv() {
@@ -83,5 +86,13 @@ public class RefFooter implements Serializable {
 
     public void setExitSecureSite(ExitSecureSite exitSecureSite) {
         this.exitSecureSite = exitSecureSite;
+    }
+
+    public boolean getIsApplication() {
+        return isApplication;
+    }
+
+    public void setIsApplication(boolean isApplication) {
+        this.isApplication = isApplication;
     }
 }

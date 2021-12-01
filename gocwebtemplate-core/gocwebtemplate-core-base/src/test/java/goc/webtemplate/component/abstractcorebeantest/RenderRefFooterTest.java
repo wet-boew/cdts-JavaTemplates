@@ -95,4 +95,20 @@ public class RenderRefFooterTest {
         assertTrue(sut.getRenderRefFooter().contains("\"msgBoxHeader\":\"Warning, you are leaving a secure site!\""),
         		"RefFooter rendering: LeavingSecureSite not rendered as expected. (" + sut.getRenderRefFooter() + ")");
     }
+
+    @Test
+    public void testIsApplicationFalse() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        assertTrue(sut.getRenderRefFooter().contains("\"isApplication\":false"),
+        		"RefFooter rendering: Not rendered as expected. (" + sut.getRenderRefFooter() + ")");
+    }
+
+    @Test
+    public void testIsApplicationTrue() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        assertTrue(sut.getRenderRefFooterForApp().contains("\"isApplication\":true"),
+        		"RefFooter rendering: Not rendered as expected. (" + sut.getRenderRefFooter() + ")");
+    }
 }

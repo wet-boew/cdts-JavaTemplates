@@ -2021,8 +2021,12 @@ public abstract class AbstractCoreBean {
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used 
      * as parameter for the "refFooter"
+     *
+     * Applications will actually use property "renderRefFooter" or "renderRefFooterForApp" depending
+     * on the case, since passing argument when calling properties is not supported in JSF2.0 (not supported anymore), having two
+     * differently named get methods seemed the next simplest solution.
      */
-    public String getRenderRefFooter() {
+    private String buildRefFooterValue(boolean isApplication) {
         if (this.getWebAnalytics().isActive() && !this.getCurrentCDTSEnvironment().getCanUseWebAnalytics()) {
             throw new IllegalArgumentException("The WebAnalytics feature is not supported in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
         }
@@ -2032,8 +2036,15 @@ public abstract class AbstractCoreBean {
                 this.getLeavingSecureSiteWarning(),
                 this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
                 JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                this.getWebAnalytics()
-            ));        
+                this.getWebAnalytics(),
+                isApplication
+            ));
+    }
+    public String getRenderRefFooter() {
+        return this.buildRefFooterValue(false);
+    }
+    public String getRenderRefFooterForApp() {
+        return this.buildRefFooterValue(true);
     }
     
     public String getRenderServerTop() {

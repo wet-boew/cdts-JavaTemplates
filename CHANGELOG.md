@@ -2,6 +2,14 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.3.0
+
+- Now targeting Struts version 2.5.27
+- Now targeting Spring Boot version 2.6.1
+- [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.44 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.44.5
+- Updated static fallback files
+- Bug Fixes
+
 ## v2.2.0
 
 - Added a targetWarning parameter for the exitScript allowing users to be warned that link will open in a new window

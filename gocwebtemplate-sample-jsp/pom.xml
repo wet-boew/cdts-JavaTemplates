@@ -74,6 +74,17 @@
     </plugins>
   </build>
   
+  <dependencyManagement>
+    <dependencies>
+        <!-- Because of a vulnerability in log4j 2.14.1-, we are forcing this transitive dependency to the latest -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.16.0</version>
+        </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
   <dependencies>
     <dependency>
       <groupId>ca.gc.gocwebtemplate</groupId>
@@ -84,7 +95,7 @@
     <dependency>  
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-tiles-plugin</artifactId>
-      <version>2.5.27</version>
+      <version>2.5.28</version>
       <scope>runtime</scope>
     </dependency> 
     

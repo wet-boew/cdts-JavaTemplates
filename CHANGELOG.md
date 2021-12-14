@@ -6,6 +6,7 @@
 
 - Now targeting Struts version 2.5.27
 - Now targeting Spring Boot version 2.6.1
+- Forcing log4j transitive dependency to point to version 2.16.0 because of vulnerability in previous versions
 - [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.44 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.44.5
 - Updated static fallback files
 - Bug Fixes

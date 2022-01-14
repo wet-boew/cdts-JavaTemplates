@@ -13,7 +13,7 @@ public class FeedbackAndShareThisPageSampleBean extends DefaultTemplateCoreBean 
         this.setFeedbackUrlFr("http://www.google.ca/?hl=fr");
 
         this.setShowSharePageLink(true);
-        this.getSharePageMediaSites().add(Constants.SocialMediaSites.bitly);
+        this.getSharePageMediaSites().add(Constants.SocialMediaSites.blogger);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.facebook);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.twitter);
     }

@@ -20,7 +20,7 @@ public abstract class Constants {
     public static final String STATIC_FALLBACK_FILES_INTERNAL_PATH = "/goc/webtemplate/StaticFallbackFiles";
     
     public static enum SocialMediaSites {
-		bitly, blogger, delicious, digg, diigo, email, facebook, gmail, googleplus, 
-		linkedin, myspace, pinterest, reddit, stumbleupon, tumblr, twitter, yahoomail
+		blogger, diigo, email, facebook, gmail, linkedin, myspace, pinterest,
+		reddit, tinyurl, tumblr, twitter, whatsapp, yahoomail
     }
 }

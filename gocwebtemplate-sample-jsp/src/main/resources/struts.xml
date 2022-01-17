@@ -26,6 +26,7 @@
 		<action name="splashpagesample"><result type="tiles">splashPageSample</result></action>
 		<action name="gcintranetsample"><result type="tiles">gcIntranetSample</result></action>
 		<action name="addjsandcssfilessample"><result type="tiles">addJSAndCSSFilesSample</result></action>
+		<action name="adobeanalyticssample"><result type="tiles">adobeAnalyticsSample</result></action>
 		<action name="basesettingssample"><result type="tiles">baseSettingsSample</result></action>
 		<action name="breadcrumbsample"><result type="tiles">breadcrumbsSample</result></action>
 		<action name="errorsample"><result type="tiles">errorSample</result></action>

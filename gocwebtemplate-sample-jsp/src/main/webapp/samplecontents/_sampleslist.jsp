@@ -4,6 +4,7 @@
     <ul>
         <li><a href="splashpagesample.action">Splash Page</a></li>
         <li><a href="addjsandcssfilessample.action">Adding CSS or JS</a></li>
+        <li><a href="adobeanalyticssample.action">Adobe Analytics</a></li>
         <li><a href="basesettingssample.action">Basic Settings</a></li>
         <li><a href="breadcrumbsample.action">Breadcrumbs</a></li>
         <li><a href="errorbilingualsample.action">Bilingual Error Page</a></li>

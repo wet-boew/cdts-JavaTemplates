@@ -85,6 +85,10 @@
 		<put-attribute name="title" value="Add JS and CSS Files Sample" />
 		<put-attribute name="body" value="/samplecontents/addjsandcssfilessamplecontent.jsp" />
 	</definition>
+	<definition name="adobeAnalyticsSample" extends="gocWebTemplateLayout">
+		<put-attribute name="beaninit" value="/samplebeans/adobeanalyticssamplebean.jsp" />
+		<put-attribute name="body" value="/samplecontents/adobeanalyticssamplecontent.jsp" />
+	</definition>
 	<definition name="baseSettingsSample" extends="gocWebTemplateLayout">
 		<put-attribute name="beaninit" value="/samplebeans/basesettingssamplebean.jsp" />
 		<put-attribute name="body" value="/samplecontents/basesettingssamplecontent.jsp" />

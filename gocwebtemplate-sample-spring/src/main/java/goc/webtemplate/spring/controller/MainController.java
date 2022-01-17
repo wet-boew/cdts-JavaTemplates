@@ -15,6 +15,11 @@ public class MainController {
 		return "AddJSandCSSFilesSample";
 	}
 	
+	@GetMapping("/AdobeAnalyticsSample")
+	public String AdobeAnalyticsSample() {
+		return "AdobeAnalyticsSample";
+	}
+	
 	@GetMapping("/ApplicationSample")
 	public String ApplicationSample() {
 		return "ApplicationSample";

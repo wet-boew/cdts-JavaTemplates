@@ -36,7 +36,7 @@
         </noscript>
         <!-- Write closure template -->
         <script type="text/javascript">
-            document.write(wet.builder.refTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerRefTop" />));
+            document.write(wet.builder.serverRefTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerRefTop" />));
         </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->

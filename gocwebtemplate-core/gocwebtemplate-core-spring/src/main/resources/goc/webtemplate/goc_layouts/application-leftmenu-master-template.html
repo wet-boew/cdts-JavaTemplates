@@ -50,6 +50,11 @@
         	<!-- Write closure fall-back static file -->
             [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
        	</nav>
+        <!-- Write closure template -->
+        <script type="text/javascript">
+            var secondarymenu = document.getElementById("wb-sec");
+            secondarymenu.innerHTML = wet.builder.secmenu([(${goctemplateclientbean.renderLeftMenuSections})]);
+        </script>
         <div id="def-footer">
             <!-- Write closure fall-back static file -->
             [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'appFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]

@@ -2,6 +2,12 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.3.1
+
+- Now targeting Struts version 2.5.29
+- Now targeting Spring Boot version 2.6.6
+- Bug Fixes
+
 ## v2.3.0
 
 - Now targeting Struts version 2.5.27

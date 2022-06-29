@@ -2,6 +2,13 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.4.0
+
+- Added an acronym parameter to the custom menu allowing users to provide a description for an abbreviation.
+- [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.45 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.50.1
+- Updated static fallback files
+- Bug Fixes
+
 ## v2.3.2
 
 - Now targeting Struts version 2.5.30

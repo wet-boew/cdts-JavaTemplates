@@ -19,14 +19,16 @@ public class SecMenuSubItem implements Serializable {
 
     private String  subhref;
     private String  subtext;
+    private String  acronym;
     private boolean newWindow;
     
     public SecMenuSubItem() {
     }
 
-    public SecMenuSubItem(String subhref, String subtext, boolean newWindow) {
+    public SecMenuSubItem(String subhref, String subtext, String acronym, boolean newWindow) {
         this.subhref = subhref;
         this.subtext = subtext;
+        this.acronym = acronym;
         this.newWindow = newWindow;
     }
 
@@ -37,6 +39,7 @@ public class SecMenuSubItem implements Serializable {
     public SecMenuSubItem(MenuItem menuItem) {
         this.subhref = BaseUtil.encodeUrl(menuItem.getHref());
         this.subtext = menuItem.getText();
+        this.acronym = menuItem.getAcronym();
         this.newWindow = menuItem.isOpenInNewWindow();
     }
 
@@ -62,5 +65,13 @@ public class SecMenuSubItem implements Serializable {
 
     public void setNewWindow(boolean newWindow) {
         this.newWindow = newWindow;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 }

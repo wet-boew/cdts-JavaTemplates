@@ -6,27 +6,45 @@ import java.util.ArrayList;
 public class MenuItem extends Link {
     private ArrayList<MenuItem> subItems = null;
     private boolean openInNewWindow = false;
+    private String acronym = null;
 
     public MenuItem() {
         this.subItems = new ArrayList<MenuItem>();
     }
 
     public MenuItem(String href, String text) {
-        this(href, text, new ArrayList<MenuItem>(), false);
+    	this(href, text, null, new ArrayList<MenuItem>(), false);
+    }
+
+    public MenuItem(String href, String text, String acronym) {
+        this(href, text, acronym, new ArrayList<MenuItem>(), false);
     }
 
     public MenuItem(String href, String text, boolean openInNewWindow) {
-        this(href, text, new ArrayList<MenuItem>(), openInNewWindow);
+        this(href, text, null, new ArrayList<MenuItem>(), openInNewWindow);
     }
-    
+
+    public MenuItem(String href, String text, String acronym, boolean openInNewWindow) {
+        this(href, text, acronym, new ArrayList<MenuItem>(), openInNewWindow);
+    }
+
     public MenuItem(String href, String text, ArrayList<MenuItem> subItems) {
-        this(href, text, subItems, false);
+        this(href, text, null, subItems, false);
     }
 
     public MenuItem(String href, String text, ArrayList<MenuItem> subItems, boolean openInNewWindow) {
+        this(href, text, null, subItems, openInNewWindow);
+    }
+
+    public MenuItem(String href, String text, String acronym, ArrayList<MenuItem> subItems) {
+        this(href, text, acronym, subItems, false);
+    }
+
+    public MenuItem(String href, String text, String acronym, ArrayList<MenuItem> subItems, boolean openInNewWindow) {
         super(href, text);
         this.subItems = subItems;
         this.openInNewWindow = openInNewWindow;
+        this.acronym = acronym;
     }
 
     public void setOpenInNewWindow(boolean openInNewWindow) {
@@ -43,5 +61,13 @@ public class MenuItem extends Link {
 
     public ArrayList<MenuItem> getSubItems() {
         return this.subItems;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 }

@@ -21,15 +21,17 @@ public class SecMenuItem implements Serializable {
 
     private String                      href;
     private String                      text;
+    private String                      acronym;
     private Boolean                     newWindow;
     private ArrayList<SecMenuSubItem>   subLinks;
     
     public SecMenuItem() {
     }
 
-    public SecMenuItem(String href, String text, Boolean newWindow, ArrayList<SecMenuSubItem> subLinks) {
+    public SecMenuItem(String href, String text, String acronym, Boolean newWindow, ArrayList<SecMenuSubItem> subLinks) {
         this.href = href;
         this.text = text;
+        this.acronym = acronym;
         this.newWindow = newWindow;
         this.subLinks = subLinks;
     }
@@ -41,6 +43,7 @@ public class SecMenuItem implements Serializable {
     public SecMenuItem(Link link) {
         this.href = BaseUtil.encodeUrl(link.getHref());
         this.text = link.getText();
+        this.acronym = null;
         this.newWindow = null;
         this.subLinks = null;
         
@@ -48,6 +51,7 @@ public class SecMenuItem implements Serializable {
             MenuItem mi = (MenuItem)link; 
             
             this.newWindow = mi.isOpenInNewWindow();
+            this.acronym = mi.getAcronym();
             
             if (mi.getSubItems() != null && mi.getSubItems().size() > 0) {
                 this.subLinks = new ArrayList<SecMenuSubItem>(mi.getSubItems().size());
@@ -86,5 +90,13 @@ public class SecMenuItem implements Serializable {
 
     public void setSubLinks(ArrayList<SecMenuSubItem> subLinks) {
         this.subLinks = subLinks;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 }

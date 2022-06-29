@@ -23,7 +23,7 @@ public class LeftSideMenuSampleBean extends DefaultTemplateCoreBean {
         leftMenu.getItems().add(new Link("http://www.tsn.ca", "TSN"));
         
         MenuItem item = new MenuItem("", "Sports");
-        item.getSubItems().add(new MenuItem("http://www.nhl.com", "NHL", null, true));
+        item.getSubItems().add(new MenuItem("http://www.nhl.com", "NHL", true));
         item.getSubItems().add(new MenuItem("http://www.mlb.com", "MLB"));
         
         leftMenu.getItems().add(item);

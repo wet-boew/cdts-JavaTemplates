@@ -2,6 +2,13 @@
 
 [Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
 
+## v2.5.0
+
+- Added an optional parameter hidePlaceholderMenu to the GCIntranet theme. When set to true, this parameter is used to hide the placeholder menu while a custom menu is being loaded.
+- [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.46 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.55
+- Updated static fallback files
+- Bug Fixes
+
 ## v2.4.0
 
 - Added an acronym parameter to the custom menu allowing users to provide a description for an abbreviation.

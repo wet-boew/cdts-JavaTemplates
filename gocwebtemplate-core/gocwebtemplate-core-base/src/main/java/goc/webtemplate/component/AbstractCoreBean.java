@@ -1459,6 +1459,7 @@ public abstract class AbstractCoreBean {
      * can be overriden programatically.
      */
     public boolean getHidePlaceholderMenu() {
+        this.initializeOnce();
         return this.hidePlaceholderMenu;
     }
 

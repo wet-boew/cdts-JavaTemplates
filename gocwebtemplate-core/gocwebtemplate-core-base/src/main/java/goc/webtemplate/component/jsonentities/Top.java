@@ -27,6 +27,7 @@ public class Top implements Serializable {
     private List<Breadcrumb>    breadcrumbs;
     private String              localPath;
     private boolean             siteMenu;
+    private boolean             hidePlaceholderMenu;
     
     @SerializedName("GCToolsModal")
     private boolean             gcToolsModal;
@@ -41,7 +42,7 @@ public class Top implements Serializable {
 
     public Top(String cdnEnv, String subTheme, List<IntranetTitle> intranetTitle, boolean search, List<LanguageLink> lngLinks,
             boolean showPreContent, List<Breadcrumb> breadcrumbs, String localPath, boolean siteMenu,
-            boolean topSecMenu, List<CustomSearch> customSearch, boolean gcToolsModal) {
+            boolean topSecMenu, List<CustomSearch> customSearch, boolean gcToolsModal, boolean hidePlaceholderMenu) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.intranetTitle = intranetTitle;
@@ -54,6 +55,7 @@ public class Top implements Serializable {
         this.topSecMenu = topSecMenu;
         this.customSearch = customSearch;
         this.gcToolsModal = gcToolsModal;
+        this.hidePlaceholderMenu = hidePlaceholderMenu;
     }
 
     public String getCdnEnv() {
@@ -150,5 +152,13 @@ public class Top implements Serializable {
     
     public void setGcToolsModal(boolean value) {
         this.gcToolsModal = value;
+    }
+
+    public boolean getHidePlaceholderMenu() {
+        return hidePlaceholderMenu;
+    }
+
+    public void setHidePlaceholderMenu(boolean value) {
+        this.hidePlaceholderMenu = value;
     }
 }

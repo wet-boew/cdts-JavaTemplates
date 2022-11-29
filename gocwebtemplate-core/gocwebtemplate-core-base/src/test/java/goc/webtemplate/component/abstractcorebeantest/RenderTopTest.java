@@ -48,4 +48,13 @@ public class RenderTopTest {
             sut.getRenderTop(); 
         });
     }
+
+    @Test
+    public void testHidePlaceholderMenuTrueRenders() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        sut.setHidePlaceholderMenu(true);
+
+        assertTrue(sut.getRenderTop().contains("\"hidePlaceholderMenu\":true"));
+    }
 }

@@ -150,6 +150,7 @@ public abstract class AbstractCoreBean {
     private WebAnalyticsInfo webAnalytics = new WebAnalyticsInfo(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.usewebanalytics"))); //will be false if not specified in config
     private boolean gcToolsModal = false;
     private String footerPath = null;
+    private boolean hidePlaceholderMenu = false;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -457,7 +458,7 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v4_0_45)
+     * Returns the version of the CDN files to use to build the page. (e.g v4_0_46)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -478,7 +479,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v4_0_45)
+     * Sets the version of the CDN files to use to build the page. (e.g v4_0_46)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -1453,6 +1454,25 @@ public abstract class AbstractCoreBean {
     }
     
     /**
+     * Returns whether the placeholder menu should be hidden while a custom menu is being loaded
+     *
+     * can be overriden programatically.
+     */
+    public boolean getHidePlaceholderMenu() {
+        this.initializeOnce();
+        return this.hidePlaceholderMenu;
+    }
+
+    /**
+     * Sets whether the placeholder menu should be hidden while a custom menu is being loaded
+     *
+     * can be overriden programatically.
+     */
+    public void setHidePlaceholderMenu(boolean value) {
+        this.hidePlaceholderMenu = value;
+    }
+
+    /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
      */
     private ArrayList<Breadcrumb> getEncodedBreadcrumbs() {
@@ -1797,7 +1817,8 @@ public abstract class AbstractCoreBean {
                     true, //siteMenu
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
                     this.customSearch != null? Arrays.asList(this.customSearch): null,      
-                    this.gcToolsModal
+                    this.gcToolsModal,
+                    this.hidePlaceholderMenu
                 ));        
     }
     
@@ -1822,7 +1843,8 @@ public abstract class AbstractCoreBean {
                     false, //siteMenu
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.gcToolsModal        
+                    this.gcToolsModal,
+                    this.hidePlaceholderMenu
                 ));        
     }
     

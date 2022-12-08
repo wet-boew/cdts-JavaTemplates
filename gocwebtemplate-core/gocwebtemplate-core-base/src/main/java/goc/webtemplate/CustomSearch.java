@@ -1,7 +1,7 @@
 package goc.webtemplate;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.annotations.JsonAdapter;
 
@@ -17,8 +17,8 @@ public class CustomSearch implements Serializable {
     private String                  id;
     private String                  method;
     //NOTE: Custom serialization/adapter because value is serialized as a list of name+value tupples
-    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.HashMapAdapter.class)
-    private HashMap<String, String> hiddenInput;
+    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.MapAdapter.class)
+    private Map<String, String> hiddenInput;
     
     public CustomSearch() {
     }
@@ -93,14 +93,14 @@ public class CustomSearch implements Serializable {
     /**
      * Returns the (optional) hidden form input fields.
      */
-    public HashMap<String, String> getHiddenInput() {
+    public Map<String, String> getHiddenInput() {
         return hiddenInput;
     }
 
     /**
      * Sets the (optional) hidden form input fields.
      */
-    public void setHiddenInput(HashMap<String, String> hiddenInput) {
+    public void setHiddenInput(Map<String, String> hiddenInput) {
         this.hiddenInput = hiddenInput;
     }
 }

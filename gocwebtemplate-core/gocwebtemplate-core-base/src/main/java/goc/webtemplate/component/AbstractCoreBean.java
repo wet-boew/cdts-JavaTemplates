@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -110,7 +111,7 @@ public abstract class AbstractCoreBean {
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
     private String feedbackUrlFr = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl_fr");
-    private ArrayList<Link> contactLinks = null;
+    private List<Link> contactLinks = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.displaymodalwindow")),
@@ -127,24 +128,24 @@ public abstract class AbstractCoreBean {
     private boolean showFeedbackLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink"));
     private boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
     private boolean showFeatures = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
-    private ArrayList<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
-    private ArrayList<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
-    private ArrayList<String> htmlHeaderElements = new ArrayList<String>();
-    private ArrayList<String> htmlBodyElements = new ArrayList<String>();
+    private List<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
+    private List<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
+    private List<String> htmlHeaderElements = new ArrayList<String>();
+    private List<String> htmlBodyElements = new ArrayList<String>();
     private String staticFallbackFilePath = this.getResourceBundleString("cdn", "goc.webtemplate.staticfileslocation");    
     private String  customSiteMenuUrl = this.getResourceBundleString("cdn", "goc.webtemplate.customsitemenuurl");
-    private ArrayList<MenuItem> menuLinks = null;
+    private List<MenuItem> menuLinks = null;
     private String  signInLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signinlinkurl");
     private String  signOutLinkUrl = this.getResourceBundleString("cdn", "goc.webtemplate.signoutlinkurl");
     private String  appSettingsUrl = this.getResourceBundleString("cdn", "goc.webtemplate.appsettingsurl");
     private boolean showSignInLink = false;
     private boolean showSignOutLink = false;
-    private ArrayList<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
-    private ArrayList<FooterSection> customFooterSections = new ArrayList<FooterSection>();
+    private List<FooterLink> customFooterLinks = new ArrayList<FooterLink>();
+    private List<FooterSection> customFooterSections = new ArrayList<FooterSection>();
     private CustomSearch customSearch = null;
     private SessionTimeout sessionTimeoutConfiguration = null; //initialization in get method
     private SplashPageInfo splashPageInfo = null; //initialization in get method
-    private ArrayList<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
+    private List<MenuSection> leftMenuSections = new ArrayList<MenuSection>();
     private FooterLink privacyLink = new FooterLink();
     private FooterLink termsConditionsLink = new FooterLink();
     private WebAnalyticsInfo webAnalytics = new WebAnalyticsInfo(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.usewebanalytics"))); //will be false if not specified in config
@@ -615,7 +616,7 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the list of breadcrumb links.
      */
-    public ArrayList<Breadcrumb> getBreadcrumbs() {
+    public List<Breadcrumb> getBreadcrumbs() {
         this.initializeOnce();
         return this.breadcrumbs;
     }
@@ -623,7 +624,7 @@ public abstract class AbstractCoreBean {
     /**
      * Sets the list of breadcrumb links.
      */
-    public void setBreadcrumbs(ArrayList<Breadcrumb> value) {
+    public void setBreadcrumbs(List<Breadcrumb> value) {
         this.breadcrumbs = value;
     }
     
@@ -662,7 +663,7 @@ public abstract class AbstractCoreBean {
      * 
      * This list is used to add metatags, css, js etc. to web pages.
      */
-    public ArrayList<String> getHtmlHeaderElements() {
+    public List<String> getHtmlHeaderElements() {
         this.initializeOnce();
         return this.htmlHeaderElements;
     }
@@ -672,7 +673,7 @@ public abstract class AbstractCoreBean {
      * 
      * This list is used to add metatags, css, js etc. to web pages.
      */
-    public void setHtmlHeaderElements(ArrayList<String> value) {
+    public void setHtmlHeaderElements(List<String> value) {
         this.htmlHeaderElements = value;
     }
     
@@ -681,7 +682,7 @@ public abstract class AbstractCoreBean {
      * 
      * This list is used to add metatags, css, js etc. to web pages.
      */
-    public ArrayList<String> getHtmlBodyElements() {
+    public List<String> getHtmlBodyElements() {
         this.initializeOnce();
         return this.htmlBodyElements;
     }
@@ -691,7 +692,7 @@ public abstract class AbstractCoreBean {
      * 
      * This list is used to add metatags, css, js etc. to web pages.
      */
-    public void setHtmlBodyElements(ArrayList<String> value) {
+    public void setHtmlBodyElements(List<String> value) {
         this.htmlBodyElements = value;
     }
     
@@ -799,7 +800,7 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the list of menu items for the left menu.
      */
-    public ArrayList<MenuSection> getLeftMenuSections() {
+    public List<MenuSection> getLeftMenuSections() {
         this.initializeOnce();
         return this.leftMenuSections;
     }
@@ -807,7 +808,7 @@ public abstract class AbstractCoreBean {
     /**
      * Sets the list of menu items for the left menu.
      */
-    public void setLeftMenuSections(ArrayList<MenuSection> value) {
+    public void setLeftMenuSections(List<MenuSection> value) {
         this.leftMenuSections = value;
     }
     
@@ -876,7 +877,7 @@ public abstract class AbstractCoreBean {
     /**
      * Returns the list of contact links, null if no contact list is currently specified.
      */
-    public ArrayList<Link> getContactLinks() {
+    public List<Link> getContactLinks() {
         this.initializeOnce();
         return this.contactLinks;
     }
@@ -884,7 +885,7 @@ public abstract class AbstractCoreBean {
     /**
      * Sets the list of contact links to the specified value.
      */
-    public void setContactLinks(ArrayList<Link> value) {
+    public void setContactLinks(List<Link> value) {
     	this.contactLinks = value;
     }
     
@@ -1000,7 +1001,7 @@ public abstract class AbstractCoreBean {
      * Returns the list of items to be displayed in the Share Page window.
      * Set by application programmatically
      */
-    public ArrayList<Constants.SocialMediaSites> getSharePageMediaSites() {
+    public List<Constants.SocialMediaSites> getSharePageMediaSites() {
         this.initializeOnce();
         return this.sharePageMediaSites;
     }
@@ -1009,7 +1010,7 @@ public abstract class AbstractCoreBean {
      * Sets the list of items to be displayed in the Share Page window.
      * Set by application programmatically
      */
-    public void setSharePageMediaSites(ArrayList<Constants.SocialMediaSites> value) {
+    public void setSharePageMediaSites(List<Constants.SocialMediaSites> value) {
         this.sharePageMediaSites = value;
     }
     
@@ -1258,7 +1259,7 @@ public abstract class AbstractCoreBean {
      * 
      * @see getCustomSiteMenuUrl()
      */
-    public ArrayList<MenuItem> getMenuLinks() {
+    public List<MenuItem> getMenuLinks() {
         this.initializeOnce();
         return this.menuLinks;
     }
@@ -1274,7 +1275,7 @@ public abstract class AbstractCoreBean {
      * 
      * @see setCustomSiteMenuUrl()
      */
-    public void setMenuLinks(ArrayList<MenuItem> value) {
+    public void setMenuLinks(List<MenuItem> value) {
         this.menuLinks = value;
     }
 
@@ -1414,7 +1415,7 @@ public abstract class AbstractCoreBean {
      * Set by application programmatically
      * Only available in the Application Template when using the GCweb theme.
      */
-    public ArrayList<FooterLink> getCustomFooterLinks() {
+    public List<FooterLink> getCustomFooterLinks() {
         this.initializeOnce();
         return this.customFooterLinks;
     }
@@ -1426,7 +1427,7 @@ public abstract class AbstractCoreBean {
      * Set by application programmatically
      * Only available in the Application Template when using the GCweb theme.
      */
-    public void setCustomFooterLinks(ArrayList<FooterLink> value) {
+    public void setCustomFooterLinks(List<FooterLink> value) {
         this.customFooterLinks = value;
     }
     
@@ -1437,7 +1438,7 @@ public abstract class AbstractCoreBean {
      * Set by application programmatically
      * Only available in the Application Template when using a theme other than GCweb.
      */
-    public ArrayList<FooterSection> getCustomFooterSections() {
+    public List<FooterSection> getCustomFooterSections() {
         this.initializeOnce();
         return this.customFooterSections;
     }
@@ -1449,7 +1450,7 @@ public abstract class AbstractCoreBean {
      * Set by application programmatically
      * Only available in the Application Template when using a theme other than GCweb.
      */
-    public void setCustomFooterSections(ArrayList<FooterSection> value) {
+    public void setCustomFooterSections(List<FooterSection> value) {
         this.customFooterSections = value;
     }
     
@@ -1475,9 +1476,9 @@ public abstract class AbstractCoreBean {
     /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
      */
-    private ArrayList<Breadcrumb> getEncodedBreadcrumbs() {
-        ArrayList<Breadcrumb>   sourceList = this.getBreadcrumbs();
-        ArrayList<Breadcrumb>   tmpBreadcrumbs = null;
+    private List<Breadcrumb> getEncodedBreadcrumbs() {
+        List<Breadcrumb>   sourceList = this.getBreadcrumbs();
+        List<Breadcrumb>   tmpBreadcrumbs = null;
         
         if ((sourceList != null) && (sourceList.size() > 0)) {
             tmpBreadcrumbs = new ArrayList<Breadcrumb>();
@@ -1599,7 +1600,7 @@ public abstract class AbstractCoreBean {
         return this.getRenderHtmlElements(this.getHtmlBodyElements());
     }
     
-    private String getRenderHtmlElements(ArrayList<String> elems)
+    private String getRenderHtmlElements(List<String> elems)
     {
         StringBuilder sb = new StringBuilder();
         
@@ -1625,9 +1626,9 @@ public abstract class AbstractCoreBean {
         return dateModifiedFormat.get().format(sourceDate);
     }    
     
-    private ArrayList<LanguageLink> buildLanguageLinkList()
+    private List<LanguageLink> buildLanguageLinkList()
     {
-        ArrayList<LanguageLink> vtr;
+        List<LanguageLink> vtr;
         
         if (!this.getShowLanguageLink()) return null;
         
@@ -1639,8 +1640,8 @@ public abstract class AbstractCoreBean {
         return vtr;
     }    
     
-    private ArrayList<IntranetTitle> buildIntranetTitleList() {
-        ArrayList<IntranetTitle> vtr;
+    private List<IntranetTitle> buildIntranetTitleList() {
+        List<IntranetTitle> vtr;
         
         if (this.intranetTitle == null) return null;
         
@@ -1657,17 +1658,17 @@ public abstract class AbstractCoreBean {
         return (this.leftMenuSections != null && this.leftMenuSections.size() > 0);
     }
     
-    private ArrayList<SecMenuItem> buildMenuLinksList() {
+    private List<SecMenuItem> buildMenuLinksList() {
         this.initializeOnce();
         if ((this.menuLinks == null) || (this.menuLinks.size() <= 0)) return null;
         
-        ArrayList<SecMenuItem>  vtr = new ArrayList<SecMenuItem>();
+        List<SecMenuItem>  vtr = new ArrayList<SecMenuItem>();
         for (MenuItem mi: this.menuLinks) vtr.add(new SecMenuItem(mi));
         return vtr;
     }
     
-    private ArrayList<Link> buildHideableHrefOnlyLink(String href, boolean showLink) {
-        ArrayList<Link> vtr;
+    private List<Link> buildHideableHrefOnlyLink(String href, boolean showLink) {
+        List<Link> vtr;
         
         if ((!showLink) || Utility.isNullOrEmpty(href)) return null;
         
@@ -1680,9 +1681,9 @@ public abstract class AbstractCoreBean {
     /**
      * Builds the footer link list from custom links or sections depending on selected environment/theme.
      */
-    private ArrayList<IFooterSection> buildCustomFooterSections() {
-        ArrayList<IFooterSection>   footerSections = null;
-        CDTSEnvironment             env = this.getCurrentCDTSEnvironment();
+    private List<IFooterSection> buildCustomFooterSections() {
+        List<IFooterSection>   footerSections = null;
+        CDTSEnvironment        env = this.getCurrentCDTSEnvironment();
         
         //---[ Build list
         if (env.getFooterSectionLimit() > 0) {
@@ -1719,8 +1720,8 @@ public abstract class AbstractCoreBean {
         return footerSections;
     }
     
-    public ArrayList<Link> buildContactLinks() {
-        ArrayList<Link> links = this.getContactLinks();
+    public List<Link> buildContactLinks() {
+        List<Link> links = this.getContactLinks();
         
         if (!this.getCurrentCDTSEnvironment().getCanHaveMultipleContactLinks()) {
             if ((links != null) && links.size() > 1) throw new IllegalArgumentException("Having multiple contact links is not allowed for environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
@@ -1858,7 +1859,7 @@ public abstract class AbstractCoreBean {
         this.initializeOnce();
         this.checkIfBothShowSignInAndOutAreSet();
 
-        ArrayList<Link> appName = new ArrayList<Link>();
+        List<Link> appName = new ArrayList<Link>();
         appName.add(this.applicationTitle);
         
         //For v4.0.26.x we have to render this section differently depending on the theme, 

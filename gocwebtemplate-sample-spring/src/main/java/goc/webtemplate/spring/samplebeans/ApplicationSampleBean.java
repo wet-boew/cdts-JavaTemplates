@@ -1,6 +1,6 @@
 package goc.webtemplate.spring.samplebeans;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.stereotype.Component;
@@ -24,28 +24,28 @@ public class ApplicationSampleBean extends DefaultTemplateCoreBean {
         this.setIntranetTitle(new IntranetTitle("#intranetlink", "My Intranet", "ACRONYM"));
 
         // Custom Footer Links - GCweb theme only
-        this.setCustomFooterLinks(new ArrayList<FooterLink>(Arrays.asList( 
+        this.setCustomFooterLinks(Arrays.asList( 
                 new FooterLink[] {
                         new FooterLink("#", "Footer Link 1", false),
                         new FooterLink("#", "Footer Link 2", true)
-                })));
+                }));
 
         // Custom Footer Sections - GCintranet theme only
         /*
         FooterSection footerSection1 = new FooterSection("Section One", 
-                new ArrayList<FooterLink>(Arrays.asList( 
+                Arrays.asList( 
                         new FooterLink[] {
                                 new FooterLink("#", "Footer Section 1 Link 1", false),
                                 new FooterLink("#", "Footer Section 1 Link 2", true)
-                        })));
+                        }));
         FooterSection footerSection2 = new FooterSection("Section Two", 
-                new ArrayList<FooterLink>(Arrays.asList( 
+                Arrays.asList( 
                         new FooterLink[] {
                                 new FooterLink("#", "Footer Section 2 Link 1", false),
                                 new FooterLink("#", "Footer Section 2 Link 2", true)
-                        })));
-        this.setCustomFooterSections(new ArrayList<FooterSection>(Arrays.asList(new FooterSection[] {
-                footerSection1, footerSection2})));
+                        }));
+        this.setCustomFooterSections(Arrays.asList(new FooterSection[] {
+                footerSection1, footerSection2}));
         */      
 
         // Setup custom search behavior
@@ -59,7 +59,7 @@ public class ApplicationSampleBean extends DefaultTemplateCoreBean {
         
         //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
         //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)
-        //NOTE: The menu can also be set by calling setMenuLinks(ArrayList<MenuItem>) instead. 
+        //NOTE: The menu can also be set by calling setMenuLinks(List<MenuItem>) instead. 
         this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/mycustommenu.html" );
         
         this.setAppSettingsUrl("#myappsettingsurl");

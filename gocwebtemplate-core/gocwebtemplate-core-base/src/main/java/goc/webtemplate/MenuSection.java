@@ -1,26 +1,27 @@
 package goc.webtemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuSection {
     private String name = "";
     private String link = "";
-    private ArrayList<Link> items = null;
+    private List<Link> items = null;
     private boolean openInNewWindow = false;
 
     public MenuSection() {
         this("", new ArrayList<Link>());
     }
 
-    public MenuSection(String sectionName, ArrayList<Link> menuLinks) {
+    public MenuSection(String sectionName, List<Link> menuLinks) {
         this("", "", menuLinks);
     }
 
-    public MenuSection(String sectionName, String sectionLink, ArrayList<Link> menuLinks) {
+    public MenuSection(String sectionName, String sectionLink, List<Link> menuLinks) {
         this(sectionName, sectionLink, menuLinks, false);
     }
 
-    public MenuSection(String sectionName, String sectionLink, ArrayList<Link> menuLinks, boolean openInNewWindow) {
+    public MenuSection(String sectionName, String sectionLink, List<Link> menuLinks, boolean openInNewWindow) {
         this.name = sectionName;
         this.link = sectionLink;
         this.items = menuLinks;
@@ -51,11 +52,11 @@ public class MenuSection {
         return this.link;
     }
 
-    public void setItems(ArrayList<Link> menuLinks) {
+    public void setItems(List<Link> menuLinks) {
         this.items = menuLinks;
     }
 
-    public ArrayList<Link> getItems() {
+    public List<Link> getItems() {
         return this.items;
     }
 }

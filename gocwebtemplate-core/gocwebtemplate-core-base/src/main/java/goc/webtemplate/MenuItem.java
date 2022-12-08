@@ -1,10 +1,11 @@
 package goc.webtemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class MenuItem extends Link {
-    private ArrayList<MenuItem> subItems = null;
+    private List<MenuItem> subItems = null;
     private boolean openInNewWindow = false;
     private String acronym = null;
 
@@ -28,19 +29,19 @@ public class MenuItem extends Link {
         this(href, text, acronym, new ArrayList<MenuItem>(), openInNewWindow);
     }
 
-    public MenuItem(String href, String text, ArrayList<MenuItem> subItems) {
+    public MenuItem(String href, String text, List<MenuItem> subItems) {
         this(href, text, null, subItems, false);
     }
 
-    public MenuItem(String href, String text, ArrayList<MenuItem> subItems, boolean openInNewWindow) {
+    public MenuItem(String href, String text, List<MenuItem> subItems, boolean openInNewWindow) {
         this(href, text, null, subItems, openInNewWindow);
     }
 
-    public MenuItem(String href, String text, String acronym, ArrayList<MenuItem> subItems) {
+    public MenuItem(String href, String text, String acronym, List<MenuItem> subItems) {
         this(href, text, acronym, subItems, false);
     }
 
-    public MenuItem(String href, String text, String acronym, ArrayList<MenuItem> subItems, boolean openInNewWindow) {
+    public MenuItem(String href, String text, String acronym, List<MenuItem> subItems, boolean openInNewWindow) {
         super(href, text);
         this.subItems = subItems;
         this.openInNewWindow = openInNewWindow;
@@ -55,11 +56,11 @@ public class MenuItem extends Link {
         return this.openInNewWindow;
     }
 
-    public void setSubItems(ArrayList<MenuItem> subItems) {
+    public void setSubItems(List<MenuItem> subItems) {
         this.subItems = subItems;
     }
 
-    public ArrayList<MenuItem> getSubItems() {
+    public List<MenuItem> getSubItems() {
         return this.subItems;
     }
 

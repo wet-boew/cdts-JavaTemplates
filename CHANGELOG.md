@@ -1,6 +1,10 @@
 # JavaTemplates Change Log
 
-[Download and/or Installation instructions](https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Documentation/Installation)
+[Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
+
+## v2.5.1
+
+- Minor refactoring: Functions now take parameters (and return value) using interfaces `java.util.List` and `java.util.Map` instead of concrete classes `java.util.ArrayList` and `java.util.HashMap` for more flexibility.
 
 ## v2.5.0
 

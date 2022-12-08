@@ -3,6 +3,7 @@ package goc.webtemplate.component.jsonentities;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuSection;
@@ -20,15 +21,15 @@ import goc.webtemplate.component.BaseUtil;
 public class SecMenuSection implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String                  sectionName;
-    private String                  sectionLink;
-    private Boolean                 newWindow;
-    private ArrayList<SecMenuItem>  menuLinks;
+    private String             sectionName;
+    private String             sectionLink;
+    private Boolean            newWindow;
+    private List<SecMenuItem>  menuLinks;
     
     public SecMenuSection() {
     }
 
-    public SecMenuSection(String sectionName, String sectionLink, Boolean newWindow, ArrayList<SecMenuItem> menuLinks) {
+    public SecMenuSection(String sectionName, String sectionLink, Boolean newWindow, List<SecMenuItem> menuLinks) {
         this.sectionName = sectionName;
         this.sectionLink = sectionLink;
         this.newWindow = newWindow;
@@ -80,11 +81,11 @@ public class SecMenuSection implements Serializable {
         this.newWindow = newWindow;
     }
 
-    public ArrayList<SecMenuItem> getMenuLinks() {
+    public List<SecMenuItem> getMenuLinks() {
         return menuLinks;
     }
 
-    public void setMenuLinks(ArrayList<SecMenuItem> menuLinks) {
+    public void setMenuLinks(List<SecMenuItem> menuLinks) {
         this.menuLinks = menuLinks;
     }
 }

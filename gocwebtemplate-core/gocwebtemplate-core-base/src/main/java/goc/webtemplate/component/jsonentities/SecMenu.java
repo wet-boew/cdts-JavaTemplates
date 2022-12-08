@@ -3,6 +3,7 @@ package goc.webtemplate.component.jsonentities;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import goc.webtemplate.MenuSection;
 
@@ -14,7 +15,7 @@ import goc.webtemplate.MenuSection;
 public class SecMenu implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private ArrayList<SecMenuSection>   sections;
+    private List<SecMenuSection>   sections;
     
     public SecMenu() {
     }
@@ -24,26 +25,26 @@ public class SecMenu implements Serializable {
     //      but since we dont' really need the field initialization constructor, we'll
     //      just comment it out....
     //
-    //public SecMenu(ArrayList<SecMenuSection> sections) {
+    //public SecMenu(List<SecMenuSection> sections) {
     //    this.sections = sections;
     //}
 
     /**
-     * Convenience constructor to initialize an object from an ArrayList of MenuSection
+     * Convenience constructor to initialize an object from an List of MenuSection
      * objects.
      */
-    public SecMenu(ArrayList<MenuSection> menuSections) {
+    public SecMenu(List<MenuSection> menuSections) {
          if (menuSections != null && menuSections.size() > 0) {
              this.sections  = new ArrayList<SecMenuSection>(menuSections.size());
              for (MenuSection ms: menuSections) this.sections.add(new SecMenuSection(ms));
          } //(else this.sections stays null)
     }
 
-    public ArrayList<SecMenuSection> getSections() {
+    public List<SecMenuSection> getSections() {
         return sections;
     }
 
-    public void setSections(ArrayList<SecMenuSection> sections) {
+    public void setSections(List<SecMenuSection> sections) {
         this.sections = sections;
     }
 }

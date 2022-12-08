@@ -59,11 +59,11 @@ public void onWebTemplateInitialize() {
 @Override
 public void onWebTemplateInitialize() {
 //...
-    this.setCustomFooterLinks(new ArrayList&lt;FooterLink&gt;(Arrays.asList( 
+    this.setCustomFooterLinks(Arrays.asList( 
             new FooterLink[] {
                     new FooterLink("#", "Footer Link 1", false),
                     new FooterLink("#", "Footer Link 2", true)
-            })));
+            }));
 //...
 }
    </pre>
@@ -85,19 +85,19 @@ public void onWebTemplateInitialize() {
 public void onWebTemplateInitialize() {
 //...
     FooterSection footerSection1 = new FooterSection("Section One", 
-            new ArrayList&lt;FooterLink>(Arrays.asList( 
+            Arrays.asList( 
                     new FooterLink[] {
                             new FooterLink("#", "Footer Section 1 Link 1", false),
                             new FooterLink("#", "Footer Section 1 Link 2", true)
-                    })));
+                    }));
     FooterSection footerSection2 = new FooterSection("Section Two", 
-            new ArrayList&lt;FooterLink>(Arrays.asList( 
+            Arrays.asList( 
                     new FooterLink[] {
                             new FooterLink("#", "Footer Section 2 Link 1", false),
                             new FooterLink("#", "Footer Section 2 Link 2", true)
-                    })));
-    this.setCustomFooterSections(new ArrayList&lt;FooterSection>(Arrays.asList(new FooterSection[] {
-            footerSection1, footerSection2})));
+                    }));
+    this.setCustomFooterSections(Arrays.asList(new FooterSection[] {
+            footerSection1, footerSection2}));
 //...
 }
    </pre>
@@ -142,7 +142,7 @@ public void onWebTemplateInitialize() {
 //...
     //NOTE: This can also be set at the application level by setting the property goc.webtemplate.customsitemenuurl in cdn.properties
     //      (in this sample, default in cdn.properties is blank, which means the default menu will be used)
-    //NOTE: The menu can also be set by calling setMenuLinks(ArrayList&lt;MenuItem&gt;) instead. 
+    //NOTE: The menu can also be set by calling setMenuLinks(List&lt;MenuItem&gt;) instead. 
     this.setCustomSiteMenuUrl( this.getRequest().getContextPath() + "/samplecontents/mycustommenu.html" );
 //...
 }

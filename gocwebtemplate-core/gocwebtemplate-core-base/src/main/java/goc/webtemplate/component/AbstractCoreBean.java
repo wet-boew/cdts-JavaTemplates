@@ -1632,18 +1632,65 @@ public abstract class AbstractCoreBean {
      * Returns the CDN path to the soyutils javascript file.
      * 
      * (Used by template files when rendering)
+     *
+     * @deprecated For CDTS 4.0.44+, soyutils is no longer necessary
      */
+    @Deprecated
     public String getSoyUtilPath() {
-        return this.getPartialCDNPath() + "soyutils.js";
+        return this.getPartialCDNPath() + "compiled/soyutils.js";
     }
     
+    /**
+     * Return the CDN path to the cdts-[subtheme]-styles.css file.
+     *
+     * (Used by template files when rendering)
+     */
+    public String getCssPath() {
+        if (!this.isThemeGcWeb()) {
+            //NOT gcweb...
+            String subTheme = this.getSubTheme();
+            if (!Utility.isNullOrEmpty(subTheme)) {
+                subTheme = subTheme.toLowerCase();
+			    //...limit to supported subthemes
+                if (subTheme.equals("esdc") || subTheme.equals("eccc")) {
+                    return String.format("%scdts-%s-styles.css", this.getPartialCDNPath(), subTheme);
+                }
+            }
+        }
+
+        //(if we get here, we're gcweb or gcintranet with no subtheme value)
+        return this.getPartialCDNPath() + "cdts-styles.css";
+    }
+
+    /**
+     * Return the CDN path to the cdts-[app-]styles.css file.
+     *
+     * (Used by template files when rendering)
+     */
+    public String getAppCssPath() {
+        if (this.isThemeGcWeb()) {
+            return this.getPartialCDNPath() + "cdts-app-styles.css";
+        } else {
+            return this.getCssPath();
+        }
+    }
+
+    /**
+     * Return the CDN path to the cdts-splash-styles.css file.
+     *
+     * (Used by template files when rendering)
+     */
+    public String getSplashCssPath() {
+        return this.getPartialCDNPath() + "cdts-splash-styles.css";
+    }
+
     /**
      * Returns the CDN path to the wet javascript file.
      * 
      * (Used by template files when rendering)
      */
     public String getWetJsPath() {
-        return String.format("%swet-%s.js", this.getPartialCDNPath(), this.getTwoLetterCultureLanguage()); 
+        return String.format("%scompiled/wet-%s.js", this.getPartialCDNPath(), this.getTwoLetterCultureLanguage()); 
     }
 
     /**

@@ -28,7 +28,7 @@
         <title><tiles:insertAttribute name="title" /><s:property value="#goctemplateclientbean.headerTitle"/></title>
         <meta content="width=device-width,initial-scale=1" name="viewport" />
         <!-- Load closure template scripts -->
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.soyUtilPath"/>"></script>
+        <link rel="stylesheet" href="<s:property value="#goctemplateclientbean.splashCssPath"/>">
         <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
         <noscript>
             <!-- Write closure fall-back static file -->

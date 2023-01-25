@@ -4,7 +4,7 @@
 
 ## v2.6.0
 
-- [CDTS](https://gccode.ssc-spc.gc.ca/iitb-dgiit/nw-ws/sgdc-cdts) v4.0.47 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.56.5
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v4.0.47 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.56.5
 - Updated static fallback files
 - Bug Fixes
 

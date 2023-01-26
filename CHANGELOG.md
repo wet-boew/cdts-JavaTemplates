@@ -2,6 +2,12 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v2.6.0
+
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v4.0.47 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.56.5
+- Updated static fallback files
+- Bug Fixes
+
 ## v2.5.1
 
 - Minor refactoring: Functions now take parameters (and return value) using interfaces `java.util.List` and `java.util.Map` instead of concrete classes `java.util.ArrayList` and `java.util.HashMap` for more flexibility.

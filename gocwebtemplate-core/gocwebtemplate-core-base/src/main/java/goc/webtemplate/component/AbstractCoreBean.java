@@ -20,6 +20,7 @@ import goc.webtemplate.CustomSearch;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.FooterSection;
 import goc.webtemplate.IFooterSection;
+import goc.webtemplate.InfoBanner;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
 import goc.webtemplate.LeavingSecureSiteWarning;
@@ -152,6 +153,7 @@ public abstract class AbstractCoreBean {
     private boolean gcToolsModal = false;
     private String footerPath = null;
     private boolean hidePlaceholderMenu = false;
+    private InfoBanner infoBanner = null;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -1474,6 +1476,25 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns whether to display an information banner on top of the page
+     *
+     * can be overriden programatically.
+     */
+    public InfoBanner getInfoBanner() {
+        this.initializeOnce();
+        return this.infoBanner;
+    }
+
+    /**
+     * Sets whether to display an information banner on top of the page
+     *
+     * can be overriden programatically.
+     */
+    public void setInfoBanner(InfoBanner value) {
+        this.infoBanner = value;
+    }
+
+    /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
      */
     private List<Breadcrumb> getEncodedBreadcrumbs() {
@@ -1880,7 +1901,8 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    this.infoBanner
                     );
         } else {
             appTop = new AppTop.AppTopGCIntranet(

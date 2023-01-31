@@ -11,12 +11,12 @@ import goc.webtemplate.Link;
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.appFooter' JavaScript function in the template
- * pages. 
+ * pages.
  */
-public class AppFooter implements Serializable {
+public class AppFooter implements Serializable, IFooter {
     private static final long serialVersionUID = 1L;
 
-    private String              	cdnEnv; 
+    private String              	cdnEnv;
     private String              	subTheme;
     private String              	localPath;
     private String              	footerPath;
@@ -25,13 +25,13 @@ public class AppFooter implements Serializable {
     private List<FooterLink>        termsLink;
     private List<FooterLink>        privacyLink;
     private boolean             	showFeatures;
-    
+
     public AppFooter()
     {
     }
 
     public AppFooter(String cdnEnv, String subTheme, String localPath, String footerPath,
-            List<IFooterSection> footerSections, List<Link> contactLink, 
+            List<IFooterSection> footerSections, List<Link> contactLink,
             List<FooterLink> termsLink, List<FooterLink> privacyLink, boolean showFeatures) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
@@ -67,7 +67,7 @@ public class AppFooter implements Serializable {
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
     }
-    
+
     public String getFooterPath() {
         return footerPath;
     }
@@ -111,7 +111,7 @@ public class AppFooter implements Serializable {
     public boolean isShowFeatures() {
         return showFeatures;
     }
-    
+
     public void setShowFeatures(boolean showFeatures) {
         this.showFeatures = showFeatures;
     }

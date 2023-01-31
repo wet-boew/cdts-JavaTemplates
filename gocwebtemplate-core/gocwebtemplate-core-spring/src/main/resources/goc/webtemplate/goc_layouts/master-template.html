@@ -10,55 +10,32 @@
 	    <meta content="width=device-width,initial-scale=1" name="viewport" />
 	    <!-- Load closure template scripts -->
 	    <link rel="stylesheet" th:href="${goctemplateclientbean.cssPath}">
-	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
+        <script th:remove="tag" th:utext='|<script type="text/javascript" src="${goctemplateclientbean.wetJsPath}" data-cdts-setup=&apos;${goctemplateclientbean.renderSetup}&apos;></script>|'></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
-	    </noscript>   
-        <script type="text/javascript">
-		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderRefTop})]));
-		</script>
+	    </noscript>
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
     </head>
     <body vocab="http://schema.org/" typeof="WebPage">
     	[(${goctemplateclientbean.renderSessionTimeoutControl})]
-    	<div id="def-top">
+    	<div id="cdts-def-top">
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
 	    </div>
-	    <!-- Write closure template -->
-        <script type="text/javascript">
-		    var defTop = document.getElementById("def-top");
-		    defTop.outerHTML = wet.builder.top([(${goctemplateclientbean.renderTop})]);
-		</script>
 	    <main role="main" property="mainContentOfPage" class="container" typeof="WebPageElement">
             <!-- the main content -->
             <section layout:fragment="content"></section>
             <!-- end main content -->
-            <div id="def-preFooter">
+            <div id="cdts-def-preFooter">
                 <!-- Write closure fall-back static file -->
                 [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
         	</div>
-            <!-- Write closure template -->
-            <script type="text/javascript">
-                var defPreFooter = document.getElementById("def-preFooter");
-                defPreFooter.outerHTML = wet.builder.preFooter([(${goctemplateclientbean.renderPreFooter})]);
-			</script>
 	    </main>	
-        <div id="def-footer">
+        <div id="cdts-def-footer">
             <!-- Write closure fall-back static file -->
             [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'footer-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
         </div>
-        <!-- Write closure template -->
-        <script type="text/javascript">
-            var defFooter = document.getElementById("def-footer");
-            defFooter.outerHTML = wet.builder.footer([(${goctemplateclientbean.renderFooter})]);	            
-		</script>
-        <!-- Write closure template -->
-		<script type="text/javascript">
-			document.write(wet.builder.refFooter([(${goctemplateclientbean.renderRefFooter})]));
-        </script> 
-        [(${goctemplateclientbean.renderHtmlBodyElements})]
     </body>
 </html>

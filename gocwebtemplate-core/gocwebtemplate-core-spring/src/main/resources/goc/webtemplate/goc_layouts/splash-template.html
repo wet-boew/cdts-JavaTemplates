@@ -8,28 +8,21 @@
 	    <meta content="width=device-width,initial-scale=1" name="viewport" />
 	    <!-- Load closure template scripts -->
         <link rel="stylesheet" th:href="${goctemplateclientbean.splashCssPath}">
-	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
+        <script th:remove="tag" th:utext='|<script type="text/javascript" src="${goctemplateclientbean.wetJsPath}" data-cdts-setup=&apos;${goctemplateclientbean.renderSplashSetup}&apos;></script>|'></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splashTop.html')})]
 	    </noscript>   
-        <script type="text/javascript">
-		    document.write(wet.builder.splashTop([(${goctemplateclientbean.renderSplashTop})]));
-		</script>
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
     </head>
     <body vocab="http://schema.org/" class="splash" typeof="WebPage">
-		<div id="splashContent">
+		<div id="cdts-splash-content">
 			<noscript>
 	            <!--  Write closure fall-back static file -->
 	            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splash.html')})]
 	            <!-- Write closure template -->
             </noscript>
-            <script type="text/javascript">
-			    var contentSplash = document.getElementById("splashContent");
-				contentSplash.innerHTML = wet.builder.splash([(${goctemplateclientbean.renderSplash})]);
-			</script>
         </div>
 	 </body>
 </html>

@@ -13,9 +13,9 @@ import goc.webtemplate.Link;
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.footer' JavaScript function in the template
- * pages. 
+ * pages.
  */
-public class Footer implements Serializable {
+public class Footer implements Serializable, IFooter {
     private static final long serialVersionUID = 1L;
 
     private String              cdnEnv;
@@ -82,7 +82,7 @@ public class Footer implements Serializable {
     public boolean isShowFeatures() {
         return showFeatures;
     }
-    
+
     public void setShowFeatures(boolean showFeatures) {
         this.showFeatures = showFeatures;
     }

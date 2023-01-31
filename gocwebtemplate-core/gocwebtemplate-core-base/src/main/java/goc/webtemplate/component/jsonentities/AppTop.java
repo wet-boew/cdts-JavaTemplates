@@ -17,19 +17,19 @@ import goc.webtemplate.Link;
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.appTop' JavaScript function in the template
- * pages. 
- * 
+ * pages.
+ *
  * NOTE: For v4.0.27+ we have to render AppTop differently depending on the theme,
- *       GCIntranet has extra properties. So, see also AppTopGCIntranet at the 
- *       bottom of this file.         
+ *       GCIntranet has extra properties. So, see also AppTopGCIntranet at the
+ *       bottom of this file.
  */
-public class AppTop implements Serializable { 
+public class AppTop implements Serializable, ITop {
     private static final long serialVersionUID = 1L;
-    
+
     private String              cdnEnv;
     private String              subTheme;
     private String              localPath;
-    
+
     private List<Link>          appName;
     private String              menuPath;
     private List<SecMenuItem>   menuLinks;
@@ -111,11 +111,11 @@ public class AppTop implements Serializable {
     public List<Link> getAppName() {
         return this.appName;
     }
-    
+
     public void setAppName(List<Link> value) {
         this.appName = value;
     }
-    
+
     public String getMenuPath() {
         return menuPath;
     }
@@ -187,11 +187,11 @@ public class AppTop implements Serializable {
     public void setShowPreContent(boolean showPreContent) {
         this.showPreContent = showPreContent;
     }
-    
+
     public List<CustomSearch> getCustomSearch() {
         return this.customSearch;
     }
-    
+
     public void setCustomSearch(List<CustomSearch> customSearch) {
         this.customSearch = customSearch;
     }
@@ -220,31 +220,30 @@ public class AppTop implements Serializable {
         this.headerMenu = headerMenu;
     }
 
-    
     /**
      * For v4.0.27+ we have to render AppTop differently depending on the theme,
      * GCIntranet has extra properties.
-     * 
+     *
      * This is the GCIntranet-specific implementation
      */
     public static class AppTopGCIntranet extends AppTop
     {
         private static final long serialVersionUID = 1L;
-        
+
         private List<IntranetTitle>          intranetTitle;
-        
+
         @SerializedName("GCToolsModal")
         private boolean                      gcToolsModal;
-        
+
         public AppTopGCIntranet()
         {
         }
 
         public AppTopGCIntranet(String cdnEnv, String subTheme, String localPath, List<Link> appName, String menuPath,
                 List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
-                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu, 
+                boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu,
                 List<IntranetTitle> intranetTitle, boolean gcToolsModal) {
-            
+
             super(cdnEnv, subTheme, localPath, appName, menuPath,
                     menuLinks, lngLinks, signIn, signOut, appSettings,
                     search, breadcrumbs, showPreContent, customSearch, topSecMenu, null, null);
@@ -252,7 +251,7 @@ public class AppTop implements Serializable {
             this.intranetTitle = intranetTitle;
             this.gcToolsModal = gcToolsModal;
         }
-        
+
         public List<IntranetTitle> getIntranetTitle() {
             return intranetTitle;
         }
@@ -260,13 +259,13 @@ public class AppTop implements Serializable {
         public void setIntranetTitle(List<IntranetTitle> intranetTitle) {
             this.intranetTitle = intranetTitle;
         }
-        
+
         public boolean getGcToolsModal() {
             return gcToolsModal;
         }
-        
+
         public void setGcToolsModal(boolean value) {
             this.gcToolsModal = value;
         }
-    }    
+    }
 }

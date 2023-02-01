@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
+import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.CustomSearch;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.FooterSection;
@@ -154,6 +155,9 @@ public abstract class AbstractCoreBean {
     private String footerPath = null;
     private boolean hidePlaceholderMenu = false;
     private InfoBanner infoBanner = null;
+    private ContextualFooter contextualFooter = null;
+    private boolean hideMainFooter = false;
+    private boolean hideCorporateFooter = false;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -1495,6 +1499,63 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns whether to display a contextual footer band that can display up to 3 links
+     *
+     * can be overriden programatically.
+     */
+    public ContextualFooter getContextualFooter() {
+        this.initializeOnce();
+        return this.contextualFooter;
+    }
+
+    /**
+     * Sets whether to display a contextual footer band that can display up to 3 links
+     *
+     * can be overriden programatically.
+     */
+    public void setContextualFooter(ContextualFooter value) {
+        this.contextualFooter = value;
+    }
+
+    /**
+     * Returns whether to hide the main footer
+     *
+     * can be overriden programatically.
+     */
+    public boolean getHideMainFooter() {
+        this.initializeOnce();
+        return this.hideMainFooter;
+    }
+
+    /**
+     * Sets whether to hide the main footer
+     *
+     * can be overriden programatically.
+     */
+    public void setHideMainFooter(boolean value) {
+        this.hideMainFooter = value;
+    }
+
+    /**
+     * Returns whether to hide corporate footer links
+     *
+     * can be overriden programatically.
+     */
+    public boolean getHideCorporateFooter() {
+        this.initializeOnce();
+        return this.hideCorporateFooter;
+    }
+
+    /**
+     * Sets whether to hide corporate footer links
+     *
+     * can be overriden programatically.
+     */
+    public void setHideCorporateFooter(boolean value) {
+        this.hideCorporateFooter = value;
+    }
+
+    /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
      */
     private List<Breadcrumb> getEncodedBreadcrumbs() {
@@ -2010,9 +2071,12 @@ public abstract class AbstractCoreBean {
                 true, //showFooter,
                 this.getShowFeatures(),
                 this.buildContactLinks(),
-                null, //privacyLink
-                null, //termsLink
-                JsonValueUtils.getNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getFooterLinkContext(this.getPrivacyLink(), true),
+                JsonValueUtils.getFooterLinkContext(this.getTermsConditionsLink(), true),
+                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                this.contextualFooter,
+                this.hideMainFooter,
+                this.hideCorporateFooter
             ));        
     }
     
@@ -2027,9 +2091,12 @@ public abstract class AbstractCoreBean {
                 false, //showFooter
                 this.getShowFeatures(),
                 this.buildContactLinks(),
-                JsonValueUtils.getNonEmptySingleItemLinkList(this.getPrivacyLink()),
-                JsonValueUtils.getNonEmptySingleItemLinkList(this.getTermsConditionsLink()),
-                JsonValueUtils.getNonEmptyString(this.getLocalPath())
+                JsonValueUtils.getFooterLinkContext(this.getPrivacyLink(), false),
+                JsonValueUtils.getFooterLinkContext(this.getTermsConditionsLink(), false),
+                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
+                null,  //contextualFooter
+                false, //hideMainFooter
+                false  //hideCorporateFooter
             ));        
     }
     

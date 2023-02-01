@@ -35,7 +35,7 @@ public class RenderAppTopTest {
         InfoBanner banner = new InfoBanner("Main Text", new Link("google", "Link"), new Link("yahoo", "Button"));
         sut.setInfoBanner(banner);
 
-        assertTrue(sut.getRenderAppTop().contains("\"infoBanner\":{\"mainHTML\":\"Main Text\",\"link\":{\"href\":\"google\",\"text\":\"Link\"},\"button\":{\"href\":\"yahoo\",\"text\":\"Button\"}"),
+        assertTrue(sut.getRenderAppTop().contains("\"infoBanner\":{\"mainHTML\":\"Main Text\",\"link\":{\"href\":\"google\",\"text\":\"Link\",\"newWindow\":false},\"button\":{\"href\":\"yahoo\",\"text\":\"Button\",\"newWindow\":false}"),
         		"\"RenderTop: InfoBanner not rendered as expected.\"");
     }
 

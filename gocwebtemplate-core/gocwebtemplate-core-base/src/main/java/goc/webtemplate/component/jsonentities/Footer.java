@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.FooterLink;
+import goc.webtemplate.FooterLinkContext;
 import goc.webtemplate.Link;
 
 /**
@@ -20,15 +24,25 @@ public class Footer implements Serializable {
     private boolean             showFooter;
     private boolean             showFeatures;
     private List<Link>          contactLinks;
-    private List<FooterLink>    privacyLink;
-    private List<FooterLink>    termsLink;
+
+    //NOTE: Custom serialization/adapter because value can be both a footer link and a list of footer links
+    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FooterLinkAdapter.class)
+    private FooterLinkContext   privacyLink;
+
+    //NOTE: Custom serialization/adapter because value can be both a footer link and a list of footer links
+    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FooterLinkAdapter.class)    
+    private FooterLinkContext   termsLink;
+
     private String              localPath;
+    private ContextualFooter    contextualFooter;
+    private boolean             hideFooterMain;
+    private boolean             hideFooterCorporate;
 
     public Footer() {
     }
 
     public Footer(String cdnEnv, String subTheme, boolean showFooter, boolean showFeatures, List<Link> contactLinks,
-            List<FooterLink> privacyLink, List<FooterLink> termsLink, String localPath) {
+            FooterLinkContext privacyLink, FooterLinkContext termsLink, String localPath, ContextualFooter contextualFooter, boolean hideFooterMain, boolean hideFooterCorporate) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.showFooter = showFooter;
@@ -37,6 +51,9 @@ public class Footer implements Serializable {
         this.privacyLink = privacyLink;
         this.termsLink = termsLink;
         this.localPath = localPath;
+        this.contextualFooter = contextualFooter;
+        this.hideFooterMain = hideFooterMain;
+        this.hideFooterCorporate = hideFooterCorporate;
     }
 
     public String getCdnEnv() {
@@ -79,19 +96,19 @@ public class Footer implements Serializable {
         this.contactLinks = contactLinks;
     }
 
-    public List<FooterLink> getPrivacyLink() {
+    public FooterLinkContext getPrivacyLink() {
         return privacyLink;
     }
 
-    public void setPrivacyLink(List<FooterLink> privacyLink) {
+    public void setPrivacyLink(FooterLinkContext privacyLink) {
         this.privacyLink = privacyLink;
     }
 
-    public List<FooterLink> getTermsLink() {
+    public FooterLinkContext getTermsLink() {
         return termsLink;
     }
 
-    public void setTermsLink(List<FooterLink> termsLink) {
+    public void setTermsLink(FooterLinkContext termsLink) {
         this.termsLink = termsLink;
     }
 
@@ -101,5 +118,29 @@ public class Footer implements Serializable {
 
     public void setLocalPath(String localPath) {
         this.localPath = localPath;
+    }
+
+    public ContextualFooter getContextualFooter() {
+        return contextualFooter;
+    }
+
+    public void setContextualFooter(ContextualFooter contextualFooter) {
+        this.contextualFooter = contextualFooter;
+    }
+
+    public boolean isHideFooterMain() {
+        return hideFooterMain;
+    }
+
+    public void setHideFooterMain(boolean hideFooterMain) {
+        this.hideFooterMain = hideFooterMain;
+    }
+
+    public boolean isHideFooterCorporate() {
+        return hideFooterCorporate;
+    }
+
+    public void setHideFooterCorporate(boolean hideFooterCorporate) {
+        this.hideFooterCorporate = hideFooterCorporate;
     }
 }

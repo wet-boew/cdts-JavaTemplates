@@ -1,4 +1,6 @@
-package goc.webtemplate;
+package goc.webtemplate.component.jsonentities;
+
+import goc.webtemplate.FooterLink;
 
 public class FooterLinkContext {
 

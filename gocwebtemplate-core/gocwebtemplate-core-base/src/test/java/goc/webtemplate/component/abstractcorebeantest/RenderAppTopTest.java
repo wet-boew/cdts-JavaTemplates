@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import goc.webtemplate.BannerLink;
 import goc.webtemplate.InfoBanner;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
@@ -32,7 +33,7 @@ public class RenderAppTopTest {
     public void testInfoBanner() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
 
-        InfoBanner banner = new InfoBanner("Main Text", new Link("google", "Link"), new Link("yahoo", "Button"));
+        InfoBanner banner = new InfoBanner("Main Text", new BannerLink("google", "Link"), new BannerLink("yahoo", "Button"));
         sut.setInfoBanner(banner);
 
         assertTrue(sut.getRenderAppTop().contains("\"infoBanner\":{\"mainHTML\":\"Main Text\",\"link\":{\"href\":\"google\",\"text\":\"Link\",\"newWindow\":false},\"button\":{\"href\":\"yahoo\",\"text\":\"Button\",\"newWindow\":false}"),

@@ -8,7 +8,6 @@ import com.google.gson.annotations.JsonAdapter;
 
 import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.FooterLink;
-import goc.webtemplate.FooterLinkContext;
 import goc.webtemplate.Link;
 
 /**

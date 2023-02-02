@@ -11,7 +11,7 @@
         <li><a href="errorsample.action">Unilingual Error Page</a></li>
         <li><a href="extendedbasepagesample.action">Extended Base Page</a></li>
         <li><a href="feedbackandsharethispagesample.action">Feedback and Share This Page Links</a></li>
-        <li><a href="footerlinkssample.action">Footer Links</a></li>
+        <li><a href="footerlinkssample.action">Footer</a></li>
         <li><a href="leavingsecureSitesample.action">Leaving Secure Site Warning</a></li>
         <li><a href="leftsidemenusample.action">Left Side Menu</a></li>
         <li><a href="nestedmasterpagesample.action">Nested Master Page</a></li>

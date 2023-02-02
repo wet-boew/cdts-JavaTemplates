@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import goc.webtemplate.FooterLink;
-import goc.webtemplate.FooterLinkContext;
 import goc.webtemplate.Link;
 import goc.webtemplate.Utility;
+
+import goc.webtemplate.component.jsonentities.FooterLinkContext;
 
 public final class JsonValueUtils {
     

@@ -33,6 +33,8 @@ import goc.webtemplate.SplashPageInfo;
 import goc.webtemplate.Utility;
 import goc.webtemplate.WebAnalyticsInfo;
 
+import static goc.webtemplate.component.JsonRenderer.gson;
+
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
@@ -61,19 +63,6 @@ import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
  *
  */
 public abstract class AbstractCoreBean {
-    /**
-     * Object used for JSON serialization.  (https://github.com/google/gson)
-     * 
-     * According to documentation (http://www.javadoc.io/doc/com.google.code.gson/gson/2.8.0) 
-     * and source code, Gson objects are thread-safe.
-     */
-    //NOTE: Doesn't render null values by default, which is what we want
-    //NOTE: Escapes HTML by default, which is what we want (though URLs still need to be encoded)
-    //NOTE: Indented output can be obtained by chaining a call to setPrettyPrinting()
-    private static Gson gson = new com.google.gson.GsonBuilder()
-                                        .setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.IDENTITY)
-                                        .create();
-
     /**
      * Hold the table of CDTS environment configuration objects (loaded the first time it is accessed).
      */

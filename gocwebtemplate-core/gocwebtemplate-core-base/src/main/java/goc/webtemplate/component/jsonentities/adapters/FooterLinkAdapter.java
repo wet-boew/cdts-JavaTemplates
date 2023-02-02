@@ -5,7 +5,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import goc.webtemplate.FooterLinkContext;
+import static goc.webtemplate.component.JsonRenderer.gson;
+
+import goc.webtemplate.component.jsonentities.FooterLinkContext;
 
 /**
  * GSON type adapter for serializing the "privacyLink" or "termsLink" parameter to the WET
@@ -23,12 +25,7 @@ public class FooterLinkAdapter extends TypeAdapter<FooterLinkContext>{
 
         //If showFooter is false, render footer link as an array
         if (!obj.isShowFooter()) jw.beginArray();
-        jw.beginObject();
-        jw.name("href");
-        jw.value(obj.getFooterLink().getHref());
-        jw.name("newWindow");
-        jw.value(obj.getFooterLink().getNewWindow());
-        jw.endObject();
+        gson.toJson(obj.getFooterLink(), obj.getFooterLink().getClass(), jw);
         if (!obj.isShowFooter()) jw.endArray();
     }
 
@@ -36,5 +33,4 @@ public class FooterLinkAdapter extends TypeAdapter<FooterLinkContext>{
     public FooterLinkContext read(JsonReader jr) throws IOException {
         throw new UnsupportedOperationException("JSON deserialization not supported for type FooterLinkContext.");
     }
-
 }

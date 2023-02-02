@@ -18,5 +18,25 @@ public class FooterLinksSampleBean extends DefaultTemplateCoreBean {
         contactLinks.add(new Link("http://travel.gc.ca/", "Contact Travel!"));
         this.setContactLinks(contactLinks);
         */
+
+        /*
+        //Example of adding a contextual footer with 3 links
+        List<FooterLink> links = new ArrayList<FooterLink>();
+
+        links.add(new FooterLink("http://www.canada.ca/en/index.html", "Link 1", false));
+        links.add(new FooterLink("http://www.canada.ca/en/index.html", "Link 2", false));
+        links.add(new FooterLink("http://www.canada.ca/en/index.html", "Link 3", false));
+        this.setContextualFooter(new ContextualFooter("Title", links));
+        */
+
+        //Hiding the main footer
+        //this.setHideMainFooter(true);
+
+        //Hiding the corporate footer links
+        //this.setHideCorporateFooter(true);
+
+        //Overwriting the href of the privacy link and the terms and conditions link
+        //this.setPrivacyLink(new FooterLink("http://canada.ca/"));
+        //this.setTermsConditionsLink(new FooterLink("http://canada.ca/"));
     }
 }

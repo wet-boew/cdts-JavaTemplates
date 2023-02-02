@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import goc.webtemplate.BannerLink;
 import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
@@ -28,14 +29,13 @@ public class RenderFooterTest {
     public void testShowContextualFooter() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
 
-        ContextualFooter f = new ContextualFooter();
-        List<Link> l = new ArrayList<Link>();
+        List<FooterLink> l = new ArrayList<FooterLink>();
 
-        l.add(new Link("google", "Link 1"));
-        l.add(new Link("google", "Link 2", true));
+        l.add(new FooterLink("google", "Link 1", false));
+        l.add(new FooterLink("google", "Link 2", true));
         sut.setContextualFooter(new ContextualFooter("Contextual", l));
 
-        assertTrue(sut.getRenderFooter().contains("\"contextualFooter\":{\"title\":\"Contextual\",\"links\":[{\"href\":\"google\",\"text\":\"Link 1\",\"newWindow\":false},{\"href\":\"google\",\"text\":\"Link 2\",\"newWindow\":true}]"),
+        assertTrue(sut.getRenderFooter().contains("\"contextualFooter\":{\"title\":\"Contextual\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}]"),
                 "RenderFooter: ContextualFooter not rendered as expected.");
     }
 
@@ -49,7 +49,7 @@ public class RenderFooterTest {
         sut.setPrivacyLink(new FooterLink("google"));
         sut.setTermsConditionsLink(new FooterLink("google"));
 
-        assertTrue(sut.getRenderFooter().contains("\"privacyLink\":{\"href\":\"google\",\"newWindow\":false},\"termsLink\":{\"href\":\"google\",\"newWindow\":false}"),
+        assertTrue(sut.getRenderFooter().contains("\"privacyLink\":{\"newWindow\":false,\"href\":\"google\",\"text\":\"\"},\"termsLink\":{\"newWindow\":false,\"href\":\"google\",\"text\":\"\"}"),
                 "RenderFooter: PrivacyLink/TermsLinks not rendered as expected.");
     }
 
@@ -63,7 +63,7 @@ public class RenderFooterTest {
         sut.setPrivacyLink(new FooterLink("google"));
         sut.setTermsConditionsLink(new FooterLink("google"));
 
-        assertTrue(sut.getRenderTransactionalFooter().contains("\"privacyLink\":[{\"href\":\"google\",\"newWindow\":false}],\"termsLink\":[{\"href\":\"google\",\"newWindow\":false}]"),
+        assertTrue(sut.getRenderTransactionalFooter().contains("\"privacyLink\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"\"}],\"termsLink\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"\"}]"),
                 "RenderTransactionalFooter: PrivacyLink/TermsLinks not rendered as expected.");
     }
 }

@@ -1,8 +1,8 @@
 package goc.webtemplate;
 
-public class BannerLink {
-    private String href;
-    private String text;
+public class BannerLink extends Link{
+    private static final long serialVersionUID = 1L;
+
     private boolean newWindow;
     
     public BannerLink() {}
@@ -19,25 +19,8 @@ public class BannerLink {
 
     public BannerLink(String href, String text, boolean newWindow)
     {   
-        this.href = href;
-        this.text = text;
+        super(href, text);
         this.newWindow = newWindow;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public boolean isNewWindow() {

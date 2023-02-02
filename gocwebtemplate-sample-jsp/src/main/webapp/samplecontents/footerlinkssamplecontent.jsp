@@ -1,5 +1,5 @@
 <h1>GoC Web Template Samples - Footer</h1>
-<p>Canada.ca is moving to a new global site footer as seen <a href="https://design.canada.ca/common-design-patterns/site-footer.html">here.</a></p>
+<p>Canada.ca provides a global site footer as seen <a href="https://design.canada.ca/common-design-patterns/site-footer.html">here.</a></p>
 <p>For more information, please visit the WET footer documentation <a href="https://wet-boew.github.io/GCWeb/sites/footers/footers-en.html">here.</a></p>
 <h2>Pre-requisite</h2>
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>

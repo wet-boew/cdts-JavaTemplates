@@ -2,12 +2,12 @@ package goc.webtemplate;
 
 public class InfoBanner {
     private String mainHTML;
-    private Link link;
-    private Link button;
+    private BannerLink link;
+    private BannerLink button;
 
     public InfoBanner() {}
 
-    public InfoBanner(String mainHTML, Link link, Link button)
+    public InfoBanner(String mainHTML, BannerLink link, BannerLink button)
     {
         this.mainHTML = mainHTML;
         this.link = link;
@@ -22,19 +22,19 @@ public class InfoBanner {
         this.mainHTML = mainHTML;
     }
 
-    public Link getLink() {
+    public BannerLink getLink() {
         return link;
     }
 
-    public void setLink(Link link) {
+    public void setLink(BannerLink link) {
         this.link = link;
     }
 
-    public Link getButton() {
+    public BannerLink getButton() {
         return button;
     }
 
-    public void setButton(Link button) {
+    public void setButton(BannerLink button) {
         this.button = button;
     }
 }

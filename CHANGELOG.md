@@ -4,6 +4,7 @@
 
 ## v2.6.0
 
+- **IMPORTANT** The GCWeb site footer has been updated to reflect the changes introduced in WET footer version 4. These changes will be applied automatically. For more information, please visit the WET documentation: https://wet-boew.github.io/GCWeb/sites/footers/footers-en.html
 - [CDTS](https://github.com/wet-boew/cdts-sgdc/) v4.0.47 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.56.5
 - Updated static fallback files
 - Bug Fixes

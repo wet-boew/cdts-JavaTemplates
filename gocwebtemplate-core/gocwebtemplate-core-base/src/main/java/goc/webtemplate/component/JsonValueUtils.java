@@ -8,6 +8,8 @@ import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 import goc.webtemplate.Utility;
 
+import goc.webtemplate.component.jsonentities.FooterLinkContext;
+
 public final class JsonValueUtils {
     
     /**
@@ -106,5 +108,13 @@ public final class JsonValueUtils {
     public static boolean getBooleanValue(String value, boolean defaultValue)
     {
         return Utility.isNullOrEmpty(value)? defaultValue: Boolean.parseBoolean(value);
+    }
+
+    /**
+     * Returns FooterLinkContext value depending on the value of showFooter
+     * If the link href if null, then a null value is returned
+     */
+    public static FooterLinkContext getFooterLinkContext(FooterLink link, boolean showFooter) {
+        return Utility.isNullOrEmpty(link.getHref())? null: new FooterLinkContext(showFooter, link);
     }
 }

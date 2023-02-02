@@ -76,11 +76,7 @@ public class RenderSetupTest {
     //TODO: Update other tests
     //TODO: Get rid of RefTop and RefFooter (if no longer used)... and maybe getLocalPath() and other unused functions that were used to build these objects.
 
-    //TODO: Test that gson's default espcaping of ' with \u0027 works... (leaving secure site sample)
-
-    //TODO: Test that session timeout control still works
-    //TODO: Search for "document.write"  and "wet.builder." to be sure
     //TODO: Change log
-    //TODO: JSP Bilingual error sample is UTF8 properly?
     //TODO: Remove some Deprecated?
+    //TODO: Test with huge data
 }

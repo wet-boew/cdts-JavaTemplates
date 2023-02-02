@@ -29,29 +29,20 @@
         <meta content="width=device-width,initial-scale=1" name="viewport" />
         <!-- Load closure template scripts -->
         <link rel="stylesheet" href="<s:property value="#goctemplateclientbean.splashCssPath"/>">
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
+        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>" data-cdts-setup='<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashSetup"/>'></script>
         <noscript>
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splashTop.html')}" />
         </noscript>
-        <!-- Write closure template -->
-        <script type="text/javascript">
-            document.write(wet.builder.splashTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashTop" />));
-        </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" class="splash" typeof="WebPage">
-		<div id="splashContent">
+		<div id="cdts-splash-content">
 			<noscript>
 				<!-- Write closure fall-back static file -->
 	            <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splash.html')}" />
 			</noscript>
-			
-			<script type="text/javascript">
-			    var contentSplash = document.getElementById("splashContent");
-			    contentSplash.innerHTML = wet.builder.splash(<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplash" />);
-			</script>			
 		</div>
 	</body>
 </html>

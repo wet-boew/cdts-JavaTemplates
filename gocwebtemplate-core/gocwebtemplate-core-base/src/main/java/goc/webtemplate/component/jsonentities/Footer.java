@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.gson.annotations.JsonAdapter;
 
 import goc.webtemplate.ContextualFooter;
-import goc.webtemplate.FooterLink;
 import goc.webtemplate.Link;
 
 /**
@@ -29,7 +28,7 @@ public class Footer implements Serializable, IFooter {
     private FooterLinkContext   privacyLink;
 
     //NOTE: Custom serialization/adapter because value can be both a footer link and a list of footer links
-    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FooterLinkAdapter.class)    
+    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FooterLinkAdapter.class)
     private FooterLinkContext   termsLink;
 
     private String              localPath;

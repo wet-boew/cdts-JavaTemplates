@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import goc.webtemplate.HeaderLink;
 import goc.webtemplate.HeaderMenu;
 import goc.webtemplate.InfoBanner;
-import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 
 public class RenderAppTopTest {

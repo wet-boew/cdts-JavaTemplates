@@ -7,12 +7,10 @@ import goc.webtemplate.LeavingSecureSiteWarning;
 import goc.webtemplate.Utility;
 import goc.webtemplate.WebAnalyticsInfo;
 
-import goc.webtemplate.component.JsonValueUtils;
-
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.refFooter' JavaScript function in the template
- * pages. 
+ * pages.
  */
 public class RefFooter implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,7 +21,7 @@ public class RefFooter implements Serializable {
     private String  localPath;
     private boolean webAnalytics;
     private boolean isApplication;
-    
+
     public RefFooter() {
     }
 
@@ -35,7 +33,7 @@ public class RefFooter implements Serializable {
         this.webAnalytics = webAnalytics;
         this.isApplication = isApplication;
     }
-    
+
     public RefFooter(String cdnEnv, LeavingSecureSiteWarning lssw, String jqueryEnv, String localPath, WebAnalyticsInfo webAnalyticsInfo, boolean isApplication) {
         this.cdnEnv = cdnEnv;
         this.exitSecureSite = null;

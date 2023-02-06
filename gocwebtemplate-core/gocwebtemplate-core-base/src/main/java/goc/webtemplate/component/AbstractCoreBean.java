@@ -11,8 +11,6 @@ import java.util.MissingResourceException;
 
 import org.apache.commons.text.StringEscapeUtils;
 
-import com.google.gson.Gson;
-
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.ContextualFooter;
@@ -460,9 +458,9 @@ public abstract class AbstractCoreBean {
 
     /**
      * Returns the version of the CDN files to use to build the page. (e.g v4_0_47)
-     * 
-     * Set at application level via "wettemplate_version" property in cdn.properties, 
-     * can be overriden programatically.  
+     *
+     * Set at application level via "wettemplate_version" property in cdn.properties,
+     * can be overriden programatically.
      */
     public String getTemplateVersion() {
         this.initializeOnce();
@@ -481,9 +479,9 @@ public abstract class AbstractCoreBean {
 
     /**
      * Sets the version of the CDN files to use to build the page. (e.g v4_0_47)
-     * 
-     * Set at application level via "wettemplate_version" property in cdn.properties, 
-     * can be overriden programatically.  
+     *
+     * Set at application level via "wettemplate_version" property in cdn.properties,
+     * can be overriden programatically.
      */
     public void setTemplateVersion(String value) {
         this.templateVersion = value;
@@ -1569,7 +1567,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Returns a copy of the breadcrumb list, ready for JSON serialization 
+     * Returns a copy of the breadcrumb list, ready for JSON serialization
      */
     private List<Breadcrumb> getEncodedBreadcrumbs() {
         List<Breadcrumb>   sourceList = this.getBreadcrumbs();
@@ -2060,7 +2058,8 @@ public abstract class AbstractCoreBean {
                     this.getEncodedBreadcrumbs(),
                     this.showPreContent,
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.getHasLeftMenuSections() //topSecMenu, true if there is at least one left menu section defined
+                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
+                    this.infoBanner
                     );
         } else {
             appTop = new AppTop.AppTopGCIntranet(
@@ -2295,7 +2294,7 @@ public abstract class AbstractCoreBean {
                 this.contextualFooter,
                 this.hideMainFooter,
                 this.hideCorporateFooter
-            ));        
+            ));
     }
 
     /**
@@ -2315,7 +2314,7 @@ public abstract class AbstractCoreBean {
                 null,  //contextualFooter
                 false, //hideMainFooter
                 false  //hideCorporateFooter
-            ));        
+            ));
     }
 
 

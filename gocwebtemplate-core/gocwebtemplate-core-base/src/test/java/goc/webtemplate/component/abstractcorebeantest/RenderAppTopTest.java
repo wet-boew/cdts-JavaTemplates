@@ -56,5 +56,4 @@ public class RenderAppTopTest {
         assertTrue(sut.getRenderAppTop().contains("\"headerMenu\":{\"text\":\"Main Text\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}],\"logoutLink\":{\"href\":\"google\",\"text\":\"Logout Now\"}}"),
         		"\"RenderTop: HeaderMenu not rendered as expected.\"");
     }
-
 }

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.CustomSearch;
+import goc.webtemplate.HeaderMenu;
 import goc.webtemplate.InfoBanner;
 import goc.webtemplate.IntranetTitle;
 import goc.webtemplate.LanguageLink;
@@ -34,6 +35,7 @@ public class AppTop implements Serializable {
     private List<SecMenuItem>   menuLinks;
     private List<LanguageLink>  lngLinks;
     private InfoBanner          infoBanner;
+    private HeaderMenu          headerMenu;
     
     /**
      * This is a List but should only have one item in it.
@@ -62,7 +64,7 @@ public class AppTop implements Serializable {
 
     public AppTop(String cdnEnv, String subTheme, String localPath, List<Link> appName, String menuPath,
             List<SecMenuItem> menuLinks, List<LanguageLink> lngLinks, List<Link> signIn, List<Link> signOut, List<Link> appSettings,
-            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu, InfoBanner infoBanner) {
+            boolean search, List<Breadcrumb> breadcrumbs, boolean showPreContent, List<CustomSearch> customSearch, boolean topSecMenu, InfoBanner infoBanner, HeaderMenu headerMenu) {
         this.cdnEnv = cdnEnv;
         this.subTheme = subTheme;
         this.localPath = localPath;
@@ -79,6 +81,7 @@ public class AppTop implements Serializable {
         this.customSearch = customSearch;
         this.topSecMenu = topSecMenu;
         this.infoBanner = infoBanner;
+        this.headerMenu = headerMenu;
     }
 
     public String getCdnEnv() {
@@ -209,6 +212,14 @@ public class AppTop implements Serializable {
         this.infoBanner = infoBanner;
     }
 
+    public HeaderMenu getHeaderMenu() {
+        return headerMenu;
+    }
+
+    public void setHeaderMenu(HeaderMenu headerMenu) {
+        this.headerMenu = headerMenu;
+    }
+
     
     /**
      * For v4.0.27+ we have to render AppTop differently depending on the theme,
@@ -236,7 +247,7 @@ public class AppTop implements Serializable {
             
             super(cdnEnv, subTheme, localPath, appName, menuPath,
                     menuLinks, lngLinks, signIn, signOut, appSettings,
-                    search, breadcrumbs, showPreContent, customSearch, topSecMenu, null);
+                    search, breadcrumbs, showPreContent, customSearch, topSecMenu, null, null);
             
             this.intranetTitle = intranetTitle;
             this.gcToolsModal = gcToolsModal;

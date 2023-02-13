@@ -1,23 +1,23 @@
 package goc.webtemplate;
 
-public class BannerLink extends Link{
+public class HeaderLink extends Link{
     private static final long serialVersionUID = 1L;
 
     private boolean newWindow;
     
-    public BannerLink() {}
+    public HeaderLink() {}
 
-    public BannerLink(String href)
+    public HeaderLink(String href)
     {
         this(href, "");
     }
 
-    public BannerLink(String href, String text)
+    public HeaderLink(String href, String text)
     {   
         this(href, text, false);
     }
 
-    public BannerLink(String href, String text, boolean newWindow)
+    public HeaderLink(String href, String text, boolean newWindow)
     {   
         super(href, text);
         this.newWindow = newWindow;

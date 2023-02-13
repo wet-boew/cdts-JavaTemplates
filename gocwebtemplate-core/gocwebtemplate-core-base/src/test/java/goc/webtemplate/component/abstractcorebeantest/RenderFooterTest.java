@@ -7,10 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import goc.webtemplate.BannerLink;
 import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.FooterLink;
-import goc.webtemplate.Link;
 
 public class RenderFooterTest {
 

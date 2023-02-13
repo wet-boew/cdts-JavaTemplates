@@ -20,6 +20,7 @@ import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.CustomSearch;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.FooterSection;
+import goc.webtemplate.HeaderMenu;
 import goc.webtemplate.IFooterSection;
 import goc.webtemplate.InfoBanner;
 import goc.webtemplate.IntranetTitle;
@@ -77,7 +78,7 @@ public abstract class AbstractCoreBean {
                                                           return new SimpleDateFormat("yyyy-MM-dd");
                                                         }
                                                     };
-    
+
     /**
      * Flag indicating whether the onWebTemplateInitialize has already been called. 
      */
@@ -147,6 +148,7 @@ public abstract class AbstractCoreBean {
     private ContextualFooter contextualFooter = null;
     private boolean hideMainFooter = false;
     private boolean hideCorporateFooter = false;
+    private HeaderMenu headerMenu = null;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -1543,6 +1545,25 @@ public abstract class AbstractCoreBean {
     public void setHideCorporateFooter(boolean value) {
         this.hideCorporateFooter = value;
     }
+    
+    /**
+     * Returns whether to display a header menu on top of the page
+     *
+     * can be overriden programatically.
+     */
+    public HeaderMenu getHeaderMenu() {
+        this.initializeOnce();
+        return this.headerMenu;
+    }
+
+    /**
+     * Sets whether to display a header menu on top of the page
+     *
+     * can be overriden programatically.
+     */
+    public void setHeaderMenu(HeaderMenu value) {
+        this.headerMenu = value;
+    }
 
     /**
      * Returns a copy of the breadcrumb list, ready for JSON serialization 
@@ -1952,7 +1973,8 @@ public abstract class AbstractCoreBean {
                     this.showPreContent,
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.infoBanner
+                    this.infoBanner,
+                    this.headerMenu
                     );
         } else {
             appTop = new AppTop.AppTopGCIntranet(

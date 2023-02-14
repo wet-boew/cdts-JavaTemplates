@@ -36,13 +36,10 @@ import static goc.webtemplate.component.JsonRenderer.gson;
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
-import goc.webtemplate.component.jsonentities.CdnEnvironment;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.IPreFooter;
 import goc.webtemplate.component.jsonentities.PreFooter;
-import goc.webtemplate.component.jsonentities.RefFooter;
-import goc.webtemplate.component.jsonentities.RefTop;
 import goc.webtemplate.component.jsonentities.SecMenu;
 import goc.webtemplate.component.jsonentities.SecMenuItem;
 import goc.webtemplate.component.jsonentities.Setup;
@@ -50,7 +47,6 @@ import goc.webtemplate.component.jsonentities.Setup.Mode;
 import goc.webtemplate.component.jsonentities.SetupBase;
 import goc.webtemplate.component.jsonentities.ShareList;
 import goc.webtemplate.component.jsonentities.Splash;
-import goc.webtemplate.component.jsonentities.SplashTop;
 import goc.webtemplate.component.jsonentities.Top;
 import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
 
@@ -811,28 +807,6 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Returns the URL to be used for the Privacy link in transactional mode.
-     *
-     *  @deprecated {@link #getPrivacyLink()} should be used instead.
-     */
-    @Deprecated
-    public String getPrivacyLinkUrl() {
-        this.initializeOnce();
-        return this.privacyLink.getHref();
-    }
-
-    /**
-     * Sets the URL to be used for the Privacy link in transactional mode.
-     *
-     * @deprecated {@link #setPrivacyLink()} should be used instead.
-     */
-    @Deprecated
-    public void setPrivacyLinkUrl(String value) {
-        this.privacyLink.setHref(value);
-    }
-
-
-    /**
      * Returns the Link to be used for the Privacy link in transactional mode.
      *
      *  @since 1.31.0
@@ -1138,31 +1112,6 @@ public abstract class AbstractCoreBean {
      */
     public void setSplashPageInfo(SplashPageInfo value) {
         this.splashPageInfo = value;
-    }
-
-    /**
-     * Returns the url to be used for the Terms & Conditions link in transactional mode.
-     *
-     * Set by application programmatically.
-     *
-     * @deprecated {@link #getTermsConditionsLink()} should be used instead.
-     */
-    @Deprecated
-    public String getTermsConditionsLinkUrl() {
-        this.initializeOnce();
-        return this.termsConditionsLink.getHref();
-    }
-
-    /**
-     * Sets the url to be used for the Terms & Conditions link in transactional mode.
-     *
-     * Set by application programmatically.
-     *
-     * @deprecated {@link #setTermsConditionsLink(FooterLink)} should be used instead.
-     */
-    @Deprecated
-    public void setTermsConditionsLinkUrl(String value) {
-        this.termsConditionsLink.setHref(value);
     }
 
     /**
@@ -1718,22 +1667,11 @@ public abstract class AbstractCoreBean {
         return this.getRenderHtmlElements(this.getHtmlHeaderElements());
     }
 
-    /**
-     * Returns the list of body elements rendered as a string.
-     *
-     * @see #getHtmlHeaderElements()
-     */
-    public String getRenderHtmlBodyElements()
-    {
-        return this.getRenderHtmlElements(this.getHtmlBodyElements());
-    }
-
     private List<String> buildHtmlBodyElements() {
         if (this.htmlBodyElements == null) return null;
         if (this.htmlBodyElements.isEmpty()) return null;
         return this.htmlBodyElements;
     }
-    //TODO: Get rid of renderHtmlBodyElements
 
     private String getRenderHtmlElements(List<String> elems)
     {
@@ -1899,15 +1837,6 @@ public abstract class AbstractCoreBean {
         return sb.toString();
     }
 
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "secmenu"
-     */
-    public String getRenderLeftMenuSections() {
-        return gson.toJson(new SecMenu(this.getLeftMenuSections()));
-    }
-    //TODO: Get rid of renderLeftMenuSections
-
     /** Creates the `SetupBase` object needed in rendering the CDTS setup JSON
      *  (assumes initializeOnce() was called)
      */
@@ -1920,33 +1849,6 @@ public abstract class AbstractCoreBean {
                 this.getLoadJQueryFromGoogle() ? "external" : null, // jqueryEnv
                 this.getLeavingSecureSiteWarning(),
                 this.getWebAnalytics().isActive() ? Arrays.asList(this.getWebAnalytics()) : null);
-    }
-    // TODO: Get rid of renderRefTop related functions
-    // TODO: Get rid of renderRefFooter related functions
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "refTop"
-     *
-     * Applications will actually use property "renderRefTop" or "renderRefTopForApp" depending
-     * on the case, since passing argument when calling properties is not supported in JSF2.0 (not supported anymore), having two
-     * differently named get methods seemed the next simplest solution.
-     */
-    private String buildRefTopValue(boolean isApplication) {
-        return gson.toJson(new RefTop(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                isApplication,
-                this.getWebAnalytics().isActive()? Arrays.asList(this.getWebAnalytics()): null
-            ));
-    }
-    public String getRenderRefTop() {
-        return this.buildRefTopValue(false);
-    }
-    public String getRenderRefTopForApp() {
-        return this.buildRefTopValue(true);
     }
 
     /**
@@ -1973,59 +1875,6 @@ public abstract class AbstractCoreBean {
                     this.gcToolsModal,
                     this.hidePlaceholderMenu
                 );
-    }
-    //TODO: Get rid of renderTop and renderTransactionalRop
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "top"
-     */
-    public String getRenderTop() {
-        if (this.isThemeGcWeb() && this.gcToolsModal){
-            throw new UnsupportedOperationException(String.format("The gcToolsModal is not available in %s", this.getTheme().toLowerCase()));
-        }
-
-        return gson.toJson(new Top(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                    this.buildIntranetTitleList(),
-                    this.showSearch,
-                    this.buildLanguageLinkList(),
-                    this.showPreContent,
-                    this.getEncodedBreadcrumbs(),
-                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                    true, //siteMenu
-                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.gcToolsModal,
-                    this.hidePlaceholderMenu
-                ));
-    }
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "top" for transactional pages.
-     */
-    public String getRenderTransactionalTop() {
-        if (this.isThemeGcWeb() && this.gcToolsModal){
-            throw new UnsupportedOperationException(String.format("The gcToolsModal is not available in %s", this.getTheme().toLowerCase()));
-        }
-
-        return gson.toJson(new Top(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                    this.buildIntranetTitleList(),
-                    this.showSearch,
-                    this.buildLanguageLinkList(),
-                    false, //preContent
-                    this.getEncodedBreadcrumbs(),
-                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                    false, //siteMenu
-                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.gcToolsModal,
-                    this.hidePlaceholderMenu
-                ));
     }
 
     /**
@@ -2059,7 +1908,8 @@ public abstract class AbstractCoreBean {
                     this.showPreContent,
                     this.customSearch != null? Arrays.asList(this.customSearch): null,
                     this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.infoBanner
+                    this.infoBanner,
+                    this.headerMenu
                     );
         } else {
             appTop = new AppTop.AppTopGCIntranet(
@@ -2086,99 +1936,8 @@ public abstract class AbstractCoreBean {
         return appTop;
     }
 
-    //TODO: Get rid of renderAppTop
     /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "appTop"
-     */
-    public String getRenderAppTop() {
-        AppTop  appTop;
-
-        this.initializeOnce();
-        this.checkIfBothShowSignInAndOutAreSet();
-
-        List<Link> appName = new ArrayList<Link>();
-        appName.add(this.applicationTitle);
-
-        //For v4.0.26.x we have to render this section differently depending on the theme,
-        //GCIntranet theme renders AppName and AppUrl seperately in GCWeb we render it as a List of Links.
-        if (isThemeGcWeb()) {
-            appTop = new AppTop(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                    appName,
-                    JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
-                    this.buildMenuLinksList(),
-                    this.buildLanguageLinkList(),
-                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
-                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
-                    this.buildHideableHrefOnlyLink(this.getAppSettingsUrl(), true),
-                    this.showSearch,
-                    this.getEncodedBreadcrumbs(),
-                    this.showPreContent,
-                    this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.infoBanner,
-                    this.headerMenu
-                    );
-        } else {
-            appTop = new AppTop.AppTopGCIntranet(
-                    this.getCdtsCdnEnv(),
-                    JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                    JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                    appName,
-                    JsonValueUtils.getNonEmptyURLEscapedString(this.getCustomSiteMenuUrl()),
-                    this.buildMenuLinksList(),
-                    this.buildLanguageLinkList(),
-                    this.buildHideableHrefOnlyLink(this.getSignInLinkUrl(), this.getShowSignInLink()),
-                    this.buildHideableHrefOnlyLink(this.getSignOutLinkUrl(), this.getShowSignOutLink()),
-                    this.buildHideableHrefOnlyLink(this.getAppSettingsUrl(), true),
-                    this.showSearch,
-                    this.getEncodedBreadcrumbs(),
-                    this.showPreContent,
-                    this.customSearch != null? Arrays.asList(this.customSearch): null,
-                    this.getHasLeftMenuSections(), //topSecMenu, true if there is at least one left menu section defined
-                    this.buildIntranetTitleList(),
-                    this.gcToolsModal
-                    );
-        }
-
-        return gson.toJson(appTop);
-    }
-
-    //TODO: Get rid of splash-related render functions
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "splashTop"
-     */
-    public String getRenderSplashTop() {
-        return gson.toJson(new SplashTop(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getLocalPath())
-              ));
-    }
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "splash"
-     */
-    public String getRenderSplash() {
-        SplashPageInfo  spi = this.getSplashPageInfo();
-
-        return gson.toJson(new Splash(
-                    this.getCdtsCdnEnv(),
-                    spi.getEnglishHomeUrl(),
-                    spi.getFrenchHomeUrl(),
-                    JsonValueUtils.getNonEmptyString(spi.getEnglishTermsUrl()),
-                    JsonValueUtils.getNonEmptyString(spi.getFrenchTermsUrl()),
-                    spi.getEnglishName(),
-                    spi.getFrenchName()
-                ));
-    }
-
-    /**
-     * Builds the "Top" object needed in rendering the CDTS setup JSON
+     * Builds the "PreFooter" object needed in rendering the CDTS setup JSON
      * (assumes initializeOnce() was called)
      */
     private IPreFooter buildPreFooter(boolean isTransactional, boolean isUnilingualError) {
@@ -2212,49 +1971,6 @@ public abstract class AbstractCoreBean {
                   );
         }
     }
-    //TODO: Get rid of renderPreFooter functionS
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "preFooter"
-     */
-    public String getRenderPreFooter() {
-        return gson.toJson(new PreFooter(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
-                this.buildDateModified(),
-                this.showPostContent,
-                new FeedbackLink(this.showFeedbackLink,
-                        (this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.ENGLISH_ACCRONYM.toUpperCase()) || Utility.isNullOrEmpty(this.getFeedbackUrlFr()) ?
-                                this.feedbackUrl:
-                                this.feedbackUrlFr) ),
-                new ShareList(this.showSharePageLink, this.sharePageMediaSites),
-                JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
-              ));
-    }
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "preFooter" for transactional template.
-     */
-    public String getRenderTransactionalPreFooter() {
-        return gson.toJson(new PreFooter(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
-                this.buildDateModified(),
-                false, //showPostContent,
-                new FeedbackLink(false, null),
-                new ShareList(false, null),
-                JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
-              ));
-    }
-
-    public String getRenderUnilingualErrorPreFooter() {
-        return gson.toJson(new UnilingualErrorPreFooter(this.getCdtsCdnEnv(),
-                false
-                ));
-    }
-
 
     /**
      * Builds the "Footer" object needed in rendering the CDTS setup JSON
@@ -2275,48 +1991,6 @@ public abstract class AbstractCoreBean {
                 isTransactional? false: this.hideCorporateFooter //hideCorporateFooter
             );
     }
-    //TODO: Get rid of renderFooter and renderTransactionalFooter
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "footer"
-     */
-    public String getRenderFooter() {
-        return gson.toJson(new Footer(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                true, //showFooter,
-                this.getShowFeatures(),
-                this.buildContactLinks(),
-                JsonValueUtils.getFooterLinkContext(this.getPrivacyLink(), true),
-                JsonValueUtils.getFooterLinkContext(this.getTermsConditionsLink(), true),
-                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                this.contextualFooter,
-                this.hideMainFooter,
-                this.hideCorporateFooter
-            ));
-    }
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "footer" for transactional template
-     */
-    public String getRenderTransactionalFooter() {
-        return gson.toJson(new Footer(
-                this.getCdtsCdnEnv(),
-                JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                false, //showFooter
-                this.getShowFeatures(),
-                this.buildContactLinks(),
-                JsonValueUtils.getFooterLinkContext(this.getPrivacyLink(), false),
-                JsonValueUtils.getFooterLinkContext(this.getTermsConditionsLink(), false),
-                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                null,  //contextualFooter
-                false, //hideMainFooter
-                false  //hideCorporateFooter
-            ));
-    }
-
 
     /**
      * Builds the "AppFooter" object needed in rendering the CDTS setup JSON
@@ -2341,84 +2015,6 @@ public abstract class AbstractCoreBean {
                     this.getShowFeatures()
                );
     }
-    //TODO: Get rid of renderAppFooter
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "appFooter"
-     */
-    public String getRenderAppFooter() {
-        AppFooter                   appFooter;
-
-        this.initializeOnce();
-
-        if (!this.getCurrentCDTSEnvironment().getCanHaveContactLinkInAppTemplate()) {
-            if ((this.getContactLinks() != null) && (this.getContactLinks().size() > 0)) {
-                throw new IllegalArgumentException("Custom Footer must be used to provide a contact link in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
-            }
-        }
-
-        appFooter = new AppFooter(
-                        this.getCdtsCdnEnv(),
-                        JsonValueUtils.getNonEmptyString(this.getSubTheme()),
-                        JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                        JsonValueUtils.getNonEmptyString(this.getFooterPath()),
-                        this.buildCustomFooterSections(),
-                        this.buildContactLinks(),
-                        JsonValueUtils.getNonEmptySingleItemLinkList(this.termsConditionsLink),
-                        JsonValueUtils.getNonEmptySingleItemLinkList(this.privacyLink),
-                        this.getShowFeatures()
-                );
-
-        return gson.toJson(appFooter);
-    }
-
-    /**
-     * Builds a string with the format required by the closure template to represent the JSON object used
-     * as parameter for the "refFooter"
-     *
-     * Applications will actually use property "renderRefFooter" or "renderRefFooterForApp" depending
-     * on the case, since passing argument when calling properties is not supported in JSF2.0 (not supported anymore), having two
-     * differently named get methods seemed the next simplest solution.
-     */
-    private String buildRefFooterValue(boolean isApplication) {
-        if (this.getWebAnalytics().isActive() && !this.getCurrentCDTSEnvironment().getCanUseWebAnalytics()) {
-            throw new IllegalArgumentException("The WebAnalytics feature is not supported in environment [" + this.getCurrentCDTSEnvironment().getName() + "]");
-        }
-
-        return gson.toJson(new RefFooter(
-                this.getCdtsCdnEnv(),
-                this.getLeavingSecureSiteWarning(),
-                this.getLoadJQueryFromGoogle() ? "external" : null, //jqueryEnv
-                JsonValueUtils.getNonEmptyString(this.getLocalPath()),
-                this.getWebAnalytics(),
-                isApplication
-            ));
-    }
-    public String getRenderRefFooter() {
-        return this.buildRefFooterValue(false);
-    }
-    public String getRenderRefFooterForApp() {
-        return this.buildRefFooterValue(true);
-    }
-
-    //TODO: Get rid of serverXXX (and renderCdnEnvironment/CdnEnvironment class probably)
-    public String getRenderServerTop() {
-        return this.getRenderCdnEnvironment();
-    }
-    public String getRenderServerBottom() {
-        return this.getRenderCdnEnvironment();
-    }
-    public String getRenderServerRefTop() {
-        return this.getRenderCdnEnvironment();
-    }
-    public String getRenderServerRefFooter() {
-        return this.getRenderCdnEnvironment();
-    }
-
-    private String getRenderCdnEnvironment() {
-        return gson.toJson(new CdnEnvironment(this.getCdtsCdnEnv()));
-    }
 
     /**
      *  Builds the "common" CDTS setup object based on parameteres (used by the render functions)
@@ -2436,7 +2032,6 @@ public abstract class AbstractCoreBean {
                    null, //splash
                    this.buildHtmlBodyElements());
     }
-    // TODO: Complete
 
     /**
      * Builds a string with the format required by the closure template to represent the JSON object used

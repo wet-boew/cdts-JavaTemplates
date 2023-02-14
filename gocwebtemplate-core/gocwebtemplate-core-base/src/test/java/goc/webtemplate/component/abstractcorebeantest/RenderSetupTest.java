@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 /**
  * This contains tests for RenderSetup in relation with the top-most attributes,
  * see the other RenderXXX classes for further tests.
- *
  */
 public class RenderSetupTest {
     @Test
@@ -72,11 +71,4 @@ public class RenderSetupTest {
         //splash must be present
         assertTrue(json.contains("\"splash\":{"));
     }
-
-    //TODO: Update other tests
-    //TODO: Get rid of RefTop and RefFooter (if no longer used)... and maybe getLocalPath() and other unused functions that were used to build these objects.
-
-    //TODO: Change log
-    //TODO: Remove some Deprecated?
-    //TODO: Test with huge data
 }

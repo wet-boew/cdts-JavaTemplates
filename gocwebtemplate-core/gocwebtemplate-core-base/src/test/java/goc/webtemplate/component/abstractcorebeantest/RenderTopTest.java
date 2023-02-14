@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import goc.webtemplate.CustomSearch;
 
+/**
+ * This contains tests for RenderSetup in relation with the Top attributes,
+ * see the other RenderXXX classes for further tests.
+ */
 public class RenderTopTest {
 
     @Test
@@ -14,38 +18,38 @@ public class RenderTopTest {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
 
         sut.setCustomSearch(new CustomSearch("#", "Custom Search Placeholder", null, "get"));
-        
-        assertTrue(sut.getRenderTop().contains("\"customSearch\":[{\"action\":\"#\",\"placeholder\":\"Custom Search Placeholder\",\"method\":\"get\"}]"),
+
+        assertTrue(sut.getRenderSetup().contains("\"customSearch\":[{\"action\":\"#\",\"placeholder\":\"Custom Search Placeholder\",\"method\":\"get\"}]"),
         		"RenderTop: CustomSearch not rendered as expected.");
     }
-    
+
     @Test
     public void testCustomSearchDefaultNotRendered() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
-        
-        assertTrue(!sut.getRenderTop().contains("\"customSearch\":"),
+
+        assertTrue(!sut.getRenderSetup().contains("\"customSearch\":"),
         		"RenderTop: CustomSearch should not be rendered when not specified.");
     }
-    
+
     @Test
     public void testGcToolsModalRendersInIntranet() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
-        
+
         sut.setTheme("gcintranet");
         sut.setGcToolsModal(true);
-        
-        assertTrue(sut.getRenderTop().contains("\"GCToolsModal\":true"));
+
+        assertTrue(sut.getRenderSetup().contains("\"GCToolsModal\":true"));
     }
-    
+
     @Test
     public void testGcToolsModalThrowsExceptionInGcWeb() {
         AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
-        
+
         sut.setTheme("gcweb");
         sut.setGcToolsModal(true);
-        
-        assertThrows(UnsupportedOperationException.class, () -> { 
-            sut.getRenderTop(); 
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            sut.getRenderSetup();
         });
     }
 
@@ -55,6 +59,6 @@ public class RenderTopTest {
 
         sut.setHidePlaceholderMenu(true);
 
-        assertTrue(sut.getRenderTop().contains("\"hidePlaceholderMenu\":true"));
+        assertTrue(sut.getRenderSetup().contains("\"hidePlaceholderMenu\":true"));
     }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import goc.webtemplate.HeaderLink;
 import goc.webtemplate.HeaderMenu;
 import goc.webtemplate.InfoBanner;
+import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 
 /**
@@ -55,8 +56,7 @@ public class RenderAppTopTest {
 
         HeaderMenu menu = new HeaderMenu("Main Text", list, new Link("google", "Logout Now"));
         sut.setHeaderMenu(menu);
-        String x = sut.getRenderAppTop();
-        assertTrue(sut.getRenderAppTop().contains("\"headerMenu\":{\"text\":\"Main Text\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}],\"logoutLink\":{\"href\":\"google\",\"text\":\"Logout Now\"}}"),
+        assertTrue(sut.getRenderAppSetup().contains("\"headerMenu\":{\"text\":\"Main Text\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}],\"logoutLink\":{\"href\":\"google\",\"text\":\"Logout Now\"}}"),
         		"\"RenderTop: HeaderMenu not rendered as expected.\"");
     }
 }

@@ -2,6 +2,13 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v3.0.0
+
+- **IMPORTANT** ALL LAYOUT DEFINITIONS UPDATED - All inline scripts and occurences of `document.write` were removed. 
+    - Spring Version: This change should be transparent unless custom layouts were created in client applications. 
+    - Struts/JSP Version: All tiles templates must be updated from sample project (src/main/webapp/templates/*.
+- **IMPORTTANT** Functions that were deprecated long ago were removed in this version.
+
 ## v2.6.0
 
 - **IMPORTANT** The GCWeb site footer has been updated to reflect the changes introduced in WET footer version 4. These changes will be applied automatically. For more information, please visit the WET documentation: https://wet-boew.github.io/GCWeb/sites/footers/footers-en.html

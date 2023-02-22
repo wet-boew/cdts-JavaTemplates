@@ -7,27 +7,27 @@ import com.google.gson.annotations.JsonAdapter;
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.preFooter' JavaScript function in the template
- * pages. 
+ * pages.
  */
-public class PreFooter implements Serializable {
+public class PreFooter implements Serializable, IPreFooter {
     private static final long serialVersionUID = 1L;
 
     private String              cdnEnv;
     private String              versionIdentifier;
     private String              dateModified;
     private boolean             showPostContent;
-    
+
     //NOTE: Custom serialization/adapter because value can be both boolean and string
     @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FeedbackLinkAdapter.class)
     private FeedbackLink        showFeedback;
-    
+
     //NOTE: Custom serialization/adapter because value can be both boolean and array of string
     @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.ShareListAdapter.class)
     private ShareList           showShare;
 
     private String              screenIdentifier;
-    
-    
+
+
     public PreFooter() {
     }
 

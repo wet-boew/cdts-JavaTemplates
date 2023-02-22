@@ -9,59 +9,33 @@
 	    <div layout:fragment="title" th:remove="tag"><title th:text="${goctemplateclientbean.headerTitle}"></title></div>
 	    <meta content="width=device-width,initial-scale=1" name="viewport" />
 	    <!-- Load closure template scripts -->
-	  	<script type="text/javascript" th:src="${goctemplateclientbean.soyUtilPath}"></script>
-	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
+        <link rel="stylesheet" th:href="${goctemplateclientbean.cssPath}">
+        <script th:remove="tag" th:utext='|<script type="text/javascript" src="${goctemplateclientbean.wetJsPath}" data-cdts-setup=&apos;${goctemplateclientbean.renderTransactionalSetup}&apos;></script>|'></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
 	    </noscript>   
-        <script type="text/javascript">
-		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderRefTop})]));
-		</script>
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
     </head>
     <body vocab="http://schema.org/" typeof="WebPage">
     	[(${goctemplateclientbean.renderSessionTimeoutControl})]
-    	<div id="def-top">
+    	<div id="cdts-def-top">
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
-	    	<!-- Google Tag Manager DO NOT REMOVE OR MODIFY - NE PAS SUPPRIMER OU MODIFIER -->
-            <noscript><iframe title="Google Tag Manager" src="//www.googletagmanager.com/ns.html?id=GTM-TLGQ9K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-            <!-- End Google Tag Manager -->
 	    </div>
-	    <!-- Write closure template -->
-        <script type="text/javascript">
-		    var defTop = document.getElementById("def-top");
-			defTop.outerHTML = wet.builder.top([(${goctemplateclientbean.renderTransactionalTop})]);
-		</script>
 	    <main role="main" property="mainContentOfPage" class="container" typeof="WebPageElement">
             <!-- the main content -->
             <section layout:fragment="content"></section>
             <!-- end main content -->
-            <div id="def-preFooter">
+            <div id="cdts-def-preFooter">
                 <!-- Write closure fall-back static file -->
                 [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
         	</div>
-            <!-- Write closure template -->
-            <script type="text/javascript">
-                var defPreFooter = document.getElementById("def-preFooter");
-                defPreFooter.outerHTML = wet.builder.preFooter([(${goctemplateclientbean.renderTransactionalPreFooter})]);
-			</script>
 	    </main>	
-        <div id="def-footer">
-	            <!-- Write closure fall-back static file -->
-	            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
-	        </div>
-	        <!-- Write closure template -->
-	        <script type="text/javascript">
-	            var defFooter = document.getElementById("def-footer");
-	            defFooter.outerHTML = wet.builder.footer([(${goctemplateclientbean.renderTransactionalFooter})]);	            
-			</script>
-	        <!-- Write closure template -->
-            <script type="text/javascript">
-			    document.write(wet.builder.refFooter([(${goctemplateclientbean.renderRefFooter})]));
-			</script>
-        [(${goctemplateclientbean.renderHtmlBodyElements})]
+        <div id="cdts-def-footer">
+            <!-- Write closure fall-back static file -->
+            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+        </div>
     </body>
 </html>

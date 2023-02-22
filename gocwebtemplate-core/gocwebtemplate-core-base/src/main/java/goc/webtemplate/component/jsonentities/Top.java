@@ -13,9 +13,9 @@ import goc.webtemplate.LanguageLink;
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
  * as parameter to the 'wet.builder.top' JavaScript function in the template
- * pages. 
+ * pages.
  */
-public class Top implements Serializable {
+public class Top implements Serializable, ITop {
     private static final long serialVersionUID = 1L;
 
     private String              cdnEnv;
@@ -28,7 +28,7 @@ public class Top implements Serializable {
     private String              localPath;
     private boolean             siteMenu;
     private boolean             hidePlaceholderMenu;
-    
+
     @SerializedName("GCToolsModal")
     private boolean             gcToolsModal;
     /**
@@ -36,7 +36,7 @@ public class Top implements Serializable {
      */
     private boolean             topSecMenu;
     private List<CustomSearch>  customSearch;
-    
+
     public Top() {
     }
 
@@ -144,12 +144,12 @@ public class Top implements Serializable {
 
     public void setCustomSearch(List<CustomSearch> customSearch) {
         this.customSearch = customSearch;
-    }    
-    
+    }
+
     public boolean getGcToolsModal() {
         return gcToolsModal;
     }
-    
+
     public void setGcToolsModal(boolean value) {
         this.gcToolsModal = value;
     }

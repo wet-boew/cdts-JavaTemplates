@@ -28,48 +28,29 @@
         <title><tiles:insertAttribute name="title" /><s:property value="#goctemplateclientbean.headerTitle"/></title>
         <meta content="width=device-width,initial-scale=1" name="viewport" />
         <!-- Load closure template scripts -->
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.soyUtilPath"/>"></script>
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>"></script>
+        <link rel="stylesheet" href="<s:property value="#goctemplateclientbean.cssPath"/>">
+        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>" data-cdts-setup='<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerSetup"/>'></script>
         <noscript>
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'serverRefTop.html')}" />
         </noscript>
-        <!-- Write closure template -->
-        <script type="text/javascript">
-            document.write(wet.builder.serverRefTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerRefTop" />));
-        </script>
         <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlHeaderElements" />
         <!--  GoC Web Template Build Version <s:property value="#goctemplateclientbean.webTemplateDistributionVersion" /> -->
 	</head>
 	<body vocab="http://schema.org/" typeof="WebPage">		
 		<s:property escapeHtml="false" value="#goctemplateclientbean.renderSessionTimeoutControl" />
-        <div id="def-top">
+        <div id="cdts-def-top">
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'serverTop.html'))}" />
         </div>
-        <!-- Write closure template -->
-        <script type="text/javascript">
-            var defTop = document.getElementById("def-top");
-            defTop.outerHTML = wet.builder.serverTop(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerTop" />);
-        </script>
         <main role="main" property="mainContentOfPage" class="container" typeof="WebPageElement">
             <!-- the main content -->
             <tiles:insertAttribute name="body" />
             <!-- end main content -->
         </main>	
-        <div id="def-footer">
+        <div id="cdts-def-footer">
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'serverBottom.html'))}" />
         </div>
-        <!-- Write closure template -->
-        <script type="text/javascript">
-            var defFooter = document.getElementById("def-footer");
-            defFooter.outerHTML = wet.builder.serverBottom(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerBottom" />);
-        </script>
-        <!-- Write closure template -->
-		<script type="text/javascript">
-			document.write(wet.builder.refFooter(<s:property escapeHtml="false" value="#goctemplateclientbean.renderServerRefFooter" />));
-		</script>
-        <s:property escapeHtml="false" value="#goctemplateclientbean.renderHtmlBodyElements" />	
 	</body>
 </html>

@@ -13,6 +13,10 @@ import goc.webtemplate.InfoBanner;
 import goc.webtemplate.Link;
 import goc.webtemplate.MenuItem;
 
+/**
+ * This contains tests for RenderAppSetup in relation with the AppTop attributes,
+ * see the other RenderXXX classes for further tests.
+ */
 public class RenderAppTopTest {
 
     @Test
@@ -27,7 +31,7 @@ public class RenderAppTopTest {
         menuLinks.add(item);
         sut.setMenuLinks(menuLinks);
 
-        assertTrue(sut.getRenderAppTop().contains("\"menuLinks\":[{\"href\":\"https//google.ca\",\"text\":\"Custom Menu Link\",\"acronym\":\"acronym\""),
+        assertTrue(sut.getRenderAppSetup().contains("\"menuLinks\":[{\"href\":\"https//google.ca\",\"text\":\"Custom Menu Link\",\"acronym\":\"acronym\""),
         		"RenderTop: Custom MenuItem not rendered as expected.");
     }
 
@@ -38,7 +42,7 @@ public class RenderAppTopTest {
         InfoBanner banner = new InfoBanner("Main Text", new HeaderLink("google", "Link"), new HeaderLink("yahoo", "Button"));
         sut.setInfoBanner(banner);
 
-        assertTrue(sut.getRenderAppTop().contains("\"infoBanner\":{\"mainHTML\":\"Main Text\",\"link\":{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link\"},\"button\":{\"newWindow\":false,\"href\":\"yahoo\",\"text\":\"Button\"}"),
+        assertTrue(sut.getRenderAppSetup().contains("\"infoBanner\":{\"mainHTML\":\"Main Text\",\"link\":{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link\"},\"button\":{\"newWindow\":false,\"href\":\"yahoo\",\"text\":\"Button\"}"),
         		"\"RenderTop: InfoBanner not rendered as expected.\"");
     }
 
@@ -52,8 +56,7 @@ public class RenderAppTopTest {
 
         HeaderMenu menu = new HeaderMenu("Main Text", list, new Link("google", "Logout Now"));
         sut.setHeaderMenu(menu);
-        String x = sut.getRenderAppTop();
-        assertTrue(sut.getRenderAppTop().contains("\"headerMenu\":{\"text\":\"Main Text\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}],\"logoutLink\":{\"href\":\"google\",\"text\":\"Logout Now\"}}"),
+        assertTrue(sut.getRenderAppSetup().contains("\"headerMenu\":{\"text\":\"Main Text\",\"links\":[{\"newWindow\":false,\"href\":\"google\",\"text\":\"Link 1\"},{\"newWindow\":true,\"href\":\"google\",\"text\":\"Link 2\"}],\"logoutLink\":{\"href\":\"google\",\"text\":\"Logout Now\"}}"),
         		"\"RenderTop: HeaderMenu not rendered as expected.\"");
     }
 }

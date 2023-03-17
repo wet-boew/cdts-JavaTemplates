@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Transactional look</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Transactional look</h1>
 <p><a href="http://www.gcpedia.gc.ca/wiki/Content_Delivery_Network/GoC_.NET_template_guide">Web Template Documentation (GCPedia)</a></p>
 <p>This sample page provides an example of a page using the Transactional Master Page of the Web Template.</p>
 <p>Customizing the Transactional site can be performed in the same manner as the regular GoC Web Template Master Page.</p>

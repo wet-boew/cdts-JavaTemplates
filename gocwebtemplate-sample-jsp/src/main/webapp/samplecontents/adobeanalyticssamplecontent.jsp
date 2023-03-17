@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Adobe Analytics</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Adobe Analytics</h1>
 <p>This sample page demonstrates how your application can incorporate Adobe Analytics via the GoC Web Template.</p>
 <h2>Pre-requisite</h2>
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>

@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Breadcrumbs</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Breadcrumbs</h1>
 <p>The breadcrumbs are a list of links displayed near to the top of the content to help the user determine where they are on the site and to help them navigate.</p>
 <h2>Pre-requisite</h2>
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>

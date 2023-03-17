@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Footer</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Footer</h1>
 <p>Canada.ca provides a global site footer as seen <a href="https://design.canada.ca/common-design-patterns/site-footer.html">here.</a></p>
 <p>For more information, please visit the WET footer documentation <a href="https://wet-boew.github.io/GCWeb/sites/footers/footers-en.html">here.</a></p>
 <h2>Pre-requisite</h2>

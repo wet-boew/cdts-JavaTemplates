@@ -1,5 +1,5 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<h1>GoC Web Template Samples - Extended BasePage</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Extended BasePage</h1>
 <p>This page provides an example on how to extend the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class provided by the Web Template.  The <code class="wb-prettify">BaseCoreBean</code> provided by the Web Template has very little functions and therefore applications may wish to extend its functionality. This will be useful should you require to add your own common logic that will be used by your applications' pages.</p>
 <p>In this sample, we've created a new class <code class="wb-prettify">"ExtendedBasePageSampleBean"</code>, which extend the BaseCoreBean class from the Web Template and it includes the following:</p>
 <ul>

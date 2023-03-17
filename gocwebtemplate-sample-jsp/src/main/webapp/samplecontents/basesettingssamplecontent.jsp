@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Basic Settings</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Basic Settings</h1>
 <p>This sample page provides the basic items to configure in your pages, when using the GoC Web Template.</p>
 <h2>Pre-requisite</h2>
 <p>To override the Default GoC Web Template look &amp; feel, you will have to create a custom bean class that extends the <code class="wb-prettify">goc.webtemplate.component.jsp.BaseCoreBean</code> class, and then override the various methods made available to alter the look &amp; feel of the web page.</p>

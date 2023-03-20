@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Session Timeout</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Session Timeout</h1>
 <p><a href="http://www.gcpedia.gc.ca/wiki/Content_Delivery_Network/GoC_.NET_template_guide">Web Template Documentation (GCPedia)</a></p>
 <p>This sample helps web page owners by providing session timeout and inactivity timeout functionality and is based on the <a href="http://wet-boew.github.io/wet-boew/demos/session-timeout/session-timeout-en.html">WET Session Timeout plugin</a>. When a user requests a page with this plugin implemented their session will begin. After the specified session period, they will be notified that their session is about to timeout. At this point, they will have the option to remain logged in by clicking "Continue session", or signing out by clicking "End session now".</p>
 <h2>Pre-requisite</h2>

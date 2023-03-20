@@ -1,4 +1,4 @@
-<h1>GoC Web Template Samples - Nested Master Page</h1>
+<h1 id="wb-cont">GoC Web Template Samples - Nested Master Page</h1>
 
 <p>This sample demonstrates how a Nested Master Page could be implemented with the GoC JSP Web Template.</p>
 

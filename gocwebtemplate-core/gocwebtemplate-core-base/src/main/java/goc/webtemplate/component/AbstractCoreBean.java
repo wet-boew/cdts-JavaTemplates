@@ -36,6 +36,7 @@ import static goc.webtemplate.component.JsonRenderer.gson;
 import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
+import goc.webtemplate.component.jsonentities.CDTSEnvironmentList;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.IPreFooter;
@@ -62,9 +63,13 @@ import goc.webtemplate.component.jsonentities.UnilingualErrorPreFooter;
  */
 public abstract class AbstractCoreBean {
     /**
-     * Hold the table of CDTS environment configuration objects (loaded the first time it is accessed).
+     * Holds the table of CDTS environment configuration objects (loaded the first time it is accessed).
      */
     private static HashMap<String, CDTSEnvironment> cdtsEnvironments = null;
+    /**
+     * Holds the table of theme/version -> fileName -> SRIHash
+     */
+    private static HashMap<String, HashMap<String, String>> cdtsSRIHashes = null;
 
     /**
      * SimpleDateFormat object used to format dateModified-type dates.
@@ -91,7 +96,8 @@ public abstract class AbstractCoreBean {
     private String templateVersion = null; // initialized in getTemplateVersion
     private String theme = null; // initialized in getTheme
     private String subTheme = null; // initialized in getSubTheme
-    private boolean useHttps = Boolean.parseBoolean(this.getResourceBundleString("cdn", "webtemplate_usehttps"));
+    private boolean useHttps = !"false".equals(this.getResourceBundleString("cdn", "webtemplate_usehttps")); //defaults to true if not specified/is not exactly "false"
+    private boolean useSRI = !"false".equals(this.getResourceBundleString("cdn", "webtemplate_usesri")); //defaults to true if not specified/is not exactly "false"
     private boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
     private String cdnLocalPath = null; //initialized in getLocalPath
     private String headerTitle = "";
@@ -153,6 +159,7 @@ public abstract class AbstractCoreBean {
     //-------------------------------------------------------
     private String          partialCDNPath = null;
     private CDTSEnvironment currentCDTSEnvironment = null;
+    private HashMap<String, String> currentSRIHashes = null;
     //-------------------------------------------------------
 
     //-------------------------------------------------------
@@ -183,41 +190,62 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns the table of fileName -> SRIHash for the specified theme and version.
+     * @param theme Name of the theme, must be lowercase
+     * @param version Version "name" (e.g. v9_9_9)
+     */
+    private static HashMap<String, String> getCDTSSRIHashes(String theme, String version) {
+        if (cdtsSRIHashes == null) loadCDTSEnvironments();
+        return cdtsSRIHashes.get(theme + "/" + version);
+    }
+
+    /**
      * Load environment json file (converts all environment names to lowercase)
      */
     private static synchronized void loadCDTSEnvironments() { //note the "static synchronized"... i.e. synchronized on AbstractCoreBean.class
-        HashMap<String, CDTSEnvironment>    map = new HashMap<String, CDTSEnvironment>();
-        CDTSEnvironment.CDTSEnvironmentList tmpList;
-        java.io.InputStream                 is = null;
+        HashMap<String, CDTSEnvironment>            map = new HashMap<String, CDTSEnvironment>();
+        HashMap<String, HashMap<String, String>>    hashes = new HashMap<String, HashMap<String, String>>();
+        CDTSEnvironmentList                         tmpList;
+        java.io.InputStream                         is = null;
 
         try {
             is = AbstractCoreBean.class.getResourceAsStream("/goc/webtemplate/global/config/CDTSEnvironments.json");
             if (is == null) {
                 System.err.println("ERROR: CDTSEnvironment.json could not be read. Environment list will be empty. (/goc/webtemplate/global/config/CDTSEnvironments.json not found in jar)");
                 cdtsEnvironments = map;
+                cdtsSRIHashes = hashes;
                 return;
             }
 
-            tmpList = gson.fromJson(new java.io.InputStreamReader(is, "UTF-8"), CDTSEnvironment.CDTSEnvironmentList.class);
+            tmpList = gson.fromJson(new java.io.InputStreamReader(is, "UTF-8"), CDTSEnvironmentList.class);
             for (CDTSEnvironment cdtsenv: tmpList.getEnvironments()) {
                 //(convert name to all lower-case)
                 map.put(cdtsenv.getName().toLowerCase(), cdtsenv);
             }
+            hashes = tmpList.getThemeSRIHashes();
         }
         catch (Exception ex) {
             System.err.println("ERROR: CDTSEnvironment.json could not be read. Environment list will be empty. Exception:  " + ex);
-            cdtsEnvironments = map;
         }
         finally {
             try {is.close();} catch (Throwable e) {}
         }
 
         cdtsEnvironments = map;
+        cdtsSRIHashes = hashes;
     }
 
     private CDTSEnvironment getCurrentCDTSEnvironment() {
        if (this.currentCDTSEnvironment == null) this.currentCDTSEnvironment = getCDTSEnvironmentByName(this.getCDNEnvironment().toLowerCase());
        return this.currentCDTSEnvironment;
+    }
+
+    private HashMap<String, String> getCurrentCDTSSRIHashes() {
+        if (this.currentSRIHashes == null) {
+            HashMap<String, String> sriMap = getCDTSSRIHashes(this.getTheme(), this.getTemplateVersion());
+            this.currentSRIHashes = sriMap != null? sriMap: new HashMap<String, String>(); // if not found, initialize to empty map
+        }
+        return this.currentSRIHashes;
     }
 
     private void initializeOnce() {
@@ -354,8 +382,9 @@ public abstract class AbstractCoreBean {
     public void setCDNEnvironment(String value) {
         this.cdnEnvironment = value;
 
-        //---[ The environment anme changed, we have a few cached values to clear so they are re-loaded from the proper environment
+        //---[ The environment name changed, we have a few cached values to clear so they are re-loaded from the proper environment
         this.currentCDTSEnvironment = null;
+        this.currentSRIHashes = null;
         this.cdtsCdnEnv = null;
         this.partialCDNPath = null;
         this.cdnLocalPath = null;
@@ -453,6 +482,27 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns whether or not to include Sub Resource Integrity when inserting CDTS scripts and css.
+     *
+     * Set at application level via "webtemplate_usesri" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public boolean getUseSRI() {
+        this.initializeOnce();
+        return this.useSRI;
+    }
+
+    /**
+     * Sets whether or not to include Sub Resource Integrity when inserting CDTS scripts and css.
+     *
+     * Set at application level via "webtemplate_usesri" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public void setUseSRI(boolean value) {
+        this.useSRI = value;
+    }
+
+    /**
      * Returns the version of the CDN files to use to build the page. (e.g v4_0_47)
      *
      * Set at application level via "wettemplate_version" property in cdn.properties,
@@ -481,6 +531,7 @@ public abstract class AbstractCoreBean {
      */
     public void setTemplateVersion(String value) {
         this.templateVersion = value;
+        this.currentSRIHashes = null;
     }
 
     /**
@@ -518,6 +569,7 @@ public abstract class AbstractCoreBean {
      */
     public void setTheme(String value) {
         this.theme = value;
+        this.currentSRIHashes = null;
     }
 
     /**
@@ -1495,7 +1547,7 @@ public abstract class AbstractCoreBean {
     public void setHideCorporateFooter(boolean value) {
         this.hideCorporateFooter = value;
     }
-    
+
     /**
      * Returns whether to display a header menu on top of the page
      *
@@ -1578,48 +1630,72 @@ public abstract class AbstractCoreBean {
         return Constants.WEB_TEMPLATE_DISTRIBUTION_VERSION;
     }
 
+    private String getPathAttributes(String pathAttributeName, String fileName) {
+        StringBuilder buf = new StringBuilder(384);
+
+        buf.append(pathAttributeName);
+        buf.append("=\"");
+        buf.append(this.getPartialCDNPath());
+        buf.append(fileName);
+        buf.append("\"");
+        if (this.getUseSRI()) {
+            HashMap<String, String> sriHashes = this.getCurrentCDTSSRIHashes();
+
+            String hash = sriHashes.get(fileName);
+            if (hash != null) { //if not found, simply don't issue SRI attributes
+                buf.append(" integrity=\"");
+                buf.append(hash);
+                buf.append("\" crossorigin=\"anonymous\"");
+            }
+        }
+
+        return buf.toString();
+    }
+
     /**
-     * Return the CDN path to the cdts-[subtheme]-styles.css file.
+     * Return the href/integrity/crossorigin attribute to the cdts-[subtheme]-styles.css file.
      *
      * (Used by template files when rendering)
      */
-    public String getCssPath() {
+    public String getCssPathAttributes() {
+        //---[ Figure out CSS file name
+        String fileName = "cdts-styles.css";
+
         if (!this.isThemeGcWeb()) {
             //NOT gcweb...
             String subTheme = this.getSubTheme();
             if (!Utility.isNullOrEmpty(subTheme)) {
                 subTheme = subTheme.toLowerCase();
-			    //...limit to supported subthemes
+                //...limit to supported subthemes
                 if (subTheme.equals("esdc") || subTheme.equals("eccc")) {
-                    return String.format("%scdts-%s-styles.css", this.getPartialCDNPath(), subTheme);
+                    fileName = String.format("cdts-%s-styles.css", subTheme);
                 }
             }
-        }
+        } // (else we're gcweb or gcintranet with no subtheme value)
 
-        //(if we get here, we're gcweb or gcintranet with no subtheme value)
-        return this.getPartialCDNPath() + "cdts-styles.css";
+        return this.getPathAttributes("href", fileName);
     }
 
     /**
-     * Return the CDN path to the cdts-[app-]styles.css file.
+     * Return the href/integrity/crossorigin attribute to the cdts-[app-]styles.css file.
      *
      * (Used by template files when rendering)
      */
-    public String getAppCssPath() {
+    public String getAppCssPathAttributes() {
         if (this.isThemeGcWeb()) {
-            return this.getPartialCDNPath() + "cdts-app-styles.css";
+            return this.getPathAttributes("href", "cdts-app-styles.css");
         } else {
-            return this.getCssPath();
+            return this.getCssPathAttributes();
         }
     }
 
     /**
-     * Return the CDN path to the cdts-splash-styles.css file.
+     * Return the href/integrity/crossorigin attribute to the cdts-splash-styles.css file.
      *
      * (Used by template files when rendering)
      */
-    public String getSplashCssPath() {
-        return this.getPartialCDNPath() + "cdts-splash-styles.css";
+    public String getSplashCssPathAttributes() {
+        return this.getPathAttributes("href", "cdts-splash-styles.css");
     }
 
     /**
@@ -1627,8 +1703,8 @@ public abstract class AbstractCoreBean {
      *
      * (Used by template files when rendering)
      */
-    public String getWetJsPath() {
-        return String.format("%scompiled/wet-%s.js", this.getPartialCDNPath(), this.getTwoLetterCultureLanguage());
+    public String getWetJsPathAttributes() {
+        return this.getPathAttributes("src", String.format("compiled/wet-%s.js", this.getTwoLetterCultureLanguage()));
     }
 
     /**
@@ -1848,7 +1924,8 @@ public abstract class AbstractCoreBean {
         return new SetupBase(JsonValueUtils.getNonEmptyString(this.getSubTheme()),
                 this.getLoadJQueryFromGoogle() ? "external" : null, // jqueryEnv
                 this.getLeavingSecureSiteWarning(),
-                this.getWebAnalytics().isActive() ? Arrays.asList(this.getWebAnalytics()) : null);
+                this.getWebAnalytics().isActive() ? Arrays.asList(this.getWebAnalytics()) : null,
+                this.getUseSRI()? null: false); //if SRi is true, set to null to let CDTS's default be used
     }
 
     /**
@@ -2084,7 +2161,7 @@ public abstract class AbstractCoreBean {
 
         return gson.toJson(new Setup(this.getCdtsCdnEnv(),
                 Mode.SERVER,
-                null, //base
+                this.getUseSRI()? null: new SetupBase(null, null, (LeavingSecureSiteWarning)null, null, false), //base left null for defaults is SRI is true
                 null, //top
                 null, //preFooter
                 null, //footer
@@ -2104,7 +2181,7 @@ public abstract class AbstractCoreBean {
 
         return gson.toJson(new Setup(this.getCdtsCdnEnv(),
                 Mode.SPLASH,
-                null, //base
+                this.buildSetupBase(), //base
                 null, //top
                 null, //preFooter
                 null, //footer

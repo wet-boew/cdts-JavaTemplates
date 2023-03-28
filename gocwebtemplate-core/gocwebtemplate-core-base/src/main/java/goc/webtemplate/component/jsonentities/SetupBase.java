@@ -20,20 +20,22 @@ public class SetupBase implements Serializable {
     private String jqueryEnv;
     private ExitSecureSite exitSecureSite;
     private List<WebAnalyticsInfo> webAnalytics;
+    private Boolean sriEnabled;
 
     public SetupBase() {
     }
 
     public SetupBase(String subTheme, String jqueryEnv, ExitSecureSite exitSecureSite,
-            List<WebAnalyticsInfo> webAnalytics) {
+            List<WebAnalyticsInfo> webAnalytics, Boolean sriEnabled) {
         this.subTheme = subTheme;
         this.jqueryEnv = jqueryEnv;
         this.exitSecureSite = exitSecureSite;
         this.webAnalytics = webAnalytics;
+        this.sriEnabled = sriEnabled;
     }
 
     public SetupBase(String subTheme, String jqueryEnv, LeavingSecureSiteWarning lssw,
-            List<WebAnalyticsInfo> webAnalytics) {
+            List<WebAnalyticsInfo> webAnalytics, Boolean sriEnabled) {
         this.subTheme = subTheme;
         this.jqueryEnv = jqueryEnv;
         this.exitSecureSite = null;
@@ -41,6 +43,7 @@ public class SetupBase implements Serializable {
             this.exitSecureSite = new ExitSecureSite(lssw);
         }
         this.webAnalytics = webAnalytics;
+        this.sriEnabled = sriEnabled;
     }
 
     public String getSubTheme() {
@@ -73,5 +76,13 @@ public class SetupBase implements Serializable {
 
     public void setWebAnalytics(List<WebAnalyticsInfo> webAnalytics) {
         this.webAnalytics = webAnalytics;
+    }
+
+    public Boolean isSriEnabled() {
+        return sriEnabled;
+    }
+
+    public void setSriEnabled(Boolean sriEnabled) {
+        this.sriEnabled = sriEnabled;
     }
 }

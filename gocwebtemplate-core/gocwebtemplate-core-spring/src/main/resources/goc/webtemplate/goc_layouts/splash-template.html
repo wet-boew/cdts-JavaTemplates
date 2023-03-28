@@ -7,8 +7,8 @@
     	<div layout:fragment="title" th:remove="tag"><title th:text="${goctemplateclientbean.headerTitle}"></title></div>
 	    <meta content="width=device-width,initial-scale=1" name="viewport" />
 	    <!-- Load closure template scripts -->
-        <link rel="stylesheet" th:href="${goctemplateclientbean.splashCssPath}">
-        <script th:remove="tag" th:utext='|<script type="text/javascript" src="${goctemplateclientbean.wetJsPath}" data-cdts-setup=&apos;${goctemplateclientbean.renderSplashSetup}&apos;></script>|'></script>
+        <link th:remove="tag" th:utext='|<link rel="stylesheet" ${goctemplateclientbean.splashCssPathAttributes}>|'>
+        <script th:remove="tag" th:utext='|<script type="text/javascript" ${goctemplateclientbean.wetJsPathAttributes} data-cdts-setup=&apos;${goctemplateclientbean.renderSplashSetup}&apos;></script>|'></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
 	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splashTop.html')})]

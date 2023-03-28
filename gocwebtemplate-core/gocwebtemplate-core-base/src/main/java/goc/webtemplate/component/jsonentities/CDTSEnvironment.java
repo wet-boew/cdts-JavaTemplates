@@ -2,36 +2,34 @@ package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-
 /**
  * Holds information/configuration related to a CDTS environment
- * (mostly for the CDTSEnvironment.json file). 
+ * (mostly for the CDTSEnvironment.json file).
  */
 public class CDTSEnvironment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String  name;
-    
+
     private String  path;
     private String  localPath;
-    
+
     private String  theme;
     private String  subTheme;
-    private String  cdn; 
-    
+    private String  cdn;
+
     private boolean isVersionRnCombined;
     private boolean isEncryptionModifiable;
     private String  appendToTitle;
-    
+
     private int 	footerSectionLimit;
     private boolean	canHaveMultipleContactLinks;
     private boolean	canHaveContactLinkInAppTemplate;
     private boolean canUseWebAnalytics;
-    
+
     public CDTSEnvironment() {
     }
-    
+
     public String getName() {
         return name;
     }
@@ -75,11 +73,11 @@ public class CDTSEnvironment implements Serializable {
     public String getCDN() {
         return this.cdn;
     }
-    
+
     public void setCDN(String value) {
         this.cdn = value;
     }
-    
+
     public boolean isVersionRnCombined() {
         return isVersionRnCombined;
     }
@@ -99,7 +97,7 @@ public class CDTSEnvironment implements Serializable {
     public String getAppendToTitle() {
         return this.appendToTitle;
     }
-    
+
     public void setAppendToTitle(String value) {
         this.appendToTitle = value;
     }
@@ -127,31 +125,12 @@ public class CDTSEnvironment implements Serializable {
     public void setCanHaveContactLinkInAppTemplate(boolean canHaveContactLinkInAppTemplate) {
         this.canHaveContactLinkInAppTemplate = canHaveContactLinkInAppTemplate;
     }
-    
+
     public boolean getCanUseWebAnalytics() {
         return this.canUseWebAnalytics;
     }
-    
+
     public void setCanUseWebAnalytics(boolean canUseWebAnalytics) {
         this.canUseWebAnalytics = canUseWebAnalytics;
-    }
-
-	/**
-     * Exists as a container of CDTSEnvironment matching the format of the
-     * JSON file the data is read from.
-     */
-    public static class CDTSEnvironmentList {
-        private ArrayList<CDTSEnvironment>  environments;
-        
-        public CDTSEnvironmentList() {
-        }
-        
-        public ArrayList<CDTSEnvironment> getEnvironments() {
-            return this.environments;
-        }
-        
-        public void setEnvironments(ArrayList<CDTSEnvironment> value) {
-            this.environments = value;
-        }
     }
 }

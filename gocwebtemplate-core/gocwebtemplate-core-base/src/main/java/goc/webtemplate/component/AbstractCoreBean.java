@@ -340,7 +340,7 @@ public abstract class AbstractCoreBean {
 
         templateVersion = this.getTemplateVersion();
         envRun = "";
-        if (Utility.isNullOrEmpty(templateVersion)) {
+        if (Utility.isNullOrEmpty(templateVersion) || templateVersion.equals("rn")) {
             if ((environment != null) && environment.isVersionRnCombined()) {
                 templateVersion = "rn/";
                 //(envRun stays blank)

@@ -14,7 +14,7 @@ public class CSSPathTest {
 
         sut.setTheme("gcweb");
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-styles.css"));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class CSSPathTest {
 
         sut.setTheme("gcintranet");
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-styles.css"));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("eSdC"); //test case insensitivity
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-esdc-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-esdc-styles.css"));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("eCcC"); //test case insensitivity
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-eccc-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-eccc-styles.css"));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CSSPathTest {
 
         sut.setTheme("whatever");
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-styles.css"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("whatever");
 
-        assertTrue(sut.getCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getCssPathAttributes().contains("/cdts-styles.css"));
     }
 
 	// *************************
@@ -75,7 +75,7 @@ public class CSSPathTest {
 
         sut.setTheme("gcweb");
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-app-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-app-styles.css"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class CSSPathTest {
 
         sut.setTheme("gcintranet");
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-styles.css"));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("eSdC"); //test case insensitivity
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-esdc-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-esdc-styles.css"));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("eCcC"); //test case insensitivity
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-eccc-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-eccc-styles.css"));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class CSSPathTest {
 
         sut.setTheme("whatever");
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-styles.css"));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class CSSPathTest {
         sut.setTheme("gcintranet");
         sut.setSubTheme("whatever");
 
-        assertTrue(sut.getAppCssPath().endsWith("/cdts-styles.css"));
+        assertTrue(sut.getAppCssPathAttributes().contains("/cdts-styles.css"));
     }
 
 	// *************************
@@ -136,7 +136,7 @@ public class CSSPathTest {
 
         sut.setTheme("gcweb");
 
-        assertTrue(sut.getSplashCssPath().endsWith("/cdts-splash-styles.css"));
+        assertTrue(sut.getSplashCssPathAttributes().contains("/cdts-splash-styles.css"));
     }
 
     @Test
@@ -145,6 +145,6 @@ public class CSSPathTest {
 
         sut.setTheme("gcintranet");
 
-        assertTrue(sut.getSplashCssPath().endsWith("/cdts-splash-styles.css"));
+        assertTrue(sut.getSplashCssPathAttributes().contains("/cdts-splash-styles.css"));
     }
 }

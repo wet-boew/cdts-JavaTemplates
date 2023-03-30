@@ -28,8 +28,8 @@
         <title><tiles:insertAttribute name="title" /><s:property value="#goctemplateclientbean.headerTitle"/></title>
         <meta content="width=device-width,initial-scale=1" name="viewport" />
         <!-- Load closure template scripts -->
-        <link rel="stylesheet" href="<s:property value="#goctemplateclientbean.splashCssPath"/>">
-        <script type="text/javascript" src="<s:property value="#goctemplateclientbean.wetJsPath"/>" data-cdts-setup='<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashSetup"/>'></script>
+        <link rel="stylesheet" <s:property escapeHtml="false" value="#goctemplateclientbean.splashCssPathAttributes"/>>
+        <script type="text/javascript" <s:property escapeHtml="false" value="#goctemplateclientbean.wetJsPathAttributes"/> data-cdts-setup='<s:property escapeHtml="false" value="#goctemplateclientbean.renderSplashSetup"/>'></script>
         <noscript>
             <!-- Write closure fall-back static file -->
             <s:property escapeHtml="false" value="%{#applicationscopebean.getStaticFile(#goctemplateclientbean.staticFallbackFilePath, #request.wettheme, 'splashTop.html')}" />

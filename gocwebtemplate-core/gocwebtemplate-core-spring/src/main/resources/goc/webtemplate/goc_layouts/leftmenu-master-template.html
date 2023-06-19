@@ -3,44 +3,44 @@
 <!--[if gt IE 8]><!-->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="no-js" dir="ltr" th:with="${goctemplateclientbean}?: goctemplateclientbean=${@defaulttemplatespringbean}" th:lang="${goctemplateclientbean.twoLetterCultureLanguage}">
     <head>
-    	<meta charset="utf-8" />
-    	<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
-	            wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
-	    <div layout:fragment="title" th:remove="tag"><title th:text="${goctemplateclientbean.headerTitle}"></title></div>
-	    <meta content="width=device-width,initial-scale=1" name="viewport" />
-	    <!-- Load closure template scripts -->
+        <meta charset="utf-8" />
+        <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
+                wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
+        <div layout:fragment="title" th:remove="tag"><title th:text="${goctemplateclientbean.headerTitle}"></title></div>
+        <meta content="width=device-width,initial-scale=1" name="viewport" />
+        <!-- Load closure template scripts -->
         <link th:remove="tag" th:utext='|<link rel="stylesheet" ${goctemplateclientbean.cssPathAttributes}>|'>
         <script th:remove="tag" th:utext='|<script type="text/javascript" ${goctemplateclientbean.wetJsPathAttributes} data-cdts-setup=&apos;${goctemplateclientbean.renderSetup}&apos;></script>|'></script>
-	    <noscript>
-	    	<!-- Write closure fall-back static file -->
-	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
-	    </noscript>   
+        <noscript>
+            <!-- Write closure fall-back static file -->
+            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
+        </noscript>   
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
     </head>
     <body vocab="http://schema.org/" typeof="WebPage">
-    	[(${goctemplateclientbean.renderSessionTimeoutControl})]
-    	<div id="cdts-def-top">
-	    	<!-- Write closure fall-back static file -->
-	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
-	    </div>
-		<div class="container">
-			<div class="row">
-	    		<main role="main" property="mainContentOfPage" class="col-md-9 col-md-push-3" typeof="WebPageElement">
-		            <!-- the main content -->
-		            <section layout:fragment="content"></section>
-		            <!-- end main content -->
-		            <div id="cdts-def-preFooter">
-		                <!-- Write closure fall-back static file -->
-		                [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
-		        	</div>
-			    </main>	
-			    <nav class="wb-sec col-md-3 col-md-pull-9" typeof="SiteNavigationElement" id="wb-sec" role="navigation">
-		        	<!-- Write closure fall-back static file -->
-	                [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
-	        	</nav>
-	        </div>
-	    </div>	   
+        [(${goctemplateclientbean.renderSessionTimeoutControl})]
+        <div id="cdts-def-top">
+            <!-- Write closure fall-back static file -->
+            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+        </div>
+        <div class="container">
+            <div class="row">
+                <nav class="wb-sec col-md-3" typeof="SiteNavigationElement" id="wb-sec" role="navigation">
+                    <!-- Write closure fall-back static file -->
+                    [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+                </nav>
+                <main role="main" property="mainContentOfPage" class="col-md-9" typeof="WebPageElement">
+                    <!-- the main content -->
+                    <section layout:fragment="content"></section>
+                    <!-- end main content -->
+                    <div id="cdts-def-preFooter">
+                        <!-- Write closure fall-back static file -->
+                        [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+                    </div>
+                </main>    
+            </div>
+        </div>       
         <div id="cdts-def-footer">
             <!-- Write closure fall-back static file -->
             [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'footer-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]

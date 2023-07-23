@@ -8,6 +8,9 @@
     - Spring Version: This change should be transparent unless custom layouts were created in client applications. 
     - Struts/JSP Version: All tiles templates must be updated from sample project (src/main/webapp/templates/*.
 - **IMPORTTANT** Functions that were deprecated long ago were removed in this version.
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v4.1.0 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.63
+- Updated static fallback files
+- Bug Fixes
 
 ## v2.6.0
 

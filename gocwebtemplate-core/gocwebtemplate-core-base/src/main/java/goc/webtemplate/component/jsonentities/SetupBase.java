@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import goc.webtemplate.LeavingSecureSiteWarning;
-import goc.webtemplate.Utility;
 import goc.webtemplate.WebAnalyticsInfo;
 
 /**
@@ -39,7 +38,7 @@ public class SetupBase implements Serializable {
         this.subTheme = subTheme;
         this.jqueryEnv = jqueryEnv;
         this.exitSecureSite = null;
-        if ((lssw != null) && lssw.isEnabled() && !Utility.isNullOrEmpty(lssw.getRedirectUrl())) {
+        if ((lssw != null) && lssw.isEnabled()) {
             this.exitSecureSite = new ExitSecureSite(lssw);
         }
         this.webAnalytics = webAnalytics;

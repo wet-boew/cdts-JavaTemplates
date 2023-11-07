@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import goc.webtemplate.Constants;
 
 public final class BaseUtil {
-	public static void doLeaveSecureSite(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public static void doLeaveSecureSite(HttpServletRequest req, HttpServletResponse res) throws Exception { //TODO: Remove this once no longer referenced
 		String redirectUrl = URLDecoder.decode(req.getParameter("targetUrl"), "UTF-8");
 		res.sendRedirect(redirectUrl);
 	}
@@ -24,6 +24,10 @@ public final class BaseUtil {
 		}
 		
 		String prevUrl = URLDecoder.decode(req.getParameter(Constants.QUERYSTRING_KEY), "UTF-8");
+
+		// Validate that the redirect link is relative to the host and NOT absolute or relative to scheme
+		if ((!prevUrl.startsWith("/")) || prevUrl.startsWith("//")) throw new Exception("Unauthorized return URL specified for language switching.");
+
 		res.sendRedirect(prevUrl);
 	}
 	

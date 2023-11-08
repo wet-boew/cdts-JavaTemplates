@@ -13,7 +13,6 @@
 		<result-types>
 			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
 		</result-types>
-		<action name="leavesecuresiteredirect" class="goc.webtemplate.component.jsp.LeaveSecureSiteAction" method="execute"></action>
 		<action name="switchlocale" class="goc.webtemplate.component.jsp.SwitchLocaleAction" method="execute"></action>
 		<!--  ==============================================================  -->
 		

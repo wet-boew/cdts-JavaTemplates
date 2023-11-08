@@ -8,11 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import goc.webtemplate.Constants;
 
 public final class BaseUtil {
-	public static void doLeaveSecureSite(HttpServletRequest req, HttpServletResponse res) throws Exception { //TODO: Remove this once no longer referenced
-		String redirectUrl = URLDecoder.decode(req.getParameter("targetUrl"), "UTF-8");
-		res.sendRedirect(redirectUrl);
-	}
-	
 	public static void doLocaleSwitch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String currLang = req.getSession().getAttribute(Constants.CURRENT_LANG_SESSION_KEY) == null ? 
 									req.getLocale().getLanguage() : 

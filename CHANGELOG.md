@@ -2,6 +2,11 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v2.7.0
+
+- **SECURITY FIX** Removal of default redirect handlers for "leaving secure site" feature. Leaving secure site feature now relies solely on WET functionality. Unless these redirect handlers were explicitely referenced by client application there should be no impact. (Spring version: removal of endpoint "/gocwebtemplate_leavesecuresiteredirect"; JSP version: removal of action "leavesecuresiteredirect.action")
+- Bug fixes
+
 ## v2.6.0
 
 - **IMPORTANT** The GCWeb site footer has been updated to reflect the changes introduced in WET footer version 4. These changes will be applied automatically. For more information, please visit the WET documentation: https://wet-boew.github.io/GCWeb/sites/footers/footers-en.html

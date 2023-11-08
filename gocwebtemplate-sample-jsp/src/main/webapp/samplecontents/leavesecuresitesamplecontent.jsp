@@ -17,8 +17,8 @@
 <ul>
     <li>display the message to the user in the form of a modal window</li>
     <li>display the message your application provides</li>
-    <li>allow your application to execute any clean up code (ex: close session, gracefully logout user etc...)</li>
     <li>allow your application to exlude any domains from raising the warning</li>
+    <li>optionally, allow your application to execute any clean up code (ex: close session, gracefully logout user etc...)</li>
 </ul>
 <h2>How it works</h2>
 <ul>
@@ -29,29 +29,21 @@
             <li>A "Yes" button appears on the window to allow the user to continue with the redirection to the selected link. (Text can be customized, see below.)</li>
         </ul>
    	</li>
-	<li>if the "Yes" button is clicked:
-        <ul>
-            <li>the user will first be redirect to the url set in <code class="wb-prettify">"leavingSecureSiteRedirectUrl"</code> via either the cdn.properties file or programmatically</li>
-            <li>the info of the linked that was clicked is part of the querystring to that url</li>
-            <li>in the redirect url provided earlier, attach the preRenderView event to the page and execute a custom bean method to perform the redirect</li>
-            <li>execute any clean up code your application requires</li>
-            <li>once executed the custom bean class will redirect the user to the url of the clicked link</li>
-            <li>the leave secure site feature is already provided by default as part of the GoC Web Template package, by default it will use the templates/leavesecuresiteredirect.xhtml page</li>
-            <li>by default the leave secure site redirect page will invoke the <code class="wb-prettify">leavesecuresiteredirect.action</code> Struts Action already pre-registered in struts.xml</li>
-        </ul>
+    <li>if the "Yes" button is clicked, the browser will be directed to the external link</li>
+    <li>optionally, a redirect url can be set in <code class="wb-prettify">"leavingSecureSiteRedirectUrl"</code> via either the cdn.properties file or programmatically.
+        If this is used, the browser will be directed to this page before leaving, where the application can terminate the user's session and let them proceed to the external link.
+        The external link will be presented to the user by placing an element <code class="wb-prettify">&lt;span class="wb-exitscript wb-exitscript-exiturlparam"&gt;&lt;/span&gt;</code> on the page.
+        For an example of a "middle page", refer to <a href="https://wet-boew.github.io/wet-boew/demos/exitscript/exitscript-en.html#wb-auto-3">scenario 3 link in the WET Documentation</a>.
     </li>
 </ul>
 <p>Here is a local link that will not display the warning: <a href="basesettingssample.action">Link to Local Page</a></p>
-<p>Here is an external link that will display the warning:<a href="https://gccode.ssc-spc.gc.ca/iitb-dgiit/sds/GOCWebTemplates/JavaTemplates/wikis/Redirect-Page">Link to External Page</a></p>
+<p>Here is an external link that will display the warning:<a href="https://github.com/wet-boew/cdts-JavaTemplates/wiki/Redirect-Page">Link to External Page</a></p>
 <h2>Steps to implement:</h2>
 <h3>Enable the leaving secure site feature</h3>
 <ul>
     <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"Enabled"</code> to <strong>"true"</strong></li>
     <li>Provide the message to be displayed by setting the <code class="wb-prettify">"Message"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
-    <li>Set, via the cdn.properties file or programmatically in your custom bean class, <code class="wb-prettify">"RedirectUrl"</code> to your action class which will execute your clean up code and then redirect to the selected url.</li>
     <li>Set, via the cdn.properties or programmatically in your custom bean class, <code class="wb-prettify">"ExcludedDomain"</code> the list of domains you do not want to raise the warning</li>
-    <li>Optionally, provide a cancel message by setting the <code class="wb-prettify">"CancelMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
-    <li>Optionally, provide a yes message by setting the <code class="wb-prettify">"YesMessage"</code> programmatically via the <code class="wb-prettify">setLeavingSecureSiteWarning</code> method in your custom bean class.</li>
 </ul>
 <div class="wb-prettify all-pre lang-vb linenums">
    	<pre>
@@ -62,7 +54,6 @@ public void onWebTemplateInitialize() {
 
     lssw.setEnabled(true);
     lssw.setMessage("You are about to leave a secure site, do you wish to continue?");
-    lssw.setRedirectUrl("leavesecuresiteredirect.action");
     lssw.setExcludedDomains("www.esdc.gc.ca,www.jobbank.gc.ca,www.readseal.ca");
     lssw.setCancelMessage("Don't leave");
     lssw.setYesMessage("Yes, leave this site");
@@ -72,27 +63,5 @@ public void onWebTemplateInitialize() {
 //...
 }
    	</pre>
-</div>
-<h3>Created your custom "redirect" class</h3>
-<ul>
-    <li>Create a class and a public method will be invoked by the preRenderView event of the redirect url</li>
-    <li>enter your clean up code if required</li>
-    <li>redirect to the <code class="wb-prettify">"targetURL"</code> parameter value in the querystring</li>
-</ul>
-<div class="wb-prettify all-pre lang-vb linenums">
-    <h3>Code Sample for your Redirect action class</h3>
-    <pre>
-import java.net.URLDecoder;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.struts2.ServletActionContext;
-
-public class LeaveSecureSiteAction {
-	public void execute() throws Exception {
-		HttpServletRequest currentReq = ServletActionContext.getRequest();
-		String redirectUrl = URLDecoder.decode(currentReq.getParameter("targetUrl"), "UTF-8");
-		ServletActionContext.getResponse().sendRedirect(redirectUrl);
-	}
-}
-   </pre>
 </div>
 <%@ include file="_sampleslist.jsp" %>

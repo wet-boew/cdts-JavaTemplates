@@ -20,8 +20,8 @@ public final class BaseUtil {
 		
 		String prevUrl = URLDecoder.decode(req.getParameter(Constants.QUERYSTRING_KEY), "UTF-8");
 
-		// Validate that the redirect link is relative to the host and NOT absolute or relative to scheme                                                
-		if ((!prevUrl.startsWith("/")) || prevUrl.startsWith("//")) throw new Exception("Unauthorized return URL specified for language switching.");    
+		// Validate that the redirect link is relative to the host and NOT absolute or relative to scheme
+		if ((!prevUrl.startsWith("/")) || prevUrl.startsWith("//")) throw new Exception("Unauthorized return URL specified for language switching.");
 
 		res.sendRedirect(prevUrl);
 	}

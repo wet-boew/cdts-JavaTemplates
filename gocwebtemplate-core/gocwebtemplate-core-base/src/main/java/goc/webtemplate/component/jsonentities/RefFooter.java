@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 import goc.webtemplate.LeavingSecureSiteWarning;
 
-import goc.webtemplate.Utility;
 import goc.webtemplate.WebAnalyticsInfo;
-
-import goc.webtemplate.component.JsonValueUtils;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
@@ -39,7 +36,7 @@ public class RefFooter implements Serializable {
     public RefFooter(String cdnEnv, LeavingSecureSiteWarning lssw, String jqueryEnv, String localPath, WebAnalyticsInfo webAnalyticsInfo, boolean isApplication) {
         this.cdnEnv = cdnEnv;
         this.exitSecureSite = null;
-        if ((lssw != null) && lssw.isEnabled() && !Utility.isNullOrEmpty(lssw.getRedirectUrl())) {
+        if ((lssw != null) && lssw.isEnabled()) {
             this.exitSecureSite = new ExitSecureSite(lssw);
         }
         this.jqueryEnv = jqueryEnv;

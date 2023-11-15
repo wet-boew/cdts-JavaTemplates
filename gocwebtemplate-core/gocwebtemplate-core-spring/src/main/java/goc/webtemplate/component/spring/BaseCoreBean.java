@@ -35,7 +35,7 @@ public abstract class BaseCoreBean extends AbstractCoreBean{
     
     @Override
     protected String getDefaultLeaveSecureSiteRedirectUrl() {
-        return "gocwebtemplate_leavesecuresiteredirect";
+        return null;
     }
     
     @Override

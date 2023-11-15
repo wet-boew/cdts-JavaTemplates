@@ -12,7 +12,6 @@ public class LeaveSecureSiteSampleBean extends DefaultTemplateCoreBean {
 
         lssw.setEnabled(true);
         lssw.setMessage("You are about to leave a secure site, do you wish to continue?");
-        lssw.setRedirectUrl("leavesecuresiteredirect.action");
         lssw.setExcludedDomains("www.esdc.gc.ca,www.jobbank.gc.ca,www.readseal.ca");
         lssw.setCancelMessage("Don't leave");
         lssw.setYesMessage("Yes, leave this site");

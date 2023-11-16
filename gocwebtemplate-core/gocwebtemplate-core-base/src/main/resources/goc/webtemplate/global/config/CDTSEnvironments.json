@@ -76,6 +76,24 @@
   "//sri": "To add SRI hashes, create entries with key '<theme>/<version>' and value from the corresponding CDTS SRI-INFO.json file",
   "themeSRIHashes" :{
     "gcweb/v4_1_0": {"cdtsPath":"gcweb/v4_1_0/cdts/","compiled/wet-en.js":"sha512-lSU0LI1sjHEUkRASTTpDHaLg0kL1H7DT4cbPXjtKepizDqqLmkF8vjmUHvSx2QaBV3w0kPe+l50d0V8K2TJQ0A==","compiled/wet-fr.js":"sha512-vaMZcx7BWb8z8v4Ty3+8ym9l4iUkj8hsARRGnwLAaK6+ruGocK79RGehRUKNBBEQMtj8h2fNz3NlvP2wfXPxjQ=="},
-    "gcintranet/v4_1_0": {"cdtsPath":"gcintranet/v4_1_0/cdts/","compiled/wet-en.js":"sha512-RGu4EtF23KOVIZA+ZSl55ZhLIpwkgpf1l16LiGe+DqQYdn+ke4DFMOhnsA1L4+Zq2vQD7f/7q2m74K86Tf21Hg==","compiled/wet-fr.js":"sha512-+ErlCtTP7ITdeV908E0p+XTa5DJ/GVi9NBJ/hDI6HP74NbNnKy7o1xyKVwwmb0K/N4V0r4duATSeem75ha2SHA==","cdts-styles.css":"sha512-dqrBeYZXK6RYeYmF7LSMsQ7efhL3Lalpi1P09QpwGXVBbuEB2lnqzhhVN1yPXTYN/5/4UeRlCf3SDtiXnk6sOQ==","cdts-splash-styles.css":"sha512-0ydKRZxST0akj4GM/lin6DobWLxhDLA2k8iPwrTBl4tFS5/0C/ERsRMpurzWf5yalJNqh6ffJcOguX8LB+yAKg==","cdts-eccc-styles.css":"sha512-VjD7joqLvOMRsDY0x+9zCkn/H9RQGHTbiYLGZtLJ+AU3KF9CysP9vI9igQgNxeVgkqagyTCHVBP2y0jDZnEozg==","cdts-esdc-styles.css":"sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA==","cdts-labour-styles.css":"sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA=="}
+    "gcintranet/v4_1_0": {"cdtsPath":"gcintranet/v4_1_0/cdts/","compiled/wet-en.js":"sha512-RGu4EtF23KOVIZA+ZSl55ZhLIpwkgpf1l16LiGe+DqQYdn+ke4DFMOhnsA1L4+Zq2vQD7f/7q2m74K86Tf21Hg==","compiled/wet-fr.js":"sha512-+ErlCtTP7ITdeV908E0p+XTa5DJ/GVi9NBJ/hDI6HP74NbNnKy7o1xyKVwwmb0K/N4V0r4duATSeem75ha2SHA==","cdts-styles.css":"sha512-dqrBeYZXK6RYeYmF7LSMsQ7efhL3Lalpi1P09QpwGXVBbuEB2lnqzhhVN1yPXTYN/5/4UeRlCf3SDtiXnk6sOQ==","cdts-splash-styles.css":"sha512-0ydKRZxST0akj4GM/lin6DobWLxhDLA2k8iPwrTBl4tFS5/0C/ERsRMpurzWf5yalJNqh6ffJcOguX8LB+yAKg==","cdts-eccc-styles.css":"sha512-VjD7joqLvOMRsDY0x+9zCkn/H9RQGHTbiYLGZtLJ+AU3KF9CysP9vI9igQgNxeVgkqagyTCHVBP2y0jDZnEozg==","cdts-esdc-styles.css":"sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA==","cdts-labour-styles.css":"sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA=="},
+    "gcweb/v5_0_0": {
+      "cdtsPath": "gcweb/v5_0_0/cdts/",
+      "compiled/wet-en.js": "sha512-mg8ZGn9N3Ym/FSe2nxlTObEx+d4FL32ljUiQLEWVx2WdnOck7cIXLQERusE/26DPreFjWplzZ96AlwRbapsYjA==",
+      "compiled/wet-fr.js": "sha512-47rm6TxLwxTjzpg5aHh9uZCtl/lE5IN4Vn7JjskuxiywsWOoL69x+z5NoTcGYYOrnwXUPn16DvLqkcova4nQFw==",
+      "cdts-styles.css": "sha512-9XjF3MCbcyrmE5Xxp3JaLAQsYbSdIrwd8aJGafX6V7T8d7SrkAIrd6HFwsev0eAQrOMtDQ4pO65La3CrVHXo8w==",
+      "cdts-app-styles.css": "sha512-LdDduYGImuTiQIQCuQgOEttk+oe7wg5+rauqTbA/Qi1qTeZuvBcWcoqr5Nn1mHepDsboEadVW9HnHuMAOqJefA==",
+      "cdts-splash-styles.css": "sha512-Ux0hmX3uXA6WcF0i6+JHf0J3Z4HzzxDNyWdV+5mo1qakQwUBeDKMY+xcCcrWHySqStFvndhaJ5OqbIiqaADb9g=="
+    },
+    "gcintranet/v5_0_0": {
+      "cdtsPath": "gcintranet/v5_0_0/cdts/",
+      "compiled/wet-en.js": "sha512-il2RYIa+0JpSa5W7Zr7QBnhYl2AoDFDRgdtpUk/KZ/XIFvu5n206i3wDwjdA/5Lqp5elzsv56L3f6648gJjO4Q==",
+      "compiled/wet-fr.js": "sha512-lh9kbjTN0FV85JfXNafp4MACeX4SoEgE5R89A3xqXM6P/mtJcWTtKM3QRb3T5movi43XmKM42gyihd6ApTmSvQ==",
+      "cdts-styles.css": "sha512-dqrBeYZXK6RYeYmF7LSMsQ7efhL3Lalpi1P09QpwGXVBbuEB2lnqzhhVN1yPXTYN/5/4UeRlCf3SDtiXnk6sOQ==",
+      "cdts-splash-styles.css": "sha512-Ux0hmX3uXA6WcF0i6+JHf0J3Z4HzzxDNyWdV+5mo1qakQwUBeDKMY+xcCcrWHySqStFvndhaJ5OqbIiqaADb9g==",
+      "cdts-eccc-styles.css": "sha512-VjD7joqLvOMRsDY0x+9zCkn/H9RQGHTbiYLGZtLJ+AU3KF9CysP9vI9igQgNxeVgkqagyTCHVBP2y0jDZnEozg==",
+      "cdts-esdc-styles.css": "sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA==",
+      "cdts-labour-styles.css": "sha512-K10RfHMGrIcS+36XhwMqShTiifXP/cTrMN4y66HPJOeRipyaRtQvrK4VgmodS2QK2IJIyXWSwS8I85uA4MnoTA=="
+    }
   }
 }

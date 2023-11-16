@@ -7,6 +7,9 @@ public class FeedbackLink implements Serializable {
 
     private boolean shown;
     private String  url;
+    private String  text;
+    private String  theme;
+    private String  section;
     
     public FeedbackLink() {
     }
@@ -30,5 +33,29 @@ public class FeedbackLink implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }    
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
 }

@@ -17,9 +17,7 @@ public class PreFooter implements Serializable, IPreFooter {
     private String              dateModified;
     private boolean             showPostContent;
 
-    //NOTE: Custom serialization/adapter because value can be both boolean and string
-    @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.FeedbackLinkAdapter.class)
-    private FeedbackLink        showFeedback;
+    private Feedback        showFeedback;
 
     //NOTE: Custom serialization/adapter because value can be both boolean and array of string
     @JsonAdapter(goc.webtemplate.component.jsonentities.adapters.ShareListAdapter.class)
@@ -32,7 +30,7 @@ public class PreFooter implements Serializable, IPreFooter {
     }
 
     public PreFooter(String cdnEnv, String versionIdentifier, String dateModified, boolean showPostContent,
-            FeedbackLink showFeedback, ShareList showShare, String screenIdentifier) {
+            Feedback showFeedback, ShareList showShare, String screenIdentifier) {
         this.cdnEnv = cdnEnv;
         this.versionIdentifier = versionIdentifier;
         this.dateModified = dateModified;
@@ -74,11 +72,11 @@ public class PreFooter implements Serializable, IPreFooter {
         this.showPostContent = showPostContent;
     }
 
-    public FeedbackLink getShowFeedback() {
+    public Feedback getShowFeedback() {
         return showFeedback;
     }
 
-    public void setShowFeedback(FeedbackLink showFeedback) {
+    public void setShowFeedback(Feedback showFeedback) {
         this.showFeedback = showFeedback;
     }
 

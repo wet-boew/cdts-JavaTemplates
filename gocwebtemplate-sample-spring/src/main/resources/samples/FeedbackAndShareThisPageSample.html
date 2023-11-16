@@ -21,9 +21,17 @@
 		<ul>
 		    <li>Set the key <code class="wb-prettify">"goc.webtemplate.showfeedbacklink"</code> in the cdn.properties file to <strong>"true"</strong>.</li>
 		    <li>or set the property programmatically via the <code class="wb-prettify">setShowFeedbackLink</code> method in your custom bean class.</li>
-		    <li>If you wish to redirect the user to your own pages instead of the default canada.ca page, set the key <code class="wb-prettify">"goc.webtemplate.feedbackurl"</code> and optionally <code class="wb-prettify">"goc.webtemplate.feedbackurl_fr"</code> in the cdn.properties file to the url of your page.</li>
+		    <li>Your page MUST have the following metadata defined for the feedback tool to be enabled: <code>&lt;meta name="dcterms.creator" content="[Department name / Nom du département]"&gt;</code></li>
+		    <li>The values for Theme, Section and Department Name should be the SAME for English and French.</li>
+		    <li>If you wish to add contact information, set the key <code class="wb-prettify">"goc.webtemplate.feedbackurl"</code> and optionally <code class="wb-prettify">"goc.webtemplate.feedbackurl_fr"</code> in the cdn.properties file which will be the url for the contact link.</li>
 		    <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackUrl</code> method and optionally the <code class="wb-prettify">setFeedbackUrlFr</code> method in your custom bean class.</li>
+		    <li>If you wish to add contact information, set the key <code class="wb-prettify">"goc.webtemplate.feedbacktext"</code> and optionally <code class="wb-prettify">"goc.webtemplate.feedbacktext"</code> in the cdn.properties file which will be the name of the contact.</li>
+		    <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackText</code> method and optionally the <code class="wb-prettify">setFeedbackTextFr</code> method in your custom bean class.</li>
 		    <li>If no french URL is specified, the english one wil be used for both languages.</li>
+		    <li>If you wish to add the theme, set the key <code class="wb-prettify">"goc.webtemplate.feedbacktheme"</code> in the cdn.properties file.</li>
+		    <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackTheme</code> method in your custom bean class.</li>
+		    <li>If you wish to add the section, set the key <code class="wb-prettify">"goc.webtemplate.feedbacksection"</code> in the cdn.properties file.</li>
+		    <li>or set the property programmatically via the <code class="wb-prettify">setFeedbackSection</code> method in your custom bean class.</li>
 		</ul>
 		<div class="wb-prettify all-pre lang-vb linenums">
 		    <pre>
@@ -31,13 +39,17 @@
 public void onWebTemplateInitialize() {
 //...
     this.setShowFeedbackLink(true);
+    this.setFeedbackText("Contact");
+    this.setFeedbackTextFr("Contactez-nous");
     this.setFeedbackUrl("http://www.google.ca");
     this.setFeedbackUrlFr("http://www.google.ca/?hl=fr");
+    this.setFeedbackTheme("Theme");
+    this.setFeedbackSection("Section");
 //...
 } 
 		    </pre>
 		</div>
-		<p>The text of the link is pre-defined by the theme and cannot be modified.</p>
+		<p>The text of the feedback tool is pre-defined and cannot be modified.</p>
 	    <h2>Share This Page Link</h2>
 	    <p>The "Share This Page" Link is a way for the users to share the URL of the site via Social Media .  Displaying the link is optional and Portfolio Web or the Principal Publisher should be contacted to help you determine if it should be displayed on your site.</p>
 	    <p>To display the Share This Page link</p>

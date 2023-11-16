@@ -37,6 +37,7 @@ import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
 import goc.webtemplate.component.jsonentities.CDTSEnvironmentList;
+import goc.webtemplate.component.jsonentities.Feedback;
 import goc.webtemplate.component.jsonentities.FeedbackLink;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.IPreFooter;
@@ -106,6 +107,10 @@ public abstract class AbstractCoreBean {
     private String languageLinkUrl = "";
     private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
     private String feedbackUrlFr = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl_fr");
+    private String feedbackText = this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktext");
+    private String feedbackTextFr = this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktext_fr");
+    private String feedbackTheme = this.getResourceBundleString("cdn", "goc.webtemplate.feedbacksection");
+    private String feedbackSection = this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktheme");
     private List<Link> contactLinks = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
@@ -1100,6 +1105,91 @@ public abstract class AbstractCoreBean {
     public void setFeedbackUrlFr(String value) {
         this.feedbackUrlFr = value;
     }
+    
+    /**
+     * Returns the FeedBack contact link text.
+     *
+     * Set at application level via "goc.webtemplate.feedbacktext" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public String getFeedbackText() {
+        this.initializeOnce();
+        return this.feedbackText;
+    }
+
+    /**
+     * Sets the FeedBack contact link text.
+     *
+     * Set at application level via "goc.webtemplate.feedbacktext" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public void setFeedbackText(String value) {
+        this.feedbackText = value;
+    }
+    
+    /**
+     * Returns the french FeedBack contact link text.
+     *
+     * Set at application level via "goc.webtemplate.feedbacktext_fr" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public String getFeedbackTextFr() {
+        this.initializeOnce();
+        return this.feedbackTextFr;
+    }
+
+    /**
+     * Sets the french FeedBack contact link text.
+     *
+     * Set at application level via "goc.webtemplate.feedbacktext_fr" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public void setFeedbackTextFr(String value) {
+        this.feedbackTextFr = value;
+    }
+    
+    /**
+     * Returns the theme of the page which Feedback is on.
+     *
+     * Set at application level via "goc.webtemplate.feedbacktheme" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public String getFeedbackTheme() {
+        this.initializeOnce();
+        return this.feedbackTheme;
+    }
+
+    /**
+     * Sets the theme of the page which Feedback is on.
+     *
+     * Set at application level via "goc.webtemplate.feedbacksection" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public void setFeedbackTheme(String value) {
+        this.feedbackTheme = value;
+    }
+    
+    /**
+     * Returns the Feedback section.
+     *
+     * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public String getFeedbackSection() {
+        this.initializeOnce();
+        return this.feedbackSection;
+    }
+
+    /**
+     * Sets the Feedback section.
+     *
+     * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties,
+     * can be overriden programatically.
+     */
+    public void setFeedbackSection(String value) {
+        this.feedbackSection = value;
+    }
+    
 
 
     /**
@@ -2020,15 +2110,29 @@ public abstract class AbstractCoreBean {
     private IPreFooter buildPreFooter(boolean isTransactional, boolean isUnilingualError) {
         if (!isTransactional) {
             if (!isUnilingualError) {
-                return new PreFooter(
+                Feedback feedback = new Feedback();
+                feedback.setEnabled(this.showFeedbackLink);
+                
+                Boolean isFrenchCulture = this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.FRENCH_ACCRONYM.toUpperCase());
+                
+                if (!Utility.isNullOrEmpty(this.getFeedbackText()) || !Utility.isNullOrEmpty(this.getFeedbackSection()) || !Utility.isNullOrEmpty(this.getFeedbackTheme()))
+                {
+                	feedback.setSection(this.feedbackSection);
+                	feedback.setTheme(this.feedbackTheme);
+                	feedback.setText((isFrenchCulture && !Utility.isNullOrEmpty(this.getFeedbackTextFr())) ? this.feedbackTextFr : this.feedbackText);
+                	feedback.setHref((isFrenchCulture && !Utility.isNullOrEmpty(this.getFeedbackUrlFr())) ? this.feedbackUrlFr : this.feedbackUrl);
+                }
+                else if (!Utility.isNullOrEmpty(this.getFeedbackUrl())) 
+                {
+                	feedback.setLegacyBtnUrl((isFrenchCulture && !Utility.isNullOrEmpty(this.getFeedbackUrlFr())) ? this.feedbackUrlFr : this.feedbackUrl);
+                }
+                
+            	return new PreFooter(
                         null, //no need for cdnEnv now that we're using CDTS setup function
                         JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                         this.buildDateModified(),
                         this.showPostContent,
-                        new FeedbackLink(this.showFeedbackLink,
-                                (this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.ENGLISH_ACCRONYM.toUpperCase()) || Utility.isNullOrEmpty(this.getFeedbackUrlFr()) ?
-                                        this.feedbackUrl:
-                                        this.feedbackUrlFr) ),
+                        feedback,
                         new ShareList(this.showSharePageLink, this.sharePageMediaSites),
                         JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
                       );
@@ -2042,7 +2146,7 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                     this.buildDateModified(),
                     false, //showPostContent,
-                    new FeedbackLink(false, null),
+                    new Feedback(false, null, null, null, null, null),
                     new ShareList(false, null),
                     JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
                   );

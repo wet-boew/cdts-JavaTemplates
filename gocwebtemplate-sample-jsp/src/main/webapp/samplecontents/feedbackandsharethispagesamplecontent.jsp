@@ -18,7 +18,7 @@
 <ul>
     <li>Set the key <code class="wb-prettify">"goc.webtemplate.showfeedbacklink"</code> in the cdn.properties file to <strong>"true"</strong>.</li>
     <li>or set the property programmatically by creating a FeedbackLink object and enabling it via the <code class="wb-prettify">setEnabled</code> method in your custom bean class.</li>
-    <li>Your page MUST have the following metadata defined for the feedback tool to be enabled: <code>&lt;meta name="dcterms.creator" content="[Department name / Nom du département]"&gt;</code></li>
+    <li>Your page MUST have the following metadata defined for the feedback tool to be enabled: <code>&lt;meta name="dcterms.creator" content="[Department name / Nom du dÃ©partement]"&gt;</code></li>
     <li>The values for Theme, Section and Department Name should be the SAME for English and French.</li>
     <li>If you wish to add contact information, set the key <code class="wb-prettify">"goc.webtemplate.feedbackurl"</code> and optionally <code class="wb-prettify">"goc.webtemplate.feedbackurl_fr"</code> in the cdn.properties file which will be the url for the contact link.</li>
     <li>or set the property programmatically via the <code class="wb-prettify">setUrl</code> method and optionally the <code class="wb-prettify">setUrlFr</code> method in your custom bean class.</li>
@@ -37,7 +37,7 @@ public void onWebTemplateInitialize() {
 //...
     List&lt;String> elements = new ArrayList&lt;String>();
     elements.add("&lt;meta content=\"width = device - width, initial - scale = 1\" name=\"viewport\">");
-    elements.add("&lt;meta name=\"dcterms.creator\" content=\"[Department name / Nom du département]\">");
+    elements.add("&lt;meta name=\"dcterms.creator\" content=\"[Department name / Nom du dÃ©partement]\">");
     this.setHtmlHeaderElements(elements);
 
     FeedbackLink feedbackLink = new FeedbackLink();

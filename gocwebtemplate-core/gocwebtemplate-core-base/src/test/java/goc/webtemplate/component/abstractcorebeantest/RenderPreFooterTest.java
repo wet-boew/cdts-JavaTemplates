@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import goc.webtemplate.Constants;
+import goc.webtemplate.FeedbackLink;
 
 /**
  * This contains tests for RenderSetup in relation with the preFooter attributes,
@@ -34,11 +35,15 @@ public class RenderPreFooterTest {
         elements.add("<meta name=\"dcterms.creator\" content=\"[Department name / Nom du dÃ©partement]\">");
         sut.setHtmlHeaderElements(elements);
 
-        sut.setShowFeedbackLink(true);
-        sut.setFeedbackText("Contact");
-        sut.setFeedbackUrl("http://www.google.ca");
-        sut.setFeedbackTheme("Theme");
-        sut.setFeedbackSection("Section");
+        FeedbackLink feedbackLink = new FeedbackLink();
+        feedbackLink.setEnabled(true);
+        feedbackLink.setText("Contact");
+        feedbackLink.setTextFr("Contactez-nous");
+        feedbackLink.setUrl("http://www.google.ca"); 
+        feedbackLink.setUrlFr("http://www.google.ca/?hl=fr");
+        feedbackLink.setTheme("Theme");
+        feedbackLink.setSection("Section");
+        sut.setFeedbackLink(feedbackLink);
 
         String x = sut.getRenderSetup();
         assertTrue(sut.getRenderSetup().contains("\"showFeedback\":{\"enabled\":true,\"href\":\"http://www.google.ca\",\"text\":\"Contact\",\"theme\":\"Theme\",\"section\":\"Section\"}"),

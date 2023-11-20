@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import goc.webtemplate.Constants;
-
+import goc.webtemplate.FeedbackLink;
 import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
 public class FeedbackAndShareThisPageSampleBean extends DefaultTemplateCoreBean {
@@ -16,14 +16,16 @@ public class FeedbackAndShareThisPageSampleBean extends DefaultTemplateCoreBean 
         elements.add("<meta name=\"dcterms.creator\" content=\"[Department name / Nom du dÃ©partement]\">");
         this.setHtmlHeaderElements(elements);
 
-        this.setShowFeedbackLink(true);
-        this.setFeedbackText("Contact");
-        this.setFeedbackTextFr("Contactez-nous");
-        this.setFeedbackUrl("http://www.google.ca"); 
-        this.setFeedbackUrlFr("http://www.google.ca/?hl=fr");
-        this.setFeedbackTheme("Theme");
-        this.setFeedbackSection("Section");
+        FeedbackLink feedbackLink = new FeedbackLink();
+        feedbackLink.setEnabled(true);
+        feedbackLink.setText("Contact");
+        feedbackLink.setTextFr("Contactez-nous");
+        feedbackLink.setUrl("http://www.google.ca"); 
+        feedbackLink.setUrlFr("http://www.google.ca/?hl=fr");
+        feedbackLink.setTheme("Theme");
+        feedbackLink.setSection("Section");
 
+        this.setFeedbackLink(feedbackLink);
         this.setShowSharePageLink(true);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.blogger);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.facebook);

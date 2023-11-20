@@ -38,6 +38,11 @@
 @Override
 public void onWebTemplateInitialize() {
 //...
+    List&lt;String> elements = new ArrayList&lt;String>();
+    elements.add("&lt;meta content=\"width = device - width, initial - scale = 1\" name=\"viewport\">");
+    elements.add("&lt;meta name=\"dcterms.creator\" content=\"[Department name / Nom du département]\">");
+    this.setHtmlHeaderElements(elements);
+
     FeedbackLink feedbackLink = new FeedbackLink();
     feedbackLink.setEnabled(false);
     feedbackLink.setText("Contact");

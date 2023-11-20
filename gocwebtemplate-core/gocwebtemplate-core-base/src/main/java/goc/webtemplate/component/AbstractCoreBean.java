@@ -2057,7 +2057,7 @@ public abstract class AbstractCoreBean {
     /**
      * Builds the Feedback object
      */
-    private Feedback buildFeedbackLink(FeedbackLink feedbackLink) 
+    private Feedback buildFeedback(FeedbackLink feedbackLink) 
     {
         Feedback feedback = new Feedback();
         feedback.setEnabled(this.feedbackLink.isEnabled());
@@ -2091,7 +2091,7 @@ public abstract class AbstractCoreBean {
                         JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                         this.buildDateModified(),
                         this.showPostContent,
-                        buildFeedbackLink(this.getFeedbackLink()),
+                        buildFeedback(this.getFeedbackLink()),
                         new ShareList(this.showSharePageLink, this.sharePageMediaSites),
                         JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
                       );

@@ -2086,8 +2086,6 @@ public abstract class AbstractCoreBean {
     private IPreFooter buildPreFooter(boolean isTransactional, boolean isUnilingualError) {
         if (!isTransactional) {
             if (!isUnilingualError) {
-                
-                
             	return new PreFooter(
                         null, //no need for cdnEnv now that we're using CDTS setup function
                         JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),

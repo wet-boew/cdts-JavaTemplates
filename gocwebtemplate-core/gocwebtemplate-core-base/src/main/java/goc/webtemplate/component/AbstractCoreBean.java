@@ -15,6 +15,7 @@ import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.Constants;
 import goc.webtemplate.ContextualFooter;
 import goc.webtemplate.CustomSearch;
+import goc.webtemplate.FeedbackLink;
 import goc.webtemplate.FooterLink;
 import goc.webtemplate.FooterSection;
 import goc.webtemplate.HeaderMenu;
@@ -37,7 +38,7 @@ import goc.webtemplate.component.jsonentities.AppFooter;
 import goc.webtemplate.component.jsonentities.AppTop;
 import goc.webtemplate.component.jsonentities.CDTSEnvironment;
 import goc.webtemplate.component.jsonentities.CDTSEnvironmentList;
-import goc.webtemplate.component.jsonentities.FeedbackLink;
+import goc.webtemplate.component.jsonentities.Feedback;
 import goc.webtemplate.component.jsonentities.Footer;
 import goc.webtemplate.component.jsonentities.IPreFooter;
 import goc.webtemplate.component.jsonentities.PreFooter;
@@ -104,8 +105,13 @@ public abstract class AbstractCoreBean {
     private Link applicationTitle = new Link();
     private IntranetTitle intranetTitle = null;
     private String languageLinkUrl = "";
-    private String feedbackUrl = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl");
-    private String feedbackUrlFr = this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl_fr");
+    private FeedbackLink feedbackLink = new FeedbackLink(Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink")),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl"),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbackurl_fr"),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktext"),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktext_fr"),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbacktheme"),
+                                            this.getResourceBundleString("cdn", "goc.webtemplate.feedbacksection"));
     private List<Link> contactLinks = null;
     private LeavingSecureSiteWarning leavingSecureSiteWarning = new LeavingSecureSiteWarning(
                                             Boolean.parseBoolean(this.getResourceBundleString("cdn", "leavingsecuresitewarning.enabled")),
@@ -120,7 +126,6 @@ public abstract class AbstractCoreBean {
     private boolean showPreContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showprecontent"));
     private boolean showPostContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showpostcontent"));
     private boolean showLanguageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showlanguagelink"));
-    private boolean showFeedbackLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeedbacklink"));
     private boolean showSharePageLink = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsharepagelink"));
     private boolean showFeatures = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showfeatures"));
     private List<Constants.SocialMediaSites> sharePageMediaSites = new ArrayList<Constants.SocialMediaSites>();
@@ -503,7 +508,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v4_1_0)
+     * Returns the version of the CDN files to use to build the page. (e.g v5_0_0)
      *
      * Set at application level via "wettemplate_version" property in cdn.properties,
      * can be overriden programatically.
@@ -524,7 +529,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v4_1_0)
+     * Sets the version of the CDN files to use to build the page. (e.g v5_0_0)
      *
      * Set at application level via "wettemplate_version" property in cdn.properties,
      * can be overriden programatically.
@@ -1043,10 +1048,13 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties,
      * can be overriden programatically.
+     * 
+     * * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public boolean getShowFeedbackLink() {
         this.initializeOnce();
-        return this.showFeedbackLink;
+        return this.feedbackLink.isEnabled();
     }
 
     /**
@@ -1054,9 +1062,12 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties,
      * can be overriden programatically.
+     * 
+     * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public void setShowFeedbackLink(boolean value) {
-        this.showFeedbackLink = value;
+        this.feedbackLink.setEnabled(value);
     }
 
     /**
@@ -1064,10 +1075,13 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties,
      * can be overriden programatically.
+     * 
+     * * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public String getFeedbackUrl() {
         this.initializeOnce();
-        return this.feedbackUrl;
+        return this.feedbackLink.getUrl();
     }
 
     /**
@@ -1075,9 +1089,12 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties,
      * can be overriden programatically.
+     * 
+     * * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public void setFeedbackUrl(String value) {
-        this.feedbackUrl = value;
+        this.feedbackLink.setUrl(value);
     }
 
     /**
@@ -1085,22 +1102,46 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties,
      * can be overriden programatically.
+     * 
+     * * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public String getFeedbackUrlFr() {
         this.initializeOnce();
-        return this.feedbackUrlFr;
+        return this.feedbackLink.getUrlFr();
     }
 
     /**
      * Sets the french FeedBack link URL.
      *
      * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties,
-     * can be overriden programatically.
+     * can be overriden programmatically.
+     * 
+     * * @Depracted Starting with version v4.0.0, use get/setFeedbackLink instead
      */
+    @Deprecated
     public void setFeedbackUrlFr(String value) {
-        this.feedbackUrlFr = value;
+        this.feedbackLink.setUrlFr(value);
+    }
+    
+    /**
+     * Returns the FeedbackLink object used as configuration 
+     *
+     * Configuration can be set at application level in cdn.properties, or set programmatically at runtime.
+     */
+    public FeedbackLink getFeedbackLink() {
+        this.initializeOnce();
+        return this.feedbackLink;
     }
 
+    /**
+     * Sets the FeedbackLink object used as configuration
+     *
+     * Configuration can be set at application level in cdn.properties, or set programattically at runtime.
+     */
+    public void setFeedbackLink(FeedbackLink value) {
+        this.feedbackLink = value;
+    }
 
     /**
      * Returns a unique string to identify a web page. Used by user to identify the screen where an issue occured.
@@ -2014,21 +2055,43 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Builds the Feedback object
+     */
+    private Feedback buildFeedback(FeedbackLink feedbackLink) 
+    {
+        Feedback feedback = new Feedback();
+        feedback.setEnabled(this.feedbackLink.isEnabled());
+
+        Boolean isFrenchCulture = this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.FRENCH_ACCRONYM.toUpperCase());
+
+        if (!Utility.isNullOrEmpty(this.feedbackLink.getText()) || !Utility.isNullOrEmpty(this.feedbackLink.getSection()) || !Utility.isNullOrEmpty(this.feedbackLink.getTheme()))
+        {
+            feedback.setSection(feedbackLink.getSection());
+            feedback.setTheme(feedbackLink.getTheme());
+            feedback.setText((isFrenchCulture && !Utility.isNullOrEmpty(this.feedbackLink.getTextFr())) ? feedbackLink.getTextFr() : feedbackLink.getText());
+            feedback.setHref((isFrenchCulture && !Utility.isNullOrEmpty(this.feedbackLink.getUrlFr())) ? feedbackLink.getUrlFr() : feedbackLink.getUrl());
+        }
+        else if (!Utility.isNullOrEmpty(this.feedbackLink.getUrl())) 
+        {
+            feedback.setLegacyBtnUrl((isFrenchCulture && !Utility.isNullOrEmpty(this.feedbackLink.getUrlFr())) ? this.feedbackLink.getUrlFr() : this.feedbackLink.getUrl());
+        }
+
+        return feedback;
+    }
+
+    /**
      * Builds the "PreFooter" object needed in rendering the CDTS setup JSON
      * (assumes initializeOnce() was called)
      */
     private IPreFooter buildPreFooter(boolean isTransactional, boolean isUnilingualError) {
         if (!isTransactional) {
             if (!isUnilingualError) {
-                return new PreFooter(
+            	return new PreFooter(
                         null, //no need for cdnEnv now that we're using CDTS setup function
                         JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                         this.buildDateModified(),
                         this.showPostContent,
-                        new FeedbackLink(this.showFeedbackLink,
-                                (this.getTwoLetterCultureLanguage().toUpperCase().equals(Constants.ENGLISH_ACCRONYM.toUpperCase()) || Utility.isNullOrEmpty(this.getFeedbackUrlFr()) ?
-                                        this.feedbackUrl:
-                                        this.feedbackUrlFr) ),
+                        buildFeedback(this.getFeedbackLink()),
                         new ShareList(this.showSharePageLink, this.sharePageMediaSites),
                         JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
                       );
@@ -2042,7 +2105,7 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.getNonEmptyString(this.getVersionIdentifier()),
                     this.buildDateModified(),
                     false, //showPostContent,
-                    new FeedbackLink(false, null),
+                    new Feedback(false, null, null, null, null, null),
                     new ShareList(false, null),
                     JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
                   );

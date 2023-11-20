@@ -29,7 +29,7 @@ public class SRITest {
         sut.setTheme("gcweb");
 
         assertTrue(sut.getCssPathAttributes().contains(Constants.CDTS_DEFAULT_VERSION));
-        //assertTrue(sut.getCssPathAttributes().contains("integrity")); NOTE: For version v4_1_0, the CSS path does not have SRI
+        assertTrue(sut.getCssPathAttributes().contains("integrity"));
         assertTrue(sut.getWetJsPathAttributes().contains("integrity"));
     }
 

@@ -32,7 +32,7 @@ public class RenderPreFooterTest {
 
         ArrayList<String> elements = new ArrayList<String>();
         elements.add("<meta content=\"width = device - width, initial - scale = 1\" name=\"viewport\">");
-        elements.add("<meta name=\"dcterms.creator\" content=\"[Department name / Nom du dÃ©partement]\">");
+        elements.add("<meta name=\"dcterms.creator\" content=\"[Department name / Nom du département]\">");
         sut.setHtmlHeaderElements(elements);
 
         FeedbackLink feedbackLink = new FeedbackLink();

@@ -15,7 +15,7 @@ public abstract class Constants {
     
     public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "2.7.0";
 
-    public static final String CDTS_DEFAULT_VERSION = "v4_0_47";
+    public static final String CDTS_DEFAULT_VERSION = "v5_0_0";
     
     public static final String STATIC_FALLBACK_FILES_INTERNAL_PATH = "/goc/webtemplate/StaticFallbackFiles";
     

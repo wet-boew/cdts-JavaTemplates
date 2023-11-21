@@ -5,7 +5,10 @@
 ## v2.7.0
 
 - **SECURITY FIX** Removal of default redirect handlers for "leaving secure site" feature. Leaving secure site feature now relies solely on WET functionality. Unless these redirect handlers were explicitely referenced by client application there should be no impact. (Spring version: removal of endpoint "/gocwebtemplate_leavesecuresiteredirect"; JSP version: removal of action "leavesecuresiteredirect.action")
-- Bug fixes
+- Replacing the 'Report a problem button' with the new Page Feedback tool. The Page Feedback tool is optional and will be hidden unless explicitly enabled and other conditions are met. Please visit the sample pages for more information.
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.0 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.70.1
+- Updated static fallback files
+- Bug Fixes
 
 ## v2.6.0
 

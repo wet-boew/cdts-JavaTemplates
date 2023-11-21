@@ -1022,7 +1022,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public boolean getShowFeedbackLink() {
@@ -1036,7 +1036,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.showfeedbacklink" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public void setShowFeedbackLink(boolean value) {
@@ -1049,7 +1049,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public String getFeedbackUrl() {
@@ -1063,7 +1063,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.feedbackurl" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public void setFeedbackUrl(String value) {
@@ -1076,7 +1076,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public String getFeedbackUrlFr() {
@@ -1090,7 +1090,7 @@ public abstract class AbstractCoreBean {
      * Set at application level via "goc.webtemplate.feedbackurl_fr" property in cdn.properties, 
      * can be overriden programatically.
      * 
-     * @Depracted Starting with version v2.7.0, use get/setFeedbackLink instead
+     * @Deprecated Starting with version v2.7.0, use get/setFeedbackLink instead
      */
     @Deprecated
     public void setFeedbackUrlFr(String value) {

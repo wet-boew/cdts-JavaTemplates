@@ -2,6 +2,10 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v4.0.1
+
+- Now targeting Struts version 2.5.33
+
 ## v4.0.0
 
 - **SECURITY FIX** Removal of default redirect handlers for "leaving secure site" feature. Leaving secure site feature now relies solely on WET functionality. Unless these redirect handlers were explicitely referenced by client application there should be no impact. (Spring version: removal of endpoint "/gocwebtemplate_leavesecuresiteredirect"; JSP version: removal of action "leavesecuresiteredirect.action")

@@ -3,7 +3,7 @@
 
 	<groupId>ca.gc.gocwebtemplate</groupId>
   	<artifactId>gocwebtemplate-sample-spring</artifactId>
-  	<version>4.0.0-SNAPSHOT</version>
+  	<version>4.0.1-SNAPSHOT</version>
   	<!--Change packaging type to "war" if your application must be deployable in a web container-->
  	<packaging>jar</packaging>
  
@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<springboot.version>2.6.6</springboot.version>
-		<webtemplate.version>4.0.0-SNAPSHOT</webtemplate.version>
+		<webtemplate.version>4.0.1-SNAPSHOT</webtemplate.version>
 		
 		<build_number>local</build_number>
 		<timestamp>${maven.build.timestamp}</timestamp>

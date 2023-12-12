@@ -13,7 +13,7 @@ public abstract class Constants {
     
     public static final String CACHE_KEY_STATICFILES_PREFIX = "GoC.Template.CacheKey";
     
-    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "2.7.0";
+    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "2.7.1";
 
     public static final String CDTS_DEFAULT_VERSION = "v5_0_0";
     

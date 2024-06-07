@@ -461,7 +461,7 @@ public abstract class AbstractCoreBean {
     }
     
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v5_0_0)
+     * Returns the version of the CDN files to use to build the page. (e.g v5_0_1)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  
@@ -482,7 +482,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v5_0_0)
+     * Sets the version of the CDN files to use to build the page. (e.g v5_0_1)
      * 
      * Set at application level via "wettemplate_version" property in cdn.properties, 
      * can be overriden programatically.  

@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>ca.gc.gocwebtemplate</groupId>
 		<artifactId>gocwebtemplate-core</artifactId>
-		<version>4.0.3-SNAPSHOT</version>
+		<version>4.0.4-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 	

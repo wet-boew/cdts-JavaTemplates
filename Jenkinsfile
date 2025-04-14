@@ -25,7 +25,7 @@ pipeline {
         maven('maven')
         git('git')
         ant('Ant')
-        jdk('JDK11')
+        jdk('OpenJDK11')
     }
    
     parameters {

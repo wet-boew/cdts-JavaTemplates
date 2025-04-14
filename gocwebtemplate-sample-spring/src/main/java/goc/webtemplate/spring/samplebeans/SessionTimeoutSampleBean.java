@@ -30,6 +30,7 @@ public class SessionTimeoutSampleBean extends DefaultTemplateCoreBean {
 
         SessionTimeout sconfig = new SessionTimeout();
         SessionTimeoutTextOverrides textOverrides = new SessionTimeoutTextOverrides();
+        textOverrides.setButtonContinue("Keep Going");
         
         sconfig.setEnabled(true);
         sconfig.setInactivity(30000);

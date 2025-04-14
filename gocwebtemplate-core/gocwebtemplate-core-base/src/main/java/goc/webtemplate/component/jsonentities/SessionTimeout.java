@@ -53,7 +53,7 @@ public class SessionTimeout implements Serializable {
     
     public SessionTimeout(Integer inactivity, Integer reactionTime, Integer sessionalive,
                           String logouturl, String refreshCallbackUrl, Boolean refreshOnClick,
-                          Integer refreshLimit, String method, String additionalData, String signInUrl) {
+                          Integer refreshLimit, String method, String additionalData, String signInUrl, SessionTimeoutTextOverrides textOverrides) {
         this.inactivity = inactivity;
         this.reactionTime = reactionTime;
         this.sessionalive = sessionalive;

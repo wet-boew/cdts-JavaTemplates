@@ -24,19 +24,19 @@ public class SessionTimeout implements Serializable {
     public SessionTimeout(int inactivity, int reactiontime, int sessionalive, 
     					  String logouturl, String refreshcallbackurl, 
     					  boolean refreshonclick, int refreshlimit, 
-    					  String method, String additionaldata, String signInUrl, SessionTimeoutTextOverrides textOverrides) {
+    					  String method, String additionaldata, String signinurl, SessionTimeoutTextOverrides textoverrides) {
 
         this(false,
              inactivity, reactiontime, sessionalive,
              logouturl, refreshcallbackurl,
              refreshonclick, refreshlimit,
-             method, additionaldata, signInUrl, textOverrides);
+             method, additionaldata, signinurl, textoverrides);
     }
 
     public SessionTimeout(boolean enabled, int inactivity, int reactiontime, int sessionalive, 
             String logouturl, String refreshcallbackurl, 
             boolean refreshonclick, int refreshlimit, 
-            String method, String additionaldata, String signInUrl, SessionTimeoutTextOverrides textOverrides) {
+            String method, String additionaldata, String signinurl, SessionTimeoutTextOverrides textoverrides) {
 
         this.enabled = enabled;
         this.inactivity = inactivity;
@@ -48,8 +48,8 @@ public class SessionTimeout implements Serializable {
         this.refreshLimit = refreshlimit;
         this.method = method;
         this.additionalData = additionaldata;
-        this.signInUrl = signInUrl;
-        this.textOverrides = textOverrides;
+        this.signInUrl = signinurl;
+        this.textOverrides = textoverrides;
     }
 
     public boolean isEnabled() {

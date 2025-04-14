@@ -15,6 +15,8 @@ public class SessionTimeout implements Serializable {
 	private int refreshLimit = 0;
 	private String method = "";
 	private String additionalData = "";
+	private String signInUrl = "";
+	private SessionTimeoutTextOverrides textOverrides = null;
     
     public SessionTimeout() {
     }
@@ -22,19 +24,19 @@ public class SessionTimeout implements Serializable {
     public SessionTimeout(int inactivity, int reactiontime, int sessionalive, 
     					  String logouturl, String refreshcallbackurl, 
     					  boolean refreshonclick, int refreshlimit, 
-    					  String method, String additionaldata) {
+    					  String method, String additionaldata, String signInUrl, SessionTimeoutTextOverrides textOverrides) {
 
         this(false,
              inactivity, reactiontime, sessionalive,
              logouturl, refreshcallbackurl,
              refreshonclick, refreshlimit,
-             method, additionaldata);
+             method, additionaldata, signInUrl, textOverrides);
     }
 
     public SessionTimeout(boolean enabled, int inactivity, int reactiontime, int sessionalive, 
             String logouturl, String refreshcallbackurl, 
             boolean refreshonclick, int refreshlimit, 
-            String method, String additionaldata) {
+            String method, String additionaldata, String signInUrl, SessionTimeoutTextOverrides textOverrides) {
 
         this.enabled = enabled;
         this.inactivity = inactivity;
@@ -46,6 +48,8 @@ public class SessionTimeout implements Serializable {
         this.refreshLimit = refreshlimit;
         this.method = method;
         this.additionalData = additionaldata;
+        this.signInUrl = signInUrl;
+        this.textOverrides = textOverrides;
     }
 
     public boolean isEnabled() {
@@ -126,5 +130,21 @@ public class SessionTimeout implements Serializable {
 
 	public void setAdditionalData(String additionalData) {
 		this.additionalData = additionalData;
+	}
+
+	public String getSignInUrl() {
+		return signInUrl;
+	}
+
+	public void setSignInUrl(String signInUrl) {
+		this.signInUrl = signInUrl;
+	}
+
+	public SessionTimeoutTextOverrides getTextOverrides() {
+		return textOverrides;
+	}
+
+	public void setTextOverrides(SessionTimeoutTextOverrides textOverrides) {
+		this.textOverrides = textOverrides;
 	}
 }

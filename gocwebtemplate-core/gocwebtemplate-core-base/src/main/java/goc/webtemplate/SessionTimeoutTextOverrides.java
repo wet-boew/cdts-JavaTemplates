@@ -1,11 +1,7 @@
 package goc.webtemplate;
 
-/** Optional button text and message elements to override the defaults in SessionTimeout
- * @param buttonContinue Text for the Continue Session button
- * @param buttonEnd Text for the End Session button
- * @param buttonSignIn Text for the Sign In button
- * @param timeoutEnd Text for the message displayed below the timer
- * @param timeoutAlready Text for the message displayed when the session has expired
+/**
+ * Optional button text and message elements to override the defaults in SessionTimeout
 */
 public class SessionTimeoutTextOverrides {
     private String buttonContinue;
@@ -14,6 +10,14 @@ public class SessionTimeoutTextOverrides {
     private String timeoutEnd;
     private String timeoutAlready;
 
+    /**
+     * Create new SessionTimeoutTextOverrides
+     * @param buttonContinue Text for the Continue Session button
+     * @param buttonEnd Text for the End Session button
+     * @param buttonSignIn Text for the Sign In button
+     * @param timeoutEnd Text for the message displayed below the timer
+     * @param timeoutAlready Text for the message displayed when the session has expired
+    */
     public SessionTimeoutTextOverrides() {}
 
     public SessionTimeoutTextOverrides(String buttonContinue, String buttonEnd, String buttonSignIn, String timeoutEnd, String timeoutAlready)

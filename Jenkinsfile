@@ -94,8 +94,8 @@ pipeline {
                     def git = tool('git')
                     def gitCommitId = sh(script: "'${git}' rev-parse HEAD", returnStdout: true).trim()
                     
-                    withAnt(ant: 'Ant', jdk: 'JDK11') {
-                        withMaven(maven: 'maven', jdk: 'JDK11') {
+                    withAnt(ant: 'Ant', jdk: 'OpenJDK11') {
+                        withMaven(maven: 'maven', jdk: 'OpenJDK11') {
                             //---[ If an explicit version was specified, override source's versions
                             if (!params.DEPLOY_VERSION.isEmpty()) {
                                 sh(script: "ant -buildfile ./builds/build-setprojectversion.xml \"-Dgocwebtemplate.build.version=${params.DEPLOY_VERSION}\"")

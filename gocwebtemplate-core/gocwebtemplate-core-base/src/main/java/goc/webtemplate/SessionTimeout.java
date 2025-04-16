@@ -24,15 +24,26 @@ public class SessionTimeout implements Serializable {
     public SessionTimeout(int inactivity, int reactiontime, int sessionalive, 
     					  String logouturl, String refreshcallbackurl, 
     					  boolean refreshonclick, int refreshlimit, 
-    					  String method, String additionaldata,
-    					  String signinurl, SessionTimeoutTextOverrides textoverrides) {
+    					  String method, String additionaldata) {
 
         this(false,
              inactivity, reactiontime, sessionalive,
              logouturl, refreshcallbackurl,
              refreshonclick, refreshlimit,
-             method, additionaldata,
-             signinurl, textoverrides);
+             method, additionaldata);
+    }
+
+    public SessionTimeout(boolean enabled, int inactivity, int reactiontime, int sessionalive,
+            String logouturl, String refreshcallbackurl,
+            boolean refreshonclick, int refreshlimit,
+            String method, String additionaldata) {
+
+        this(false,
+                inactivity, reactiontime, sessionalive,
+                logouturl, refreshcallbackurl,
+                refreshonclick, refreshlimit,
+                method, additionaldata,
+                "", null);
     }
 
     public SessionTimeout(boolean enabled, int inactivity, int reactiontime, int sessionalive, 

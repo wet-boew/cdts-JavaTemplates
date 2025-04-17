@@ -2,6 +2,7 @@ package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
 
+import goc.webtemplate.SessionTimeoutTextOverrides;
 import goc.webtemplate.component.JsonValueUtils;
 
 /**
@@ -25,6 +26,8 @@ public class SessionTimeout implements Serializable {
     private Integer refreshLimit = null;
     private String method = null;
     private String additionalData = null;
+    private String signInUrl = null;
+    private SessionTimeoutTextOverrides textOverrides = null;
     
     public SessionTimeout() {
     }
@@ -44,11 +47,14 @@ public class SessionTimeout implements Serializable {
         this.refreshLimit = otherObj.getRefreshLimit() > 0? otherObj.getRefreshLimit(): null;
         this.method = JsonValueUtils.getNonEmptyString(otherObj.getMethod());
         this.additionalData = JsonValueUtils.getNonEmptyString(otherObj.getAdditionalData());
+        this.signInUrl = JsonValueUtils.getNonEmptyString(otherObj.getSignInUrl());
+        this.textOverrides = otherObj.getTextOverrides();
     }
     
     public SessionTimeout(Integer inactivity, Integer reactionTime, Integer sessionalive,
                           String logouturl, String refreshCallbackUrl, Boolean refreshOnClick,
-                          Integer refreshLimit, String method, String additionalData) {
+                          Integer refreshLimit, String method, String additionalData,
+                          String signInUrl, SessionTimeoutTextOverrides textOverrides) {
         this.inactivity = inactivity;
         this.reactionTime = reactionTime;
         this.sessionalive = sessionalive;
@@ -58,6 +64,8 @@ public class SessionTimeout implements Serializable {
         this.refreshLimit = refreshLimit;
         this.method = method;
         this.additionalData = additionalData;
+        this.signInUrl = signInUrl;
+        this.textOverrides = textOverrides;
     }
 
     public Integer getInactivity() {
@@ -132,4 +140,20 @@ public class SessionTimeout implements Serializable {
         this.additionalData = additionalData;
     }
     
+    public String getSignInUrl() {
+        return signInUrl;
+    }
+
+    public void setSignInUrl(String signInUrl) {
+        this.signInUrl = signInUrl;
+    }
+
+    public SessionTimeoutTextOverrides getTextOverrides() {
+        return textOverrides;
+    }
+
+    public void setTextOverrides(SessionTimeoutTextOverrides textOverrides) {
+        this.textOverrides = textOverrides;
+    }
+
 }

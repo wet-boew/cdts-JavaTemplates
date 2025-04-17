@@ -11,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import goc.webtemplate.Breadcrumb;
 import goc.webtemplate.SessionTimeout;
+import goc.webtemplate.SessionTimeoutTextOverrides;
 import goc.webtemplate.component.spring.DefaultTemplateCoreBean;
 
 @Component(value = "sessiontimeoutsamplebean")
@@ -28,6 +29,8 @@ public class SessionTimeoutSampleBean extends DefaultTemplateCoreBean {
         this.setBreadcrumbs(bcs);
 
         SessionTimeout sconfig = new SessionTimeout();
+        SessionTimeoutTextOverrides textOverrides = new SessionTimeoutTextOverrides();
+        textOverrides.setButtonContinue("Keep Going");
         
         sconfig.setEnabled(true);
         sconfig.setInactivity(30000);
@@ -39,6 +42,8 @@ public class SessionTimeoutSampleBean extends DefaultTemplateCoreBean {
         sconfig.setRefreshLimit(3);
         sconfig.setMethod("");
         sconfig.setAdditionalData("");
+        sconfig.setSignInUrl("");
+        sconfig.setTextOverrides(textOverrides);
         
         this.setSessionTimeoutConfiguration(sconfig);
     }

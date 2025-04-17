@@ -10,6 +10,8 @@ public class SessionTimeoutTextOverrides {
     private String timeoutEnd;
     private String timeoutAlready;
 
+    public SessionTimeoutTextOverrides() {}
+
     /**
      * Create new SessionTimeoutTextOverrides
      * @param buttonContinue Text for the Continue Session button
@@ -18,8 +20,6 @@ public class SessionTimeoutTextOverrides {
      * @param timeoutEnd Text for the message displayed below the timer
      * @param timeoutAlready Text for the message displayed when the session has expired
     */
-    public SessionTimeoutTextOverrides() {}
-
     public SessionTimeoutTextOverrides(String buttonContinue, String buttonEnd, String buttonSignIn, String timeoutEnd, String timeoutAlready)
     {
         this.buttonContinue = buttonContinue;

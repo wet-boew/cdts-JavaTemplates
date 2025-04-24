@@ -31,6 +31,15 @@
     <li><strong>session.refreshlimit.value</strong>: Sets the amount of time that must pass before an ajax request can be made</li>
     <li><strong>session.method</strong>: Sets the request method used for ajax requests. Recommended: GET or POST</li>
     <li><strong>session.additionaldata</strong>: Additional data to send with the request</li>
+    <li><strong>session.signinurl</strong>: URL to the Sign-In page</li>
+</ul>
+<p>Override the default text and message elements programmatically via the <code class="wb-prettify">setTextOverrides</code> method using the SessionTimeoutTextOverrides object: </p>
+<ul>
+    <li><strong>buttonContinue</strong>: Text for the Continue Session button</li>
+    <li><strong>buttonEnd</strong>: Text for the End Session button</li>
+    <li><strong>buttonSignin</strong>: Text for the Sign In button</li>
+    <li><strong>timeoutEnd</strong>: Text for the message displayed below the timer</li>
+    <li><strong>timeoutAlready</strong>: Text for the message displayed when the session has expired</li>
 </ul>
 <h4>Notes:</h4>
 <ul>

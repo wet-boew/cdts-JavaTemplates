@@ -1654,6 +1654,9 @@ public abstract class AbstractCoreBean {
                 
             if (!Utility.isNullOrEmpty(bundle.getString("session.additionaldata"))) 
                 configs.setAdditionalData(bundle.getString("session.additionaldata"));
+
+            if (!Utility.isNullOrEmpty(bundle.getString("session.signinurl")))
+                configs.setSignInUrl(bundle.getString("session.signinurl"));
         }
         
         return configs;

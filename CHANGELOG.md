@@ -2,6 +2,11 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v4.0.5
+
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.5 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.89
+- Updated static fallback files
+
 ## v4.0.4
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.4 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.85

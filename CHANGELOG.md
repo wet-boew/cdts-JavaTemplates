@@ -5,6 +5,7 @@
 ## v4.0.5
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.5 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.89
+- Adding a Contributors pattern allowing users to highlight departments that have contributed to the content of the page. Please visit the sample pages for all the details.
 - Adding an optional languagePrecedence property for Splash page allowing users to decide the order of official languages
 - Updated static fallback files
 

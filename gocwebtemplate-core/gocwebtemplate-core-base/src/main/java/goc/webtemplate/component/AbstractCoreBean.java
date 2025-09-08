@@ -122,6 +122,7 @@ public abstract class AbstractCoreBean {
     private Date dateModified = null;
     private String screenIdentifier = "";
     private String versionIdentifier = "";
+    private List<Link> contributors = null;
     private boolean showSearch = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showsearch"));
     private boolean showPreContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showprecontent"));
     private boolean showPostContent = Boolean.parseBoolean(this.getResourceBundleString("cdn", "goc.webtemplate.showpostcontent"));
@@ -1159,6 +1160,21 @@ public abstract class AbstractCoreBean {
     }
 
     /**
+     * Returns the list of contributors, null if no list is currently specified.
+     */
+    public List<Link> getContributors() {
+        this.initializeOnce();
+        return this.contributors;
+    }
+
+    /**
+     * Sets the list of contributors to the specified value.
+     */
+    public void setContributors(List<Link> value) {
+        this.contributors = value;
+    }
+
+    /**
      * Returns the configuration object containing the various session timeout settings.
      *
      * Can be set in either cdn.properties or by application programmatically
@@ -2096,7 +2112,8 @@ public abstract class AbstractCoreBean {
                         this.showPostContent,
                         buildFeedback(this.getFeedbackLink()),
                         new ShareList(this.showSharePageLink, this.sharePageMediaSites),
-                        JsonValueUtils.getNonEmptyString(this.getScreenIdentifier())
+                        JsonValueUtils.getNonEmptyString(this.getScreenIdentifier()),
+                        this.contributors
                       );
             } else { //(isUnilingualError)
                 return new UnilingualErrorPreFooter(null, false);

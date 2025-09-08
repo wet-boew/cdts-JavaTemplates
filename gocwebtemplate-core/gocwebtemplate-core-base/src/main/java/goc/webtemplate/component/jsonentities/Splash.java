@@ -17,6 +17,7 @@ public class Splash implements Serializable {
     private String  termsFra;
     private String  nameEng;
     private String  nameFra;
+    private String  languagePrecedence;
     
     public Splash() {    
     }
@@ -24,7 +25,8 @@ public class Splash implements Serializable {
     public Splash(String cdnEnv, 
                     String indexEng, String indexFra, 
                     String termsEng, String termsFra, 
-                    String nameEng,  String nameFra) {
+                    String nameEng,  String nameFra,
+                    String languagePrecedence) {
         this.cdnEnv = cdnEnv;
         this.indexEng = indexEng;
         this.indexFra = indexFra;
@@ -32,6 +34,7 @@ public class Splash implements Serializable {
         this.termsFra = termsFra;
         this.nameEng = nameEng;
         this.nameFra = nameFra;
+        this.languagePrecedence = languagePrecedence;
     }
 
     public String getCdnEnv() {
@@ -88,5 +91,13 @@ public class Splash implements Serializable {
 
     public void setNameFra(String nameFra) {
         this.nameFra = nameFra;
+    }
+
+    public String getLanguagePrecedence() {
+        return languagePrecedence;
+    }
+
+    public void setLanguagePrecedence(String languagePrecedence) {
+        this.languagePrecedence = languagePrecedence;
     }
 }

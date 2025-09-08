@@ -5,6 +5,7 @@ import java.util.List;
 
 import goc.webtemplate.Constants;
 import goc.webtemplate.FeedbackLink;
+import goc.webtemplate.Link;
 import goc.webtemplate.component.jsp.DefaultTemplateCoreBean;
 
 public class FeedbackAndShareThisPageSampleBean extends DefaultTemplateCoreBean {
@@ -26,10 +27,15 @@ public class FeedbackAndShareThisPageSampleBean extends DefaultTemplateCoreBean 
         feedbackLink.setTheme("Theme");
         feedbackLink.setSection("Section");
 
+        List<Link> contributors = new ArrayList<Link>();
+        Link link = new Link("https://esdc.prv", "ESDC");
+        contributors.add(link);
+
         this.setFeedbackLink(feedbackLink);
         this.setShowSharePageLink(true);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.blogger);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.facebook);
         this.getSharePageMediaSites().add(Constants.SocialMediaSites.twitter);
+        this.setContributors(contributors);
     }
 }

@@ -23,7 +23,7 @@ public class RenderSplashTest {
         );
 		sut.setSplashPageInfo(splash);
 
-		assertTrue(sut.getRenderSplashSetup().contains("\"splash\":{\"indexEng\":\"index\",\"indexFra\":\"index\",\"termsEng\":\"http://www.canada.ca/en/transparency/terms.html\",\"termsFra\":\"http://www.canada.ca/fr/transparence/avis.html\",\"nameEng\":\"[My web asset]\",\"nameFra\":\"[Mon actif web]\",\"languagePrecedence\":\"French\"}"),
+		assertTrue(sut.getRenderSplash().contains("\"indexEng\":\"index\",\"indexFra\":\"index\",\"termsEng\":\"http://www.canada.ca/en/transparency/terms.html\",\"termsFra\":\"http://www.canada.ca/fr/transparence/avis.html\",\"nameEng\":\"[My web asset]\",\"nameFra\":\"[Mon actif web]\",\"languagePrecedence\":\"French\""),
                 "\"RenderSplash: Splash not rendered as expected.\"");
 	}
 }

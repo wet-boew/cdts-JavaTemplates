@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import goc.webtemplate.Constants;
 import goc.webtemplate.FeedbackLink;
+import goc.webtemplate.Link;
 
 public class RenderPreFooterTest {
 	@Test
@@ -42,5 +43,19 @@ public class RenderPreFooterTest {
 
         assertTrue(sut.getRenderPreFooter().contains("\"showFeedback\":{\"enabled\":true,\"href\":\"http://www.google.ca\",\"text\":\"Contact\",\"theme\":\"Theme\",\"section\":\"Section\"}"),
                 "PreFooter rendering: Not rendered as expected. (" + sut.getRenderPreFooter() + ")");
+    }
+
+    @Test
+    public void testRenderContributors() {
+        AbstractCoreBeanImpl sut = new AbstractCoreBeanImpl();
+
+        List<Link> contributors = new ArrayList<Link>();
+        Link link = new Link("https://esdc.prv", "ESDC");
+        contributors.add(link);
+
+        sut.setContributors(contributors);
+
+        assertTrue(sut.getRenderSetup().contains("\"contributors\":[{\"href\":\"https://esdc.prv\",\"text\":\"ESDC\"}]"),
+                "PreFooter rendering: Not rendered as expected. (" + sut.getRenderSetup() + ")");
     }
 }

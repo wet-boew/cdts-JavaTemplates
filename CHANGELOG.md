@@ -2,6 +2,14 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v2.7.5
+
+- **IMPORTANT** This will be the last release for v2.x. Updates and support will only be available for v4.x moving forward.
+- [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.0.5 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.89
+- Adding a Contributors pattern allowing users to highlight departments that have contributed to the content of the page.
+- Adding an optional languagePrecedence property for Splash page allowing users to decide the order of official languages
+- Updating static fallback files
+
 ## v2.7.4
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.4 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.85

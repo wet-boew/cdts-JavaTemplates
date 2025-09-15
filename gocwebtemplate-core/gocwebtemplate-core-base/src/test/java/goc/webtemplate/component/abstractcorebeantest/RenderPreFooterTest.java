@@ -55,7 +55,7 @@ public class RenderPreFooterTest {
 
         sut.setContributors(contributors);
 
-        assertTrue(sut.getRenderSetup().contains("\"contributors\":[{\"href\":\"https://esdc.prv\",\"text\":\"ESDC\"}]"),
-                "PreFooter rendering: Not rendered as expected. (" + sut.getRenderSetup() + ")");
+        assertTrue(sut.getRenderPreFooter().contains("\"contributors\":[{\"href\":\"https://esdc.prv\",\"text\":\"ESDC\"}]"),
+                "PreFooter rendering: Not rendered as expected. (" + sut.getRenderPreFooter() + ")");
     }
 }

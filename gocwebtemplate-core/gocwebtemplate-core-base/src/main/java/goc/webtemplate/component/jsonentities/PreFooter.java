@@ -1,8 +1,11 @@
 package goc.webtemplate.component.jsonentities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.JsonAdapter;
+
+import goc.webtemplate.Link;
 
 /**
  * Objects of this class are meant to be serialized to a JSON object to be passed
@@ -24,6 +27,7 @@ public class PreFooter implements Serializable {
     private ShareList           showShare;
 
     private String              screenIdentifier;
+    private List<Link>          contributors;
     
     
     public PreFooter() {
@@ -31,6 +35,11 @@ public class PreFooter implements Serializable {
 
     public PreFooter(String cdnEnv, String versionIdentifier, String dateModified, boolean showPostContent,
             Feedback showFeedback, ShareList showShare, String screenIdentifier) {
+        this(cdnEnv, versionIdentifier, dateModified, showPostContent, showFeedback, showShare, screenIdentifier, null);
+    }
+
+    public PreFooter(String cdnEnv, String versionIdentifier, String dateModified, boolean showPostContent,
+            Feedback showFeedback, ShareList showShare, String screenIdentifier, List<Link> contributors) {
         this.cdnEnv = cdnEnv;
         this.versionIdentifier = versionIdentifier;
         this.dateModified = dateModified;
@@ -38,6 +47,7 @@ public class PreFooter implements Serializable {
         this.showFeedback = showFeedback;
         this.showShare = showShare;
         this.screenIdentifier = screenIdentifier;
+        this.contributors = contributors;
     }
 
     public String getCdnEnv() {
@@ -94,5 +104,13 @@ public class PreFooter implements Serializable {
 
     public void setScreenIdentifier(String screenIdentifier) {
         this.screenIdentifier = screenIdentifier;
+    }
+
+    public List<Link> getContributors() {
+        return contributors;
+    }
+
+    public void setContributors(List<Link> contributors) {
+        this.contributors = contributors;
     }
 }

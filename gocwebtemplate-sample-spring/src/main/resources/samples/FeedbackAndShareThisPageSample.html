@@ -88,6 +88,23 @@ public void onWebTemplateInitialize() {
 } 
 	        </pre>
 	    </div>
+	    <h2>Contributors</h2>
+	    <p>The contributors pattern is a way for the users to pattern to highlight institutions/organizations that have contributed to the content on a webpage.</p>
+	    <p>Set programmatically via the <code class="wb-prettify">setContributors</code> method in your custom bean class.</p>
+	    <div class="wb-prettify all-pre lang-vb linenums">
+	        <pre>
+@Override
+public void onWebTemplateInitialize() {
+//...
+    List&lt;Link&gt; contributors = new ArrayList&lt;Link&gt;();
+    Link link = new Link("https://esdc.prv", "ESDC");
+    contributors.add(link);
+
+    this.setContributors(contributors);
+//...
+}
+	        </pre>
+	    </div>
 
 	<div th:replace="_samplelist :: samplelist"></div>
 </section> 

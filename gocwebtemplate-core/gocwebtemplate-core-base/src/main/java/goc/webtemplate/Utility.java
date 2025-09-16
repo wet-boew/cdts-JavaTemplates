@@ -1,6 +1,6 @@
 package goc.webtemplate;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class Utility {
 	public static boolean isNullOrEmpty(String param) {

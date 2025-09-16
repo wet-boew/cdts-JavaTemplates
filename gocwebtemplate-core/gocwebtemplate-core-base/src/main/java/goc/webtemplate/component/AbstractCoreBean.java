@@ -2070,7 +2070,8 @@ public abstract class AbstractCoreBean {
                     JsonValueUtils.getNonEmptyString(spi.getEnglishTermsUrl()),
                     JsonValueUtils.getNonEmptyString(spi.getFrenchTermsUrl()),
                     spi.getEnglishName(),
-                    spi.getFrenchName()
+                    spi.getFrenchName(),
+                    spi.getLanguagePrecedence()
                 ));
     }
     

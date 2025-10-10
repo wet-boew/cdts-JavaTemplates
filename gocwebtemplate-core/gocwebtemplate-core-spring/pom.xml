@@ -35,7 +35,6 @@
                             <include>ca.gc.gocwebtemplate:gocwebtemplate-core-base</include>
                             <include>org.apache.commons:commons-text</include>
                             <include>com.google.code.gson:gson</include>
-                            <include>org.apache.commons:commons-lang3</include>
                         </includes>
                     </artifactSet>
                     <!-- <minimizeJar>true</minimizeJar> -->

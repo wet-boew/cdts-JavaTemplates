@@ -2,6 +2,10 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v4.0.6
+
+- Now targeting Struts version 6.8.0
+
 ## v4.0.5
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.0.5 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.89

@@ -97,6 +97,10 @@ public abstract class AbstractCoreBean {
     private String templateVersion = null; // initialized in getTemplateVersion
     private String theme = null; // initialized in getTheme
     private String subTheme = null; // initialized in getSubTheme
+    /**
+     * @deprecated UseHttps is no longer supported. Https is always enabled.
+     */
+    @Deprecated
     private boolean useHttps = !"false".equals(this.getResourceBundleString("cdn", "webtemplate_usehttps")); //defaults to true if not specified/is not exactly "false"
     private boolean useSRI = !"false".equals(this.getResourceBundleString("cdn", "webtemplate_usesri")); //defaults to true if not specified/is not exactly "false"
     private boolean loadjQueryFromGoogle = Boolean.parseBoolean(this.getResourceBundleString("cdn", "wettemplate_loadjqueryfromgoogle"));
@@ -471,7 +475,10 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "webtemplate_usehttps" property in cdn.properties,
      * can be overriden programatically.
+     *
+     * @deprecated UseHttps is no longer supported. Https is always enabled.
      */
+    @Deprecated
     public boolean getUseHttps() {
         this.initializeOnce();
         return this.useHttps;
@@ -482,7 +489,10 @@ public abstract class AbstractCoreBean {
      *
      * Set at application level via "webtemplate_usehttps" property in cdn.properties,
      * can be overriden programatically.
+     *
+     * @deprecated UseHttps is no longer supported. Https is always enabled.
      */
+    @Deprecated
     public void setUseHttps(boolean value) {
         this.useHttps = value;
     }
@@ -509,7 +519,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Returns the version of the CDN files to use to build the page. (e.g v5_0_5)
+     * Returns the version of the CDN files to use to build the page. (e.g v5_1_0)
      *
      * Set at application level via "wettemplate_version" property in cdn.properties,
      * can be overriden programatically.
@@ -530,7 +540,7 @@ public abstract class AbstractCoreBean {
     }
 
     /**
-     * Sets the version of the CDN files to use to build the page. (e.g v5_0_5)
+     * Sets the version of the CDN files to use to build the page. (e.g v5_1_0)
      *
      * Set at application level via "wettemplate_version" property in cdn.properties,
      * can be overriden programatically.

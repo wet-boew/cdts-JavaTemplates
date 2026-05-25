@@ -2,6 +2,15 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v2.8.0
+
+- [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.1.0 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96 (GCIntranet uses v4.0.85)
+- GCIntranet Cloud URL https://cdts.service.canada.ca has been replaced by a bilingual URL https://cdts-sgdc.service.canada.ca.
+- GCIntranet URL https://templates.service.gc.ca has been replaced by a bilingual URL https://cdts-sgdc.service.canada.ca.
+- Environment PROD_UNSECURE has been removed. Use PROD_SSL instead.
+- UseHttps property is no longer supported. Https is always enabled.
+- Updating static fallback files
+
 ## v2.7.5
 
 - **IMPORTANT** This will be the last release for v2.x. Updates and support will only be available for v4.x moving forward.

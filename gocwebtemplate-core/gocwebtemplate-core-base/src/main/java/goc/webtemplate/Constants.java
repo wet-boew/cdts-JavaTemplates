@@ -13,9 +13,9 @@ public abstract class Constants {
     
     public static final String CACHE_KEY_STATICFILES_PREFIX = "GoC.Template.CacheKey";
     
-    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "2.7.5";
+    public static final String WEB_TEMPLATE_DISTRIBUTION_VERSION = "2.8.0";
 
-    public static final String CDTS_DEFAULT_VERSION = "v5_0_5";
+    public static final String CDTS_DEFAULT_VERSION = "v5_1_0";
     
     public static final String STATIC_FALLBACK_FILES_INTERNAL_PATH = "/goc/webtemplate/StaticFallbackFiles";
     

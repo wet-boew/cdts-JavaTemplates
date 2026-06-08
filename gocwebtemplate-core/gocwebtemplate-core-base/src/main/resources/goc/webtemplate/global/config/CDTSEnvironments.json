@@ -33,7 +33,7 @@
     },
     {
       "name": "PROD_SSL_ECCCSUB",
-      "path": "https://cdts-sgddc.service.canada.ca/{1}/cls/WET/{2}/{3}cdts/compiled/",
+      "path": "https://cdts-sgdc.service.canada.ca/{1}/cls/WET/{2}/{3}cdts/compiled/",
       "theme": "gcintranet",
       "subTheme": "eccc",
       "cdn": "prod",
@@ -47,7 +47,7 @@
     },
     {
       "name": "ESDC_PROD",
-      "path": "https://cdts-sgddc.service.canada.ca/{1}/cls/WET/{2}/{3}cdts/compiled/",
+      "path": "https://cdts-sgdc.service.canada.ca/{1}/cls/WET/{2}/{3}cdts/compiled/",
       "theme": "gcintranet",
       "subTheme": "esdc",
       "cdn": "esdcprod",

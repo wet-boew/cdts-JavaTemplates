@@ -3,7 +3,7 @@ package goc.webtemplate.component.spring;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

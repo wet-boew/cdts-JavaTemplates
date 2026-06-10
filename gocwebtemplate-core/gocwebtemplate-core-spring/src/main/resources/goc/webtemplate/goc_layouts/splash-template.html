@@ -11,7 +11,9 @@
 	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
-	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splashTop.html')})]
+	        <th:block th:with="splashTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splashTop.html')}">
+	            [(${splashTopStaticPath})]
+	        </th:block>
 	    </noscript>   
         <script type="text/javascript">
 		    document.write(wet.builder.splashTop([(${goctemplateclientbean.renderSplashTop})]));
@@ -23,7 +25,9 @@
 		<div id="splashContent">
 			<noscript>
 	            <!--  Write closure fall-back static file -->
-	            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splash.html')})]
+	            <th:block th:with="splashStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'splash.html')}">
+	                [(${splashStaticPath})]
+	            </th:block>
 	            <!-- Write closure template -->
             </noscript>
             <script type="text/javascript">

@@ -36,7 +36,7 @@
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.4.0</version>
           <configuration>
             <failOnMissingWebXml>true</failOnMissingWebXml>
             <!-- Add a few custom attributes to the manifest -->          
@@ -95,7 +95,7 @@
     <dependency>  
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-tiles-plugin</artifactId>
-      <version>2.5.33</version>
+      <version>7.1.1</version>
       <scope>runtime</scope>
     </dependency> 
     
@@ -114,25 +114,31 @@
     </dependency> 
 
     <dependency>  
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.1.0</version>
       <scope>provided</scope> <!-- Provided by WebLogic/container -->
     </dependency>
     
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-      <scope>provided</scope> <!-- Provided by WebLogic/container -->
-    </dependency>
-    
-    <dependency>
-        <groupId>javax.servlet.jsp</groupId>
-        <artifactId>jsp-api</artifactId>
-        <version>2.2</version>
-        <scope>provided</scope> <!-- Provided by WebLogic/container -->
-    </dependency>
+	    <groupId>jakarta.servlet.jsp.jstl</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+	    <version>3.0.0</version>
+	    <!--<scope>provided</scope>-->
+	</dependency>
+	
+	<dependency>
+	    <groupId>jakarta.servlet.jsp</groupId>
+	    <artifactId>jakarta.servlet.jsp-api</artifactId>
+	    <version>3.1.1</version>
+	    <scope>provided</scope>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.glassfish.web</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+	    <version>3.0.1</version>
+	</dependency>
   
     <dependency>
       <groupId>org.junit.jupiter</groupId>

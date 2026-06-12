@@ -13,9 +13,7 @@
 	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
-	        <th:block th:with="refTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')}">
-	            [(${refTopStaticPath})]
-	        </th:block>
+	        <th:block th:with="refTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')}">[(${refTopStaticPath})]</th:block>
 	    </noscript>   
         <script type="text/javascript">
 		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderRefTop})]));
@@ -27,9 +25,7 @@
     	[(${goctemplateclientbean.renderSessionTimeoutControl})]
     	<div id="def-top">
 	    	<!-- Write closure fall-back static file -->
-	        <th:block th:with="topStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">
-	            [(${topStaticPath})]
-	        </th:block>
+	        <th:block th:with="topStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'top-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${topStaticPath})]</th:block>
 	    </div>
 	    <!-- Write closure template -->
         <script type="text/javascript">
@@ -44,9 +40,7 @@
 		            <!-- end main content -->
 		            <div id="def-preFooter">
 		                <!-- Write closure fall-back static file -->
-		                <th:block th:with="preFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">
-		                    [(${preFooterStaticPath})]
-		                </th:block>
+		                <th:block th:with="preFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${preFooterStaticPath})]</th:block>
 		        	</div>
 		            <!-- Write closure template -->
 		            <script type="text/javascript">
@@ -56,9 +50,7 @@
 			    </main>	
 			    <nav class="wb-sec col-md-3 col-md-pull-9" typeof="SiteNavigationElement" id="wb-sec" role="navigation">
 			        	<!-- Write closure fall-back static file -->
-		                <th:block th:with="secMenuStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">
-		                    [(${secMenuStaticPath})]
-		                </th:block>
+		                <th:block th:with="secMenuStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${secMenuStaticPath})]</th:block>
 		        	</nav>
 			        <!-- Write closure template -->
 			       	<script type="text/javascript">

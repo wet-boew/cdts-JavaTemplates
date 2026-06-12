@@ -13,7 +13,7 @@
 	    <script type="text/javascript" th:src="${goctemplateclientbean.wetJsPath}"></script>
 	    <noscript>
 	    	<!-- Write closure fall-back static file -->
-	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
+	        <th:block th:with="refTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')}">[(${refTopStaticPath})]</th:block>
 	    </noscript>   
         <script type="text/javascript">
 		    document.write(wet.builder.refTop([(${goctemplateclientbean.renderRefTop})]));
@@ -25,7 +25,7 @@
     	[(${goctemplateclientbean.renderSessionTimeoutControl})]
     	<div id="def-top">
 	    	<!-- Write closure fall-back static file -->
-	    	[(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+	        <th:block th:with="transactTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${transactTopStaticPath})]</th:block>
 	    	<!-- Google Tag Manager DO NOT REMOVE OR MODIFY - NE PAS SUPPRIMER OU MODIFIER -->
             <noscript><iframe title="Google Tag Manager" src="//www.googletagmanager.com/ns.html?id=GTM-TLGQ9K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- End Google Tag Manager -->
@@ -41,7 +41,7 @@
             <!-- end main content -->
             <div id="def-preFooter">
                 <!-- Write closure fall-back static file -->
-                [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+                <th:block th:with="preFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${preFooterStaticPath})]</th:block>
         	</div>
             <!-- Write closure template -->
             <script type="text/javascript">
@@ -51,7 +51,7 @@
 	    </main>	
         <div id="def-footer">
 	            <!-- Write closure fall-back static file -->
-	            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+	            <th:block th:with="transactFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${transactFooterStaticPath})]</th:block>
 	        </div>
 	        <!-- Write closure template -->
 	        <script type="text/javascript">

@@ -4,7 +4,7 @@ import java.net.URLEncoder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import goc.webtemplate.Constants;
 import goc.webtemplate.component.AbstractCoreBean;

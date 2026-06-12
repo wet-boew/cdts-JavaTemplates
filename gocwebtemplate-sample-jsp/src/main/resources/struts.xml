@@ -5,6 +5,7 @@
 <struts>
 	<constant name="struts.action.extension" value="action" />
 	<constant name="struts.devMode" value="true" />
+	<constant name="struts.allowlist.packageNames" value="goc.webtemplate.jsp.samplebeans,goc.webtemplate.component" />
 	<package name="default" namespace="/" extends="struts-default">
 		<!--  ==============================================================  -->
 		<!--  The following are part of the GoC Web Template related struts configuration, 

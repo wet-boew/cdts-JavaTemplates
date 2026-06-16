@@ -5,7 +5,7 @@ import goc.webtemplate.Constants;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class MasterApplicationBean {
 	private HttpServletRequest req = null;

@@ -13,7 +13,7 @@
         <script th:remove="tag" th:utext='|<script type="text/javascript" ${goctemplateclientbean.wetJsPathAttributes} data-cdts-setup=&apos;${goctemplateclientbean.renderTransactionalSetup}&apos;></script>|'></script>
         <noscript>
             <!-- Write closure fall-back static file -->
-            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')})]
+            <th:block th:with="refTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'refTop.html')}">[(${refTopStaticPath})]</th:block>
         </noscript>   
         [(${goctemplateclientbean.renderHtmlHeaderElements})]
         <!--  GoC Web Template Build Version [(${goctemplateclientbean.webTemplateDistributionVersion})] --> 
@@ -22,13 +22,13 @@
         [(${goctemplateclientbean.renderSessionTimeoutControl})]
         <div id="cdts-def-top">
             <!-- Write closure fall-back static file -->
-            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+            <th:block th:with="transactTopStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactTop-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${transactTopStaticPath})]</th:block>
         </div>
         <div class="container">
             <div class="row">
                 <nav class="wb-sec col-md-3" typeof="SiteNavigationElement" id="wb-sec" role="navigation">
                     <!-- Write closure fall-back static file -->
-                    [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+                    <th:block th:with="secMenuStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'secMenu-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${secMenuStaticPath})]</th:block>
                 </nav>
                 <main role="main" property="mainContentOfPage" class="col-md-9" typeof="WebPageElement">
                     <!-- the main content -->
@@ -36,14 +36,14 @@
                     <!-- end main content -->
                     <div id="cdts-def-preFooter">
                         <!-- Write closure fall-back static file -->
-                        [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+                        <th:block th:with="preFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'preFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${preFooterStaticPath})]</th:block>
                     </div>
                 </main>    
             </div>
         </div>          
         <div id="cdts-def-footer">
             <!-- Write closure fall-back static file -->
-            [(${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))})]
+            <th:block th:with="transactFooterStaticPath=${@applicationscopebean.getStaticFile(goctemplateclientbean.staticFallbackFilePath, goctemplateclientbean.theme, 'transactFooter-'.concat(goctemplateclientbean.twoLetterCultureLanguage).concat('.html'))}">[(${transactFooterStaticPath})]</th:block>
         </div>
     </body>
 </html>

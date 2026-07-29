@@ -2,6 +2,16 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v5.0.0
+
+- **IMPORTANT** BREAKING CHANGES: Updated framework and dependencies including migration to Spring Framework 6
+- **IMPORTANT** Now targeting the following:
+	- Spring Boot version 4.0.6
+	- Struts version 7.1.1
+	- Java 21
+- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.1.1 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96.3 (GCIntranet uses v4.0.85)
+- Updated static fallback files
+
 ## v4.1.0
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.1.0 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96 (GCIntranet uses v4.0.85)

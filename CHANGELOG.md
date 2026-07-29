@@ -2,6 +2,11 @@
 
 [Download and/or Installation instructions](https://github.com/wet-boew/cdts-JavaTemplates/wiki/Installation)
 
+## v4.1.1
+
+- [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.1.1 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96.3 (GCIntranet uses v4.0.85)
+- Updating static fallback files
+
 ## v4.1.0
 
 - [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.1.0 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96 (GCIntranet uses v4.0.85)

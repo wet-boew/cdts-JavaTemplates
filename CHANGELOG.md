@@ -9,8 +9,11 @@
 	- Spring Boot version 4.0.6
 	- Struts version 7.1.1
 	- Java 21
-- [CDTS](https://github.com/wet-boew/cdts-sgdc/) v5.1.1 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96.3 (GCIntranet uses v4.0.85)
-- Updated static fallback files
+
+## v4.1.1
+
+- [CDTS](https://github.com/wet-boew/cdts-sgdc) v5.1.1 & [wet-boew](https://github.com/wet-boew/wet-boew) v4.0.96.3 (GCIntranet uses v4.0.85)
+- Updating static fallback files
 
 ## v4.1.0
 
